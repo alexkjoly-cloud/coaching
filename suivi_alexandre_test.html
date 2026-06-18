@@ -23,7 +23,6 @@
   .cycle-badge { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); text-align:right; line-height:1.4; }
   .cycle-badge strong { color:var(--gold); font-weight:500; display:block; font-size:11px; }
 
-  /* WEEK SELECTOR */
   .week-selector { display:flex; gap:6px; padding:12px 16px; background:var(--dark); border-bottom:1px solid var(--border); position:sticky; top:69px; z-index:99; }
   .week-btn { flex:1; padding:10px 0; border-radius:2px; font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.08em; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--muted); transition:all 0.15s; }
   .week-btn .wk-sub { display:block; font-family:'DM Sans',sans-serif; font-size:7px; letter-spacing:0.1em; text-transform:uppercase; margin-top:1px; }
@@ -67,17 +66,19 @@
   .exo-prescription { font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.05em; white-space:nowrap; flex-shrink:0; }
   .pres-force { color:var(--red); } .pres-hyp { color:var(--gold); } .pres-lower { color:var(--blue); } .pres-lower2 { color:#7ab8f0; } .pres-spec { color:var(--green); }
 
-  /* Last week reference */
+  .pr-badge { font-size:9px; color:var(--gold); font-weight:500; margin-top:3px; letter-spacing:0.05em; }
+  .pr-badge b { color:var(--gold); }
   .last-week-ref { font-size:9px; color:var(--muted2); padding:0 14px 6px; font-style:italic; letter-spacing:0.03em; }
   .last-week-ref b { color:var(--muted); font-style:normal; font-weight:400; }
 
-  .col-header { display:grid; grid-template-columns:32px 1fr 1fr 40px; padding:6px 0 4px; border-top:1px solid var(--border); }
+  .col-header { display:grid; grid-template-columns:32px 1fr 1fr 1fr 40px; padding:6px 0 4px; border-top:1px solid var(--border); }
   .col-h { font-size:8px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); text-align:center; }
   .series-rows { display:flex; flex-direction:column; }
-  .serie-row { display:grid; grid-template-columns:32px 1fr 1fr 40px; align-items:center; border-bottom:1px solid #131313; }
+  .serie-row { display:grid; grid-template-columns:32px 1fr 1fr 1fr 40px; align-items:center; border-bottom:1px solid #131313; }
   .serie-row:last-child { border-bottom:none; }
   .serie-num { font-size:10px; color:var(--muted2); text-align:center; padding:12px 0; border-right:1px solid #131313; font-weight:500; }
   .serie-input { background:none; border:none; color:var(--white); font-family:'DM Sans',sans-serif; font-size:15px; padding:12px 8px; width:100%; text-align:center; outline:none; border-right:1px solid #131313; -webkit-appearance:none; }
+  .serie-input.rir { color:var(--muted); font-size:13px; }
   .serie-input::placeholder { color:var(--muted2); font-size:13px; }
   .serie-input:focus { background:rgba(255,255,255,0.03); }
   .serie-check { display:flex; align-items:center; justify-content:center; padding:12px 6px; }
@@ -94,11 +95,9 @@
   .reset-btn { margin-top:8px; width:100%; padding:10px; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:2px; font-family:'DM Sans',sans-serif; font-size:11px; cursor:pointer; }
   .spacer { height:16px; }
 
-  /* Poids tab */
   .poids-row { display:grid; grid-template-columns:64px 1fr 1fr; align-items:center; border-bottom:1px solid #131313; }
   .poids-row:last-child { border-bottom:none; }
 
-  /* Bouton bascule clavier numérique ↔ texte */
   .kg-wrap { display:flex; align-items:center; border-right:1px solid #131313; }
   .kg-wrap .serie-input { border-right:none; flex:1; }
   .kbd-toggle { background:none; border:none; color:var(--muted2); font-size:13px; padding:0 6px 0 2px; cursor:pointer; flex-shrink:0; line-height:1; }
@@ -115,7 +114,6 @@
   <div class="cycle-badge">Cycle de 4 semaines<strong id="cycle-label">Bloc 1</strong></div>
 </div>
 
-<!-- WEEK SELECTOR -->
 <div class="week-selector" id="week-selector">
   <button class="week-btn active" data-week="1" onclick="switchWeek(1)">S1<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
   <button class="week-btn" data-week="2" onclick="switchWeek(2)">S2<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
@@ -255,13 +253,8 @@
 </div>
 
 <script>
-/* ============================================================
-   CONFIGURATION GOOGLE SHEETS
-   Colle ici l'URL de ton Google Apps Script (étape du guide).
-   Tant que c'est vide, l'appli marche en local uniquement.
-   ============================================================ */
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
-const CLIENT_ID = "alexandre_test"; // identifiant du client (un par fichier)
+const CLIENT_ID = "alexandre_test";
 
 const CONFIG = {
   'upper-a': {exo1:2,exo2:2,exo3:3,exo4:2,exo5:2,exo6:3},
@@ -275,14 +268,8 @@ const NB_SEMAINES = 4;
 const SESSIONS = ['upper-a','lower-a','upper-b','lower-b','upper-c'];
 let currentWeek = 1;
 
-// KEY now includes week: session-exo-sX-field-wW
 function getKey(s,exo,serie,field,week){ return `${s}-${exo}-s${serie}-${field}-w${week}`; }
 
-/* ============================================================
-   SYNCHRONISATION CLOUD (Google Sheets)
-   Envoie une donnée vers le Google Sheet du coach.
-   Si SYNC_URL est vide, ne fait rien (mode local).
-   ============================================================ */
 let syncStatusTimer=null;
 function showSyncStatus(ok){
   let el=document.getElementById('sync-status');
@@ -300,21 +287,12 @@ function showSyncStatus(ok){
 }
 
 function syncToCloud(payload){
-  if(!SYNC_URL) return; // mode local uniquement
-  fetch(SYNC_URL,{
-    method:'POST',
-    mode:'no-cors',
-    headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body:JSON.stringify(payload)
-  }).then(()=>{ showSyncStatus(true); })
-    .catch(()=>{ showSyncStatus(false); });
+  if(!SYNC_URL) return;
+  fetch(SYNC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
+    .then(()=>{ showSyncStatus(true); }).catch(()=>{ showSyncStatus(false); });
 }
 
-// Lookup des noms d'exercices lisibles (rempli au build)
 const EXO_NAMES = {};
-
-// Débounce : on n'envoie au cloud qu'après une courte pause de saisie
-// (évite d'envoyer "5" puis "55" ; le localStorage, lui, sauve instantanément)
 const _syncTimers = {};
 function syncFieldDebounced(timerKey, payload){
   clearTimeout(_syncTimers[timerKey]);
@@ -324,31 +302,13 @@ function syncFieldDebounced(timerKey, payload){
 function syncField(session,exo,serie,field,value,week){
   const exoName = (EXO_NAMES[session] && EXO_NAMES[session][exo]) ? EXO_NAMES[session][exo] : exo;
   const timerKey = `${session}-${exo}-s${serie}-${field}-w${week}`;
-  syncFieldDebounced(timerKey, {
-    client:CLIENT_ID,
-    type:'perf',
-    week:week,
-    session:session,
-    exo:exoName,
-    serie:serie,
-    field:field,
-    value:value,
-    ts:new Date().toISOString()
-  });
+  syncFieldDebounced(timerKey, {client:CLIENT_ID,type:'perf',week:week,session:session,exo:exoName,serie:serie,field:field,value:value,ts:new Date().toISOString()});
 }
 
-// Bascule clavier numérique ↔ texte sur le champ Kg
 function toggleKbd(btn){
   const input = btn.previousElementSibling;
-  if(input.inputMode === 'decimal'){
-    input.inputMode = 'text';
-    btn.classList.add('text-mode');
-    btn.title = 'Revenir au pavé numérique';
-  } else {
-    input.inputMode = 'decimal';
-    btn.classList.remove('text-mode');
-    btn.title = 'Basculer clavier texte';
-  }
+  if(input.inputMode === 'decimal'){ input.inputMode = 'text'; btn.classList.add('text-mode'); }
+  else { input.inputMode = 'decimal'; btn.classList.remove('text-mode'); }
   input.focus();
 }
 
@@ -361,10 +321,9 @@ function buildSession(session){
     EXO_NAMES[session][exo] = card.dataset.name;
     const count = CONFIG[session][exo];
     const num = String(idx+1).padStart(2,'0');
-    let html = `<div class="exo-top"><div class="exo-num">${num}</div><div class="exo-info"><div class="exo-name">${card.dataset.name}</div><div class="exo-target">${card.dataset.target}</div></div><div class="exo-prescription ${card.dataset.presclass}">${card.dataset.pres}</div></div>`;
-    // reference to previous week
+    let html = `<div class="exo-top"><div class="exo-num">${num}</div><div class="exo-info"><div class="exo-name">${card.dataset.name}</div><div class="exo-target">${card.dataset.target}</div><div class="pr-badge" id="pr-${session}-${exo}"></div></div><div class="exo-prescription ${card.dataset.presclass}">${card.dataset.pres}</div></div>`;
     html += `<div class="last-week-ref" id="ref-${session}-${exo}"></div>`;
-    html += `<div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">✓</div></div>`;
+    html += `<div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RIR</div><div class="col-h">✓</div></div>`;
     html += `<div class="series-rows" id="${session}-${exo}">`;
     for(let s=1;s<=count;s++){
       html += `<div class="serie-row">
@@ -374,12 +333,31 @@ function buildSession(session){
           <button class="kbd-toggle" onclick="toggleKbd(this)" title="Basculer clavier texte">✎</button>
         </div>
         <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${session}-${exo}-s${s}-reps" oninput="save('${session}','${exo}',${s},'reps',this.value)">
+        <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input rir" placeholder="—" id="${session}-${exo}-s${s}-rir" oninput="save('${session}','${exo}',${s},'rir',this.value)">
         <div class="serie-check"><button class="check-btn" id="chk-${session}-${exo}-s${s}" onclick="toggleCheck('${session}','${exo}',${s})"></button></div>
       </div>`;
     }
     html += `</div>`;
     card.innerHTML = html;
   });
+}
+
+function updatePR(session,exo){
+  const count=CONFIG[session][exo];
+  let best=null, bestReps=null;
+  for(let w=1;w<=NB_SEMAINES;w++){
+    for(let s=1;s<=count;s++){
+      const raw=localStorage.getItem(getKey(session,exo,s,'kg',w))||'';
+      const kg=parseFloat(String(raw).replace(',','.'));
+      const reps=localStorage.getItem(getKey(session,exo,s,'reps',w))||'';
+      if(!isNaN(kg)&&kg>0){ if(best===null||kg>best){best=kg;bestReps=reps;} }
+    }
+  }
+  const el=document.getElementById(`pr-${session}-${exo}`);
+  if(el){
+    if(best!==null){ el.innerHTML=`PR : <b>${best} kg${bestReps?' × '+bestReps:''}</b>`; }
+    else { el.innerHTML=''; }
+  }
 }
 
 function buildAll(){
@@ -390,6 +368,7 @@ function buildAll(){
 function save(session,exo,serie,field,value){
   localStorage.setItem(getKey(session,exo,serie,field,currentWeek),value);
   syncField(session,exo,serie,field,value,currentWeek);
+  if(field==='kg') updatePR(session,exo);
   updateDots();
   updateWeekFills();
 }
@@ -400,16 +379,19 @@ function loadAll(){
       for(let s=1;s<=count;s++){
         const kg=localStorage.getItem(getKey(session,exo,s,'kg',currentWeek))||'';
         const reps=localStorage.getItem(getKey(session,exo,s,'reps',currentWeek))||'';
+        const rir=localStorage.getItem(getKey(session,exo,s,'rir',currentWeek))||'';
         const checked=localStorage.getItem(getKey(session,exo,s,'chk',currentWeek))==='1';
         const kgEl=document.getElementById(`${session}-${exo}-s${s}-kg`);
         const repsEl=document.getElementById(`${session}-${exo}-s${s}-reps`);
+        const rirEl=document.getElementById(`${session}-${exo}-s${s}-rir`);
         const chkEl=document.getElementById(`chk-${session}-${exo}-s${s}`);
         if(kgEl) kgEl.value=kg;
         if(repsEl) repsEl.value=reps;
+        if(rirEl) rirEl.value=rir;
         if(chkEl){chkEl.className='check-btn'+(checked?' checked':'');chkEl.textContent=checked?'✓':'';}
       }
-      // last week reference
       updateRef(session,exo);
+      updatePR(session,exo);
     });
     const noteEl=document.getElementById(`note-${session}`);
     if(noteEl) noteEl.value=localStorage.getItem(`${session}-note-w${currentWeek}`)||'';
@@ -428,15 +410,10 @@ function updateRef(session,exo){
   for(let s=1;s<=count;s++){
     const kg=localStorage.getItem(getKey(session,exo,s,'kg',prevWeek))||'';
     const reps=localStorage.getItem(getKey(session,exo,s,'reps',prevWeek))||'';
-    if(kg!=='' || reps!==''){
-      parts.push(`${kg||'?'}×${reps||'?'}`);
-    }
+    if(kg!==''||reps!==''){ parts.push(`${kg||'?'}×${reps||'?'}`); }
   }
-  if(parts.length>0){
-    refEl.innerHTML=`Semaine ${prevWeek} : <b>${parts.join('  ·  ')}</b>`;
-  } else {
-    refEl.innerHTML='';
-  }
+  if(parts.length>0){ refEl.innerHTML=`Semaine ${prevWeek} : <b>${parts.join('  ·  ')}</b>`; }
+  else { refEl.innerHTML=''; }
 }
 
 function toggleCheck(session,exo,serie){
@@ -454,15 +431,12 @@ function toggleCheck(session,exo,serie){
 function saveSession(session){
   const noteEl=document.getElementById(`note-${session}`);
   if(session==='poids'){
-    if(noteEl){ localStorage.setItem('poids-note',noteEl.value);
-      syncToCloud({client:CLIENT_ID,type:'note',session:'poids',week:'-',value:noteEl.value,ts:new Date().toISOString()}); }
+    if(noteEl){ localStorage.setItem('poids-note',noteEl.value); syncToCloud({client:CLIENT_ID,type:'note',session:'poids',week:'-',value:noteEl.value,ts:new Date().toISOString()}); }
   } else {
-    if(noteEl){ localStorage.setItem(`${session}-note-w${currentWeek}`,noteEl.value);
-      syncToCloud({client:CLIENT_ID,type:'note',session:session,week:currentWeek,value:noteEl.value,ts:new Date().toISOString()}); }
+    if(noteEl){ localStorage.setItem(`${session}-note-w${currentWeek}`,noteEl.value); syncToCloud({client:CLIENT_ID,type:'note',session:session,week:currentWeek,value:noteEl.value,ts:new Date().toISOString()}); }
   }
-  const btn=event.target;
-  const orig=btn.textContent;
-  btn.textContent='ENREGISTRÉ ✓';btn.classList.add('saved');
+  const btn=event.target; const orig=btn.textContent;
+  btn.textContent='ENREGISTRÉ ✓'; btn.classList.add('saved');
   setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
   updateDots();
 }
@@ -473,6 +447,7 @@ function resetSession(session){
     for(let s=1;s<=count;s++){
       localStorage.removeItem(getKey(session,exo,s,'kg',currentWeek));
       localStorage.removeItem(getKey(session,exo,s,'reps',currentWeek));
+      localStorage.removeItem(getKey(session,exo,s,'rir',currentWeek));
       localStorage.removeItem(getKey(session,exo,s,'chk',currentWeek));
     }
   });
@@ -481,8 +456,7 @@ function resetSession(session){
 }
 
 function getProgress(session){
-  const exos=CONFIG[session];
-  let total=0,checked=0;
+  const exos=CONFIG[session]; let total=0,checked=0;
   Object.entries(exos).forEach(([exo,count])=>{
     for(let s=1;s<=count;s++){total++;if(localStorage.getItem(getKey(session,exo,s,'chk',currentWeek))==='1')checked++;}
   });
@@ -502,7 +476,6 @@ function updateDots(){
   });
 }
 
-// shows a green dot on week buttons that have any data
 function weekHasData(week){
   for(const session of SESSIONS){
     const exos=CONFIG[session];
@@ -520,8 +493,7 @@ function weekHasData(week){
 function updateWeekFills(){
   document.querySelectorAll('.week-btn').forEach(btn=>{
     const w=parseInt(btn.dataset.week);
-    if(weekHasData(w)) btn.classList.add('has-data');
-    else btn.classList.remove('has-data');
+    if(weekHasData(w)) btn.classList.add('has-data'); else btn.classList.remove('has-data');
   });
 }
 
@@ -529,12 +501,9 @@ function switchWeek(week){
   currentWeek=week;
   document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
   document.querySelector(`.week-btn[data-week="${week}"]`).classList.add('active');
-  // update all week pills + note labels
   SESSIONS.forEach(session=>{
-    const pill=document.getElementById(`pill-${session}`);
-    if(pill) pill.textContent=`Semaine ${week}`;
-    const nl=document.getElementById(`notelabel-${session}`);
-    if(nl) nl.textContent=`Semaine ${week}`;
+    const pill=document.getElementById(`pill-${session}`); if(pill) pill.textContent=`Semaine ${week}`;
+    const nl=document.getElementById(`notelabel-${session}`); if(nl) nl.textContent=`Semaine ${week}`;
   });
   loadAll();
 }
@@ -544,12 +513,10 @@ function switchTab(id){
   document.querySelectorAll('.tab').forEach(t=>t.className='tab');
   document.getElementById(`session-${id}`).classList.add('visible');
   document.getElementById(`tab-${id}`).className=`tab active-${id}`;
-  // hide week selector on poids tab (poids has its own 4 weeks inline)
   document.getElementById('week-selector').style.display = (id==='poids') ? 'none' : 'flex';
   window.scrollTo(0,0);
 }
 
-/* ---- POIDS ---- */
 function buildPoids(){
   const container=document.getElementById('poids-rows');
   if(!container) return;
@@ -564,9 +531,13 @@ function buildPoids(){
   }
   loadPoids();
 }
-function savePoids(w,value){ localStorage.setItem(`poids-w${w}`,value);
+
+function savePoids(w,value){
+  localStorage.setItem(`poids-w${w}`,value);
   syncFieldDebounced(`poids-w${w}`, {client:CLIENT_ID,type:'poids',week:w,value:value,ts:new Date().toISOString()});
-  loadPoids(); }
+  loadPoids();
+}
+
 function loadPoids(){
   let prev=null;
   for(let w=1;w<=NB_SEMAINES;w++){
@@ -575,11 +546,11 @@ function loadPoids(){
     const deltaEl=document.getElementById(`delta-w${w}`);
     if(el) el.value=val;
     if(deltaEl){
-      if(val!=='' && prev!==null && prev!==''){
+      if(val!==''&&prev!==null&&prev!==''){
         const d=(parseFloat(String(val).replace(',','.'))-parseFloat(String(prev).replace(',','.')));
         const sign=d>0?'+':'';
         deltaEl.textContent=isNaN(d)?'—':sign+d.toFixed(1);
-        deltaEl.style.color = isNaN(d)?'var(--muted)':(d>0 ? 'var(--red)' : d<0 ? 'var(--green)' : 'var(--muted)');
+        deltaEl.style.color=isNaN(d)?'var(--muted)':(d>0?'var(--red)':d<0?'var(--green)':'var(--muted)');
       } else { deltaEl.textContent='—'; deltaEl.style.color='var(--muted)'; }
     }
     if(val!=='') prev=val;
@@ -587,6 +558,7 @@ function loadPoids(){
   const noteEl=document.getElementById('note-poids');
   if(noteEl) noteEl.value=localStorage.getItem('poids-note')||'';
 }
+
 function resetPoids(){
   if(!confirm('Effacer tout le suivi de poids ?')) return;
   for(let w=1;w<=NB_SEMAINES;w++) localStorage.removeItem(`poids-w${w}`);
