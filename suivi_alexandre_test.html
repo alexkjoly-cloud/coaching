@@ -558,7 +558,7 @@ function buildPoids(){
     const row=document.createElement('div');
     row.className='poids-row';
     row.innerHTML=`<div class="serie-num">S${w}</div>
-      <input type="number" inputmode="decimal" step="0.1" class="serie-input" placeholder="—" id="poids-w${w}" oninput="savePoids(${w},this.value)">
+      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="poids-w${w}" oninput="savePoids(${w},this.value)">
       <div class="serie-input" id="delta-w${w}" style="border-right:none;color:var(--muted)">—</div>`;
     container.appendChild(row);
   }
@@ -576,10 +576,10 @@ function loadPoids(){
     if(el) el.value=val;
     if(deltaEl){
       if(val!=='' && prev!==null && prev!==''){
-        const d=(parseFloat(val)-parseFloat(prev));
+        const d=(parseFloat(String(val).replace(',','.'))-parseFloat(String(prev).replace(',','.')));
         const sign=d>0?'+':'';
-        deltaEl.textContent=sign+d.toFixed(1);
-        deltaEl.style.color = d>0 ? 'var(--red)' : d<0 ? 'var(--green)' : 'var(--muted)';
+        deltaEl.textContent=isNaN(d)?'—':sign+d.toFixed(1);
+        deltaEl.style.color = isNaN(d)?'var(--muted)':(d>0 ? 'var(--red)' : d<0 ? 'var(--green)' : 'var(--muted)');
       } else { deltaEl.textContent='—'; deltaEl.style.color='var(--muted)'; }
     }
     if(val!=='') prev=val;
