@@ -522,7 +522,7 @@ function buildPoids(){
   loadPoids();
 }
 function savePoids(w,value){ localStorage.setItem(`poids-w${w}`,value);
-  syncToCloud({client:CLIENT_ID,type:'poids',week:w,value:value,ts:new Date().toISOString()});
+  syncFieldDebounced(`poids-w${w}`, {client:CLIENT_ID,type:'poids',week:w,value:value,ts:new Date().toISOString()});
   loadPoids(); }
 function loadPoids(){
   let prev=null;
@@ -561,6 +561,4 @@ document.querySelectorAll('.note-input').forEach(el=>{
 
 buildAll();
 buildPoids();
-</script>
-</body>
-</html>
+</sc
