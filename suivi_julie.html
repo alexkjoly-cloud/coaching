@@ -117,6 +117,10 @@
   <button class="week-btn" data-week="2" onclick="switchWeek(2)">S2<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
   <button class="week-btn" data-week="3" onclick="switchWeek(3)">S3<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
   <button class="week-btn" data-week="4" onclick="switchWeek(4)">S4<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
+  <button class="week-btn" data-week="5" onclick="switchWeek(5)">S5<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
+  <button class="week-btn" data-week="6" onclick="switchWeek(6)">S6<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
+  <button class="week-btn" data-week="7" onclick="switchWeek(7)">S7<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
+  <button class="week-btn" data-week="8" onclick="switchWeek(8)">S8<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
 </div>
 
 <div class="summary-bar">
@@ -218,7 +222,7 @@ const CONFIG = {
   'lower-c': {exo1:2,exo2:2,exo3:2,exo4:2,exo5:2,exo6:2}
 };
 
-const NB_SEMAINES = 4;
+const NB_SEMAINES = 8;
 const SESSIONS = ['lower-a','lower-b','lower-c'];
 let currentWeek = 1;
 
@@ -277,7 +281,7 @@ function buildSession(session){
     const num = String(idx+1).padStart(2,'0');
     let html = `<div class="exo-top"><div class="exo-num">${num}</div><div class="exo-info"><div class="exo-name">${card.dataset.name}</div><div class="exo-target">${card.dataset.target}</div><div class="pr-badge" id="pr-${session}-${exo}"></div></div><div class="exo-prescription ${card.dataset.presclass}">${card.dataset.pres}</div></div>`;
     html += `<div class="last-week-ref" id="ref-${session}-${exo}"></div>`;
-    html += `<div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RIR</div><div class="col-h">✓</div></div>`;
+    html += `<div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>`;
     html += `<div class="series-rows" id="${session}-${exo}">`;
     for(let s=1;s<=count;s++){
       html += `<div class="serie-row">
