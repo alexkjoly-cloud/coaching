@@ -323,7 +323,7 @@ function buildSession(session){
     const num = String(idx+1).padStart(2,'0');
     let html = `<div class="exo-top"><div class="exo-num">${num}</div><div class="exo-info"><div class="exo-name">${card.dataset.name}</div><div class="exo-target">${card.dataset.target}</div><div class="pr-badge" id="pr-${session}-${exo}"></div></div><div class="exo-prescription ${card.dataset.presclass}">${card.dataset.pres}</div></div>`;
     html += `<div class="last-week-ref" id="ref-${session}-${exo}"></div>`;
-    html += `<div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RIR</div><div class="col-h">✓</div></div>`;
+    html += `<div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>`;
     html += `<div class="series-rows" id="${session}-${exo}">`;
     for(let s=1;s<=count;s++){
       html += `<div class="serie-row">
