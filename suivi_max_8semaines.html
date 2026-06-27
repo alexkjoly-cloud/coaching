@@ -87,7 +87,6 @@
   .reset-btn { margin-top:8px; width:100%; padding:10px; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:2px; font-family:'DM Sans',sans-serif; font-size:11px; cursor:pointer; }
   .spacer { height:16px; }
 
-  /* Corporel */
   .corp-section-title { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin:18px 0 4px; padding-bottom:6px; border-bottom:1px solid var(--border); }
   .poids-row { display:grid; grid-template-columns:54px 1fr 1fr 1.4fr; align-items:center; border-bottom:1px solid #131313; }
   .poids-row:last-child { border-bottom:none; }
@@ -95,7 +94,6 @@
   .mens-row:last-child { border-bottom:none; }
   .mens-label { font-size:11px; color:var(--white); padding:11px 8px; border-right:1px solid #131313; }
 
-  /* Bouton bascule clavier numérique ↔ texte */
   .kg-wrap { display:flex; align-items:center; border-right:1px solid #131313; }
   .kg-wrap .serie-input { border-right:none; flex:1; }
   .kbd-toggle { background:none; border:none; color:var(--muted2); font-size:13px; padding:0 6px 0 2px; cursor:pointer; flex-shrink:0; line-height:1; }
@@ -115,15 +113,14 @@
 <div class="week-selector" id="week-selector"></div>
 
 <div class="tabs">
-  <button class="tab active-push" id="tab-push" onclick="switchTab('push')">Push<br><span style="font-size:8px;color:var(--muted)">Pec · Épaules · Tri</span></button>
+  <button class="tab active-legs" id="tab-legs" onclick="switchTab('legs')">Legs<br><span style="font-size:8px;color:var(--muted)">Jambes</span></button>
+  <button class="tab" id="tab-push" onclick="switchTab('push')">Push<br><span style="font-size:8px;color:var(--muted)">Pec · Épaules · Tri</span></button>
   <button class="tab" id="tab-pull" onclick="switchTab('pull')">Pull<br><span style="font-size:8px;color:var(--muted)">Dos · Biceps</span></button>
-  <button class="tab" id="tab-legs" onclick="switchTab('legs')">Legs<br><span style="font-size:8px;color:var(--muted)">Jambes</span></button>
-  <button class="tab" id="tab-upper" onclick="switchTab('upper')">Upper<br><span style="font-size:8px;color:var(--muted)">Haut complet</span></button>
   <button class="tab" id="tab-lower" onclick="switchTab('lower')">Lower<br><span style="font-size:8px;color:var(--muted)">Bas complet</span></button>
+  <button class="tab" id="tab-upper" onclick="switchTab('upper')">Upper<br><span style="font-size:8px;color:var(--muted)">Haut complet</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
 </div>
 
-<!-- Les séances sont générées dynamiquement -->
 <div id="sessions-container"></div>
 
 <!-- CORPOREL -->
@@ -156,17 +153,22 @@
 </div>
 
 <script>
-/* ============================================================
-   CONFIGURATION GOOGLE SHEETS
-   Colle ici la MÊME URL que pour Alexandre (elle marche pour tous).
-   ============================================================ */
-const SYNC_URL = "<?= webAppUrl ?>"; // se remplit automatiquement par Google Apps Script
-const CLIENT_ID = "max"; // identifiant du client
+const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
+const CLIENT_ID = "max";
 
 const NB_SEMAINES = 8;
 
-// Programme de Max : PPL + Upper/Lower
 const PROGRAMME = {
+  'legs': {
+    nom:'LEGS', couleur:'legs', tag:'Jambes',
+    exos:[
+      {nom:'Presse à cuisses / Hack', series:2},
+      {nom:'Leg extension', series:3},
+      {nom:'Leg curl (variante)', series:3},
+      {nom:'Adducteurs machine', series:2},
+      {nom:'Mollets (variante)', series:3},
+    ]
+  },
   'push': {
     nom:'PUSH', couleur:'push', tag:'Pec · Épaules · Triceps',
     exos:[
@@ -187,14 +189,14 @@ const PROGRAMME = {
       {nom:'Curl biceps (variante)', series:2},
     ]
   },
-  'legs': {
-    nom:'LEGS', couleur:'legs', tag:'Jambes',
+  'lower': {
+    nom:'LOWER', couleur:'lower', tag:'Bas du corps complet',
     exos:[
-      {nom:'Presse à cuisses / Hack', series:2},
+      {nom:'RDL (sangles)', series:2},
       {nom:'Leg extension', series:3},
       {nom:'Leg curl (variante)', series:3},
       {nom:'Adducteurs machine', series:2},
-      {nom:'Mollets (variante)', series:2},
+      {nom:'Mollets assis', series:2},
     ]
   },
   'upper': {
@@ -207,16 +209,6 @@ const PROGRAMME = {
       {nom:'Curl poulie', series:2},
     ]
   },
-  'lower': {
-    nom:'LOWER', couleur:'lower', tag:'Bas du corps complet',
-    exos:[
-      {nom:'RDL (sangles)', series:2},
-      {nom:'Leg extension', series:3},
-      {nom:'Leg curl (variante)', series:3},
-      {nom:'Adducteurs machine', series:2},
-      {nom:'Mollets assis', series:2},
-    ]
-  },
 };
 
 const MENSURATIONS = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
@@ -225,7 +217,6 @@ let currentWeek = 1;
 
 function getKey(s,exoIdx,serie,field,week){ return `${s}-e${exoIdx}-s${serie}-${field}-w${week}`; }
 
-/* ===== SYNC CLOUD ===== */
 let syncStatusTimer=null;
 function showSyncStatus(ok){
   let el=document.getElementById('sync-status');
@@ -246,7 +237,6 @@ function syncToCloud(payload){
   fetch(SYNC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
     .then(()=>{ showSyncStatus(true); }).catch(()=>{ showSyncStatus(false); });
 }
-// Débounce : on n'envoie au cloud qu'après une courte pause de saisie
 const _syncTimers = {};
 function syncFieldDebounced(timerKey, payload){
   clearTimeout(_syncTimers[timerKey]);
@@ -257,7 +247,6 @@ function syncField(session,exoIdx,exoName,serie,field,value,week){
   syncFieldDebounced(timerKey, {client:CLIENT_ID,type:'perf',week:week,session:session,exo:exoName,serie:serie,field:field,value:value,ts:new Date().toISOString()});
 }
 
-// Bascule clavier numérique ↔ texte sur le champ Kg
 function toggleKbd(btn){
   const input = btn.previousElementSibling;
   if(input.inputMode === 'decimal'){
@@ -272,7 +261,6 @@ function toggleKbd(btn){
   input.focus();
 }
 
-/* ===== BUILD ===== */
 function buildWeekSelector(){
   const sel=document.getElementById('week-selector');
   let html='';
@@ -294,6 +282,7 @@ function buildSessions(){
         <div class="session-sub">${s.exos.map(e=>e.nom.split(' ')[0]).join(' · ')}</div>
       </div>`;
     s.exos.forEach((exo,ei)=>{
+      const en = exo.nom.replace(/'/g, "\\'");
       html+=`<div class="exo-card">
         <div class="exo-top">
           <div class="exo-num">${String(ei+1).padStart(2,'0')}</div>
@@ -309,17 +298,17 @@ function buildSessions(){
         html+=`<div class="serie-row">
           <div class="serie-num">S${s2}</div>
           <div class="kg-wrap">
-            <input type="text" inputmode="decimal" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${sid}-e${ei}-s${s2}-kg" oninput="save('${sid}',${ei},'${exo.nom.replace(/'/g,"\\'")}',${s2},'kg',this.value)">
+            <input type="text" inputmode="decimal" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${sid}-e${ei}-s${s2}-kg" oninput="save('${sid}',${ei},'${en}',${s2},'kg',this.value)">
             <button class="kbd-toggle" onclick="toggleKbd(this)" title="Basculer clavier texte">✎</button>
           </div>
-          <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${sid}-e${ei}-s${s2}-reps" oninput="save('${sid}',${ei},'${exo.nom.replace(/'/g,"\\'")}',${s2},'reps',this.value)">
-          <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input rir" placeholder="—" id="${sid}-e${ei}-s${s2}-rir" oninput="save('${sid}',${ei},'${exo.nom.replace(/'/g,"\\'")}',${s2},'rir',this.value)">
+          <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${sid}-e${ei}-s${s2}-reps" oninput="save('${sid}',${ei},'${en}',${s2},'reps',this.value)">
+          <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input rir" placeholder="—" id="${sid}-e${ei}-s${s2}-rir" oninput="save('${sid}',${ei},'${en}',${s2},'rir',this.value)">
           <div class="serie-check"><button class="check-btn" id="chk-${sid}-e${ei}-s${s2}" onclick="toggleCheck('${sid}',${ei},${s2})"></button></div>
         </div>`;
       }
       html+=`</div></div>`;
     });
-    html+=`<div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-${sid}">Semaine 1</span></div><textarea class="note-input" id="note-${sid}" placeholder="Ressenti, douleurs, ajustements..."></textarea></div>
+    html+=`<div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-${sid}">Semaine 1</span></div><textarea class="note-input" id="note-${sid}" placeholder="Si tu changes un exercice, note-le ici. Ressenti, douleurs, ajustements..."></textarea></div>
       <button class="save-btn" onclick="saveSession('${sid}')">ENREGISTRER LA SÉANCE</button>
       <button class="reset-btn" onclick="resetSession('${sid}')">Effacer cette séance (semaine en cours)</button>
       <div class="spacer"></div></div>`;
@@ -355,7 +344,6 @@ function loadAll(){
   updateWeekFills();
 }
 
-// PR = meilleure charge vue sur toutes les semaines pour cet exo (toutes séries)
 function updatePR(session,exoIdx){
   const exo=PROGRAMME[session].exos[exoIdx];
   let best=null, bestReps=null;
@@ -363,7 +351,7 @@ function updatePR(session,exoIdx){
     for(let s=1;s<=exo.series;s++){
       const kg=parseFloat((localStorage.getItem(getKey(session,exoIdx,s,'kg',w))||'').replace(',','.'));
       const reps=localStorage.getItem(getKey(session,exoIdx,s,'reps',w))||'';
-      if(!isNaN(kg)){ if(best===null||kg>best){best=kg;bestReps=reps;} }
+      if(!isNaN(kg)&&kg>0){ if(best===null||kg>best){best=kg;bestReps=reps;} }
     }
   }
   const el=document.getElementById(`pr-${session}-e${exoIdx}`);
@@ -536,16 +524,9 @@ document.addEventListener('input',e=>{
   }
 });
 
-/* ============================================================
-   PRÉ-REMPLISSAGE Semaine 1 (données de départ de Max).
-   S'exécute une seule fois grâce au drapeau ci-dessous.
-   Ces valeurs s'affichent dans l'appli. Elles remonteront dans
-   ton Google Sheet dès que Max les confirmera (ou les modifiera).
-   ============================================================ */
 function seedDataMax(){
   if(localStorage.getItem('max-seed-v1')==='done') return;
   const seed = {
-    // Push — Semaine 1
     'push-e0-s1-kg-w1':'55','push-e0-s1-reps-w1':'6','push-e0-s1-rir-w1':'0',
     'push-e0-s2-kg-w1':'55','push-e0-s2-reps-w1':'5','push-e0-s2-rir-w1':'0',
     'push-e0-s3-kg-w1':'55','push-e0-s3-reps-w1':'4','push-e0-s3-rir-w1':'0',
@@ -559,7 +540,6 @@ function seedDataMax(){
     'push-e3-s3-kg-w1':'42.5','push-e3-s3-reps-w1':'5','push-e3-s3-rir-w1':'0',
     'push-e4-s1-kg-w1':'15','push-e4-s1-reps-w1':'5','push-e4-s1-rir-w1':'0',
     'push-e4-s2-kg-w1':'15','push-e4-s2-reps-w1':'4','push-e4-s2-rir-w1':'0',
-    // Poids — Semaine 1
     'corp-poids-w1':'70.2','corp-rem-w1':'2700 kcal',
   };
   Object.entries(seed).forEach(([k,v])=>{ if(localStorage.getItem(k)===null) localStorage.setItem(k,v); });
