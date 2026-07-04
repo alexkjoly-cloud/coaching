@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les formules — Coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#0a0a0a; --dark:#101010; --card:#161616; --card2:#1a1a1a; --border:#242424;
+    --red:#e63232; --red-soft:rgba(230,50,50,0.12);
+    --gold:#c9a84c; --white:#f0ede8; --muted:#8a8a8a; --muted2:#555;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--black); color:var(--white); font-family:'DM Sans',sans-serif; font-size:15px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+
+  .wrap { max-width:760px; margin:0 auto; padding:0 20px; }
+
+  /* HERO */
+  header { padding:64px 0 40px; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+  header::after { content:''; position:absolute; top:-120px; right:-120px; width:340px; height:340px; background:radial-gradient(circle,rgba(230,50,50,0.07),transparent 70%); pointer-events:none; }
+  .eyebrow { font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--red); font-weight:600; margin-bottom:16px; }
+  h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(44px,11vw,74px); line-height:0.92; letter-spacing:0.02em; margin-bottom:20px; }
+  h1 .l2 { color:var(--red); }
+  .intro { font-size:16px; color:#c5c2bc; font-weight:300; max-width:560px; }
+  .intro strong { color:var(--white); font-weight:500; }
+
+  /* PROMESSE */
+  .promesse { padding:36px 0; border-bottom:1px solid var(--border); }
+  .promesse p { font-size:15px; color:#b8b5af; font-weight:300; }
+  .promesse p + p { margin-top:14px; }
+  .promesse b { color:var(--white); font-weight:500; }
+
+  /* FORMULES */
+  .formules { padding:44px 0 20px; }
+  .section-label { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:24px; font-weight:500; }
+
+  .formule { border:1px solid var(--border); border-radius:4px; margin-bottom:18px; overflow:hidden; background:var(--card); transition:border-color 0.2s; }
+  .formule.featured { border-color:rgba(230,50,50,0.45); }
+  .formule-head { padding:26px 26px 20px; position:relative; }
+  .formule.featured .formule-head { background:linear-gradient(180deg,var(--red-soft),transparent); }
+  .badge-popular { position:absolute; top:20px; right:22px; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--red); border:1px solid rgba(230,50,50,0.4); padding:3px 9px; border-radius:2px; font-weight:600; }
+  .formule-nom { font-family:'Bebas Neue',sans-serif; font-size:27px; letter-spacing:0.04em; line-height:1; margin-bottom:6px; }
+  .formule-tagline { font-size:13px; color:var(--muted); font-weight:300; }
+  .formule-prix { display:flex; align-items:baseline; gap:10px; margin-top:16px; }
+  .prix-gros { font-family:'Bebas Neue',sans-serif; font-size:40px; line-height:1; color:var(--white); }
+  .formule.featured .prix-gros { color:var(--red); }
+  .prix-detail { font-size:12px; color:var(--muted); font-weight:300; }
+  .formule-duree { display:inline-block; margin-top:4px; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); background:rgba(201,168,76,0.1); padding:3px 9px; border-radius:2px; }
+
+  .formule-body { padding:4px 26px 26px; }
+  .inclus-titre { font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted2); margin:14px 0 10px; }
+  .inclus { list-style:none; }
+  .inclus li { position:relative; padding-left:24px; margin-bottom:9px; font-size:14px; color:#c5c2bc; font-weight:300; }
+  .inclus li::before { content:''; position:absolute; left:2px; top:9px; width:8px; height:8px; border-radius:50%; background:var(--red); }
+  .formule:not(.featured) .inclus li::before { background:var(--muted2); }
+  .inclus li b { color:var(--white); font-weight:500; }
+
+  .pour-qui { margin-top:18px; padding:14px 16px; background:var(--card2); border-left:2px solid var(--border); border-radius:2px; font-size:13px; color:var(--muted); font-weight:300; }
+  .pour-qui b { color:#c5c2bc; font-weight:500; }
+  .formule.featured .pour-qui { border-left-color:var(--red); }
+
+  /* COMMENT ÇA MARCHE */
+  .steps { padding:44px 0; border-top:1px solid var(--border); }
+  .step { display:flex; gap:18px; margin-bottom:22px; }
+  .step-num { font-family:'Bebas Neue',sans-serif; font-size:30px; color:var(--red); line-height:1; flex-shrink:0; width:34px; }
+  .step-txt h3 { font-size:15px; font-weight:600; margin-bottom:3px; }
+  .step-txt p { font-size:14px; color:var(--muted); font-weight:300; }
+
+  /* PAIEMENT / FAQ */
+  .notes { padding:36px 0 44px; border-top:1px solid var(--border); }
+  .note-item { margin-bottom:18px; }
+  .note-item h4 { font-size:13px; font-weight:600; color:var(--white); margin-bottom:4px; }
+  .note-item p { font-size:13px; color:var(--muted); font-weight:300; }
+
+  /* CTA */
+  .cta { padding:44px 0 60px; text-align:center; border-top:1px solid var(--border); }
+  .cta h2 { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:0.03em; margin-bottom:10px; }
+  .cta p { font-size:14px; color:var(--muted); font-weight:300; margin-bottom:4px; }
+  .cta .red { color:var(--red); }
+
+  footer { padding:24px 0 40px; text-align:center; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#2e2e2e; }
+
+  @media (max-width:520px){
+    .formule-head, .formule-body { padding-left:20px; padding-right:20px; }
+    .badge-popular { position:static; display:inline-block; margin-bottom:12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Coaching sportif · en ligne</div>
+    <h1>LES<br><span class="l2">FORMULES</span></h1>
+    <p class="intro">Trois façons de bosser ensemble. <strong>Pas de PDF générique recopié</strong>, pas de méthode sortie d'un autre siècle. Chaque programme part de ton bilan, ton niveau, tes objectifs et tes contraintes. Voilà ce que chaque formule contient exactement.</p>
+  </div>
+</header>
+
+<section class="promesse">
+  <div class="wrap">
+    <p>Ma méthode tient en une phrase : <b>on en fait moins, mais mieux</b>. Haute intensité, fréquence élevée, chaque série qui compte. Pas de volume pour faire du volume.</p>
+    <p>Tout est construit sur des principes solides et à jour, pas sur ce qu'on répète dans les salles depuis vingt ans. Et tout s'adapte à toi : ton matériel, ton temps, tes éventuelles blessures.</p>
+  </div>
+</section>
+
+<section class="formules">
+  <div class="wrap">
+    <div class="section-label">Choisis ce qui te correspond</div>
+
+    <!-- DÉCOUVERTE -->
+    <div class="formule">
+      <div class="formule-head">
+        <div class="formule-nom">CYCLE DÉCOUVERTE</div>
+        <div class="formule-tagline">Pour tester ma méthode, sans engagement</div>
+        <div class="formule-prix">
+          <span class="prix-gros">70€</span>
+          <span class="prix-detail">paiement unique</span>
+        </div>
+        <span class="formule-duree">6 semaines</span>
+      </div>
+      <div class="formule-body">
+        <div class="inclus-titre">Ce que tu reçois</div>
+        <ul class="inclus">
+          <li><b>Un bilan complet</b> à partir de ton questionnaire : niveau, objectifs, préférences, contraintes</li>
+          <li><b>Un programme sur mesure</b> construit pour toi, adapté à ton matériel et ton temps</li>
+          <li>Ton <b>appli de suivi perso</b> pour noter tes charges et voir tes PR évoluer</li>
+          <li>Le cycle est <b>renouvelable</b> : tu repars sur un nouveau bilan quand tu veux</li>
+        </ul>
+        <div class="pour-qui"><b>Pour qui :</b> tu veux découvrir comment je bosse, ou tu es autonome et tu veux juste une prog carrée sans suivi au quotidien.</div>
+      </div>
+    </div>
+
+    <!-- SUIVI -->
+    <div class="formule">
+      <div class="formule-head">
+        <div class="formule-nom">SUIVI 3 MOIS</div>
+        <div class="formule-tagline">L'accompagnement complet, semaine après semaine</div>
+        <div class="formule-prix">
+          <span class="prix-gros">240€</span>
+          <span class="prix-detail">soit 80€/mois · payé en une fois</span>
+        </div>
+        <span class="formule-duree">3 mois</span>
+      </div>
+      <div class="formule-body">
+        <div class="inclus-titre">Tout le Cycle Découverte, plus</div>
+        <ul class="inclus">
+          <li>Un <b>bilan chaque semaine</b> : je suis ta progression et j'ajuste ton programme en continu</li>
+          <li><b>Ajustements en temps réel</b> : ta prog évolue avec toi, elle n'est jamais figée</li>
+          <li>Tu peux <b>m'écrire quand tu veux</b> : une question, un doute, je réponds dans les 24h</li>
+          <li>Un vrai engagement sur la durée, parce que c'est là qu'on obtient des résultats</li>
+        </ul>
+        <div class="pour-qui"><b>Pour qui :</b> tu veux progresser sérieusement et être suivi, corrigé et poussé sur toute la durée.</div>
+      </div>
+    </div>
+
+    <!-- SUIVI + NUTRITION -->
+    <div class="formule featured">
+      <div class="formule-head">
+        <span class="badge-popular">Le plus complet</span>
+        <div class="formule-nom">SUIVI 3 MOIS + NUTRITION</div>
+        <div class="formule-tagline">L'entraînement, l'assiette et le mode de vie</div>
+        <div class="formule-prix">
+          <span class="prix-gros">300€</span>
+          <span class="prix-detail">soit 100€/mois · payé en une fois</span>
+        </div>
+        <span class="formule-duree">3 mois</span>
+      </div>
+      <div class="formule-body">
+        <div class="inclus-titre">Tout le Suivi 3 mois, plus</div>
+        <ul class="inclus">
+          <li><b>Le calcul de tes macros</b> selon ton objectif : sèche, prise de masse ou maintien</li>
+          <li>Un <b>guide nutrition</b> qui t'apprend à suivre tes macros facilement, sans te prendre la tête</li>
+          <li>Un <b>guide d'optimisation naturelle</b> : sommeil, gestion du stress, nutrition et hormones (testo, cortisol)</li>
+          <li>Tout ce qui joue sur ta progression <b>au-delà de l'entraînement</b>, expliqué sans bullshit</li>
+        </ul>
+        <div class="pour-qui"><b>Pour qui :</b> tu veux le package complet et comprendre comment ton corps fonctionne pour progresser à fond, à l'entraînement comme en dehors.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="steps">
+  <div class="wrap">
+    <div class="section-label">Comment ça se passe</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-txt">
+        <h3>Tu choisis ta formule</h3>
+        <p>Celle qui colle à tes objectifs et à ton budget. Tu me dis laquelle et on lance.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-txt">
+        <h3>Tu remplis le questionnaire</h3>
+        <p>C'est la base de ton bilan. Plus tu réponds précisément, plus ta prog sera juste. Prends ton temps.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-txt">
+        <h3>Je construis ta prog sur mesure</h3>
+        <p>J'analyse tout, je bâtis ton programme et ton appli de suivi, je te prépare tes guides si tu as la nutrition.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-txt">
+        <h3>On avance ensemble</h3>
+        <p>Tu t'entraînes, tu notes tes perfs, et sur les formules avec suivi tu m'envoies ton bilan chaque semaine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="notes">
+  <div class="wrap">
+    <div class="section-label">Bon à savoir</div>
+    <div class="note-item">
+      <h4>Pourquoi payer en une fois sur les formules de 3 mois ?</h4>
+      <p>Parce que l'engagement fait les résultats. On se lance vraiment ensemble sur la durée, sans se poser la question chaque mois de continuer ou pas. C'est comme ça qu'on va au bout.</p>
+    </div>
+    <div class="note-item">
+      <h4>Le bilan hebdo, c'est quoi au juste ?</h4>
+      <p>Un court récap que tu m'envoies le jour de ton choix : ton poids, tes sensations, tes perfs de la semaine. Ça me prend la température et ça me permet d'ajuster. C'est simple et rapide, et c'est toi qui me l'envoies, pas moi qui viens le chercher.</p>
+    </div>
+    <div class="note-item">
+      <h4>Et si j'ai une blessure ou une contrainte ?</h4>
+      <p>On adapte. Le programme se construit autour de tes contraintes, pas l'inverse. Pour tout ce qui touche à la santé, je te renvoie vers un médecin ou un kiné : le coaching ne remplace pas un avis médical.</p>
+    </div>
+    <div class="note-item">
+      <h4>Je suis débutant, c'est pour moi ?</h4>
+      <p>Oui. La méthode s'adapte à ton niveau, du grand débutant au pratiquant avancé. On part de là où tu en es.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>PRÊT À TE LANCER ?</h2>
+    <p>Dis-moi quelle formule te parle.</p>
+    <p class="red">Je t'envoie le questionnaire et on démarre.</p>
+  </div>
+</section>
+
+<footer>Coaching sportif en ligne · Méthode science-based</footer>
+
+</body>
+</html>
