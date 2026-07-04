@@ -61,6 +61,7 @@
   .exo-name { font-size:13px; font-weight:500; line-height:1.3; }
   .exo-target { font-size:10px; color:var(--muted); font-weight:300; margin-top:2px; }
   .pr-badge { font-size:9px; color:var(--gold); font-weight:500; margin-top:3px; letter-spacing:0.05em; }
+  .exo-repos { font-size:9px; color:var(--muted2); margin-top:2px; letter-spacing:0.04em; text-transform:uppercase; text-align:right; white-space:nowrap; }
   .pr-badge b { color:var(--gold); }
   .exo-prescription { font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.05em; white-space:nowrap; flex-shrink:0; }
   .pres-upper-a { color:var(--red); } .pres-lower-a { color:var(--blue); } .pres-upper-b { color:var(--purple); } .pres-lower-b { color:var(--teal); } .pres-upper-c { color:var(--green); }
@@ -241,56 +242,56 @@ const PROGRAMME = {
   'upper-a': {
     nom:'UPPER A', couleur:'upper-a', tag:'Haut du corps · Poussée',
     exos:[
-      {nom:'Développé incliné machine (prise confortable, sans verrouiller en haut)', target:'Pectoraux · Épaules', series:2, pres:'2 × 10-12', adapted:true},
-      {nom:'Tirage horizontal (avec support sur les pectoraux)', target:'Dos · épaisseur', series:2, pres:'2 × 10-12'},
-      {nom:'Développé épaules machine (amplitude sans douleur)', target:'Épaules', series:2, pres:'2 × 12-15', adapted:true},
-      {nom:'Élévations latérales (machine en priorité, sinon poulie ou haltères)', target:'Deltoïde latéral', series:2, pres:'2 × 12-15'},
-      {nom:'Extension triceps à la corde (ou unilatéral à la poulie)', target:'Triceps · superset avec le curl', series:2, pres:'2 × 12-15'},
-      {nom:'Curl pupitre machine (sinon poulie ou haltères)', target:'Biceps · superset avec le triceps', series:2, pres:'2 × 12-15'},
+      {nom:'Développé incliné machine (prise confortable, sans verrouiller en haut)', target:'Pectoraux · Épaules', series:2, pres:'2 × 10-12', adapted:true, repos:'Repos 2 min'},
+      {nom:'Tirage horizontal (avec support sur les pectoraux)', target:'Dos · épaisseur', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Développé épaules machine (amplitude sans douleur)', target:'Épaules', series:2, pres:'2 × 12-15', adapted:true, repos:'Repos 90 s'},
+      {nom:'Élévations latérales (machine en priorité, sinon poulie ou haltères)', target:'Deltoïde latéral', series:2, pres:'2 × 12-15', repos:'Repos 60-90 s'},
+      {nom:'Extension triceps à la corde (ou unilatéral à la poulie)', target:'Triceps · superset avec le curl', series:2, pres:'2 × 12-15', repos:'Superset → enchaîne'},
+      {nom:'Curl pupitre machine (sinon poulie ou haltères)', target:'Biceps · superset avec le triceps', series:2, pres:'2 × 12-15', repos:'60-90 s après le duo'},
     ]
   },
   'lower-a': {
     nom:'LOWER A', couleur:'lower-a', tag:'Bas du corps',
     exos:[
-      {nom:'Leg curl assis', target:'Ischio-jambiers · zéro stress genou', series:2, pres:'2 × 10-12'},
-      {nom:'Leg extension (charge légère, amplitude sans douleur)', target:'Quadriceps · test progressif', series:2, pres:'2 × 12-15', adapted:true},
-      {nom:'Hip thrust (machine ou barre guidée)', target:'Fessiers · force sans le genou', series:2, pres:'2 × 10-12'},
-      {nom:'Adducteurs machine', target:'Adducteurs', series:2, pres:'2 × 12-15'},
-      {nom:'Mollets (debout ou à la presse)', target:'Mollets', series:2, pres:'2 × 12-15'},
-      {nom:'Gainage planche', target:'Abdos · sangle', series:2, pres:'2 × 30-45s'},
+      {nom:'Leg curl assis', target:'Ischio-jambiers · zéro stress genou', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Leg extension (charge légère, amplitude sans douleur)', target:'Quadriceps · test progressif', series:2, pres:'2 × 12-15', adapted:true, repos:'Repos 90 s'},
+      {nom:'Hip thrust (machine ou barre guidée)', target:'Fessiers · force sans le genou', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Adducteurs machine', target:'Adducteurs', series:2, pres:'2 × 12-15', repos:'Repos 60-90 s'},
+      {nom:'Mollets (debout ou à la presse)', target:'Mollets', series:2, pres:'2 × 12-15', repos:'Repos 60-90 s'},
+      {nom:'Gainage planche', target:'Abdos · sangle', series:2, pres:'2 × 30-45s', repos:'Repos 60 s'},
     ]
   },
   'upper-b': {
     nom:'UPPER B', couleur:'upper-b', tag:'Haut du corps · Tirage',
     exos:[
-      {nom:'Tirage vertical (prise neutre)', target:'Dos · largeur', series:2, pres:'2 × 10-12'},
-      {nom:'Développé pectoraux machine (trajectoire convergente si dispo)', target:'Pectoraux', series:2, pres:'2 × 12-15', adapted:true},
-      {nom:'Tirage horizontal à la poulie (prise neutre)', target:'Dos · épaisseur', series:2, pres:'2 × 12-15'},
-      {nom:'Oiseau machine ou poulie (arrière d\u2019épaule)', target:'Deltoïde postérieur', series:2, pres:'2 × 12-15'},
-      {nom:'Curl haltères (prise marteau)', target:'Biceps · superset avec le triceps', series:2, pres:'2 × 12-15'},
-      {nom:'Extension triceps à la corde (ou unilatéral à la poulie)', target:'Triceps · superset avec le curl', series:2, pres:'2 × 12-15'},
+      {nom:'Tirage vertical (prise neutre)', target:'Dos · largeur', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Développé pectoraux machine (trajectoire convergente si dispo)', target:'Pectoraux', series:2, pres:'2 × 12-15', adapted:true, repos:'Repos 2 min'},
+      {nom:'Tirage horizontal à la poulie (prise neutre)', target:'Dos · épaisseur', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
+      {nom:'Oiseau machine ou poulie (arrière d\u2019épaule)', target:'Deltoïde postérieur', series:2, pres:'2 × 12-15', repos:'Repos 60-90 s'},
+      {nom:'Curl haltères (prise marteau)', target:'Biceps · superset avec le triceps', series:2, pres:'2 × 12-15', repos:'Superset → enchaîne'},
+      {nom:'Extension triceps à la corde (ou unilatéral à la poulie)', target:'Triceps · superset avec le curl', series:2, pres:'2 × 12-15', repos:'60-90 s après le duo'},
     ]
   },
   'lower-b': {
     nom:'LOWER B', couleur:'lower-b', tag:'Bas du corps',
     exos:[
-      {nom:'Leg curl allongé', target:'Ischio-jambiers', series:2, pres:'2 × 10-12'},
-      {nom:'Leg extension unilatérale (charge légère, contrôle total)', target:'Quadriceps · une jambe à la fois', series:2, pres:'2 × 12-15', adapted:true},
-      {nom:'Soulevé de terre roumain haltères (jambes presque tendues)', target:'Ischios · Fessiers · dos neutre', series:2, pres:'2 × 10-12'},
-      {nom:'Abducteurs machine', target:'Moyen fessier', series:2, pres:'2 × 12-15'},
-      {nom:'Mollets assis', target:'Soléaire', series:2, pres:'2 × 12-15'},
-      {nom:'Crunch à la poulie ou machine', target:'Abdominaux', series:2, pres:'2 × 12-15'},
+      {nom:'Leg curl allongé', target:'Ischio-jambiers', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Leg extension unilatérale (charge légère, contrôle total)', target:'Quadriceps · une jambe à la fois', series:2, pres:'2 × 12-15', adapted:true, repos:'Repos 90 s'},
+      {nom:'Soulevé de terre roumain haltères (jambes presque tendues)', target:'Ischios · Fessiers · dos neutre', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Abducteurs machine', target:'Moyen fessier', series:2, pres:'2 × 12-15', repos:'Repos 60-90 s'},
+      {nom:'Mollets assis', target:'Soléaire', series:2, pres:'2 × 12-15', repos:'Repos 60-90 s'},
+      {nom:'Crunch à la poulie ou machine', target:'Abdominaux', series:2, pres:'2 × 12-15', repos:'Repos 60 s'},
     ]
   },
   'upper-c': {
     nom:'UPPER C', couleur:'upper-c', tag:'Haut du corps · Volume',
     exos:[
-      {nom:'Pec fly machine (amplitude confortable)', target:'Pectoraux · isolation', series:2, pres:'2 × 12-15', adapted:true},
-      {nom:'Tirage vertical (prise large)', target:'Dos · largeur', series:2, pres:'2 × 12-15'},
-      {nom:'Tirage horizontal unilatéral à la poulie', target:'Dos · un bras à la fois', series:2, pres:'2 × 12-15'},
-      {nom:'Élévations latérales (machine en priorité, sinon poulie ou haltères)', target:'Deltoïde latéral', series:2, pres:'2 × 12-15'},
-      {nom:'Curl pupitre machine ou poulie', target:'Biceps · superset avec le triceps', series:2, pres:'2 × 12-15'},
-      {nom:'Extension triceps à la corde (ou unilatéral à la poulie)', target:'Triceps · superset avec le curl', series:2, pres:'2 × 12-15'},
+      {nom:'Pec fly machine (amplitude confortable)', target:'Pectoraux · isolation', series:2, pres:'2 × 12-15', adapted:true, repos:'Repos 90 s'},
+      {nom:'Tirage vertical (prise large)', target:'Dos · largeur', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
+      {nom:'Tirage horizontal unilatéral à la poulie', target:'Dos · un bras à la fois', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
+      {nom:'Élévations latérales (machine en priorité, sinon poulie ou haltères)', target:'Deltoïde latéral', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
+      {nom:'Curl pupitre machine ou poulie', target:'Biceps · superset avec le triceps', series:2, pres:'2 × 12-15', repos:'Superset → enchaîne'},
+      {nom:'Extension triceps à la corde (ou unilatéral à la poulie)', target:'Triceps · superset avec le curl', series:2, pres:'2 × 12-15', repos:'60-90 s après le duo'},
     ]
   },
 };
@@ -368,7 +369,7 @@ function buildSessions(){
             <div class="exo-target">${exo.target}</div>
             <div class="pr-badge" id="pr-${sid}-e${ei}"></div>
           </div>
-          <div class="exo-prescription pres-${s.couleur}">${exo.pres}</div>
+          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><div class="exo-repos">${exo.repos||''}</div></div>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
         <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
