@@ -2,538 +2,257 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Suivi — Julie</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programme Léo — Upper/Lower</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #0a0a0a; --dark: #111111; --card: #161616; --border: #1e1e1e;
-    --red: #e63232; --red-dim: rgba(230,50,50,0.08);
-    --gold: #c9a84c; --gold-dim: rgba(201,168,76,0.08);
-    --blue: #4a9fe8; --blue-dim: rgba(74,159,232,0.08);
-    --green: #3eb87a; --white: #f0ede8; --muted: #555; --muted2: #333;
+    --black:#0a0a0a; --dark:#111111; --card:#161616; --border:#222222;
+    --red:#e63232; --red-dim:rgba(230,50,50,0.10);
+    --gold:#c9a84c; --gold-dim:rgba(201,168,76,0.10);
+    --blue:#4a9fe8; --blue-dim:rgba(74,159,232,0.10);
+    --purple:#9b7ede; --purple-dim:rgba(155,126,222,0.10);
+    --teal:#5db8a8; --teal-dim:rgba(93,184,168,0.10);
+    --green:#3eb87a; --orange:#e67e32;
+    --white:#f0ede8; --muted:#777;
   }
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body { background:var(--black); color:var(--white); font-family:'DM Sans',sans-serif; font-size:14px; min-height:100vh; padding-bottom:40px; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--black); color:var(--white); font-family:'DM Sans',sans-serif; font-size:14px; line-height:1.6; }
 
-  .header { padding:24px 16px 16px; border-bottom:1px solid var(--border); display:flex; align-items:flex-end; justify-content:space-between; position:sticky; top:0; background:var(--black); z-index:100; }
-  .eyebrow { font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--red); margin-bottom:4px; }
-  h1 { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:0.04em; line-height:1; }
-  h1 span { color:var(--red); }
-  .cycle-badge { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); text-align:right; line-height:1.4; }
-  .cycle-badge strong { color:var(--gold); font-weight:500; display:block; font-size:11px; }
+  header { padding:48px 24px 32px; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+  header::before { content:''; position:absolute; top:-80px; right:-80px; width:350px; height:350px; background:radial-gradient(circle, rgba(230,50,50,0.06) 0%, transparent 70%); pointer-events:none; }
+  .label { font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--red); font-weight:500; margin-bottom:10px; }
+  h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,8vw,58px); letter-spacing:0.03em; line-height:0.95; margin-bottom:14px; }
+  h1 span.accent { color:var(--red); }
+  .subtitle { font-size:13px; color:var(--muted); font-weight:300; max-width:560px; line-height:1.7; }
+  .badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+  .badge { padding:4px 12px; border:1px solid var(--border); border-radius:2px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
 
-  .week-selector { display:flex; gap:6px; padding:12px 16px; background:var(--dark); border-bottom:1px solid var(--border); position:sticky; top:69px; z-index:99; }
-  .week-btn { flex:1; padding:10px 0; border-radius:2px; font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.08em; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--muted); transition:all 0.15s; }
-  .week-btn .wk-sub { display:block; font-family:'DM Sans',sans-serif; font-size:7px; letter-spacing:0.1em; text-transform:uppercase; margin-top:1px; }
-  .week-btn.active { background:var(--red-dim); border-color:rgba(230,50,50,0.4); color:var(--red); }
-  .week-btn .wk-fill { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:3px; vertical-align:middle; opacity:0; }
-  .week-btn.has-data .wk-fill { opacity:1; }
+  .rpe-box { margin:20px 24px 0; padding:18px 22px; border:1px solid rgba(230,50,50,0.25); border-radius:2px; background:var(--red-dim); }
+  .rpe-title { font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.1em; color:var(--red); margin-bottom:8px; }
+  .rpe-text { font-size:12px; color:#c98080; font-weight:300; line-height:1.7; }
+  .rpe-text b { color:var(--white); font-weight:500; }
+  .rpe-scale { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .rpe-chip { font-size:11px; padding:4px 10px; border-radius:2px; background:rgba(230,50,50,0.12); color:#d89090; }
+  .rpe-chip b { color:var(--white); }
 
-  .summary-bar { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); margin:12px 16px 0; border:1px solid var(--border); border-radius:2px; overflow:hidden; }
-  .summary-cell { background:var(--card); padding:8px 4px; text-align:center; cursor:pointer; }
-  .s-label { font-size:8px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
-  .s-dot { width:8px; height:8px; border-radius:50%; background:var(--border); margin:0 auto; transition:background 0.2s; }
-  .s-dot.done { background:var(--green); }
-  .s-dot.partial { background:var(--gold); }
+  .blessure-box { margin:14px 24px 0; padding:18px 22px; border:1px solid rgba(230,126,50,0.35); border-radius:2px; background:rgba(230,126,50,0.07); }
+  .blessure-title { font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.1em; color:var(--orange); margin-bottom:8px; }
+  .blessure-text { font-size:12px; color:#cfa080; font-weight:300; line-height:1.7; }
+  .blessure-text b { color:var(--white); font-weight:500; }
 
-  .tabs { display:flex; overflow-x:auto; padding:12px 16px 0; gap:6px; scrollbar-width:none; border-bottom:1px solid var(--border); }
-  .tabs::-webkit-scrollbar { display:none; }
-  .tab { flex-shrink:0; padding:7px 14px; border-radius:2px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:inherit; text-align:center; line-height:1.3; }
-  .tab.active-lower-a { background:var(--red-dim); border-color:rgba(230,50,50,0.3); color:var(--red); }
-  .tab.active-lower-b { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); }
-  .tab.active-lower-c { background:var(--blue-dim); border-color:rgba(74,159,232,0.3); color:var(--blue); }
-  .tab.active-poids { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); }
-  .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:5px; vertical-align:middle; }
+  .planning { padding:28px 24px; border-bottom:1px solid var(--border); }
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:0.08em; margin-bottom:16px; }
+  .week-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .day-cell { padding:12px 4px; text-align:center; border-radius:2px; border:1px solid var(--border); }
+  .day-cell.ua { border-color:rgba(230,50,50,0.4); background:var(--red-dim); }
+  .day-cell.la { border-color:rgba(74,159,232,0.4); background:var(--blue-dim); }
+  .day-cell.ub { border-color:rgba(155,126,222,0.4); background:var(--purple-dim); }
+  .day-cell.lb { border-color:rgba(93,184,168,0.4); background:var(--teal-dim); }
+  .day-cell.uc { border-color:rgba(62,184,122,0.4); background:rgba(62,184,122,0.08); }
+  .day-cell.rest { background:var(--dark); }
+  .day-name { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+  .day-session { font-size:10px; font-weight:500; line-height:1.3; }
+  .day-cell.ua .day-session { color:var(--red); }
+  .day-cell.la .day-session { color:var(--blue); }
+  .day-cell.ub .day-session { color:var(--purple); }
+  .day-cell.lb .day-session { color:var(--teal); }
+  .day-cell.uc .day-session { color:var(--green); }
+  .day-cell.rest .day-session { color:#333; }
+  .planning-note { font-size:11px; color:var(--muted); font-weight:300; margin-top:10px; font-style:italic; }
 
-  .session { display:none; padding:0 16px; }
-  .session.visible { display:block; }
-  .session-header { padding:16px 0 12px; border-bottom:1px solid var(--border); margin-bottom:4px; }
-  .session-tag { font-size:9px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:4px; }
-  .tag-force { color:var(--red); } .tag-hyp { color:var(--gold); } .tag-lower { color:var(--blue); }
-  .session-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.05em; line-height:1; }
-  .session-week-pill { display:inline-block; font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); background:var(--gold-dim); padding:2px 8px; border-radius:2px; margin-left:8px; vertical-align:middle; }
-  .session-sub { font-size:11px; color:var(--muted); margin-top:4px; font-weight:300; }
+  .sessions { padding:0 24px 40px; }
+  .session-block { margin-top:28px; border:1px solid var(--border); border-radius:2px; overflow:hidden; }
+  .session-header { padding:16px 20px; display:flex; align-items:center; gap:14px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+  .ua-h { background:linear-gradient(90deg, rgba(230,50,50,0.12) 0%, transparent 100%); }
+  .la-h { background:linear-gradient(90deg, rgba(74,159,232,0.10) 0%, transparent 100%); }
+  .ub-h { background:linear-gradient(90deg, rgba(155,126,222,0.10) 0%, transparent 100%); }
+  .lb-h { background:linear-gradient(90deg, rgba(93,184,168,0.10) 0%, transparent 100%); }
+  .uc-h { background:linear-gradient(90deg, rgba(62,184,122,0.10) 0%, transparent 100%); }
+  .session-tag { font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:0.15em; padding:3px 10px; border-radius:1px; }
+  .ua-tag { background:var(--red); color:#fff; }
+  .la-tag { background:#2a6db5; color:#fff; }
+  .ub-tag { background:var(--purple); color:#fff; }
+  .lb-tag { background:#2a8c7a; color:#fff; }
+  .uc-tag { background:#2a9c60; color:#fff; }
+  .session-title { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.05em; }
+  .session-meta { margin-left:auto; font-size:11px; color:var(--muted); text-align:right; line-height:1.5; }
 
-  .exo-card { margin-top:10px; background:var(--card); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
-  .exo-top { padding:10px 14px 8px; display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
-  .exo-num { font-size:10px; color:var(--muted2); font-weight:500; flex-shrink:0; margin-top:2px; }
-  .exo-info { flex:1; }
-  .exo-name { font-size:13px; font-weight:500; line-height:1.3; }
-  .exo-target { font-size:10px; color:var(--muted); font-weight:300; margin-top:2px; }
-  .exo-prescription { font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.05em; white-space:nowrap; flex-shrink:0; }
-  .pres-force { color:var(--red); } .pres-hyp { color:var(--gold); } .pres-lower { color:var(--blue); }
+  table { width:100%; border-collapse:collapse; }
+  thead tr { background:#0d0d0d; }
+  thead th { padding:9px 16px; text-align:left; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#444; font-weight:500; border-bottom:1px solid var(--border); }
+  tbody tr { border-bottom:1px solid #181818; }
+  tbody tr:last-child { border-bottom:none; }
+  tbody tr.adapted { border-left:2px solid var(--orange); }
+  td { padding:12px 16px; font-size:13px; vertical-align:middle; }
+  td.td-num { color:#333; font-size:11px; font-weight:500; width:34px; }
+  .exo-name { font-weight:500; color:var(--white); }
+  .exo-sub { font-size:11px; color:var(--muted); font-weight:300; margin-top:1px; }
+  .adapted-tag { display:inline-block; font-size:8px; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); border:1px solid rgba(230,126,50,0.4); padding:1px 6px; border-radius:1px; margin-left:6px; vertical-align:middle; }
+  .sets-reps { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.05em; white-space:nowrap; }
+  .rest { font-size:9px; color:#555; margin-top:3px; letter-spacing:0.05em; text-transform:uppercase; white-space:nowrap; }
+  .ua-sr { color:var(--red); } .la-sr { color:var(--blue); } .ub-sr { color:var(--purple); } .lb-sr { color:var(--teal); } .uc-sr { color:var(--green); }
+  .note-cell { font-size:11px; color:var(--muted); font-style:italic; font-weight:300; line-height:1.5; }
+  .superset-note { padding:8px 16px; background:#0d0d0d; font-size:10px; letter-spacing:0.05em; color:var(--gold); border-top:1px solid var(--border); }
 
-  .pr-badge { font-size:9px; color:var(--gold); font-weight:500; margin-top:3px; letter-spacing:0.05em; }
-  .pr-badge b { color:var(--gold); }
-  .last-week-ref { font-size:9px; color:var(--muted2); padding:0 14px 6px; font-style:italic; letter-spacing:0.03em; }
-  .last-week-ref b { color:var(--muted); font-style:normal; font-weight:400; }
+  .principes { padding:28px 24px 40px; border-top:1px solid var(--border); background:var(--dark); }
+  .principes-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:14px; margin-top:18px; }
+  .principe-card { padding:18px; border:1px solid var(--border); border-radius:2px; background:var(--card); }
+  .pc-num { font-family:'Bebas Neue',sans-serif; font-size:40px; color:#1e1e1e; line-height:1; margin-bottom:6px; }
+  .pc-title { font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.1em; color:var(--white); margin-bottom:7px; }
+  .pc-desc { font-size:12px; color:var(--muted); font-weight:300; line-height:1.6; }
 
-  .col-header { display:grid; grid-template-columns:32px 1fr 1fr 1fr 40px; padding:6px 0 4px; border-top:1px solid var(--border); }
-  .col-h { font-size:8px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); text-align:center; }
-  .series-rows { display:flex; flex-direction:column; }
-  .serie-row { display:grid; grid-template-columns:32px 1fr 1fr 1fr 40px; align-items:center; border-bottom:1px solid #131313; }
-  .serie-row:last-child { border-bottom:none; }
-  .serie-num { font-size:10px; color:var(--muted2); text-align:center; padding:12px 0; border-right:1px solid #131313; font-weight:500; }
-  .serie-input { background:none; border:none; color:var(--white); font-family:'DM Sans',sans-serif; font-size:15px; padding:12px 8px; width:100%; text-align:center; outline:none; border-right:1px solid #131313; -webkit-appearance:none; }
-  .serie-input.rir { color:var(--muted); font-size:13px; }
-  .serie-input::placeholder { color:var(--muted2); font-size:13px; }
-  .serie-input:focus { background:rgba(255,255,255,0.03); }
-  .serie-check { display:flex; align-items:center; justify-content:center; padding:12px 6px; }
-  .check-btn { width:24px; height:24px; border-radius:50%; border:1px solid var(--muted2); background:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:12px; color:transparent; }
-  .check-btn.checked { background:var(--green); border-color:var(--green); color:#000; }
-
-  .note-area { margin-top:10px; background:var(--card); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
-  .note-label { font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); padding:8px 14px 6px; border-bottom:1px solid var(--border); }
-  .note-input { width:100%; background:none; border:none; color:var(--white); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:300; padding:10px 14px; resize:none; outline:none; line-height:1.6; min-height:60px; font-style:italic; }
-  .note-input::placeholder { color:var(--muted2); }
-
-  .save-btn { margin-top:16px; width:100%; padding:14px; background:var(--red); color:#fff; border:none; border-radius:2px; font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.15em; cursor:pointer; }
-  .save-btn.saved { background:var(--green); }
-  .reset-btn { margin-top:8px; width:100%; padding:10px; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:2px; font-family:'DM Sans',sans-serif; font-size:11px; cursor:pointer; }
-  .spacer { height:16px; }
-
-  .poids-row { display:grid; grid-template-columns:64px 1fr 1fr; align-items:center; border-bottom:1px solid #131313; }
-  .poids-row:last-child { border-bottom:none; }
-
-  .kg-wrap { display:flex; align-items:center; border-right:1px solid #131313; }
-  .kg-wrap .serie-input { border-right:none; flex:1; }
-  .kbd-toggle { background:none; border:none; color:var(--muted2); font-size:13px; padding:0 6px 0 2px; cursor:pointer; flex-shrink:0; line-height:1; }
-  .kbd-toggle.text-mode { color:var(--gold); }
+  footer { padding:20px 24px; border-top:1px solid var(--border); text-align:center; font-size:10px; color:#2a2a2a; letter-spacing:0.1em; text-transform:uppercase; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div>
-    <div class="eyebrow">Suivi d'entraînement</div>
-    <h1>JULIE<span>.</span></h1>
+<header>
+  <div class="label">Programme personnalisé · Coaching · 2026</div>
+  <h1>LOWER<span class="accent"> ×3</span><br>FOCUS FESSIERS</h1>
+  <p class="subtitle">Trois séances bas du corps par semaine, axées fessiers et jambes, avec ce qu’il faut de dos et de posture pour un physique équilibré. Objectif : des jambes et un fessier galbés, une posture solide, un dos large.</p>
+  <div class="badges">
+    <span class="badge">3 séances / sem</span>
+    <span class="badge">1h30 – 1h45</span>
+    <span class="badge">6–20 reps</span>
+    <span class="badge">RPE 8–9</span>
+    <span class="badge">Focus fessiers</span>
   </div>
-  <div class="cycle-badge">Cycle de 4 semaines<strong id="cycle-label">Focus fessiers</strong></div>
-</div>
+</header>
 
-<div class="week-selector" id="week-selector">
-  <button class="week-btn active" data-week="1" onclick="switchWeek(1)">S1<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
-  <button class="week-btn" data-week="2" onclick="switchWeek(2)">S2<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
-  <button class="week-btn" data-week="3" onclick="switchWeek(3)">S3<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
-  <button class="week-btn" data-week="4" onclick="switchWeek(4)">S4<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
-  <button class="week-btn" data-week="5" onclick="switchWeek(5)">S5<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
-  <button class="week-btn" data-week="6" onclick="switchWeek(6)">S6<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
-  <button class="week-btn" data-week="7" onclick="switchWeek(7)">S7<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
-  <button class="week-btn" data-week="8" onclick="switchWeek(8)">S8<span class="wk-sub">Sem.</span><span class="wk-fill"></span></button>
-</div>
-
-<div class="summary-bar">
-  <div class="summary-cell" onclick="switchTab('lower-a')"><div class="s-label">Lower A</div><div class="s-dot" id="dot-lower-a"></div></div>
-  <div class="summary-cell" onclick="switchTab('lower-b')"><div class="s-label">Lower B</div><div class="s-dot" id="dot-lower-b"></div></div>
-  <div class="summary-cell" onclick="switchTab('lower-c')"><div class="s-label">Lower C</div><div class="s-dot" id="dot-lower-c"></div></div>
-</div>
-
-<div class="tabs">
-  <button class="tab active-lower-a" id="tab-lower-a" onclick="switchTab('lower-a')">Lower A<br><span style="font-size:8px;color:var(--muted)">Lundi · Force</span></button>
-  <button class="tab" id="tab-lower-b" onclick="switchTab('lower-b')">Lower B<br><span style="font-size:8px;color:var(--muted)">Mercredi · Quads</span></button>
-  <button class="tab" id="tab-lower-c" onclick="switchTab('lower-c')">Lower C<br><span style="font-size:8px;color:var(--muted)">Vendredi · Ischios</span></button>
-  <button class="tab" id="tab-poids" onclick="switchTab('poids')">Poids<br><span style="font-size:8px;color:var(--muted)">Suivi corporel</span></button>
-</div>
-
-<!-- LOWER A -->
-<div class="session visible" id="session-lower-a">
-  <div class="session-header">
-    <div class="session-tag tag-force">Force fessiers</div>
-    <div class="session-title">LOWER A — LUNDI<span class="session-week-pill" id="pill-lower-a">Semaine 1</span></div>
-    <div class="session-sub">Squat · Hip thrust lourd · Step-up · Hyperextension · Abducteur · Tractions</div>
+<!-- RPE -->
+<div class="rpe-box">
+  <div class="rpe-title">L'intensité se note en RPE — échelle de 0 à 10</div>
+  <div class="rpe-text">Le RPE mesure à quel point tu t'es donné sur une série. Point important pour toi : sur les gros exercices (squat, hip thrust lourd, hack, soulevé de terre), <b>reste à RPE 8-9, garde 1 rep en réserve, ne va pas à l'échec</b>. C'est ce qui te permet de récupérer et de ne pas t'épuiser. Tu peux pousser plus fort (RPE 9-10) sur les exercices d'isolation légers (abducteurs, kickback, face pull). Les séries d'échauffement ne se comptent pas.</div>
+  <div class="rpe-scale">
+    <span class="rpe-chip"><b>RPE 10</b> · effort max, pas une rep de plus</span>
+    <span class="rpe-chip"><b>RPE 9</b> · 1 rep en réserve</span>
+    <span class="rpe-chip"><b>RPE 8</b> · environ 2 reps en réserve</span>
+    <span class="rpe-chip"><b>RPE 7</b> · environ 3 reps en réserve</span>
   </div>
-  <div class="exo-card" data-exo="exo1" data-name="Squat barre" data-target="Fessiers · Quads · profondeur ATG" data-pres="2 × 6–8" data-presclass="pres-force"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Hip thrust machine (lourd)" data-target="Grand fessier · pilier glute" data-pres="2 × 6–8" data-presclass="pres-force"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Step-up Smith (par jambe)" data-target="Fessiers · step 45–50 cm" data-pres="2 × 8–10 /j" data-presclass="pres-force"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Hyperextension fessier-bias" data-target="Grand fessier · pieds out, dos arrondi" data-pres="2 × 12–15" data-presclass="pres-force"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Abducteur machine (penchée)" data-target="Moyen fessier · shelf · buste ~30°" data-pres="2 × 12–15" data-presclass="pres-force"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Tractions (lestées si possible)" data-target="Dos · posture · prise neutre" data-pres="2 × 5–8" data-presclass="pres-force"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-lower-a">Semaine 1</span></div><textarea class="note-input" id="note-lower-a" placeholder="Ressenti, charges, sensations fessier..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('lower-a')">ENREGISTRER LA SÉANCE</button>
-  <button class="reset-btn" onclick="resetSession('lower-a')">Effacer cette séance (semaine en cours)</button>
-  <div class="spacer"></div>
 </div>
 
-<!-- LOWER B -->
-<div class="session" id="session-lower-b">
-  <div class="session-header">
-    <div class="session-tag tag-hyp">Hypertrophie quads</div>
-    <div class="session-title">LOWER B — MERCREDI<span class="session-week-pill" id="pill-lower-b">Semaine 1</span></div>
-    <div class="session-sub">Hack squat · Fente bulgare · Hip thrust · Leg curl · Abducteur · Face pull</div>
-  </div>
-  <div class="exo-card" data-exo="exo1" data-name="Hack squat" data-target="Quads · pieds bas et serrés" data-pres="2 × 8–10" data-presclass="pres-hyp"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Fente bulgare (par jambe)" data-target="Quads · bias fessier flexion hanche" data-pres="2 × 10–12 /j" data-presclass="pres-hyp"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Hip thrust machine (volume)" data-target="Fessiers · ~70% du lundi, plus de reps" data-pres="2 × 10–12" data-presclass="pres-hyp"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Leg curl unilatéral (par jambe)" data-target="Ischios · rappel fréquence" data-pres="2 × 10–12 /j" data-presclass="pres-hyp"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Abducteur machine (penchée)" data-target="Moyen fessier · 3e dose shelf" data-pres="2 × 12–15" data-presclass="pres-hyp"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Face pull câble (prise corde)" data-target="Arrière épaule · posture" data-pres="2 × 12–15" data-presclass="pres-hyp"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-lower-b">Semaine 1</span></div><textarea class="note-input" id="note-lower-b" placeholder="Ressenti, charges, sensations fessier..."></textarea></div>
-  <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveSession('lower-b')">ENREGISTRER LA SÉANCE</button>
-  <button class="reset-btn" onclick="resetSession('lower-b')">Effacer cette séance (semaine en cours)</button>
-  <div class="spacer"></div>
+<!-- REPOS -->
+<div class="blessure-box" style="border-color:rgba(201,168,76,0.35);background:rgba(201,168,76,0.07)">
+  <div class="blessure-title" style="color:var(--gold)">Le repos, c'est la clé de tes séances</div>
+  <div class="blessure-text">Ton point à travailler : tu as tendance à tout donner et à traîner entre les séries, du coup tes séances durent trop et tu récupères mal. <b>Respecte les temps de repos indiqués sous chaque exercice.</b> Sur les gros mouvements, 3-4 min de repos c'est normal et nécessaire : tu dois être vraiment reposée pour attaquer la série suivante avec de la charge. Sur l'isolation, 60-90 s suffisent. Chronomètre-toi, ça va cadrer tes séances autour de 1h30-1h45 et tu récupéreras beaucoup mieux d'une séance à l'autre.</div>
 </div>
 
-<!-- LOWER C -->
-<div class="session" id="session-lower-c">
-  <div class="session-header">
-    <div class="session-tag tag-lower">Postérieur / ischios</div>
-    <div class="session-title">LOWER C — VENDREDI<span class="session-week-pill" id="pill-lower-c">Semaine 1</span></div>
-    <div class="session-sub">RDL · Hip thrust · Leg extension · Kickback · Abducteur · Rotation externe</div>
+<!-- PLANNING -->
+<section class="planning">
+  <div class="section-title">Planning hebdomadaire</div>
+  <div class="week-grid">
+    <div class="day-cell ua"><div class="day-name">Lun</div><div class="day-session">Lower A</div></div>
+    <div class="day-cell rest"><div class="day-name">Mar</div><div class="day-session">Repos</div></div>
+    <div class="day-cell la"><div class="day-name">Mer</div><div class="day-session">Lower B</div></div>
+    <div class="day-cell rest"><div class="day-name">Jeu</div><div class="day-session">Repos</div></div>
+    <div class="day-cell ub"><div class="day-name">Ven</div><div class="day-session">Lower C</div></div>
+    <div class="day-cell rest"><div class="day-name">Sam</div><div class="day-session">Repos</div></div>
+    <div class="day-cell rest"><div class="day-name">Dim</div><div class="day-session">Repos + Bilan</div></div>
   </div>
-  <div class="exo-card" data-exo="exo1" data-name="RDL barre" data-target="Ischios · étirement profond · dos neutre" data-pres="2 × 8–10" data-presclass="pres-lower"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Hip thrust machine" data-target="Fessiers · 3e dose hebdo · ~80% lundi" data-pres="2 × 10–12" data-presclass="pres-lower"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Leg extension unilatérale (penchée arrière)" data-target="Quads · rappel · rectus femoris étiré" data-pres="2 × 12–15 /j" data-presclass="pres-lower"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Kickback poulie (par jambe)" data-target="Glute pur · jambe tendue · extension hanche" data-pres="2 × 12–15 /j" data-presclass="pres-lower"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Abducteur machine (penchée)" data-target="Moyen fessier · 2e dose shelf · drop set possible" data-pres="2 × 15–20" data-presclass="pres-lower"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Rotation externe câble (coiffe, par bras)" data-target="Coiffe · infra-épineux · petit rond" data-pres="2 × 12–15 /b" data-presclass="pres-lower"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-lower-c">Semaine 1</span></div><textarea class="note-input" id="note-lower-c" placeholder="Ressenti, charges, sensations fessier..."></textarea></div>
-  <button class="save-btn" style="background:var(--blue)" onclick="saveSession('lower-c')">ENREGISTRER LA SÉANCE</button>
-  <button class="reset-btn" onclick="resetSession('lower-c')">Effacer cette séance (semaine en cours)</button>
-  <div class="spacer"></div>
-</div>
+  <p class="planning-note">Les jours sont indicatifs. Garde au moins un jour de repos entre chaque séance, et le dimanche pour ton bilan.</p>
+</section>
 
-<!-- POIDS -->
-<div class="session" id="session-poids">
-  <div class="session-header">
-    <div class="session-tag" style="color:var(--gold)">Suivi corporel · 1× / semaine</div>
-    <div class="session-title">POIDS — SUIVI</div>
-    <div class="session-sub">Pèse-toi le même jour, à jeun le matin. La colonne Δ calcule la variation automatiquement.</div>
-  </div>
-  <div class="exo-card">
-    <div class="col-header" style="grid-template-columns:64px 1fr 1fr">
-      <div class="col-h">Sem.</div><div class="col-h">Poids (kg)</div><div class="col-h">Δ vs préc.</div>
+<!-- SESSIONS -->
+<div class="sessions">
+
+  <div class="session-block">
+    <div class="session-header ua-h">
+      <span class="session-tag ua-tag">LOWER A</span>
+      <span class="session-title">Force fessiers / jambes</span>
+      <div class="session-meta">Repos indiqué sous chaque exercice</div>
     </div>
-    <div class="series-rows" id="poids-rows"></div>
+    <table>
+      <thead><tr><th>#</th><th>Exercice</th><th>Séries × Reps</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="td-num">01</td><td><div class="exo-name">Squat barre</div><div class="exo-sub">Fessiers · Quadriceps</div></td><td><span class="sets-reps ua-sr">2 × 6-8</span><div class="rest">Repos 3-4 min</div></td><td class="note-cell">Le gros exercice. Descends bien, garde 1 rep en réserve, ne va pas à l'échec.</td></tr>
+        <tr><td class="td-num">02</td><td><div class="exo-name">Hip thrust machine (lourd)</div><div class="exo-sub">Grand fessier</div></td><td><span class="sets-reps ua-sr">2 × 8-10</span><div class="rest">Repos 3 min</div></td><td class="note-cell">Serre fort les fessiers en haut 1 sec. Charge lourde, mais pas à l'échec.</td></tr>
+        <tr><td class="td-num">03</td><td><div class="exo-name">Step-up Smith (par jambe)</div><div class="exo-sub">Fessiers · unilatéral</div></td><td><span class="sets-reps ua-sr">2 × 10-12</span><div class="rest">Repos 2 min</div></td><td class="note-cell">Banc assez haut, pousse dans le talon.</td></tr>
+        <tr><td class="td-num">04</td><td><div class="exo-name">Hyperextension (bias fessier)</div><div class="exo-sub">Fessiers · chaîne postérieure</div></td><td><span class="sets-reps ua-sr">2 × 12-15</span><div class="rest">Repos 90 s</div></td><td class="note-cell">Dos légèrement arrondi, pieds tournés vers l'extérieur, serre les fessiers.</td></tr>
+        <tr><td class="td-num">05</td><td><div class="exo-name">Abducteurs machine (buste penché)</div><div class="exo-sub">Moyen fessier</div></td><td><span class="sets-reps ua-sr">2 × 15-20</span><div class="rest">Repos 90 s</div></td><td class="note-cell">Penche le buste en avant pour cibler le haut du fessier. Là tu peux pousser fort.</td></tr>
+        <tr><td class="td-num">06</td><td><div class="exo-name">Tractions (assistées ou lestées)</div><div class="exo-sub">Dos · largeur</div></td><td><span class="sets-reps ua-sr">2 × 6-10</span><div class="rest">Repos 2 min</div></td><td class="note-cell">Pour un dos large et une belle posture. Assistées à la machine si besoin.</td></tr>
+      </tbody>
+    </table>
   </div>
-  <div class="note-area"><div class="note-label">Notes (composition, sensations, mensurations...)</div><textarea class="note-input" id="note-poids" placeholder="Tour de taille, ressenti, photos prises le..."></textarea></div>
-  <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveSession('poids')">ENREGISTRER</button>
-  <button class="reset-btn" onclick="resetPoids()">Effacer le suivi poids</button>
-  <div class="spacer"></div>
+
+  <div class="session-block">
+    <div class="session-header la-h">
+      <span class="session-tag la-tag">LOWER B</span>
+      <span class="session-title">Quadriceps + posture</span>
+      <div class="session-meta">Repos indiqué sous chaque exercice</div>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Exercice</th><th>Séries × Reps</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="td-num">01</td><td><div class="exo-name">Hack squat</div><div class="exo-sub">Quadriceps · Fessiers</div></td><td><span class="sets-reps la-sr">2 × 8-10</span><div class="rest">Repos 3 min</div></td><td class="note-cell">Descente contrôlée, amplitude complète. Garde 1 rep en réserve.</td></tr>
+        <tr><td class="td-num">02</td><td><div class="exo-name">Fente bulgare (par jambe)</div><div class="exo-sub">Fessiers · Quadriceps</div></td><td><span class="sets-reps la-sr">2 × 10-12</span><div class="rest">Repos 2 min</div></td><td class="note-cell">Buste légèrement penché en avant pour plus de fessier.</td></tr>
+        <tr><td class="td-num">03</td><td><div class="exo-name">Leg curl allongé</div><div class="exo-sub">Ischio-jambiers</div></td><td><span class="sets-reps la-sr">2 × 10-12</span><div class="rest">Repos 2 min</div></td><td class="note-cell">Hanches plaquées, descente lente.</td></tr>
+        <tr><td class="td-num">04</td><td><div class="exo-name">Abducteurs machine (buste penché)</div><div class="exo-sub">Moyen fessier</div></td><td><span class="sets-reps la-sr">2 × 15-20</span><div class="rest">Repos 90 s</div></td><td class="note-cell">2e dose de la semaine, pousse fort.</td></tr>
+        <tr><td class="td-num">05</td><td><div class="exo-name">Tirage vertical (prise neutre)</div><div class="exo-sub">Dos · largeur</div></td><td><span class="sets-reps la-sr">2 × 8-10</span><div class="rest">Repos 2 min</div></td><td class="note-cell">Pour la largeur du dos et l'équilibre du haut du corps.</td></tr>
+        <tr><td class="td-num">06</td><td><div class="exo-name">Face pull à la corde</div><div class="exo-sub">Arrière épaule · posture</div></td><td><span class="sets-reps la-sr">2 × 15-20</span><div class="rest">Repos 60 s</div></td><td class="note-cell">Tire vers le visage, écarte en fin de mouvement. Corrige les épaules en avant.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="session-block">
+    <div class="session-header ub-h">
+      <span class="session-tag ub-tag">LOWER C</span>
+      <span class="session-title">Ischios / postérieur + posture</span>
+      <div class="session-meta">Repos indiqué sous chaque exercice</div>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Exercice</th><th>Séries × Reps</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="td-num">01</td><td><div class="exo-name">Soulevé de terre roumain barre</div><div class="exo-sub">Ischios · Fessiers</div></td><td><span class="sets-reps ub-sr">2 × 8-10</span><div class="rest">Repos 3-4 min</div></td><td class="note-cell">Hanches en arrière, dos neutre, étirement des ischios. Garde 1 rep en réserve.</td></tr>
+        <tr><td class="td-num">02</td><td><div class="exo-name">Hip thrust machine</div><div class="exo-sub">Grand fessier</div></td><td><span class="sets-reps ub-sr">2 × 10-12</span><div class="rest">Repos 2-3 min</div></td><td class="note-cell">Un peu plus léger que Lower A, plus de reps.</td></tr>
+        <tr><td class="td-num">03</td><td><div class="exo-name">Leg extension unilatérale (buste penché en arrière)</div><div class="exo-sub">Quadriceps · rectus femoris</div></td><td><span class="sets-reps ub-sr">2 × 12-15</span><div class="rest">Repos 90 s</div></td><td class="note-cell">Penche-toi en arrière pour étirer le haut du quadriceps.</td></tr>
+        <tr><td class="td-num">04</td><td><div class="exo-name">Kickback à la poulie (par jambe)</div><div class="exo-sub">Grand fessier · isolation</div></td><td><span class="sets-reps ub-sr">2 × 12-15</span><div class="rest">Repos 90 s</div></td><td class="note-cell">Jambe tendue vers l'arrière, serre le fessier en fin de mouvement.</td></tr>
+        <tr><td class="td-num">05</td><td><div class="exo-name">Abducteurs machine (buste penché)</div><div class="exo-sub">Moyen fessier</div></td><td><span class="sets-reps ub-sr">2 × 15-20</span><div class="rest">Repos 90 s</div></td><td class="note-cell">3e dose de la semaine. Draille possible pour finir.</td></tr>
+        <tr><td class="td-num">06</td><td><div class="exo-name">Rotation externe à la poulie (par bras)</div><div class="exo-sub">Coiffe · posture épaule</div></td><td><span class="sets-reps ub-sr">2 × 12-15</span><div class="rest">Repos 60 s</div></td><td class="note-cell">Coude collé au corps. Renforce l'épaule et évite qu'elle parte en avant.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
-<script>
-const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
-const CLIENT_ID = "julie";
+<!-- PRINCIPES -->
+<section class="principes">
+  <div class="label">Règles d'exécution</div>
+  <div class="principes-grid">
+    <div class="principe-card">
+      <div class="pc-num">01</div>
+      <div class="pc-title">Respecte tes repos</div>
+      <div class="pc-desc">C'est ta priorité. Chronomètre-toi. 3-4 min sur les gros exercices, 60-90 s sur l'isolation. Des séances plus courtes et mieux récupérées valent mieux que 2h à traîner.</div>
+    </div>
+    <div class="principe-card">
+      <div class="pc-num">02</div>
+      <div class="pc-title">Pas d'échec sur le lourd</div>
+      <div class="pc-desc">Sur squat, hip thrust lourd, hack et soulevé de terre : garde 1 rep en réserve (RPE 8-9). Tu peux pousser à fond seulement sur l'isolation légère (abducteurs, kickback, face pull).</div>
+    </div>
+    <div class="principe-card">
+      <div class="pc-num">03</div>
+      <div class="pc-title">Monte en gamme, attaque lourd</div>
+      <div class="pc-desc">Avant ta première série effective : 2-3 séries de montée en charge, légères, qui te préparent sans te fatiguer. Ta première série effective doit être la plus lourde.</div>
+    </div>
+    <div class="principe-card">
+      <div class="pc-num">04</div>
+      <div class="pc-title">Progression de charge</div>
+      <div class="pc-desc">Quand tu atteins le haut de la fourchette de reps sur toutes les séries, tu montes la charge la semaine suivante. C'est comme ça que tes fessiers et tes jambes se construisent.</div>
+    </div>
+    <div class="principe-card">
+      <div class="pc-num">05</div>
+      <div class="pc-title">Note tes changements</div>
+      <div class="pc-desc">Un exercice pas disponible que tu remplaces, tu le notes dans les notes de séance de l'appli. Comme ça j'ajuste en connaissance de cause.</div>
+    </div>
+    <div class="principe-card">
+      <div class="pc-num">06</div>
+      <div class="pc-title">Le dimanche, ton bilan</div>
+      <div class="pc-desc">Tu remplis l'onglet Bilan dans l'appli et tu m'envoies un message pour me dire que c'est fait. C'est ton rendez-vous hebdo, c'est là qu'on pilote.</div>
+    </div>
+  </div>
+</section>
 
-const CONFIG = {
-  'lower-a': {exo1:2,exo2:2,exo3:2,exo4:2,exo5:2,exo6:2},
-  'lower-b': {exo1:2,exo2:2,exo3:2,exo4:2,exo5:2,exo6:2},
-  'lower-c': {exo1:2,exo2:2,exo3:2,exo4:2,exo5:2,exo6:2}
-};
+<footer>Programme Julie · Lower ×3 · Focus fessiers · Coaching · 2026</footer>
 
-const NB_SEMAINES = 8;
-const SESSIONS = ['lower-a','lower-b','lower-c'];
-let currentWeek = 1;
-
-function getKey(s,exo,serie,field,week){ return `${s}-${exo}-s${serie}-${field}-w${week}`; }
-
-let syncStatusTimer=null;
-function showSyncStatus(ok){
-  let el=document.getElementById('sync-status');
-  if(!el){
-    el=document.createElement('div');
-    el.id='sync-status';
-    el.style.cssText='position:fixed;bottom:12px;right:12px;z-index:200;font-size:10px;letter-spacing:0.05em;padding:6px 12px;border-radius:20px;font-family:DM Sans,sans-serif;transition:opacity 0.3s;pointer-events:none;';
-    document.body.appendChild(el);
-  }
-  if(ok){ el.textContent='✓ Synchronisé'; el.style.background='rgba(62,184,122,0.15)'; el.style.color='#3eb87a'; }
-  else { el.textContent='⟳ Hors-ligne (sauvé local)'; el.style.background='rgba(201,168,76,0.15)'; el.style.color='#c9a84c'; }
-  el.style.opacity='1';
-  clearTimeout(syncStatusTimer);
-  syncStatusTimer=setTimeout(()=>{ el.style.opacity='0'; },1800);
-}
-
-function syncToCloud(payload){
-  if(!SYNC_URL) return;
-  fetch(SYNC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
-    .then(()=>{ showSyncStatus(true); }).catch(()=>{ showSyncStatus(false); });
-}
-
-const EXO_NAMES = {};
-const _syncTimers = {};
-function syncFieldDebounced(timerKey, payload){
-  clearTimeout(_syncTimers[timerKey]);
-  _syncTimers[timerKey] = setTimeout(()=>{ syncToCloud(payload); }, 600);
-}
-
-function syncField(session,exo,serie,field,value,week){
-  const exoName = (EXO_NAMES[session] && EXO_NAMES[session][exo]) ? EXO_NAMES[session][exo] : exo;
-  const timerKey = `${session}-${exo}-s${serie}-${field}-w${week}`;
-  syncFieldDebounced(timerKey, {client:CLIENT_ID,type:'perf',week:week,session:session,exo:exoName,serie:serie,field:field,value:value,ts:new Date().toISOString()});
-}
-
-function toggleKbd(btn){
-  const input = btn.previousElementSibling;
-  if(input.inputMode === 'decimal'){ input.inputMode = 'text'; btn.classList.add('text-mode'); }
-  else { input.inputMode = 'decimal'; btn.classList.remove('text-mode'); }
-  input.focus();
-}
-
-function buildSession(session){
-  const sessionEl = document.getElementById(`session-${session}`);
-  const cards = sessionEl.querySelectorAll('.exo-card[data-exo]');
-  cards.forEach((card,idx)=>{
-    const exo = card.dataset.exo;
-    EXO_NAMES[session] = EXO_NAMES[session] || {};
-    EXO_NAMES[session][exo] = card.dataset.name;
-    const count = CONFIG[session][exo];
-    const num = String(idx+1).padStart(2,'0');
-    let html = `<div class="exo-top"><div class="exo-num">${num}</div><div class="exo-info"><div class="exo-name">${card.dataset.name}</div><div class="exo-target">${card.dataset.target}</div><div class="pr-badge" id="pr-${session}-${exo}"></div></div><div class="exo-prescription ${card.dataset.presclass}">${card.dataset.pres}</div></div>`;
-    html += `<div class="last-week-ref" id="ref-${session}-${exo}"></div>`;
-    html += `<div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>`;
-    html += `<div class="series-rows" id="${session}-${exo}">`;
-    for(let s=1;s<=count;s++){
-      html += `<div class="serie-row">
-        <div class="serie-num">S${s}</div>
-        <div class="kg-wrap">
-          <input type="text" inputmode="decimal" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${session}-${exo}-s${s}-kg" oninput="save('${session}','${exo}',${s},'kg',this.value)">
-          <button class="kbd-toggle" onclick="toggleKbd(this)" title="Basculer clavier texte">✎</button>
-        </div>
-        <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${session}-${exo}-s${s}-reps" oninput="save('${session}','${exo}',${s},'reps',this.value)">
-        <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input rir" placeholder="—" id="${session}-${exo}-s${s}-rir" oninput="save('${session}','${exo}',${s},'rir',this.value)">
-        <div class="serie-check"><button class="check-btn" id="chk-${session}-${exo}-s${s}" onclick="toggleCheck('${session}','${exo}',${s})"></button></div>
-      </div>`;
-    }
-    html += `</div>`;
-    card.innerHTML = html;
-  });
-}
-
-function updatePR(session,exo){
-  const count=CONFIG[session][exo];
-  let best=null, bestReps=null;
-  for(let w=1;w<=NB_SEMAINES;w++){
-    for(let s=1;s<=count;s++){
-      const raw=localStorage.getItem(getKey(session,exo,s,'kg',w))||'';
-      const kg=parseFloat(String(raw).replace(',','.'));
-      const reps=localStorage.getItem(getKey(session,exo,s,'reps',w))||'';
-      if(!isNaN(kg)&&kg>0){ if(best===null||kg>best){best=kg;bestReps=reps;} }
-    }
-  }
-  const el=document.getElementById(`pr-${session}-${exo}`);
-  if(el){
-    if(best!==null){ el.innerHTML=`PR : <b>${best} kg${bestReps?' × '+bestReps:''}</b>`; }
-    else { el.innerHTML=''; }
-  }
-}
-
-function buildAll(){
-  SESSIONS.forEach(buildSession);
-  loadAll();
-}
-
-function save(session,exo,serie,field,value){
-  localStorage.setItem(getKey(session,exo,serie,field,currentWeek),value);
-  syncField(session,exo,serie,field,value,currentWeek);
-  if(field==='kg') updatePR(session,exo);
-  updateDots();
-  updateWeekFills();
-}
-
-function loadAll(){
-  SESSIONS.forEach(session=>{
-    Object.entries(CONFIG[session]).forEach(([exo,count])=>{
-      for(let s=1;s<=count;s++){
-        const kg=localStorage.getItem(getKey(session,exo,s,'kg',currentWeek))||'';
-        const reps=localStorage.getItem(getKey(session,exo,s,'reps',currentWeek))||'';
-        const rir=localStorage.getItem(getKey(session,exo,s,'rir',currentWeek))||'';
-        const checked=localStorage.getItem(getKey(session,exo,s,'chk',currentWeek))==='1';
-        const kgEl=document.getElementById(`${session}-${exo}-s${s}-kg`);
-        const repsEl=document.getElementById(`${session}-${exo}-s${s}-reps`);
-        const rirEl=document.getElementById(`${session}-${exo}-s${s}-rir`);
-        const chkEl=document.getElementById(`chk-${session}-${exo}-s${s}`);
-        if(kgEl) kgEl.value=kg;
-        if(repsEl) repsEl.value=reps;
-        if(rirEl) rirEl.value=rir;
-        if(chkEl){chkEl.className='check-btn'+(checked?' checked':'');chkEl.textContent=checked?'✓':'';}
-      }
-      updateRef(session,exo);
-      updatePR(session,exo);
-    });
-    const noteEl=document.getElementById(`note-${session}`);
-    if(noteEl) noteEl.value=localStorage.getItem(`${session}-note-w${currentWeek}`)||'';
-  });
-  updateDots();
-  updateWeekFills();
-}
-
-function updateRef(session,exo){
-  const refEl=document.getElementById(`ref-${session}-${exo}`);
-  if(!refEl) return;
-  if(currentWeek===1){ refEl.innerHTML=''; return; }
-  const prevWeek=currentWeek-1;
-  const count=CONFIG[session][exo];
-  let parts=[];
-  for(let s=1;s<=count;s++){
-    const kg=localStorage.getItem(getKey(session,exo,s,'kg',prevWeek))||'';
-    const reps=localStorage.getItem(getKey(session,exo,s,'reps',prevWeek))||'';
-    if(kg!==''||reps!==''){ parts.push(`${kg||'?'}×${reps||'?'}`); }
-  }
-  if(parts.length>0){ refEl.innerHTML=`Semaine ${prevWeek} : <b>${parts.join('  ·  ')}</b>`; }
-  else { refEl.innerHTML=''; }
-}
-
-function toggleCheck(session,exo,serie){
-  const key=getKey(session,exo,serie,'chk',currentWeek);
-  const current=localStorage.getItem(key)==='1';
-  localStorage.setItem(key,current?'0':'1');
-  const btn=document.getElementById(`chk-${session}-${exo}-s${serie}`);
-  if(!current){btn.classList.add('checked');btn.textContent='✓';}
-  else{btn.classList.remove('checked');btn.textContent='';}
-  syncField(session,exo,serie,'chk',current?'0':'1',currentWeek);
-  updateDots();
-  updateWeekFills();
-}
-
-function saveSession(session){
-  const noteEl=document.getElementById(`note-${session}`);
-  if(session==='poids'){
-    if(noteEl){ localStorage.setItem('poids-note',noteEl.value); syncToCloud({client:CLIENT_ID,type:'note',session:'poids',week:'-',value:noteEl.value,ts:new Date().toISOString()}); }
-  } else {
-    if(noteEl){ localStorage.setItem(`${session}-note-w${currentWeek}`,noteEl.value); syncToCloud({client:CLIENT_ID,type:'note',session:session,week:currentWeek,value:noteEl.value,ts:new Date().toISOString()}); }
-  }
-  const btn=event.target; const orig=btn.textContent;
-  btn.textContent='ENREGISTRÉ ✓'; btn.classList.add('saved');
-  setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
-  updateDots();
-}
-
-function resetSession(session){
-  if(!confirm(`Effacer les données de cette séance pour la semaine ${currentWeek} ?`)) return;
-  Object.entries(CONFIG[session]).forEach(([exo,count])=>{
-    for(let s=1;s<=count;s++){
-      localStorage.removeItem(getKey(session,exo,s,'kg',currentWeek));
-      localStorage.removeItem(getKey(session,exo,s,'reps',currentWeek));
-      localStorage.removeItem(getKey(session,exo,s,'rir',currentWeek));
-      localStorage.removeItem(getKey(session,exo,s,'chk',currentWeek));
-    }
-  });
-  localStorage.removeItem(`${session}-note-w${currentWeek}`);
-  loadAll();
-}
-
-function getProgress(session){
-  const exos=CONFIG[session]; let total=0,checked=0;
-  Object.entries(exos).forEach(([exo,count])=>{
-    for(let s=1;s<=count;s++){total++;if(localStorage.getItem(getKey(session,exo,s,'chk',currentWeek))==='1')checked++;}
-  });
-  return{total,checked};
-}
-
-function updateDots(){
-  SESSIONS.forEach(session=>{
-    const{total,checked}=getProgress(session);
-    const dot=document.getElementById(`dot-${session}`);
-    if(dot) dot.className='s-dot'+(checked===total&&total>0?' done':checked>0?' partial':'');
-    const tab=document.getElementById(`tab-${session}`);
-    if(!tab) return;
-    let d=tab.querySelector('.done-dot');
-    if(checked===total&&total>0){if(!d){const nd=document.createElement('span');nd.className='done-dot';tab.appendChild(nd);}}
-    else{if(d)d.remove();}
-  });
-}
-
-function weekHasData(week){
-  for(const session of SESSIONS){
-    const exos=CONFIG[session];
-    for(const [exo,count] of Object.entries(exos)){
-      for(let s=1;s<=count;s++){
-        if((localStorage.getItem(getKey(session,exo,s,'kg',week))||'')!=='') return true;
-        if((localStorage.getItem(getKey(session,exo,s,'reps',week))||'')!=='') return true;
-        if(localStorage.getItem(getKey(session,exo,s,'chk',week))==='1') return true;
-      }
-    }
-  }
-  return false;
-}
-
-function updateWeekFills(){
-  document.querySelectorAll('.week-btn').forEach(btn=>{
-    const w=parseInt(btn.dataset.week);
-    if(weekHasData(w)) btn.classList.add('has-data'); else btn.classList.remove('has-data');
-  });
-}
-
-function switchWeek(week){
-  currentWeek=week;
-  document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelector(`.week-btn[data-week="${week}"]`).classList.add('active');
-  SESSIONS.forEach(session=>{
-    const pill=document.getElementById(`pill-${session}`); if(pill) pill.textContent=`Semaine ${week}`;
-    const nl=document.getElementById(`notelabel-${session}`); if(nl) nl.textContent=`Semaine ${week}`;
-  });
-  loadAll();
-}
-
-function switchTab(id){
-  document.querySelectorAll('.session').forEach(s=>s.classList.remove('visible'));
-  document.querySelectorAll('.tab').forEach(t=>t.className='tab');
-  document.getElementById(`session-${id}`).classList.add('visible');
-  document.getElementById(`tab-${id}`).className=`tab active-${id}`;
-  document.getElementById('week-selector').style.display = (id==='poids') ? 'none' : 'flex';
-  window.scrollTo(0,0);
-}
-
-function buildPoids(){
-  const container=document.getElementById('poids-rows');
-  if(!container) return;
-  container.innerHTML='';
-  for(let w=1;w<=NB_SEMAINES;w++){
-    const row=document.createElement('div');
-    row.className='poids-row';
-    row.innerHTML=`<div class="serie-num">S${w}</div>
-      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="poids-w${w}" oninput="savePoids(${w},this.value)">
-      <div class="serie-input" id="delta-w${w}" style="border-right:none;color:var(--muted)">—</div>`;
-    container.appendChild(row);
-  }
-  loadPoids();
-}
-
-function savePoids(w,value){
-  localStorage.setItem(`poids-w${w}`,value);
-  syncFieldDebounced(`poids-w${w}`, {client:CLIENT_ID,type:'poids',week:w,value:value,ts:new Date().toISOString()});
-  loadPoids();
-}
-
-function loadPoids(){
-  let prev=null;
-  for(let w=1;w<=NB_SEMAINES;w++){
-    const val=localStorage.getItem(`poids-w${w}`)||'';
-    const el=document.getElementById(`poids-w${w}`);
-    const deltaEl=document.getElementById(`delta-w${w}`);
-    if(el) el.value=val;
-    if(deltaEl){
-      if(val!==''&&prev!==null&&prev!==''){
-        const d=(parseFloat(String(val).replace(',','.'))-parseFloat(String(prev).replace(',','.')));
-        const sign=d>0?'+':'';
-        deltaEl.textContent=isNaN(d)?'—':sign+d.toFixed(1);
-        deltaEl.style.color=isNaN(d)?'var(--muted)':(d>0?'var(--red)':d<0?'var(--green)':'var(--muted)');
-      } else { deltaEl.textContent='—'; deltaEl.style.color='var(--muted)'; }
-    }
-    if(val!=='') prev=val;
-  }
-  const noteEl=document.getElementById('note-poids');
-  if(noteEl) noteEl.value=localStorage.getItem('poids-note')||'';
-}
-
-function resetPoids(){
-  if(!confirm('Effacer tout le suivi de poids ?')) return;
-  for(let w=1;w<=NB_SEMAINES;w++) localStorage.removeItem(`poids-w${w}`);
-  localStorage.removeItem('poids-note');
-  loadPoids();
-}
-
-document.querySelectorAll('.note-input').forEach(el=>{
-  el.addEventListener('input',()=>{
-    if(el.id==='note-poids'){ localStorage.setItem('poids-note',el.value); return; }
-    const session=el.id.replace('note-','');
-    localStorage.setItem(`${session}-note-w${currentWeek}`,el.value);
-  });
-});
-
-buildAll();
-buildPoids();
-</script>
 </body>
 </html>
