@@ -40,14 +40,12 @@
   }
   input, .serie-input, .exo-prescription, .serie-num, .pr-badge { font-variant-numeric: tabular-nums; }
 
-  /* ---------- Header ---------- */
   .header { padding:calc(22px + env(safe-area-inset-top)) 20px 12px; display:flex; align-items:flex-end; justify-content:space-between; position:sticky; top:0; background:color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); z-index:100; border-bottom:0.5px solid var(--sep); }
   .eyebrow { font-size:12px; font-weight:500; color:var(--text2); margin-bottom:2px; }
   h1 { font-size:30px; font-weight:700; letter-spacing:-0.02em; line-height:1.05; }
   .cycle-badge { font-size:11px; color:var(--text2); text-align:right; line-height:1.4; padding-bottom:3px; }
   .cycle-badge strong { color:var(--accent); font-weight:600; display:block; font-size:12px; margin-top:1px; }
 
-  /* ---------- Semaines : segmented control ---------- */
   .week-selector { display:flex; gap:2px; padding:3px; margin:14px 20px 0; background:var(--seg-bg); border-radius:10px; position:sticky; top:72px; z-index:99; }
   .week-btn { flex:1; min-width:0; padding:7px 0; border-radius:8px; font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; border:none; background:transparent; color:var(--text2); transition:background 0.18s, color 0.18s; position:relative; }
   .week-btn .wk-sub { display:none; }
@@ -55,7 +53,6 @@
   .week-btn .wk-fill { position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:var(--green); opacity:0; transition:opacity 0.2s; }
   .week-btn.has-data .wk-fill { opacity:1; }
 
-  /* ---------- Résumé ---------- */
   .summary-bar { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 20px 0; }
   .summary-cell { background:var(--card); border-radius:12px; padding:10px 4px; text-align:center; cursor:pointer; box-shadow:var(--shadow); transition:transform 0.1s; }
   .summary-cell:active { transform:scale(0.97); }
@@ -64,7 +61,6 @@
   .s-dot.done { background:var(--green); }
   .s-dot.partial { background:var(--orange); }
 
-  /* ---------- Principes ---------- */
   .principles { margin:12px 20px 0; background:var(--card); border-radius:14px; box-shadow:var(--shadow); overflow:hidden; }
   .principles summary { list-style:none; cursor:pointer; padding:13px 16px; font-size:14px; font-weight:600; color:var(--text); display:flex; justify-content:space-between; align-items:center; }
   .principles summary::-webkit-details-marker { display:none; }
@@ -73,7 +69,6 @@
   .p-item { display:flex; gap:12px; padding:11px 16px; border-top:0.5px solid var(--sep2); font-size:13px; line-height:1.5; color:var(--text2); }
   .p-num { font-weight:700; color:var(--accent); flex-shrink:0; width:14px; font-size:13px; }
 
-  /* ---------- Onglets ---------- */
   .tabs { display:flex; overflow-x:auto; padding:14px 20px 2px; gap:8px; scrollbar-width:none; }
   .tabs::-webkit-scrollbar { display:none; }
   .tab { flex-shrink:0; padding:8px 15px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; border:none; background:var(--card); color:var(--text2); font-family:inherit; text-align:center; line-height:1.25; box-shadow:var(--shadow); transition:background 0.15s, color 0.15s; }
@@ -83,7 +78,6 @@
   .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:6px; vertical-align:middle; }
   .tab.active-fb-a .done-dot, .tab.active-fb-b .done-dot, .tab.active-fb-c .done-dot { background:#fff; }
 
-  /* ---------- Séances ---------- */
   .session { display:none; padding:0 20px; }
   .session.visible { display:block; animation:fadeUp 0.25s ease; }
   @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
@@ -99,7 +93,6 @@
   .sess-progress-fill { height:100%; width:0%; border-radius:3px; background:var(--accent); transition:width 0.3s ease; }
   .sess-progress-label { font-size:11px; font-weight:500; color:var(--text3); margin-top:6px; padding-bottom:4px; }
 
-  /* ---------- Cartes exos ---------- */
   .exo-card { margin-top:12px; background:var(--card); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); }
   .exo-top { padding:14px 16px 6px; display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
   .exo-num { font-size:11px; font-weight:600; color:var(--text3); flex-shrink:0; margin-top:3px; }
@@ -202,12 +195,12 @@
   <div class="session-header">
     <div class="session-tag tag-a">Jour Hammer</div>
     <div class="session-title">Full Body A<span class="session-week-pill" id="pill-fb-a">Semaine 1</span></div>
-    <div class="session-sub">Développé Hammer · Tirage vertical · Leg ext · Latéral · Leg curl · Curl marteau · Mollets</div>
+    <div class="session-sub">Développé Hammer · D.Y. row · Leg ext · Latéral · Leg curl · Curl marteau · Mollets</div>
     <div class="sess-progress"><div class="sess-progress-fill" id="prog-fb-a"></div></div>
     <div class="sess-progress-label" id="proglabel-fb-a">0 / 15 séries</div>
   </div>
-  <div class="exo-card" data-exo="exo1" data-name="Développé incliné Hammer" data-target="Pec haut · stop avant verrouillage" data-pres="2 × 6–10" data-presclass="pres-a" data-rpe="RPE 9 puis échec" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Tirage vertical prise neutre" data-target="Dos · Grand dorsal · largeur" data-pres="3 × 8–12" data-presclass="pres-a" data-rpe="RPE 8–9 · dern. échec"></div>
+  <div class="exo-card" data-exo="exo1" data-name="Développé incliné Hammer" data-target="Pec haut · stop avant verrouillage" data-pres="2 × 6–10" data-presclass="pres-a" data-rpe="RPE 9–10" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Rowing D.Y. appui poitrine (prise neutre)" data-target="Dos · épaisseur · appui = zéro bas du dos" data-pres="3 × 8–12" data-presclass="pres-a" data-rpe="RPE 9–10" data-adapted="1"></div>
   <div class="exo-card" data-exo="exo3" data-name="Leg extension uni semi en arrière" data-target="Quadriceps" data-pres="2 × 8–12" data-presclass="pres-a" data-rpe="RPE 10"></div>
   <div class="exo-card" data-exo="exo4" data-name="Élévation latérale câble unilatérale" data-target="Deltoïde lat." data-pres="2 × 12–15" data-presclass="pres-a" data-rpe="RPE 9–10"></div>
   <div class="exo-card" data-exo="exo5" data-name="Leg curl allongé" data-target="Ischio-jambiers" data-pres="2 × 8–12" data-presclass="pres-a" data-rpe="RPE 10"></div>
@@ -224,17 +217,17 @@
   <div class="session-header">
     <div class="session-tag tag-b">Dos en premier</div>
     <div class="session-title">Full Body B<span class="session-week-pill" id="pill-fb-b">Semaine 1</span></div>
-    <div class="session-sub">D.Y. row · Développé Smith · Leg curl · Latéral · Leg ext · Extension triceps · Abdos</div>
+    <div class="session-sub">D.Y. row · Développé Smith · Leg curl · Latéral · Leg ext · Extension triceps · Oiseau</div>
     <div class="sess-progress"><div class="sess-progress-fill" id="prog-fb-b"></div></div>
     <div class="sess-progress-label" id="proglabel-fb-b">0 / 15 séries</div>
   </div>
-  <div class="exo-card" data-exo="exo2" data-name="Rowing D.Y. appui poitrine (prise neutre)" data-target="Dos · épaisseur · appui = zéro bas du dos" data-pres="3 × 8–12" data-presclass="pres-b" data-rpe="RPE 8–9 · dern. échec" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Rowing D.Y. appui poitrine (prise neutre)" data-target="Dos · épaisseur · appui = zéro bas du dos" data-pres="3 × 8–12" data-presclass="pres-b" data-rpe="RPE 9–10" data-adapted="1"></div>
   <div class="exo-card" data-exo="exo1" data-name="Développé incliné Smith guidé" data-target="Pec haut · léger · stop avant verrouillage" data-pres="2 × 10–12" data-presclass="pres-b" data-rpe="RPE 9" data-adapted="1"></div>
   <div class="exo-card" data-exo="exo3" data-name="Leg curl allongé" data-target="Ischio-jambiers" data-pres="2 × 8–12" data-presclass="pres-b" data-rpe="RPE 10"></div>
   <div class="exo-card" data-exo="exo4" data-name="Élévation latérale câble unilatérale" data-target="Deltoïde lat." data-pres="2 × 12–15" data-presclass="pres-b" data-rpe="RPE 9–10"></div>
   <div class="exo-card" data-exo="exo5" data-name="Leg extension uni semi en arrière" data-target="Quadriceps" data-pres="2 × 8–12" data-presclass="pres-b" data-rpe="RPE 10"></div>
   <div class="exo-card" data-exo="exo6" data-name="Extension triceps poulie (pushdown)" data-target="Triceps · coudes serrés" data-pres="2 × 10–12" data-presclass="pres-b" data-rpe="RPE 9–10"></div>
-  <div class="exo-card" data-exo="exo7" data-name="Oiseau poulie" data-target="Arrière d'épaule" data-pres="2 × 15–20" data-presclass="pres-b" data-rpe="RPE 9–10"></div>
+  <div class="exo-card" data-exo="exo7" data-name="Oiseau à la poulie" data-target="Arriere d'épaule · léger, stop si gêne" data-pres="2 × 15–20" data-presclass="pres-b" data-rpe="RPE 7–8" data-adapted="1"></div>
   <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-fb-b">Semaine 1</span></div><textarea class="note-input" id="note-fb-b" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
   <button class="save-btn" onclick="saveSession('fb-b')">Enregistrer la séance</button>
   <button class="reset-btn" onclick="resetSession('fb-b')">Effacer cette séance (semaine en cours)</button>
@@ -246,12 +239,12 @@
   <div class="session-header">
     <div class="session-tag tag-c">Pec fly · vertical</div>
     <div class="session-title">Full Body C<span class="session-week-pill" id="pill-fb-c">Semaine 1</span></div>
-    <div class="session-sub">Pec fly Hammer · D.Y. row · Leg ext · Latéral · Leg curl · Abdos · Adducteurs</div>
+    <div class="session-sub">Pec fly Hammer · Tirage vertical · Leg ext · Latéral · Leg curl · Abdos · Adducteurs</div>
     <div class="sess-progress"><div class="sess-progress-fill" id="prog-fb-c"></div></div>
     <div class="sess-progress-label" id="proglabel-fb-c">0 / 16 séries</div>
   </div>
   <div class="exo-card" data-exo="exo1" data-name="Pec fly Hammer" data-target="Pectoraux · pré-étirement" data-pres="3 × 10–15" data-presclass="pres-c" data-rpe="RPE 9–10"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Rowing D.Y. appui poitrine (prise neutre)" data-target="Dos · épaisseur · appui = zéro bas du dos" data-pres="3 × 8–12" data-presclass="pres-c" data-rpe="RPE 8–9 · dern. échec" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Tirage vertical prise neutre" data-target="Dos · Grand dorsal · largeur" data-pres="3 × 8–12" data-presclass="pres-c" data-rpe="RPE 9–10"></div>
   <div class="exo-card" data-exo="exo3" data-name="Leg extension uni semi en arrière" data-target="Quadriceps" data-pres="2 × 8–12" data-presclass="pres-c" data-rpe="RPE 10"></div>
   <div class="exo-card" data-exo="exo4" data-name="Élévation latérale câble unilatérale" data-target="Deltoïde lat." data-pres="2 × 12–15" data-presclass="pres-c" data-rpe="RPE 9–10"></div>
   <div class="exo-card" data-exo="exo5" data-name="Leg curl allongé" data-target="Ischio-jambiers" data-pres="2 × 8–12" data-presclass="pres-c" data-rpe="RPE 10"></div>
@@ -297,6 +290,98 @@ const SESSIONS = ['fb-a','fb-b','fb-c'];
 let currentWeek = 1;
 
 function getKey(s,exo,serie,field,week){ return `${s}-${exo}-s${serie}-${field}-w${week}`; }
+
+/* ---------- Pré-remplissage historique (one-shot v2) ----------
+   S1→S3 : ancien programme Upper/Lower (repères indicatifs, machines
+   parfois différentes / avant conversion ×2 poulie double).
+   S4 : ton full body actuel (Fb-a 05/07 + Fb-b/Fb-c 01-03/07).
+   Reconstruit proprement S1→S4 puis pose le drapeau. */
+function seedHistorical(){
+  if(localStorage.getItem('seed-hist-v2')==='1') return;
+  // nettoyage perf S1-S4 + notes S1-S3 (on garde une note éventuelle en S4)
+  SESSIONS.forEach(s=>{
+    Object.entries(CONFIG[s]).forEach(([exo,count])=>{
+      for(let i=1;i<=count;i++){
+        [1,2,3,4].forEach(w=>{
+          ['kg','reps','rir','chk'].forEach(f=>localStorage.removeItem(getKey(s,exo,i,f,w)));
+        });
+      }
+    });
+    [1,2,3].forEach(w=>localStorage.removeItem(`${s}-note-w${w}`));
+  });
+  // [semaine, session, exo, série, kg, reps]  (reps '' = charge notée sans reps)
+  const DATA=[
+    // ===== S1 → S3 : ancien programme =====
+    // Développé incliné (fb-a exo1) — ta progression clé
+    [1,'fb-a','exo1',1,'65','10'],[1,'fb-a','exo1',2,'60','12'],
+    [2,'fb-a','exo1',1,'70','8'],[2,'fb-a','exo1',2,'71.25','7'],
+    [3,'fb-a','exo1',1,'71.25','8'],[3,'fb-a','exo1',2,'71.25','6'],
+    // Leg extension (fb-a exo3)
+    [1,'fb-a','exo3',1,'30','10'],[1,'fb-a','exo3',2,'30','10'],
+    [2,'fb-a','exo3',1,'40','10'],[2,'fb-a','exo3',2,'40','10'],
+    // Leg curl (fb-a exo5)
+    [1,'fb-a','exo5',1,'27.5','20'],[1,'fb-a','exo5',2,'30','20'],
+    [2,'fb-a','exo5',1,'42.5','15'],[2,'fb-a','exo5',2,'50','12'],
+    // Élévation latérale (fb-a exo4)
+    [2,'fb-a','exo4',1,'17.5','15'],[2,'fb-a','exo4',2,'17.5','13'],
+    // Curl marteau (fb-a exo6)
+    [1,'fb-a','exo6',1,'20','12'],[1,'fb-a','exo6',2,'20','12'],
+    [2,'fb-a','exo6',1,'24','12'],[2,'fb-a','exo6',2,'24','12'],
+    // Mollets (fb-a exo7)
+    [2,'fb-a','exo7',1,'115','15'],
+    // Triceps (fb-b exo6)
+    [1,'fb-b','exo6',1,'21.25','12'],[1,'fb-b','exo6',2,'21.25','10'],
+    [2,'fb-b','exo6',1,'21.25','12'],[2,'fb-b','exo6',2,'21.25','11'],
+    // Oiseau / rotation (fb-b exo7)
+    [1,'fb-b','exo7',1,'6','15'],
+    [2,'fb-b','exo7',1,'6','15'],[2,'fb-b','exo7',2,'6','12'],
+    // Pec fly (fb-c exo1) — repère lourd bilatéral
+    [1,'fb-c','exo1',1,'55','10'],[1,'fb-c','exo1',2,'55','10'],[1,'fb-c','exo1',3,'45','13'],
+    [2,'fb-c','exo1',1,'55','11'],[2,'fb-c','exo1',2,'55','12'],
+    // Tirage vertical (fb-c exo2) — indicatif (conversion ×2)
+    [1,'fb-c','exo2',1,'117','8'],[1,'fb-c','exo2',2,'110','5'],
+    [2,'fb-c','exo2',1,'82','12'],[2,'fb-c','exo2',2,'89','10'],
+    // Abdos (fb-c exo6)
+    [2,'fb-c','exo6',1,'46','12'],[2,'fb-c','exo6',2,'46','12'],
+    // Adducteur (fb-c exo7)
+    [1,'fb-c','exo7',1,'130','12'],
+    [2,'fb-c','exo7',1,'130','15'],[2,'fb-c','exo7',2,'130','10'],
+
+    // ===== S4 : full body actuel =====
+    // Fb-a (05/07)
+    [4,'fb-a','exo1',1,'71.25','8'],[4,'fb-a','exo1',2,'71.25','7'],
+    [4,'fb-a','exo2',1,'120',''],[4,'fb-a','exo2',2,'100','10'],[4,'fb-a','exo2',3,'100','8'],
+    [4,'fb-a','exo3',1,'40','10'],[4,'fb-a','exo3',2,'40','10'],
+    [4,'fb-a','exo4',1,'15','15'],[4,'fb-a','exo4',2,'15','15'],
+    [4,'fb-a','exo5',1,'65',''],
+    [4,'fb-a','exo6',1,'22',''],
+    // Fb-b (01/07)
+    [4,'fb-b','exo1',1,'70','7'],[4,'fb-b','exo1',2,'60','10'],
+    [4,'fb-b','exo2',1,'89','10'],[4,'fb-b','exo2',2,'89','10'],[4,'fb-b','exo2',3,'89','10'],
+    [4,'fb-b','exo3',1,'50','15'],[4,'fb-b','exo3',2,'50','12'],
+    [4,'fb-b','exo4',1,'12.5','15'],[4,'fb-b','exo4',2,'12.5','15'],
+    [4,'fb-b','exo5',1,'35','10'],[4,'fb-b','exo5',2,'35','8'],
+    [4,'fb-b','exo6',1,'16.5','10'],[4,'fb-b','exo6',2,'16.5','8'],
+    [4,'fb-b','exo7',1,'6','20'],[4,'fb-b','exo7',2,'6','15'],
+    // Fb-c (03/07)
+    [4,'fb-c','exo1',1,'25','12'],[4,'fb-c','exo1',2,'25','10'],[4,'fb-c','exo1',3,'20','10'],
+    [4,'fb-c','exo2',1,'103','10'],[4,'fb-c','exo2',2,'103','9'],[4,'fb-c','exo2',3,'103','8'],
+    [4,'fb-c','exo3',1,'40','10'],[4,'fb-c','exo3',2,'40','8'],
+    [4,'fb-c','exo4',1,'9.5','12'],[4,'fb-c','exo4',2,'6','15'],
+    [4,'fb-c','exo5',1,'57.5','12'],[4,'fb-c','exo5',2,'57.5','12'],
+    [4,'fb-c','exo6',1,'46','15'],
+    [4,'fb-c','exo7',1,'130','12']
+  ];
+  DATA.forEach(([w,s,exo,i,kg,reps])=>{
+    localStorage.setItem(getKey(s,exo,i,'kg',w),kg);
+    if(reps!=='') localStorage.setItem(getKey(s,exo,i,'reps',w),reps);
+    localStorage.setItem(getKey(s,exo,i,'chk',w),'1');
+  });
+  // poids corporel connu
+  if(localStorage.getItem('poids-w1')===null) localStorage.setItem('poids-w1','77.9');
+  if(localStorage.getItem('poids-w3')===null) localStorage.setItem('poids-w3','76.4');
+  localStorage.setItem('seed-hist-v2','1');
+}
 
 let syncStatusTimer=null;
 function showSyncStatus(ok){
@@ -640,6 +725,7 @@ document.querySelectorAll('.note-input').forEach(el=>{
   });
 });
 
+seedHistorical();
 buildAll();
 buildPoids();
 </script>
