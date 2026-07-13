@@ -142,6 +142,24 @@
   .poids-row { display:grid; grid-template-columns:64px 1fr 1fr; align-items:center; border-bottom:0.5px solid var(--sep2); }
   .poids-row:last-child { border-bottom:none; }
 
+
+  /* ---------- Chronomètre de repos (prototype) ---------- */
+  .rest-chip { font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px; background:var(--accent-dim); color:var(--accent); border:none; font-family:inherit; line-height:1.5; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:transform 0.1s; }
+  .rest-chip:active { transform:scale(0.94); }
+  .rest-chip::before { content:'⏱'; font-size:11px; }
+  #rest-chrono { position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(140%); z-index:300; width:min(340px, calc(100vw - 32px)); background:var(--card); border-radius:20px; box-shadow:0 8px 40px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12); padding:16px 18px; opacity:0; transition:transform 0.32s cubic-bezier(0.22,1,0.36,1), opacity 0.28s; border:0.5px solid var(--sep); }
+  #rest-chrono.visible { transform:translateX(-50%) translateY(0); opacity:1; }
+  .rc-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .rc-label { font-size:12px; font-weight:600; color:var(--text2); }
+  .rc-close { background:none; border:none; color:var(--text3); font-size:20px; line-height:1; cursor:pointer; padding:0 2px; }
+  .rc-time { font-size:46px; font-weight:700; letter-spacing:-0.03em; text-align:center; font-variant-numeric:tabular-nums; color:var(--text); line-height:1; margin-bottom:14px; }
+  .rc-time.running { color:var(--accent); }
+  .rc-controls { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+  .rc-btn { padding:12px 0; border-radius:11px; border:none; font-family:inherit; font-size:14px; font-weight:600; cursor:pointer; background:var(--seg-bg); color:var(--text); transition:transform 0.1s, filter 0.15s; }
+  .rc-btn:active { transform:scale(0.96); }
+  .rc-btn.primary { background:var(--accent); color:#fff; }
+  .rc-btn.mark { margin-top:8px; width:100%; background:var(--accent-dim); color:var(--accent); }
+
   .kg-wrap { display:flex; align-items:center; }
   .kg-wrap .serie-input { flex:1; }
   .kbd-toggle { background:none; border:none; color:var(--text3); font-size:13px; padding:0 8px 0 2px; cursor:pointer; flex-shrink:0; line-height:1; }
@@ -463,7 +481,7 @@ function buildSession(session){
     const num = String(idx+1).padStart(2,'0');
     if(card.dataset.adapted){ card.classList.add('adapted'); }
     let html = `<div class="exo-top"><div class="exo-num">${num}</div><div class="exo-info"><div class="exo-name">${card.dataset.name}</div><div class="exo-target">${card.dataset.target}</div><div class="pr-badge" id="pr-${session}-${exo}"></div></div><div class="exo-prescription ${card.dataset.presclass}">${card.dataset.pres}</div></div>`;
-    html += `<div class="exo-meta"><span class="chip">${card.dataset.rpe}</span>${card.dataset.adapted?'<span class="chip chip-adapt">Adapté blessure</span>':''}</div>`;
+    html += `<div class="exo-meta"><span class="chip">${card.dataset.rpe}</span>${card.dataset.adapted?'<span class="chip chip-adapt">Adapté blessure</span>':''}<button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>`;
     html += `<div class="last-week-ref" id="ref-${session}-${exo}"></div>`;
     html += `<div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>`;
     html += `<div class="series-rows" id="${session}-${exo}">`;
@@ -742,5 +760,105 @@ seedHistorical();
 buildAll();
 buildPoids();
 </script>
+
+<!-- Chronomètre de repos (prototype) -->
+<div id="rest-chrono">
+  <div class="rc-top">
+    <span class="rc-label">Chrono repos</span>
+    <button class="rc-close" onclick="restChrono.hide()" aria-label="Fermer">×</button>
+  </div>
+  <div class="rc-time" id="rc-time">0:00</div>
+  <div class="rc-controls">
+    <button class="rc-btn primary" id="rc-toggle" onclick="restChrono.toggle()">Départ</button>
+    <button class="rc-btn" onclick="restChrono.reset()">Reset</button>
+    <button class="rc-btn" onclick="restChrono.mark()">Bip</button>
+  </div>
+</div>
+
+<script>
+/* ================= CHRONOMÈTRE DE REPOS (prototype) ================= */
+const restChrono = (function(){
+  let elapsed=0, running=false, tick=null, audioCtx=null, startStamp=0, baseElapsed=0;
+
+  const box = () => document.getElementById('rest-chrono');
+  const timeEl = () => document.getElementById('rc-time');
+  const toggleBtn = () => document.getElementById('rc-toggle');
+
+  function fmt(s){ const m=Math.floor(s/60); const r=s%60; return m+':'+String(r).padStart(2,'0'); }
+
+  function render(){
+    timeEl().textContent = fmt(elapsed);
+    timeEl().classList.toggle('running', running);
+  }
+
+  function ensureAudio(){
+    try{
+      if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      if(audioCtx.state==='suspended') audioCtx.resume();
+    }catch(e){}
+  }
+
+  function beep(){
+    try{
+      ensureAudio();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type='sine';
+      osc.frequency.setValueAtTime(950, now);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.5, now+0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now+0.18);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(now); osc.stop(now+0.2);
+    }catch(e){}
+  }
+
+  function loop(){
+    elapsed = baseElapsed + Math.round((Date.now()-startStamp)/1000);
+    render();
+  }
+
+  return {
+    open(){
+      box().classList.add('visible');
+      ensureAudio();
+    },
+    // lancé depuis le bouton "Repos" d'un exo : ouvre + repart de zéro + démarre
+    startFor(){
+      this.open();
+      elapsed=0; baseElapsed=0; startStamp=Date.now(); running=true;
+      toggleBtn().textContent='Stop';
+      render();
+      clearInterval(tick); tick=setInterval(loop, 250);
+    },
+    toggle(){
+      ensureAudio();
+      if(running){
+        // stop
+        running=false; clearInterval(tick); tick=null;
+        baseElapsed=elapsed;
+        toggleBtn().textContent='Reprendre';
+        render();
+      } else {
+        // départ / reprise
+        running=true; startStamp=Date.now();
+        toggleBtn().textContent='Stop';
+        clearInterval(tick); tick=setInterval(loop, 250);
+        render();
+      }
+    },
+    reset(){
+      running=false; clearInterval(tick); tick=null;
+      elapsed=0; baseElapsed=0;
+      toggleBtn().textContent='Départ';
+      render();
+    },
+    mark(){ beep(); if(navigator.vibrate) navigator.vibrate(60); },
+    hide(){ box().classList.remove('visible'); }
+  };
+})();
+</script>
+
 </body>
 </html>
