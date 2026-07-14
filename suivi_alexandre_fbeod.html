@@ -791,27 +791,46 @@ const restChrono = (function(){
     timeEl().classList.toggle('running', running);
   }
 
+  function unlockIOSAudioSession(){
+    // Contourne l'interrupteur silence de l'iPhone : le Web Audio API seul est
+    // classe "ambient" par Safari iOS et est donc coupe par le mode silencieux.
+    // Jouer un micro son HTML5 <audio> passe la session en categorie "playback",
+    // qui ignore l'interrupteur silence pour le reste de la page.
+    if(window.__audioSessionUnlocked) return;
+    try{
+      const silent = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
+      silent.volume = 0.01;
+      const p = silent.play();
+      if(p && p.catch) p.catch(()=>{});
+      window.__audioSessionUnlocked = true;
+    }catch(e){ console.warn('[chrono] unlock audio iOS impossible :', e); }
+  }
+
   function ensureAudio(){
     try{
+      unlockIOSAudioSession();
       if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-      if(audioCtx.state==='suspended') audioCtx.resume();
-    }catch(e){}
+      if(audioCtx.state==='suspended') audioCtx.resume().catch(e=>console.warn('[chrono] resume audioCtx impossible :', e));
+    }catch(e){ console.warn('[chrono] ensureAudio erreur :', e); }
   }
 
   function beep(){
     try{
       ensureAudio();
       const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type='sine';
-      osc.frequency.setValueAtTime(950, now);
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(0.5, now+0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now+0.18);
-      osc.connect(gain); gain.connect(audioCtx.destination);
-      osc.start(now); osc.stop(now+0.2);
-    }catch(e){}
+      // deux tons brefs et plus forts : repere sonore net meme en salle bruyante
+      [0, 0.15].forEach((offset)=>{
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type='sine';
+        osc.frequency.setValueAtTime(950, now+offset);
+        gain.gain.setValueAtTime(0.0001, now+offset);
+        gain.gain.exponentialRampToValueAtTime(0.9, now+offset+0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now+offset+0.13);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(now+offset); osc.stop(now+offset+0.14);
+      });
+    }catch(e){ console.warn('[chrono] beep erreur :', e); }
   }
 
   function loop(){
