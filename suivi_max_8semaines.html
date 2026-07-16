@@ -108,6 +108,22 @@
   .bilan-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
   .bilan-grid .bilan-field { margin-top:0; }
 
+
+  /* ---------- Chronomètre de repos ---------- */
+  .rest-chip { margin-top:6px; font-family:'DM Sans',sans-serif; font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:4px 9px; border-radius:2px; background:var(--red-dim); color:var(--red); border:1px solid rgba(230,50,50,0.25); line-height:1.4; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:background 0.15s, transform 0.1s; }
+  .rest-chip:active { transform:scale(0.94); }
+  .rest-chip::before { content:'\23F1'; font-size:10px; }
+  #rest-chrono { position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(160%); z-index:300; width:min(320px, calc(100vw - 28px)); background:var(--card); border:1px solid var(--border); border-radius:3px; box-shadow:0 8px 40px rgba(0,0,0,0.6); padding:14px 16px; opacity:0; transition:transform 0.32s cubic-bezier(0.22,1,0.36,1), opacity 0.28s; }
+  #rest-chrono.visible { transform:translateX(-50%) translateY(0); opacity:1; }
+  .rc-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .rc-label { font-family:'DM Sans',sans-serif; font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+  .rc-close { background:none; border:none; color:var(--muted2); font-size:18px; line-height:1; cursor:pointer; padding:0 2px; font-family:inherit; }
+  .rc-time { font-family:'Bebas Neue',sans-serif; font-size:46px; letter-spacing:0.04em; text-align:center; font-variant-numeric:tabular-nums; color:var(--white); line-height:1; margin-bottom:12px; }
+  .rc-time.running { color:var(--red); }
+  .rc-controls { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  .rc-btn { padding:11px 0; border-radius:2px; border:1px solid var(--border); font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:0.08em; cursor:pointer; background:transparent; color:var(--muted); transition:background 0.15s, color 0.15s, transform 0.1s; }
+  .rc-btn:active { transform:scale(0.96); }
+  .rc-btn.primary { background:var(--red); border-color:var(--red); color:#fff; }
   .kg-wrap { display:flex; align-items:center; border-right:1px solid #131313; }
   .kg-wrap .serie-input { border-right:none; flex:1; }
   .kbd-toggle { background:none; border:none; color:var(--muted2); font-size:13px; padding:0 6px 0 2px; cursor:pointer; flex-shrink:0; line-height:1; }
@@ -366,6 +382,7 @@ function buildSessions(){
             <div class="exo-name">${exo.nom}</div>
             <div class="pr-badge" id="pr-${sid}-e${ei}"></div>
           </div>
+          <button class="rest-chip" onclick="restChrono.startFor()">Repos</button>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
         <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
@@ -669,5 +686,76 @@ loadAll();
 loadCorpPoids();
 loadCorpMens();
 </script>
+
+<!-- Chronomètre de repos -->
+<div id="rest-chrono">
+  <div class="rc-top">
+    <span class="rc-label">Chrono repos</span>
+    <button class="rc-close" onclick="restChrono.hide()" aria-label="Fermer">×</button>
+  </div>
+  <div class="rc-time" id="rc-time">0:00</div>
+  <div class="rc-controls">
+    <button class="rc-btn primary" id="rc-toggle" onclick="restChrono.toggle()">Départ</button>
+    <button class="rc-btn" onclick="restChrono.reset()">Reset</button>
+  </div>
+</div>
+
+<script>
+/* ================= CHRONOMÈTRE DE REPOS ================= */
+const restChrono = (function(){
+  let elapsed=0, running=false, tick=null, startStamp=0, baseElapsed=0;
+
+  const box = () => document.getElementById('rest-chrono');
+  const timeEl = () => document.getElementById('rc-time');
+  const toggleBtn = () => document.getElementById('rc-toggle');
+
+  function fmt(s){ const m=Math.floor(s/60); const r=s%60; return m+':'+String(r).padStart(2,'0'); }
+
+  function render(){
+    timeEl().textContent = fmt(elapsed);
+    timeEl().classList.toggle('running', running);
+  }
+
+  function loop(){
+    elapsed = baseElapsed + Math.round((Date.now()-startStamp)/1000);
+    render();
+  }
+
+  return {
+    open(){
+      box().classList.add('visible');
+    },
+    // lancé depuis le bouton "Repos" d'un exo : ouvre + repart de zéro + démarre
+    startFor(){
+      this.open();
+      elapsed=0; baseElapsed=0; startStamp=Date.now(); running=true;
+      toggleBtn().textContent='Stop';
+      render();
+      clearInterval(tick); tick=setInterval(loop, 250);
+    },
+    toggle(){
+      if(running){
+        running=false; clearInterval(tick); tick=null;
+        baseElapsed=elapsed;
+        toggleBtn().textContent='Reprendre';
+        render();
+      } else {
+        running=true; startStamp=Date.now();
+        toggleBtn().textContent='Stop';
+        clearInterval(tick); tick=setInterval(loop, 250);
+        render();
+      }
+    },
+    reset(){
+      running=false; clearInterval(tick); tick=null;
+      elapsed=0; baseElapsed=0;
+      toggleBtn().textContent='Départ';
+      render();
+    },
+    hide(){ box().classList.remove('visible'); }
+  };
+})();
+</script>
+
 </body>
 </html>
