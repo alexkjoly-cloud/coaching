@@ -323,6 +323,11 @@
     <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-poids" oninput="saveBilan('poids',this.value)">
   </div>
 
+  <div class="bilan-field">
+    <div class="bilan-label">Calories moyennes <span class="bilan-scale-hint">kcal / jour, moyenne de la semaine</span></div>
+    <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-calories" oninput="saveBilan('calories',this.value)">
+  </div>
+
   <div class="bilan-grid">
     <div class="bilan-field">
       <div class="bilan-label">Nutrition tenue <span class="bilan-scale-hint">1 à 10</span></div>
@@ -378,7 +383,7 @@ const CONFIG = {
 
 const NB_SEMAINES = 8;
 const SESSIONS = ['fb-a','fb-b','fb-c'];
-const BILAN_FIELDS = ['poids','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
+const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 let currentWeek = 1;
 
 function getKey(s,exo,serie,field,week){ return `${s}-${exo}-s${serie}-${field}-w${week}`; }
