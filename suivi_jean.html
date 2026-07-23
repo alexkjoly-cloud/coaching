@@ -131,9 +131,29 @@
   .kg-wrap .serie-input { border-right:none; flex:1; }
   .kbd-toggle { background:none; border:none; color:var(--muted2); font-size:13px; padding:0 6px 0 2px; cursor:pointer; flex-shrink:0; line-height:1; }
   .kbd-toggle.text-mode { color:var(--gold); }
+
+  /* Verrou d'accès — programme non réglé */
+  body.locked > *:not(#lock-overlay):not(script) { filter:blur(9px); pointer-events:none; user-select:none; }
+  #lock-overlay { display:none; position:fixed; inset:0; z-index:1000; background:rgba(10,10,10,0.55); align-items:center; justify-content:center; padding:24px; }
+  #lock-overlay.visible { display:flex; }
+  .lock-card { max-width:340px; background:var(--card); border:1px solid var(--border); border-radius:4px; padding:28px 24px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+  .lock-eyebrow { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--red); margin-bottom:10px; font-weight:500; }
+  .lock-title { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.04em; line-height:1.05; margin-bottom:14px; }
+  .lock-text { font-size:13px; color:var(--muted); font-weight:300; line-height:1.65; }
+  .lock-text + .lock-text { margin-top:10px; }
+  .lock-text b { color:var(--white); font-weight:500; }
 </style>
 </head>
 <body>
+
+<div id="lock-overlay">
+  <div class="lock-card">
+    <div class="lock-eyebrow">Suivi en pause</div>
+    <div class="lock-title">On se retrouve bientôt</div>
+    <div class="lock-text">Ton programme est prêt, mais le suivi reste en pause tant que ce n'est pas réglé entre nous. <b>Le travail qu'on met des deux côtés mérite d'être respecté, dans les deux sens.</b></div>
+    <div class="lock-text">Écris-moi quand tu es prêt à reprendre, on remet tout en route direct.</div>
+  </div>
+</div>
 
 <div class="header">
   <div>
@@ -249,6 +269,13 @@
 <script>
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
 const CLIENT_ID = "jean";
+
+// Programme non réglé : suivi verrouillé. Passer à false pour rouvrir l'accès.
+const CLIENT_LOCKED = true;
+if(CLIENT_LOCKED){
+  document.body.classList.add('locked');
+  document.getElementById('lock-overlay').classList.add('visible');
+}
 
 const NB_SEMAINES = 8;
 
@@ -495,6 +522,7 @@ function updateRef(session,exoIdx){
 }
 
 function toggleCheck(session,exoIdx,serie){
+  if(CLIENT_LOCKED) return;
   const key=getKey(session,exoIdx,serie,'chk',currentWeek);
   const cur=localStorage.getItem(key)==='1';
   localStorage.setItem(key,cur?'0':'1');
