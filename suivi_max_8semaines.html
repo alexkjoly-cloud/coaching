@@ -702,59 +702,95 @@ loadCorpMens();
 
 <script>
 /* ================= CHRONOMÈTRE DE REPOS ================= */
+/* Basé sur l'horloge + mémorisé : survit au passage en arrière-plan ET au
+   rechargement de l'onglet. Sur les iPhone avec peu de mémoire (12/13...),
+   iOS recharge la page Safari quand on la quitte — c'est ce qui remettait le
+   chrono à zéro. On stocke l'heure de départ pour reprendre pile où on en était. */
 const restChrono = (function(){
+  const LS_KEY = 'rest-chrono-state';
   let elapsed=0, running=false, tick=null, startStamp=0, baseElapsed=0;
 
   const box = () => document.getElementById('rest-chrono');
   const timeEl = () => document.getElementById('rc-time');
   const toggleBtn = () => document.getElementById('rc-toggle');
+  const isVisible = () => { const b=box(); return !!(b && b.classList.contains('visible')); };
 
   function fmt(s){ const m=Math.floor(s/60); const r=s%60; return m+':'+String(r).padStart(2,'0'); }
 
-  function render(){
-    timeEl().textContent = fmt(elapsed);
-    timeEl().classList.toggle('running', running);
+  function persist(){
+    try {
+      if(running || elapsed>0 || baseElapsed>0){
+        localStorage.setItem(LS_KEY, JSON.stringify({running, startStamp, baseElapsed, visible:isVisible()}));
+      } else {
+        localStorage.removeItem(LS_KEY);
+      }
+    } catch(e){}
   }
 
-  function loop(){
-    elapsed = baseElapsed + Math.round((Date.now()-startStamp)/1000);
-    render();
+  function render(){
+    const t=timeEl(); if(!t) return;
+    t.textContent = fmt(elapsed);
+    t.classList.toggle('running', running);
   }
+
+  function recompute(){ if(running) elapsed = baseElapsed + Math.round((Date.now()-startStamp)/1000); }
+  function loop(){ recompute(); render(); }
+  function startTick(){ clearInterval(tick); tick=setInterval(loop, 250); }
 
   return {
-    open(){
-      box().classList.add('visible');
-    },
+    open(){ box().classList.add('visible'); persist(); },
     // lancé depuis le bouton "Repos" d'un exo : ouvre + repart de zéro + démarre
     startFor(){
       this.open();
       elapsed=0; baseElapsed=0; startStamp=Date.now(); running=true;
       toggleBtn().textContent='Stop';
-      render();
-      clearInterval(tick); tick=setInterval(loop, 250);
+      render(); startTick(); persist();
     },
     toggle(){
       if(running){
         running=false; clearInterval(tick); tick=null;
-        baseElapsed=elapsed;
+        recompute(); baseElapsed=elapsed;
         toggleBtn().textContent='Reprendre';
-        render();
+        render(); persist();
       } else {
         running=true; startStamp=Date.now();
         toggleBtn().textContent='Stop';
-        clearInterval(tick); tick=setInterval(loop, 250);
-        render();
+        startTick(); render(); persist();
       }
     },
     reset(){
       running=false; clearInterval(tick); tick=null;
       elapsed=0; baseElapsed=0;
       toggleBtn().textContent='Départ';
-      render();
+      render(); persist();
     },
-    hide(){ box().classList.remove('visible'); }
+    hide(){ box().classList.remove('visible'); persist(); },
+    // rattrape l'affichage au retour d'arrière-plan (Safari gèle les timers)
+    sync(){ if(running){ recompute(); render(); if(!tick) startTick(); } },
+    // restaure l'état après un rechargement complet de l'onglet
+    restore(){
+      let s=null; try { s=JSON.parse(localStorage.getItem(LS_KEY)||'null'); } catch(e){}
+      if(!s) return;
+      running=!!s.running; baseElapsed=s.baseElapsed||0; startStamp=s.startStamp||Date.now();
+      if(running){
+        recompute();
+        toggleBtn().textContent='Stop';
+        if(s.visible) box().classList.add('visible');
+        render(); startTick();
+      } else if(baseElapsed>0){
+        elapsed=baseElapsed;
+        toggleBtn().textContent='Reprendre';
+        if(s.visible) box().classList.add('visible');
+        render();
+      }
+    }
   };
 })();
+
+/* Reprend là où on en était : au retour dans l'onglet et au rechargement de la page. */
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) restChrono.sync(); });
+window.addEventListener('pageshow', ()=>restChrono.sync());
+restChrono.restore();
 </script>
 
 </body>

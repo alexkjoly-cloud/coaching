@@ -41,6 +41,7 @@
   .tab.active-upper { background:var(--purple-dim); border-color:rgba(155,126,222,0.3); color:var(--purple); }
   .tab.active-lower { background:var(--teal-dim); border-color:rgba(93,184,168,0.3); color:var(--teal); }
   .tab.active-corp { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); }
+  .tab.active-bilan { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); }
   .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:4px; vertical-align:middle; }
 
   .session { display:none; padding:0 16px; }
@@ -97,6 +98,35 @@
   .mens-row:last-child { border-bottom:none; }
   .mens-label { font-size:11px; color:var(--white); padding:11px 8px; border-right:1px solid #131313; }
 
+  /* Bilan hebdo */
+  .bilan-intro { margin-top:14px; padding:14px 16px; background:var(--gold-dim); border:1px solid rgba(201,168,76,0.3); border-radius:2px; font-size:12px; color:#cbb87a; font-weight:300; line-height:1.6; }
+  .bilan-intro b { color:var(--gold); font-weight:500; }
+  .bilan-field { margin-top:10px; background:var(--card); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
+  .bilan-label { font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); padding:9px 14px 7px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .bilan-scale-hint { font-size:9px; color:var(--muted2); text-transform:none; letter-spacing:0; }
+  .bilan-num { width:100%; background:none; border:none; color:var(--white); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.05em; padding:10px 14px; text-align:center; outline:none; }
+  .bilan-num::placeholder { color:var(--muted2); font-size:16px; font-family:'DM Sans',sans-serif; }
+  .bilan-txt { width:100%; background:none; border:none; color:var(--white); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:300; padding:10px 14px; resize:none; outline:none; line-height:1.6; min-height:64px; }
+  .bilan-txt::placeholder { color:var(--muted2); font-style:italic; }
+  .bilan-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+  .bilan-grid .bilan-field { margin-top:0; }
+
+  /* ---------- Chronomètre de repos ---------- */
+  .rest-chip { margin-top:6px; font-family:'DM Sans',sans-serif; font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:4px 9px; border-radius:2px; background:var(--red-dim); color:var(--red); border:1px solid rgba(230,50,50,0.25); line-height:1.4; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:background 0.15s, transform 0.1s; }
+  .rest-chip:active { transform:scale(0.94); }
+  .rest-chip::before { content:'\23F1'; font-size:10px; }
+  #rest-chrono { position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(160%); z-index:300; width:min(320px, calc(100vw - 28px)); background:var(--card); border:1px solid var(--border); border-radius:3px; box-shadow:0 8px 40px rgba(0,0,0,0.6); padding:14px 16px; opacity:0; transition:transform 0.32s cubic-bezier(0.22,1,0.36,1), opacity 0.28s; }
+  #rest-chrono.visible { transform:translateX(-50%) translateY(0); opacity:1; }
+  .rc-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .rc-label { font-family:'DM Sans',sans-serif; font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+  .rc-close { background:none; border:none; color:var(--muted2); font-size:18px; line-height:1; cursor:pointer; padding:0 2px; font-family:inherit; }
+  .rc-time { font-family:'Bebas Neue',sans-serif; font-size:46px; letter-spacing:0.04em; text-align:center; font-variant-numeric:tabular-nums; color:var(--white); line-height:1; margin-bottom:12px; }
+  .rc-time.running { color:var(--red); }
+  .rc-controls { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  .rc-btn { padding:11px 0; border-radius:2px; border:1px solid var(--border); font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:0.08em; cursor:pointer; background:transparent; color:var(--muted); transition:background 0.15s, color 0.15s, transform 0.1s; }
+  .rc-btn:active { transform:scale(0.96); }
+  .rc-btn.primary { background:var(--red); border-color:var(--red); color:#fff; }
+
   .kg-wrap { display:flex; align-items:center; border-right:1px solid #131313; }
   .kg-wrap .serie-input { border-right:none; flex:1; }
   .kbd-toggle { background:none; border:none; color:var(--muted2); font-size:13px; padding:0 6px 0 2px; cursor:pointer; flex-shrink:0; line-height:1; }
@@ -121,10 +151,71 @@
   <button class="tab" id="tab-legs" onclick="switchTab('legs')">Legs<br><span style="font-size:8px;color:var(--muted)">Jambes</span></button>
   <button class="tab" id="tab-upper" onclick="switchTab('upper')">Upper<br><span style="font-size:8px;color:var(--muted)">Haut complet</span></button>
   <button class="tab" id="tab-lower" onclick="switchTab('lower')">Lower<br><span style="font-size:8px;color:var(--muted)">Bas complet</span></button>
+  <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
 </div>
 
 <div id="sessions-container"></div>
+
+<!-- BILAN HEBDO -->
+<div class="session" id="session-bilan">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--gold)">Bilan hebdomadaire</div>
+    <div class="session-title">BILAN<span class="session-week-pill" id="pill-bilan">Semaine 1</span></div>
+    <div class="session-sub">À remplir chaque dimanche. Sois honnête, c'est comme ça que j'ajuste.</div>
+  </div>
+
+  <div class="bilan-intro">
+    <b>C'est toi qui m'envoies ton bilan chaque dimanche.</b> Je ne viens pas le réclamer. Tu remplis tout ici, tu enregistres, et tu m'envoies un message pour me dire que c'est fait. Ta régularité fait partie du suivi. Et si tu veux, envoie-moi des vidéos de tes exercices avec ton bilan : c'est un vrai plus pour que je corrige ta technique, mais pas une obligation.
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">matin à jeun</span></div>
+    <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-poids" oninput="saveBilan('poids',this.value)">
+  </div>
+
+  <div class="bilan-grid">
+    <div class="bilan-field">
+      <div class="bilan-label">Nutrition tenue <span class="bilan-scale-hint">1 à 10</span></div>
+      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-nutrition" oninput="saveBilan('nutrition',this.value)">
+    </div>
+    <div class="bilan-field">
+      <div class="bilan-label">Sommeil <span class="bilan-scale-hint">1 à 10</span></div>
+      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-sommeil" oninput="saveBilan('sommeil',this.value)">
+    </div>
+    <div class="bilan-field">
+      <div class="bilan-label">Énergie / forme <span class="bilan-scale-hint">1 à 10</span></div>
+      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-energie" oninput="saveBilan('energie',this.value)">
+    </div>
+    <div class="bilan-field">
+      <div class="bilan-label">Fatigue / courbatures <span class="bilan-scale-hint">1 à 10</span></div>
+      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-fatigue" oninput="saveBilan('fatigue',this.value)">
+    </div>
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Ressenti des séances</div>
+    <textarea class="bilan-txt" id="bilan-ressenti" placeholder="Ce qui s'est bien passé, tes sensations, les exos où tu t'es senti fort..." oninput="saveBilan('ressenti',this.value)"></textarea>
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Difficultés / douleurs</div>
+    <textarea class="bilan-txt" id="bilan-difficultes" placeholder="Exos qui coincent, douleurs (genou, épaule...), séances manquées et pourquoi..." oninput="saveBilan('difficultes',this.value)"></textarea>
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Modifications à apporter</div>
+    <textarea class="bilan-txt" id="bilan-modifs" placeholder="Ce que tu aimerais changer ou ajuster dans le programme..." oninput="saveBilan('modifs',this.value)"></textarea>
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Question pour le coach</div>
+    <textarea class="bilan-txt" id="bilan-question" placeholder="Une question, un doute, autre chose à me dire..." oninput="saveBilan('question',this.value)"></textarea>
+  </div>
+
+  <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveBilanComplet()">ENREGISTRER LE BILAN</button>
+  <div class="spacer"></div>
+</div>
 
 <!-- CORPOREL -->
 <div class="session" id="session-corp">
@@ -216,6 +307,7 @@ const PROGRAMME = {
 };
 
 const MENSURATIONS = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
+const BILAN_FIELDS = ['poids','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 const SESSIONS = Object.keys(PROGRAMME);
 let currentWeek = 1;
 
@@ -287,7 +379,7 @@ function buildSessions(){
             <div class="exo-target">${exo.target}</div>
             <div class="pr-badge" id="pr-${sid}-e${ei}"></div>
           </div>
-          <div class="exo-prescription pres-${s.couleur}">${exo.pres}</div>
+          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
         <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
@@ -340,7 +432,33 @@ function loadAll(){
     const noteEl=document.getElementById(`note-${sid}`);
     if(noteEl) noteEl.value=localStorage.getItem(`${sid}-note-w${currentWeek}`)||'';
   });
+  loadBilan();
   updateWeekFills();
+}
+
+/* ===== BILAN HEBDO ===== */
+function saveBilan(field,value){
+  localStorage.setItem(`bilan-${field}-w${currentWeek}`,value);
+  syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
+}
+function loadBilan(){
+  BILAN_FIELDS.forEach(f=>{
+    const el=document.getElementById(`bilan-${f}`);
+    if(el) el.value=localStorage.getItem(`bilan-${f}-w${currentWeek}`)||'';
+  });
+  const pill=document.getElementById('pill-bilan');
+  if(pill) pill.textContent=`Semaine ${currentWeek}`;
+}
+function saveBilanComplet(){
+  BILAN_FIELDS.forEach(f=>{
+    const el=document.getElementById(`bilan-${f}`);
+    if(el && el.value!==''){
+      syncToCloud({client:CLIENT_ID,type:'bilan',field:f,week:currentWeek,value:el.value,ts:new Date().toISOString()});
+    }
+  });
+  const btn=event.target; const orig=btn.textContent;
+  btn.textContent='BILAN ENREGISTRÉ ✓'; btn.classList.add('saved');
+  setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
 }
 
 // PR = meilleure charge sur toutes les semaines pour cet exo DANS CETTE SESSION uniquement
@@ -532,5 +650,112 @@ loadAll();
 loadCorpPoids();
 loadCorpMens();
 </script>
+
+<!-- Chronomètre de repos -->
+<div id="rest-chrono">
+  <div class="rc-top">
+    <span class="rc-label">Chrono repos</span>
+    <button class="rc-close" onclick="restChrono.hide()" aria-label="Fermer">×</button>
+  </div>
+  <div class="rc-time" id="rc-time">0:00</div>
+  <div class="rc-controls">
+    <button class="rc-btn primary" id="rc-toggle" onclick="restChrono.toggle()">Départ</button>
+    <button class="rc-btn" onclick="restChrono.reset()">Reset</button>
+  </div>
+</div>
+
+<script>
+/* ================= CHRONOMÈTRE DE REPOS ================= */
+/* Basé sur l'horloge + mémorisé : survit au passage en arrière-plan ET au
+   rechargement de l'onglet. Sur les iPhone avec peu de mémoire (12/13...),
+   iOS recharge la page Safari quand on la quitte — c'est ce qui remettait le
+   chrono à zéro. On stocke l'heure de départ pour reprendre pile où on en était. */
+const restChrono = (function(){
+  const LS_KEY = 'rest-chrono-state';
+  let elapsed=0, running=false, tick=null, startStamp=0, baseElapsed=0;
+
+  const box = () => document.getElementById('rest-chrono');
+  const timeEl = () => document.getElementById('rc-time');
+  const toggleBtn = () => document.getElementById('rc-toggle');
+  const isVisible = () => { const b=box(); return !!(b && b.classList.contains('visible')); };
+
+  function fmt(s){ const m=Math.floor(s/60); const r=s%60; return m+':'+String(r).padStart(2,'0'); }
+
+  function persist(){
+    try {
+      if(running || elapsed>0 || baseElapsed>0){
+        localStorage.setItem(LS_KEY, JSON.stringify({running, startStamp, baseElapsed, visible:isVisible()}));
+      } else {
+        localStorage.removeItem(LS_KEY);
+      }
+    } catch(e){}
+  }
+
+  function render(){
+    const t=timeEl(); if(!t) return;
+    t.textContent = fmt(elapsed);
+    t.classList.toggle('running', running);
+  }
+
+  function recompute(){ if(running) elapsed = baseElapsed + Math.round((Date.now()-startStamp)/1000); }
+  function loop(){ recompute(); render(); }
+  function startTick(){ clearInterval(tick); tick=setInterval(loop, 250); }
+
+  return {
+    open(){ box().classList.add('visible'); persist(); },
+    // lancé depuis le bouton "Repos" d'un exo : ouvre + repart de zéro + démarre
+    startFor(){
+      this.open();
+      elapsed=0; baseElapsed=0; startStamp=Date.now(); running=true;
+      toggleBtn().textContent='Stop';
+      render(); startTick(); persist();
+    },
+    toggle(){
+      if(running){
+        running=false; clearInterval(tick); tick=null;
+        recompute(); baseElapsed=elapsed;
+        toggleBtn().textContent='Reprendre';
+        render(); persist();
+      } else {
+        running=true; startStamp=Date.now();
+        toggleBtn().textContent='Stop';
+        startTick(); render(); persist();
+      }
+    },
+    reset(){
+      running=false; clearInterval(tick); tick=null;
+      elapsed=0; baseElapsed=0;
+      toggleBtn().textContent='Départ';
+      render(); persist();
+    },
+    hide(){ box().classList.remove('visible'); persist(); },
+    // rattrape l'affichage au retour d'arrière-plan (Safari gèle les timers)
+    sync(){ if(running){ recompute(); render(); if(!tick) startTick(); } },
+    // restaure l'état après un rechargement complet de l'onglet
+    restore(){
+      let s=null; try { s=JSON.parse(localStorage.getItem(LS_KEY)||'null'); } catch(e){}
+      if(!s) return;
+      running=!!s.running; baseElapsed=s.baseElapsed||0; startStamp=s.startStamp||Date.now();
+      if(running){
+        recompute();
+        toggleBtn().textContent='Stop';
+        if(s.visible) box().classList.add('visible');
+        render(); startTick();
+      } else if(baseElapsed>0){
+        elapsed=baseElapsed;
+        toggleBtn().textContent='Reprendre';
+        if(s.visible) box().classList.add('visible');
+        render();
+      }
+    }
+  };
+})();
+
+/* Reprend là où on en était : au retour dans l'onglet et au rechargement de la page. */
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) restChrono.sync(); });
+window.addEventListener('pageshow', ()=>restChrono.sync());
+restChrono.restore();
+</script>
+
 </body>
 </html>
