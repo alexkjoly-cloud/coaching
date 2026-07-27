@@ -74,7 +74,7 @@
   .tab { flex-shrink:0; padding:8px 15px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; border:none; background:var(--card); color:var(--text2); font-family:inherit; text-align:center; line-height:1.25; box-shadow:var(--shadow); transition:background 0.15s, color 0.15s; }
   .tab br { display:none; }
   .tab span { display:none !important; }
-  .tab.active-haut-a, .tab.active-bas-a, .tab.active-haut-b, .tab.active-bas-b, .tab.active-poids, .tab.active-bilan { background:var(--accent); color:#fff; }
+  .tab.active-haut-a, .tab.active-bas-a, .tab.active-haut-b, .tab.active-bas-b, .tab.active-bilan { background:var(--accent); color:#fff; }
   .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:6px; vertical-align:middle; }
   .tab.active-haut-a .done-dot, .tab.active-bas-a .done-dot, .tab.active-haut-b .done-dot, .tab.active-bas-b .done-dot { background:#fff; }
 
@@ -138,9 +138,6 @@
   .save-btn.saved { background:var(--green); }
   .reset-btn { margin-top:8px; width:100%; padding:11px; background:transparent; color:var(--red); border:none; border-radius:13px; font-family:inherit; font-size:13px; font-weight:500; cursor:pointer; }
   .spacer { height:18px; }
-
-  .poids-row { display:grid; grid-template-columns:64px 1fr 1fr; align-items:center; border-bottom:0.5px solid var(--sep2); }
-  .poids-row:last-child { border-bottom:none; }
 
   /* Bilan hebdo */
   .bilan-intro { margin-top:14px; padding:14px 16px; background:var(--orange-dim); border-radius:14px; font-size:13px; color:var(--text); font-weight:400; line-height:1.55; }
@@ -219,7 +216,6 @@
   <button class="tab" id="tab-bas-a" onclick="switchTab('bas-a')">Bas A</button>
   <button class="tab" id="tab-haut-b" onclick="switchTab('haut-b')">Haut B</button>
   <button class="tab" id="tab-bas-b" onclick="switchTab('bas-b')">Bas B</button>
-  <button class="tab" id="tab-poids" onclick="switchTab('poids')">Poids</button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan</button>
 </div>
 
@@ -300,25 +296,6 @@
   <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-bas-b">Semaine 1</span></div><textarea class="note-input" id="note-bas-b" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
   <button class="save-btn" onclick="saveSession('bas-b')">Enregistrer la séance</button>
   <button class="reset-btn" onclick="resetSession('bas-b')">Effacer cette séance (semaine en cours)</button>
-  <div class="spacer"></div>
-</div>
-
-<!-- POIDS -->
-<div class="session" id="session-poids">
-  <div class="session-header">
-    <div class="session-tag" style="color:var(--accent)">Suivi corporel · 1× / semaine</div>
-    <div class="session-title">Poids</div>
-    <div class="session-sub">Pèse-toi le même jour, à jeun le matin. La colonne Δ calcule la variation automatiquement.</div>
-  </div>
-  <div class="exo-card">
-    <div class="col-header" style="grid-template-columns:64px 1fr 1fr">
-      <div class="col-h">Sem.</div><div class="col-h">Poids (kg)</div><div class="col-h">Δ vs préc.</div>
-    </div>
-    <div class="series-rows" id="poids-rows"></div>
-  </div>
-  <div class="note-area"><div class="note-label">Notes (composition, sensations, mensurations...)</div><textarea class="note-input" id="note-poids" placeholder="Tour de taille, ressenti, photos prises le..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('poids')">Enregistrer</button>
-  <button class="reset-btn" onclick="resetPoids()">Effacer le suivi poids</button>
   <div class="spacer"></div>
 </div>
 
@@ -621,13 +598,9 @@ function toggleCheck(session,exo,serie){
 
 function saveSession(session){
   const noteEl=document.getElementById(`note-${session}`);
-  if(session==='poids'){
-    if(noteEl){ localStorage.setItem('poids-note',noteEl.value); syncToCloud({client:CLIENT_ID,type:'note',session:'poids',week:'-',value:noteEl.value,ts:new Date().toISOString()}); }
-  } else {
-    if(noteEl){ localStorage.setItem(`${session}-note-w${currentWeek}`,noteEl.value); syncToCloud({client:CLIENT_ID,type:'note',session:session,week:currentWeek,value:noteEl.value,ts:new Date().toISOString()}); }
-    localStorage.setItem('fbeod-last', JSON.stringify({session:session, ts:Date.now()}));
-    updateNextBadge();
-  }
+  if(noteEl){ localStorage.setItem(`${session}-note-w${currentWeek}`,noteEl.value); syncToCloud({client:CLIENT_ID,type:'note',session:session,week:currentWeek,value:noteEl.value,ts:new Date().toISOString()}); }
+  localStorage.setItem('fbeod-last', JSON.stringify({session:session, ts:Date.now()}));
+  updateNextBadge();
   const btn=event.target; const orig=btn.textContent;
   btn.textContent='Enregistré ✓'; btn.classList.add('saved');
   setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
@@ -710,72 +683,18 @@ function switchTab(id){
   document.querySelectorAll('.tab').forEach(t=>t.className='tab');
   document.getElementById(`session-${id}`).classList.add('visible');
   document.getElementById(`tab-${id}`).className=`tab active-${id}`;
-  document.getElementById('week-selector').style.display = (id==='poids') ? 'none' : 'flex';
+  document.getElementById('week-selector').style.display='flex';
   window.scrollTo(0,0);
-}
-
-function buildPoids(){
-  const container=document.getElementById('poids-rows');
-  if(!container) return;
-  container.innerHTML='';
-  for(let w=1;w<=NB_SEMAINES;w++){
-    const row=document.createElement('div');
-    row.className='poids-row';
-    row.innerHTML=`<div class="serie-num">S${w}</div>
-      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="poids-w${w}" oninput="savePoids(${w},this.value)">
-      <div class="serie-input" id="delta-w${w}" style="color:var(--text3)">—</div>`;
-    container.appendChild(row);
-  }
-  loadPoids();
-}
-
-function savePoids(w,value){
-  localStorage.setItem(`poids-w${w}`,value);
-  syncFieldDebounced(`poids-w${w}`, {client:CLIENT_ID,type:'poids',week:w,value:value,ts:new Date().toISOString()});
-  loadPoids();
-}
-
-function loadPoids(){
-  let prev=null;
-  for(let w=1;w<=NB_SEMAINES;w++){
-    const val=localStorage.getItem(`poids-w${w}`)||'';
-    const el=document.getElementById(`poids-w${w}`);
-    const deltaEl=document.getElementById(`delta-w${w}`);
-    if(el) el.value=val;
-    if(deltaEl){
-      if(val!==''&&prev!==null&&prev!==''){
-        const d=(parseFloat(String(val).replace(',','.'))-parseFloat(String(prev).replace(',','.')));
-        if(isNaN(d)){ deltaEl.textContent='—'; deltaEl.style.color='var(--text3)'; }
-        else {
-          const arrow=d>0?'▲ +':d<0?'▼ ':'· ';
-          deltaEl.textContent=arrow+d.toFixed(1);
-          deltaEl.style.color=d>0?'var(--red)':d<0?'var(--green)':'var(--text3)';
-        }
-      } else { deltaEl.textContent='—'; deltaEl.style.color='var(--text3)'; }
-    }
-    if(val!=='') prev=val;
-  }
-  const noteEl=document.getElementById('note-poids');
-  if(noteEl) noteEl.value=localStorage.getItem('poids-note')||'';
-}
-
-function resetPoids(){
-  if(!confirm('Effacer tout le suivi de poids ?')) return;
-  for(let w=1;w<=NB_SEMAINES;w++) localStorage.removeItem(`poids-w${w}`);
-  localStorage.removeItem('poids-note');
-  loadPoids();
 }
 
 document.querySelectorAll('.note-input').forEach(el=>{
   el.addEventListener('input',()=>{
-    if(el.id==='note-poids'){ localStorage.setItem('poids-note',el.value); return; }
     const session=el.id.replace('note-','');
     localStorage.setItem(`${session}-note-w${currentWeek}`,el.value);
   });
 });
 
 buildAll();
-buildPoids();
 </script>
 
 <!-- Chronomètre de repos (prototype) -->
