@@ -53,7 +53,7 @@
   .week-btn .wk-fill { position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:var(--green); opacity:0; transition:opacity 0.2s; }
   .week-btn.has-data .wk-fill { opacity:1; }
 
-  .summary-bar { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 20px 0; }
+  .summary-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 20px 0; }
   .summary-cell { background:var(--card); border-radius:12px; padding:10px 4px; text-align:center; cursor:pointer; box-shadow:var(--shadow); transition:transform 0.1s; }
   .summary-cell:active { transform:scale(0.97); }
   .s-label { font-size:11px; font-weight:600; color:var(--text2); margin-bottom:5px; }
@@ -74,9 +74,9 @@
   .tab { flex-shrink:0; padding:8px 15px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; border:none; background:var(--card); color:var(--text2); font-family:inherit; text-align:center; line-height:1.25; box-shadow:var(--shadow); transition:background 0.15s, color 0.15s; }
   .tab br { display:none; }
   .tab span { display:none !important; }
-  .tab.active-fb-a, .tab.active-fb-b, .tab.active-fb-c, .tab.active-poids, .tab.active-bilan { background:var(--accent); color:#fff; }
+  .tab.active-haut-a, .tab.active-bas-a, .tab.active-haut-b, .tab.active-bas-b, .tab.active-poids, .tab.active-bilan { background:var(--accent); color:#fff; }
   .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:6px; vertical-align:middle; }
-  .tab.active-fb-a .done-dot, .tab.active-fb-b .done-dot, .tab.active-fb-c .done-dot { background:#fff; }
+  .tab.active-haut-a .done-dot, .tab.active-bas-a .done-dot, .tab.active-haut-b .done-dot, .tab.active-bas-b .done-dot { background:#fff; }
 
   .session { display:none; padding:0 20px; }
   .session.visible { display:block; animation:fadeUp 0.25s ease; }
@@ -85,7 +85,7 @@
 
   .session-header { padding:18px 0 0; margin-bottom:2px; }
   .session-tag { font-size:12px; font-weight:600; color:var(--accent); margin-bottom:3px; }
-  .tag-a, .tag-b, .tag-c { color:var(--accent); }
+  .tag-haut-a, .tag-bas-a, .tag-haut-b, .tag-bas-b { color:var(--accent); }
   .session-title { font-size:24px; font-weight:700; letter-spacing:-0.02em; line-height:1.1; }
   .session-week-pill { display:inline-block; font-size:11px; font-weight:600; color:var(--accent); background:var(--accent-dim); padding:3px 10px; border-radius:20px; margin-left:8px; vertical-align:middle; letter-spacing:0; }
   .session-sub { font-size:12.5px; color:var(--text2); margin-top:5px; }
@@ -100,7 +100,7 @@
   .exo-name { font-size:15px; font-weight:600; line-height:1.3; letter-spacing:-0.01em; }
   .exo-target { font-size:12px; color:var(--text2); margin-top:2px; }
   .exo-prescription { font-size:15px; font-weight:700; color:var(--accent); white-space:nowrap; flex-shrink:0; letter-spacing:-0.01em; }
-  .pres-a, .pres-b, .pres-c { color:var(--accent); }
+  .pres-haut-a, .pres-bas-a, .pres-haut-b, .pres-bas-b { color:var(--accent); }
 
   .exo-meta { display:flex; gap:6px; padding:2px 16px 11px; align-items:center; flex-wrap:wrap; }
   .chip { font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px; background:var(--seg-bg); color:var(--text2); border:none; font-family:inherit; line-height:1.5; }
@@ -182,10 +182,10 @@
 
 <div class="header">
   <div>
-    <div class="eyebrow">Alexandre · Full body 1j/2</div>
+    <div class="eyebrow">Alexandre · Haut / Bas</div>
     <h1>Suivi</h1>
   </div>
-  <div class="cycle-badge">Rotation<strong id="cycle-label">A · B · C en boucle</strong></div>
+  <div class="cycle-badge">Rotation<strong id="cycle-label">Haut A · Bas A · Haut B · Bas B</strong></div>
 </div>
 
 <div class="week-selector" id="week-selector">
@@ -200,90 +200,106 @@
 </div>
 
 <div class="summary-bar">
-  <div class="summary-cell" onclick="switchTab('fb-a')"><div class="s-label">FB A</div><div class="s-dot" id="dot-fb-a"></div></div>
-  <div class="summary-cell" onclick="switchTab('fb-b')"><div class="s-label">FB B</div><div class="s-dot" id="dot-fb-b"></div></div>
-  <div class="summary-cell" onclick="switchTab('fb-c')"><div class="s-label">FB C</div><div class="s-dot" id="dot-fb-c"></div></div>
+  <div class="summary-cell" onclick="switchTab('haut-a')"><div class="s-label">Haut A</div><div class="s-dot" id="dot-haut-a"></div></div>
+  <div class="summary-cell" onclick="switchTab('bas-a')"><div class="s-label">Bas A</div><div class="s-dot" id="dot-bas-a"></div></div>
+  <div class="summary-cell" onclick="switchTab('haut-b')"><div class="s-label">Haut B</div><div class="s-dot" id="dot-haut-b"></div></div>
+  <div class="summary-cell" onclick="switchTab('bas-b')"><div class="s-label">Bas B</div><div class="s-dot" id="dot-bas-b"></div></div>
 </div>
 
 <details class="principles">
   <summary>Principes</summary>
   <div class="p-item"><div class="p-num">1</div><div>Tu bats le log, pas ton ancien niveau. Reps d'abord dans la fourchette, puis charge (double progression).</div></div>
   <div class="p-item"><div class="p-num">2</div><div>Douleur au-dessus de 3/10 pendant, ou qui traîne le lendemain : tu réduis, tu ne forces jamais à travers.</div></div>
-  <div class="p-item"><div class="p-num">3</div><div>Presses : jamais de verrouillage complet en haut. Tirages : coudes serrés, prise neutre, jamais large.</div></div>
+  <div class="p-item"><div class="p-num">3</div><div>Presses : jamais de verrouillage complet en haut, zone infra sensible. Tirages : coude / nerf ulnaire sensible, prise neutre et coudes proches du corps dès que possible — le détail est noté sous chaque exo concerné.</div></div>
   <div class="p-item"><div class="p-num">4</div><div>Machine au max : remplis d'abord 10 à 12 reps, puis négative 3-4 s avec pause en bas. Tu changes d'outil seulement quand tout ça devient facile.</div></div>
 </details>
 
 <div class="tabs">
-  <button class="tab active-fb-a" id="tab-fb-a" onclick="switchTab('fb-a')">Full Body A</button>
-  <button class="tab" id="tab-fb-b" onclick="switchTab('fb-b')">Full Body B</button>
-  <button class="tab" id="tab-fb-c" onclick="switchTab('fb-c')">Full Body C</button>
+  <button class="tab active-haut-a" id="tab-haut-a" onclick="switchTab('haut-a')">Haut A</button>
+  <button class="tab" id="tab-bas-a" onclick="switchTab('bas-a')">Bas A</button>
+  <button class="tab" id="tab-haut-b" onclick="switchTab('haut-b')">Haut B</button>
+  <button class="tab" id="tab-bas-b" onclick="switchTab('bas-b')">Bas B</button>
   <button class="tab" id="tab-poids" onclick="switchTab('poids')">Poids</button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan</button>
 </div>
 
-<!-- FULL BODY A -->
-<div class="session visible" id="session-fb-a">
+<!-- HAUT A -->
+<div class="session visible" id="session-haut-a">
   <div class="session-header">
-    <div class="session-tag tag-a">Jour Hammer</div>
-    <div class="session-title">Full Body A<span class="session-week-pill" id="pill-fb-a">Semaine 1</span></div>
-    <div class="session-sub">Développé Hammer · Tirage vertical · Leg ext · Latéral · Leg curl · Curl marteau · Mollets</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-fb-a"></div></div>
-    <div class="sess-progress-label" id="proglabel-fb-a">0 / 15 séries</div>
+    <div class="session-tag tag-haut-a">Haut du corps · A</div>
+    <div class="session-title">Haut A<span class="session-week-pill" id="pill-haut-a">Semaine 1</span></div>
+    <div class="session-sub">Chest press · Tirage vertical · Latéral poulie · Curl poulie · Extension triceps</div>
+    <div class="sess-progress"><div class="sess-progress-fill" id="prog-haut-a"></div></div>
+    <div class="sess-progress-label" id="proglabel-haut-a">0 / 15 séries</div>
   </div>
-  <div class="exo-card" data-exo="exo1" data-name="Développé incliné Hammer" data-target="Pec haut · stop avant verrouillage" data-pres="2 × 6–10" data-presclass="pres-a" data-rpe="RPE 9–10" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Tirage vertical prise neutre" data-target="Dos · Grand dorsal · largeur" data-pres="3 × 8–12" data-presclass="pres-a" data-rpe="RPE 8–9 · dern. échec"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Leg extension uni semi en arrière" data-target="Quadriceps" data-pres="2 × 8–12" data-presclass="pres-a" data-rpe="RPE 10"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Élévation latérale câble unilatérale" data-target="Deltoïde lat." data-pres="2 × 12–15" data-presclass="pres-a" data-rpe="RPE 9–10"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Leg curl allongé" data-target="Ischio-jambiers" data-pres="2 × 8–12" data-presclass="pres-a" data-rpe="RPE 10"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Curl marteau câble (prise neutre)" data-target="Biceps · brachial · nerf ulnaire épargné" data-pres="2 × 10–12" data-presclass="pres-a" data-rpe="RPE 9–10" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo7" data-name="Mollets presse" data-target="Soléaire · stop si douleur tibia (doppler en cours)" data-pres="2 × 10–15" data-presclass="pres-a" data-rpe="RPE 9–10" data-adapted="1"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-fb-a">Semaine 1</span></div><textarea class="note-input" id="note-fb-a" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('fb-a')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('fb-a')">Effacer cette séance (semaine en cours)</button>
+  <div class="exo-card" data-exo="exo1" data-name="Chest press machine" data-target="Pec · Épaules · stop avant verrouillage complet, zone infra sensible" data-pres="3 × 6–10" data-presclass="pres-haut-a" data-rpe="RIR 1–2" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Tirage vertical prise pronation" data-target="Dos · largeur. Sangles si les avant-bras lâchent avant le dos. Coudes proches du corps, jamais tiré derrière la nuque — coude / nerf ulnaire" data-pres="3 × 8–12" data-presclass="pres-haut-a" data-rpe="RIR 1–2" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo3" data-name="Élévations latérales à la poulie" data-target="Deltoïde latéral. Une cuff de cheville au poignet à la place de la poignée : la main lâche la prise, le deltoïde va au bout" data-pres="3 × 12–20" data-presclass="pres-haut-a" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo4" data-name="Curl à la poulie (corde, prise neutre)" data-target="Biceps · prise neutre pour épargner le coude / nerf ulnaire" data-pres="3 × 10–15" data-presclass="pres-haut-a" data-rpe="RIR 0–1" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo5" data-name="Extension triceps unilatérale à la poulie" data-target="Triceps" data-pres="3 × 10–15" data-presclass="pres-haut-a" data-rpe="RIR 0–1"></div>
+  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-haut-a">Semaine 1</span></div><textarea class="note-input" id="note-haut-a" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
+  <button class="save-btn" onclick="saveSession('haut-a')">Enregistrer la séance</button>
+  <button class="reset-btn" onclick="resetSession('haut-a')">Effacer cette séance (semaine en cours)</button>
   <div class="spacer"></div>
 </div>
 
-<!-- FULL BODY B -->
-<div class="session" id="session-fb-b">
+<!-- BAS A -->
+<div class="session" id="session-bas-a">
   <div class="session-header">
-    <div class="session-tag tag-b">Dos en premier</div>
-    <div class="session-title">Full Body B<span class="session-week-pill" id="pill-fb-b">Semaine 1</span></div>
-    <div class="session-sub">D.Y. row · Développé Smith · Leg curl · Latéral · Leg ext · Extension triceps · Oiseau</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-fb-b"></div></div>
-    <div class="sess-progress-label" id="proglabel-fb-b">0 / 15 séries</div>
+    <div class="session-tag tag-bas-a">Bas du corps · A</div>
+    <div class="session-title">Bas A<span class="session-week-pill" id="pill-bas-a">Semaine 1</span></div>
+    <div class="session-sub">Presse / hack squat · Leg extension · Leg curl assis · Adducteurs · Mollets</div>
+    <div class="sess-progress"><div class="sess-progress-fill" id="prog-bas-a"></div></div>
+    <div class="sess-progress-label" id="proglabel-bas-a">0 / 13 séries</div>
   </div>
-  <div class="exo-card" data-exo="exo2" data-name="Rowing D.Y. appui poitrine (bilatéral)" data-target="Dos · épaisseur · dernière série en bilatéral" data-pres="3 × 8–12" data-presclass="pres-b" data-rpe="RPE 9–10" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo1" data-name="Développé incliné Smith guidé" data-target="Pec haut · léger · stop avant verrouillage" data-pres="2 × 10–12" data-presclass="pres-b" data-rpe="RPE 9" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Leg curl allongé" data-target="Ischio-jambiers" data-pres="2 × 8–12" data-presclass="pres-b" data-rpe="RPE 10"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Élévation latérale machine" data-target="Deltoïde lat." data-pres="2 × 12–15" data-presclass="pres-b" data-rpe="RPE 9–10"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Leg extension bilatéral machine" data-target="Quadriceps" data-pres="2 × 8–12" data-presclass="pres-b" data-rpe="RPE 10"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Extension triceps poulie (pushdown)" data-target="Triceps · coudes serrés" data-pres="2 × 10–12" data-presclass="pres-b" data-rpe="RPE 9–10"></div>
-  <div class="exo-card" data-exo="exo7" data-name="Oiseau à la poulie" data-target="Arriere d'épaule · léger, stop si gêne" data-pres="2 × 15–20" data-presclass="pres-b" data-rpe="RPE 7–8" data-adapted="1"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-fb-b">Semaine 1</span></div><textarea class="note-input" id="note-fb-b" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('fb-b')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('fb-b')">Effacer cette séance (semaine en cours)</button>
+  <div class="exo-card" data-exo="exo1" data-name="Presse à cuisses ou hack squat" data-target="Quadriceps · Fessiers" data-pres="2 × 8–12" data-presclass="pres-bas-a" data-rpe="RIR 1–2"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Leg extension" data-target="Quadriceps" data-pres="2 × 12–15" data-presclass="pres-bas-a" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo3" data-name="Leg curl assis" data-target="Ischio-jambiers" data-pres="3 × 8–12" data-presclass="pres-bas-a" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo4" data-name="Machine adducteurs" data-target="Adducteurs" data-pres="3 × 12–15" data-presclass="pres-bas-a" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo5" data-name="Mollets à la presse" data-target="Mollets" data-pres="3 × 8–12" data-presclass="pres-bas-a" data-rpe="RIR 0–1"></div>
+  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-bas-a">Semaine 1</span></div><textarea class="note-input" id="note-bas-a" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
+  <button class="save-btn" onclick="saveSession('bas-a')">Enregistrer la séance</button>
+  <button class="reset-btn" onclick="resetSession('bas-a')">Effacer cette séance (semaine en cours)</button>
   <div class="spacer"></div>
 </div>
 
-<!-- FULL BODY C -->
-<div class="session" id="session-fb-c">
+<!-- HAUT B -->
+<div class="session" id="session-haut-b">
   <div class="session-header">
-    <div class="session-tag tag-c">Pec fly · vertical</div>
-    <div class="session-title">Full Body C<span class="session-week-pill" id="pill-fb-c">Semaine 1</span></div>
-    <div class="session-sub">Pec fly Hammer · D.Y. row · Leg ext · Latéral · Leg curl · Abdos · Adducteurs</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-fb-c"></div></div>
-    <div class="sess-progress-label" id="proglabel-fb-c">0 / 16 séries</div>
+    <div class="session-tag tag-haut-b">Haut du corps · B</div>
+    <div class="session-title">Haut B<span class="session-week-pill" id="pill-haut-b">Semaine 1</span></div>
+    <div class="session-sub">Écarté poulie · Tirage horizontal · Oiseau poulie · Curl marteau · Pushdown</div>
+    <div class="sess-progress"><div class="sess-progress-fill" id="prog-haut-b"></div></div>
+    <div class="sess-progress-label" id="proglabel-haut-b">0 / 15 séries</div>
   </div>
-  <div class="exo-card" data-exo="exo1" data-name="Pec fly Hammer" data-target="Pectoraux · pré-étirement" data-pres="3 × 10–15" data-presclass="pres-c" data-rpe="RPE 9–10"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Rowing D.Y. appui poitrine (prise neutre)" data-target="Dos · épaisseur · appui = zéro bas du dos" data-pres="3 × 8–12" data-presclass="pres-c" data-rpe="RPE 8–9 · dern. échec" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Leg extension uni semi en arrière" data-target="Quadriceps" data-pres="2 × 8–12" data-presclass="pres-c" data-rpe="RPE 10"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Élévation latérale câble unilatérale" data-target="Deltoïde lat." data-pres="2 × 12–15" data-presclass="pres-c" data-rpe="RPE 9–10"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Leg curl allongé" data-target="Ischio-jambiers" data-pres="2 × 8–12" data-presclass="pres-c" data-rpe="RPE 10"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Crunch machine" data-target="Grand droit · abdos" data-pres="2 × 12–15" data-presclass="pres-c" data-rpe="RPE 9–10"></div>
-  <div class="exo-card" data-exo="exo7" data-name="Adducteur machine" data-target="Adducteurs" data-pres="2 × 12–15" data-presclass="pres-c" data-rpe="RPE 9–10"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-fb-c">Semaine 1</span></div><textarea class="note-input" id="note-fb-c" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('fb-c')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('fb-c')">Effacer cette séance (semaine en cours)</button>
+  <div class="exo-card" data-exo="exo1" data-name="Écarté à la poulie ou pec deck" data-target="Pectoraux · amplitude modérée, pas d'étirement max en bas, stop si ça tire côté omoplate" data-pres="3 × 10–15" data-presclass="pres-haut-b" data-rpe="RIR 0–1" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Tirage horizontal, coudes ouverts" data-target="Dos · épaisseur. Sangles si les avant-bras lâchent avant le dos. Garde les coudes semi-fermés plutôt que grand ouverts — épargne le coude / nerf ulnaire" data-pres="3 × 8–12" data-presclass="pres-haut-b" data-rpe="RIR 1–2" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo3" data-name="Oiseau à la poulie (prise neutre)" data-target="Arrière d'épaule · zone infra sensible, reste léger, stop si gêne. Des cuffs aux poignets évitent de serrer les poignées : ce sont les bras qui tirent, pas les mains" data-pres="3 × 12–20" data-presclass="pres-haut-b" data-rpe="RIR 0–1" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo4" data-name="Curl marteau à la poulie (corde)" data-target="Biceps · brachial · prise neutre, nerf ulnaire épargné" data-pres="3 × 10–15" data-presclass="pres-haut-b" data-rpe="RIR 0–1" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo5" data-name="Pushdown à la poulie" data-target="Triceps · coudes serrés" data-pres="3 × 10–15" data-presclass="pres-haut-b" data-rpe="RIR 0–1"></div>
+  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-haut-b">Semaine 1</span></div><textarea class="note-input" id="note-haut-b" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
+  <button class="save-btn" onclick="saveSession('haut-b')">Enregistrer la séance</button>
+  <button class="reset-btn" onclick="resetSession('haut-b')">Effacer cette séance (semaine en cours)</button>
+  <div class="spacer"></div>
+</div>
+
+<!-- BAS B -->
+<div class="session" id="session-bas-b">
+  <div class="session-header">
+    <div class="session-tag tag-bas-b">Bas du corps · B</div>
+    <div class="session-title">Bas B<span class="session-week-pill" id="pill-bas-b">Semaine 1</span></div>
+    <div class="session-sub">RDL Smith · Leg extension · Leg curl allongé · Adducteurs · Mollets assis</div>
+    <div class="sess-progress"><div class="sess-progress-fill" id="prog-bas-b"></div></div>
+    <div class="sess-progress-label" id="proglabel-bas-b">0 / 13 séries</div>
+  </div>
+  <div class="exo-card" data-exo="exo1" data-name="RDL à la Smith machine" data-target="Ischios · Fessiers · dos neutre" data-pres="2 × 8–12" data-presclass="pres-bas-b" data-rpe="RIR 1–2"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Leg extension" data-target="Quadriceps" data-pres="3 × 12–15" data-presclass="pres-bas-b" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo3" data-name="Leg curl allongé" data-target="Ischio-jambiers" data-pres="2 × 8–12" data-presclass="pres-bas-b" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo4" data-name="Machine adducteurs" data-target="Adducteurs" data-pres="3 × 12–15" data-presclass="pres-bas-b" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo5" data-name="Mollets assis" data-target="Mollets" data-pres="3 × 12–20" data-presclass="pres-bas-b" data-rpe="RIR 0–1"></div>
+  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-bas-b">Semaine 1</span></div><textarea class="note-input" id="note-bas-b" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
+  <button class="save-btn" onclick="saveSession('bas-b')">Enregistrer la séance</button>
+  <button class="reset-btn" onclick="resetSession('bas-b')">Effacer cette séance (semaine en cours)</button>
   <div class="spacer"></div>
 </div>
 
@@ -376,122 +392,18 @@ const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7v
 const CLIENT_ID = "alexandre_test";
 
 const CONFIG = {
-  'fb-a': {exo1:2,exo2:3,exo3:2,exo4:2,exo5:2,exo6:2,exo7:2},
-  'fb-b': {exo1:2,exo2:3,exo3:2,exo4:2,exo5:2,exo6:2,exo7:2},
-  'fb-c': {exo1:3,exo2:3,exo3:2,exo4:2,exo5:2,exo6:2,exo7:2}
+  'haut-a': {exo1:3,exo2:3,exo3:3,exo4:3,exo5:3},
+  'bas-a': {exo1:2,exo2:2,exo3:3,exo4:3,exo5:3},
+  'haut-b': {exo1:3,exo2:3,exo3:3,exo4:3,exo5:3},
+  'bas-b': {exo1:2,exo2:3,exo3:2,exo4:3,exo5:3}
 };
 
 const NB_SEMAINES = 8;
-const SESSIONS = ['fb-a','fb-b','fb-c'];
+const SESSIONS = ['haut-a','bas-a','haut-b','bas-b'];
 const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 let currentWeek = 1;
 
 function getKey(s,exo,serie,field,week){ return `${s}-${exo}-s${serie}-${field}-w${week}`; }
-
-/* ---------- Pré-remplissage historique (one-shot v2) ----------
-   S1→S3 : ancien programme Upper/Lower (repères indicatifs, machines
-   parfois différentes / avant conversion ×2 poulie double).
-   S4 : ton full body actuel (Fb-a 05/07 + Fb-b/Fb-c 01-03/07).
-   Reconstruit proprement S1→S4 puis pose le drapeau. */
-function seedHistorical(){
-  if(localStorage.getItem('seed-hist-v4')==='1') return;
-  // nettoyage perf S1-S5 + notes S1-S3 (on garde les notes S4/S5 déjà réelles)
-  SESSIONS.forEach(s=>{
-    Object.entries(CONFIG[s]).forEach(([exo,count])=>{
-      for(let i=1;i<=count;i++){
-        [1,2,3,4,5].forEach(w=>{
-          ['kg','reps','rir','chk'].forEach(f=>localStorage.removeItem(getKey(s,exo,i,f,w)));
-        });
-      }
-    });
-    [1,2,3].forEach(w=>localStorage.removeItem(`${s}-note-w${w}`));
-  });
-  // [semaine, session, exo, série, kg, reps]  (reps '' = charge notée sans reps)
-  const DATA=[
-    // ===== S1 → S3 : ancien programme =====
-    // Développé incliné (fb-a exo1) — ta progression clé
-    [1,'fb-a','exo1',1,'65','10'],[1,'fb-a','exo1',2,'60','12'],
-    [2,'fb-a','exo1',1,'70','8'],[2,'fb-a','exo1',2,'71.25','7'],
-    [3,'fb-a','exo1',1,'71.25','8'],[3,'fb-a','exo1',2,'71.25','6'],
-    // Leg extension (fb-a exo3)
-    [1,'fb-a','exo3',1,'30','10'],[1,'fb-a','exo3',2,'30','10'],
-    [2,'fb-a','exo3',1,'40','10'],[2,'fb-a','exo3',2,'40','10'],
-    // Leg curl (fb-a exo5)
-    [1,'fb-a','exo5',1,'27.5','20'],[1,'fb-a','exo5',2,'30','20'],
-    [2,'fb-a','exo5',1,'42.5','15'],[2,'fb-a','exo5',2,'50','12'],
-    // Élévation latérale (fb-a exo4)
-    [2,'fb-a','exo4',1,'17.5','15'],[2,'fb-a','exo4',2,'17.5','13'],
-    // Curl marteau (fb-a exo6)
-    [1,'fb-a','exo6',1,'20','12'],[1,'fb-a','exo6',2,'20','12'],
-    [2,'fb-a','exo6',1,'24','12'],[2,'fb-a','exo6',2,'24','12'],
-    // Mollets (fb-a exo7)
-    [2,'fb-a','exo7',1,'115','15'],
-    // Triceps (fb-b exo6)
-    [1,'fb-b','exo6',1,'21.25','12'],[1,'fb-b','exo6',2,'21.25','10'],
-    [2,'fb-b','exo6',1,'21.25','12'],[2,'fb-b','exo6',2,'21.25','11'],
-    // Oiseau / rotation (fb-b exo7)
-    [1,'fb-b','exo7',1,'6','15'],
-    [2,'fb-b','exo7',1,'6','15'],[2,'fb-b','exo7',2,'6','12'],
-    // Pec fly (fb-c exo1) — repère lourd bilatéral
-    [1,'fb-c','exo1',1,'55','10'],[1,'fb-c','exo1',2,'55','10'],[1,'fb-c','exo1',3,'45','13'],
-    [2,'fb-c','exo1',1,'55','11'],[2,'fb-c','exo1',2,'55','12'],
-    // Tirage vertical (fb-c exo2) — indicatif (conversion ×2)
-    [1,'fb-c','exo2',1,'117','8'],[1,'fb-c','exo2',2,'110','5'],
-    [2,'fb-c','exo2',1,'82','12'],[2,'fb-c','exo2',2,'89','10'],
-    // Abdos (fb-c exo6)
-    [2,'fb-c','exo6',1,'46','12'],[2,'fb-c','exo6',2,'46','12'],
-    // Adducteur (fb-c exo7)
-    [1,'fb-c','exo7',1,'130','12'],
-    [2,'fb-c','exo7',1,'130','15'],[2,'fb-c','exo7',2,'130','10'],
-
-    // ===== S4 : full body actuel =====
-    // Fb-a (05/07)
-    [4,'fb-a','exo1',1,'71.25','8'],[4,'fb-a','exo1',2,'71.25','7'],
-    [4,'fb-a','exo3',1,'40','10'],[4,'fb-a','exo3',2,'40','10'],
-    [4,'fb-a','exo4',1,'15','15'],[4,'fb-a','exo4',2,'15','15'],
-    [4,'fb-a','exo5',1,'65',''],
-    [4,'fb-a','exo6',1,'22',''],
-    // Fb-b (01/07)
-    [4,'fb-b','exo1',1,'70','7'],[4,'fb-b','exo1',2,'60','10'],
-    [4,'fb-b','exo2',1,'89','10'],[4,'fb-b','exo2',2,'89','10'],[4,'fb-b','exo2',3,'89','10'],
-    [4,'fb-b','exo3',1,'50','15'],[4,'fb-b','exo3',2,'50','12'],
-    [4,'fb-b','exo4',1,'12.5','15'],[4,'fb-b','exo4',2,'12.5','15'],
-    [4,'fb-b','exo5',1,'35','10'],[4,'fb-b','exo5',2,'35','8'],
-    [4,'fb-b','exo6',1,'16.5','10'],[4,'fb-b','exo6',2,'16.5','8'],
-    [4,'fb-b','exo7',1,'6','20'],[4,'fb-b','exo7',2,'6','15'],
-    // Fb-c (03/07)
-    [4,'fb-c','exo1',1,'25','12'],[4,'fb-c','exo1',2,'25','10'],[4,'fb-c','exo1',3,'20','10'],
-    [4,'fb-c','exo2',1,'103','10'],[4,'fb-c','exo2',2,'103','9'],[4,'fb-c','exo2',3,'103','8'],
-    [4,'fb-c','exo3',1,'40','10'],[4,'fb-c','exo3',2,'40','8'],
-    [4,'fb-c','exo4',1,'9.5','12'],[4,'fb-c','exo4',2,'6','15'],
-    [4,'fb-c','exo5',1,'57.5','12'],[4,'fb-c','exo5',2,'57.5','12'],
-    [4,'fb-c','exo6',1,'46','15'],
-    [4,'fb-c','exo7',1,'130','12'],
-    // compléments S4 fb-a (données réelles arrivées après coup)
-    [4,'fb-a','exo2',1,'','8'],
-    [4,'fb-a','exo5',1,'65','12'],[4,'fb-a','exo5',2,'65','12'],
-    [4,'fb-a','exo6',1,'22','12'],[4,'fb-a','exo6',2,'22','12'],
-
-    // ===== S5 : Fb-b réel du 07/07 =====
-    [5,'fb-b','exo1',1,'27.5','10'],[5,'fb-b','exo1',2,'25','10'],
-    [5,'fb-b','exo2',1,'70','12'],[5,'fb-b','exo2',2,'70','12'],[5,'fb-b','exo2',3,'40','12'],
-    [5,'fb-b','exo3',1,'65','8'],[5,'fb-b','exo3',2,'57.5','12'],
-    [5,'fb-b','exo4',1,'17.5','12'],[5,'fb-b','exo4',2,'17.5','11'],
-    [5,'fb-b','exo5',1,'117.5','10'],[5,'fb-b','exo5',2,'117.5','9'],
-    [5,'fb-b','exo6',1,'16.5','12'],[5,'fb-b','exo6',2,'20','10'],
-    [5,'fb-b','exo7',1,'9.5','15'],[5,'fb-b','exo7',2,'9.5','12']
-  ];
-  DATA.forEach(([w,s,exo,i,kg,reps])=>{
-    if(kg!=='') localStorage.setItem(getKey(s,exo,i,'kg',w),kg);
-    if(reps!=='') localStorage.setItem(getKey(s,exo,i,'reps',w),reps);
-    localStorage.setItem(getKey(s,exo,i,'chk',w),'1');
-  });
-  // poids corporel connu
-  if(localStorage.getItem('poids-w1')===null) localStorage.setItem('poids-w1','77.9');
-  if(localStorage.getItem('poids-w3')===null) localStorage.setItem('poids-w3','76.4');
-  if(localStorage.getItem('poids-w4')===null) localStorage.setItem('poids-w4','76');
-  localStorage.setItem('seed-hist-v4','1');
-}
 
 let syncStatusTimer=null;
 function showSyncStatus(ok){
@@ -538,15 +450,16 @@ function toggleKbd(btn){
 function updateNextBadge(){
   const el=document.getElementById('cycle-label');
   if(!el) return;
-  const map={'fb-a':'B','fb-b':'C','fb-c':'A'};
+  const label={'haut-a':'Haut A','bas-a':'Bas A','haut-b':'Haut B','bas-b':'Bas B'};
+  const map={'haut-a':'bas-a','bas-a':'haut-b','haut-b':'bas-b','bas-b':'haut-a'};
   const raw=localStorage.getItem('fbeod-last');
-  if(!raw){ el.textContent='A · B · C en boucle'; return; }
+  if(!raw){ el.textContent='Haut A · Bas A · Haut B · Bas B'; return; }
   try{
     const d=JSON.parse(raw);
     if(d && d.session && map[d.session]){
-      el.textContent=`Dernière : ${d.session.slice(-1).toUpperCase()} → Prochaine : ${map[d.session]}`;
+      el.textContent=`Dernière : ${label[d.session]} → Prochaine : ${label[map[d.session]]}`;
     }
-  }catch(e){ el.textContent='A · B · C en boucle'; }
+  }catch(e){ el.textContent='Haut A · Bas A · Haut B · Bas B'; }
 }
 
 function buildSession(session){
@@ -861,7 +774,6 @@ document.querySelectorAll('.note-input').forEach(el=>{
   });
 });
 
-seedHistorical();
 buildAll();
 buildPoids();
 </script>
