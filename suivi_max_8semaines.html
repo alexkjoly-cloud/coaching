@@ -58,6 +58,40 @@
   .tab.active-lower { background:var(--teal-dim); border-color:rgba(93,184,168,0.3); color:var(--teal); box-shadow:inset 0 2px 0 var(--teal); }
   .tab.active-corp { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); box-shadow:inset 0 2px 0 var(--gold); }
   .tab.active-bilan { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); box-shadow:inset 0 2px 0 var(--gold); }
+  .tab.active-transverse { background:var(--teal-dim); border-color:rgba(93,184,168,0.4); color:var(--teal); box-shadow:inset 0 2px 0 var(--teal); }
+  .tab-alert { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--teal); margin-left:4px; vertical-align:middle; }
+
+  /* ---------- Rappel vacuum (visible sur tous les onglets) ---------- */
+  #vacuum-nudge { display:none; align-items:center; gap:10px; margin:10px 16px 0; padding:10px 13px; background:var(--teal-dim); border:1px solid rgba(93,184,168,0.32); border-radius:5px; cursor:pointer; transition:background .15s; }
+  #vacuum-nudge.visible { display:flex; }
+  #vacuum-nudge:active { background:rgba(93,184,168,0.16); }
+  .vn-txt { flex:1; font-size:11px; color:var(--teal); letter-spacing:0.02em; line-height:1.4; }
+  .vn-txt b { font-weight:500; }
+  .vn-cta { flex-shrink:0; font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:0.1em; color:#04140c; background:var(--teal); padding:5px 11px; border-radius:3px; }
+
+  /* ---------- Grille des jours ---------- */
+  .tv-intro { margin-top:14px; padding:14px 16px; background:var(--teal-dim); border:1px solid rgba(93,184,168,0.3); border-radius:5px; font-size:12px; color:#9fd3c8; font-weight:300; line-height:1.6; }
+  .tv-intro b { color:var(--teal); font-weight:500; }
+  .tv-days { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-top:12px; }
+  .tv-day { background:var(--card); border:1px solid var(--border); border-radius:5px; padding:9px 0 8px; text-align:center; cursor:pointer; transition:background .15s, border-color .15s, transform .1s; }
+  .tv-day:active { transform:scale(0.94); }
+  .tv-day .d-lab { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted2); }
+  .tv-day .d-mark { font-size:15px; line-height:1.3; color:var(--muted2); margin-top:3px; }
+  .tv-day.done { background:rgba(93,184,168,0.12); border-color:rgba(93,184,168,0.45); }
+  .tv-day.done .d-lab { color:var(--teal); }
+  .tv-day.done .d-mark { color:var(--teal); }
+  .tv-day.today { border-color:var(--teal); box-shadow:0 0 0 2px rgba(93,184,168,0.18); }
+  .tv-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .tv-stat { background:var(--card); border:1px solid var(--border); border-radius:5px; padding:11px 14px; }
+  .tv-stat .s-num { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.04em; color:var(--teal); line-height:1; }
+  .tv-stat .s-lab { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+  .tv-block { margin-top:10px; background:var(--card); border:1px solid var(--border); border-radius:5px; overflow:hidden; }
+  .tv-block-h { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal); padding:10px 14px 8px; border-bottom:1px solid var(--border); }
+  .tv-step { display:flex; gap:11px; padding:10px 14px; border-bottom:1px solid var(--line-soft); font-size:12px; color:var(--white); font-weight:300; line-height:1.55; }
+  .tv-step:last-child { border-bottom:none; }
+  .tv-step .n { flex-shrink:0; width:17px; font-family:'Bebas Neue',sans-serif; font-size:13px; color:var(--teal); letter-spacing:0.04em; }
+  .tv-step .lvl { color:var(--muted); font-size:11px; }
+  .tv-note { padding:11px 14px; font-size:11px; color:var(--muted); font-weight:300; line-height:1.6; font-style:italic; }
   .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:4px; vertical-align:middle; }
 
   .session { display:none; padding:0 16px; }
@@ -180,7 +214,14 @@
   <button class="tab" id="tab-lower" onclick="switchTab('lower')">Lower<br><span style="font-size:8px;color:var(--muted)">Bas complet</span></button>
   <button class="tab" id="tab-upper" onclick="switchTab('upper')">Upper<br><span style="font-size:8px;color:var(--muted)">Haut complet</span></button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
+  <button class="tab" id="tab-transverse" onclick="switchTab('transverse')">Transverse<br><span style="font-size:8px;color:var(--muted)">Vacuum · Quotidien</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
+</div>
+
+<!-- Rappel vacuum : suit Max sur tous les onglets tant que le jour n'est pas coché -->
+<div id="vacuum-nudge" onclick="cocherAujourdhui()">
+  <div class="vn-txt"><b>Vacuum du jour</b> — pas encore fait. 5 minutes, où tu veux.</div>
+  <div class="vn-cta">Cocher</div>
 </div>
 
 <div id="sessions-container"></div>
@@ -247,6 +288,59 @@
   </div>
 
   <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveBilanComplet()">ENREGISTRER LE BILAN</button>
+  <div class="spacer"></div>
+</div>
+
+<!-- TRANSVERSE / VACUUM -->
+<div class="session" id="session-transverse">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--teal)">Sangle abdominale profonde</div>
+    <div class="session-title">TRANSVERSE<span class="session-week-pill" id="pill-transverse">Semaine 1</span></div>
+    <div class="session-sub">Tous les jours, chez toi ou à la salle. 5 minutes.</div>
+  </div>
+
+  <div class="tv-intro">
+    <b>Pourquoi toi et pourquoi maintenant.</b> En posture normale, ton ventre reste relâché. Ce n'est pas du gras, c'est une sangle profonde qui n'a jamais appris à tenir. Ça se rééduque, mais seulement avec de la répétition quotidienne — pas avec deux séries le lundi.
+  </div>
+
+  <div class="tv-days" id="tv-days"></div>
+
+  <div class="tv-stats">
+    <div class="tv-stat"><div class="s-num" id="tv-week">0 / 7</div><div class="s-lab">Cette semaine</div></div>
+    <div class="tv-stat"><div class="s-num" id="tv-total">0</div><div class="s-lab">Jours au total</div></div>
+  </div>
+
+  <div class="tv-block">
+    <div class="tv-block-h">Le vacuum — comment faire</div>
+    <div class="tv-step"><div class="n">01</div><div>Expire <b>tout</b> l'air, à fond, jusqu'à ce qu'il n'en reste plus.</div></div>
+    <div class="tv-step"><div class="n">02</div><div>Sans réinspirer, aspire le ventre vers l'intérieur, comme si tu voulais coller ton nombril à ta colonne.</div></div>
+    <div class="tv-step"><div class="n">03</div><div>Tiens 10 à 20 secondes. Tu ne respires pas pendant la tenue.</div></div>
+    <div class="tv-step"><div class="n">04</div><div>Relâche, respire normalement 20 à 30 secondes, et recommence. <b>4 à 5 tenues</b>, c'est tout.</div></div>
+    <div class="tv-note">À faire l'estomac vide de préférence, le matin au réveil c'est le plus simple. Après un repas c'est désagréable et ça tient mal.</div>
+  </div>
+
+  <div class="tv-block">
+    <div class="tv-block-h">Les 4 positions, de la plus simple à la plus dure</div>
+    <div class="tv-step"><div class="n">01</div><div>Allongé sur le dos, genoux pliés. <span class="lvl">Le plus facile, la gravité t'aide. Commence là.</span></div></div>
+    <div class="tv-step"><div class="n">02</div><div>À quatre pattes. <span class="lvl">Les organes tirent vers le bas, il faut aspirer plus fort.</span></div></div>
+    <div class="tv-step"><div class="n">03</div><div>Assis, dos droit, sans t'appuyer. <span class="lvl">Là tu commences à bosser en position réelle.</span></div></div>
+    <div class="tv-step"><div class="n">04</div><div>Debout. <span class="lvl">Le plus dur, et c'est celui qui transfère à ta posture de tous les jours. L'objectif.</span></div></div>
+    <div class="tv-note">Tu passes au niveau suivant quand tu tiens 20 secondes propres sur les 5 tenues. Pas avant.</div>
+  </div>
+
+  <div class="tv-block">
+    <div class="tv-block-h">En complément, si tu veux aller plus loin</div>
+    <div class="tv-step"><div class="n">+</div><div><b>Dead bug</b> — 2 × 8 par côté, allongé, bas du dos plaqué au sol du début à la fin. Si le dos décolle, tu réduis l'amplitude.</div></div>
+    <div class="tv-step"><div class="n">+</div><div><b>Gainage en rentrant le ventre</b> — même planche que d'habitude, mais tu aspires activement le nombril au lieu de juste tenir. Ça change tout.</div></div>
+  </div>
+
+  <div class="tv-block">
+    <div class="tv-block-h">Ce que ça fait, ce que ça ne fait pas</div>
+    <div class="tv-note" style="font-style:normal;color:var(--white);font-size:12px">
+      Ça t'apprend à contrôler et à tenir ta sangle profonde, donc à ne plus avoir le ventre qui pend au repos. En revanche ça ne brûle pas de gras et ça ne rétrécit pas ton squelette. Un ventre plat vient de la bouffe ; le maintien vient d'ici. Les deux sont des chantiers différents, et on bosse celui-là.
+    </div>
+  </div>
+
   <div class="spacer"></div>
 </div>
 
@@ -471,6 +565,7 @@ function loadAll(){
     if(noteEl) noteEl.value=localStorage.getItem(`${sid}-note-w${currentWeek}`)||'';
   });
   loadBilan();
+  loadTransverse();
   updateWeekFills();
 }
 
@@ -589,7 +684,70 @@ function switchTab(id){
   document.getElementById(`session-${id}`).classList.add('visible');
   document.getElementById(`tab-${id}`).className=`tab active-${id}`;
   document.getElementById('week-selector').style.display = (id==='corp') ? 'none' : 'flex';
+  if(id==='transverse') loadTransverse();
   window.scrollTo(0,0);
+}
+
+/* ===== TRANSVERSE / VACUUM (habitude quotidienne) =====
+   Envoyé au Sheet en type 'perf' avec la séance 'transverse' : le script
+   Google le range tout seul, sans avoir à le redéployer. */
+const TV_JOURS = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+function tvKey(j,w){ return `transverse-d${j}-w${w}`; }
+// Lundi = 1 ... Dimanche = 7 (getDay() renvoie 0 pour dimanche)
+function tvAujourdhui(){ const d=new Date().getDay(); return d===0 ? 7 : d; }
+
+function buildTransverse(){
+  const c=document.getElementById('tv-days'); if(!c) return;
+  let html='';
+  for(let j=1;j<=7;j++){
+    html+=`<div class="tv-day" id="tv-d${j}" onclick="toggleJour(${j})">
+      <div class="d-lab">${TV_JOURS[j-1]}</div>
+      <div class="d-mark" id="tv-m${j}">·</div>
+    </div>`;
+  }
+  c.innerHTML=html;
+}
+
+function toggleJour(j){
+  const k=tvKey(j,currentWeek);
+  const fait=localStorage.getItem(k)==='1';
+  localStorage.setItem(k, fait?'0':'1');
+  syncFieldDebounced(k, {client:CLIENT_ID,type:'perf',week:currentWeek,session:'transverse',
+    exo:'Vacuum '+TV_JOURS[j-1],serie:1,field:'chk',value:fait?'0':'1',ts:new Date().toISOString()});
+  loadTransverse();
+}
+
+// Raccourci du bandeau de rappel : coche le jour en cours
+function cocherAujourdhui(){
+  const j=tvAujourdhui();
+  if(localStorage.getItem(tvKey(j,currentWeek))!=='1') toggleJour(j);
+}
+
+function loadTransverse(){
+  const auj=tvAujourdhui();
+  let sem=0;
+  for(let j=1;j<=7;j++){
+    const fait=localStorage.getItem(tvKey(j,currentWeek))==='1';
+    if(fait) sem++;
+    const el=document.getElementById(`tv-d${j}`);
+    const mk=document.getElementById(`tv-m${j}`);
+    if(el){ el.className='tv-day'+(fait?' done':'')+(j===auj?' today':''); }
+    if(mk){ mk.textContent=fait?'✓':'·'; }
+  }
+  let total=0;
+  for(let w=1;w<=NB_SEMAINES;w++)
+    for(let j=1;j<=7;j++)
+      if(localStorage.getItem(tvKey(j,w))==='1') total++;
+
+  const ew=document.getElementById('tv-week'); if(ew) ew.textContent=`${sem} / 7`;
+  const et=document.getElementById('tv-total'); if(et) et.textContent=total;
+  const pill=document.getElementById('pill-transverse'); if(pill) pill.textContent=`Semaine ${currentWeek}`;
+
+  // Le rappel ne s'affiche que si le jour en cours n'est pas coché. Jamais bloquant.
+  const nudge=document.getElementById('vacuum-nudge');
+  if(nudge) nudge.classList.toggle('visible', localStorage.getItem(tvKey(auj,currentWeek))!=='1');
+  const dot=document.getElementById('tv-tabdot');
+  if(dot) dot.style.display = (localStorage.getItem(tvKey(auj,currentWeek))==='1') ? 'none' : 'inline-block';
 }
 
 /* ===== BILAN HEBDO ===== */
@@ -716,6 +874,7 @@ function seedDataMax(){
 seedDataMax();
 buildWeekSelector();
 buildSessions();
+buildTransverse();
 buildPoids();
 buildMens();
 loadAll();
