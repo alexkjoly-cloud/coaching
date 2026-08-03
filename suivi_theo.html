@@ -189,7 +189,7 @@
   <button class="tab active-fb-a" id="tab-fb-a" onclick="switchTab('fb-a')">Full Body A<br><span style="font-size:8px;color:var(--muted)">Dos · Pecs · Bras</span></button>
   <button class="tab" id="tab-fb-b" onclick="switchTab('fb-b')">Full Body B<br><span style="font-size:8px;color:var(--muted)">Dos · Épaules · Tri</span></button>
   <button class="tab" id="tab-fb-c" onclick="switchTab('fb-c')">Full Body C<br><span style="font-size:8px;color:var(--muted)">Dos · Pecs · Bras</span></button>
-  <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
+  <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Carnet<br><span style="font-size:8px;color:var(--muted)">Pour toi</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
 </div>
 
@@ -205,68 +205,59 @@
 
 <div id="sessions-container"></div>
 
-<!-- BILAN HEBDO -->
+<!-- CARNET PERSONNEL (local, jamais envoyé) -->
 <div class="session" id="session-bilan">
   <div class="session-header">
-    <div class="session-tag" style="color:var(--gold)">Bilan hebdomadaire</div>
-    <div class="session-title">BILAN<span class="session-week-pill" id="pill-bilan">Semaine 1</span></div>
-    <div class="session-sub">À remplir chaque dimanche. Sois honnête, c'est comme ça que j'ajuste.</div>
+    <div class="session-tag" style="color:var(--gold)">Ton carnet</div>
+    <div class="session-title">CARNET<span class="session-week-pill" id="pill-bilan">Semaine 1</span></div>
+    <div class="session-sub">Pour toi, pas pour moi. Personne ne lit cette page à part toi.</div>
   </div>
 
   <div class="bilan-intro">
-    <b>C'est toi qui m'envoies ton bilan chaque dimanche.</b> Je ne viens pas le réclamer. Tu remplis tout ici, tu enregistres, et tu m'envoies un message pour me dire que c'est fait. Ta régularité fait partie du suivi. Et si tu veux, envoie-moi des vidéos de tes exercices avec ton bilan : c'est un vrai plus pour que je corrige ta technique, mais pas une obligation.
+    <b>Ta formule ne comprend pas de suivi hebdomadaire.</b> Je ne reçois pas cette page et je ne la lis pas : ce que tu écris ici reste sur ton téléphone. C'est ton carnet de bord perso, pour voir toi-même comment tu évolues sur les six semaines.<br><br>
+    Ce qui remonte de mon côté, ce sont uniquement <b>tes charges et tes séries</b>, et ça me sert à te construire ton prochain cycle quand tu voudras le renouveler. Si tu veux un vrai suivi avec un retour de ma part chaque semaine, c'est une autre formule, écris-moi.
   </div>
 
   <div class="bilan-field">
-    <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">matin à jeun</span></div>
+    <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">matin à jeun, même jour</span></div>
     <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-poids" oninput="saveBilan('poids',this.value)">
   </div>
 
-  <div class="bilan-field">
-    <div class="bilan-label">Calories moyennes <span class="bilan-scale-hint">kcal / jour, moyenne de la semaine</span></div>
-    <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-calories" oninput="saveBilan('calories',this.value)">
-  </div>
-
   <div class="bilan-grid">
-    <div class="bilan-field">
-      <div class="bilan-label">Nutrition tenue <span class="bilan-scale-hint">1 à 10</span></div>
-      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-nutrition" oninput="saveBilan('nutrition',this.value)">
-    </div>
     <div class="bilan-field">
       <div class="bilan-label">Sommeil <span class="bilan-scale-hint">1 à 10</span></div>
       <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-sommeil" oninput="saveBilan('sommeil',this.value)">
     </div>
     <div class="bilan-field">
-      <div class="bilan-label">Énergie / forme <span class="bilan-scale-hint">1 à 10</span></div>
+      <div class="bilan-label">Énergie <span class="bilan-scale-hint">1 à 10</span></div>
       <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-energie" oninput="saveBilan('energie',this.value)">
     </div>
     <div class="bilan-field">
-      <div class="bilan-label">Fatigue / courbatures <span class="bilan-scale-hint">1 à 10</span></div>
+      <div class="bilan-label">Séances faites <span class="bilan-scale-hint">sur 3</span></div>
+      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-seances" oninput="saveBilan('seances',this.value)">
+    </div>
+    <div class="bilan-field">
+      <div class="bilan-label">Fatigue <span class="bilan-scale-hint">1 à 10</span></div>
       <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-fatigue" oninput="saveBilan('fatigue',this.value)">
     </div>
   </div>
 
   <div class="bilan-field">
-    <div class="bilan-label">Ressenti des séances</div>
-    <textarea class="bilan-txt" id="bilan-ressenti" placeholder="Ce qui s'est bien passé, tes sensations, les exos où tu t'es senti fort..." oninput="saveBilan('ressenti',this.value)"></textarea>
+    <div class="bilan-label">Ce qui s'est bien passé</div>
+    <textarea class="bilan-txt" id="bilan-ressenti" placeholder="Les exos où tu t'es senti fort, une charge que tu as montée, une séance qui t'a plu..." oninput="saveBilan('ressenti',this.value)"></textarea>
   </div>
 
   <div class="bilan-field">
-    <div class="bilan-label">Difficultés / douleurs</div>
-    <textarea class="bilan-txt" id="bilan-difficultes" placeholder="Exos qui coincent, douleurs (genou, épaule...), séances manquées et pourquoi..." oninput="saveBilan('difficultes',this.value)"></textarea>
+    <div class="bilan-label">Ce qui a coincé</div>
+    <textarea class="bilan-txt" id="bilan-difficultes" placeholder="Un mouvement pas clair, une gêne, une séance sautée et pourquoi..." oninput="saveBilan('difficultes',this.value)"></textarea>
   </div>
 
   <div class="bilan-field">
-    <div class="bilan-label">Modifications à apporter</div>
-    <textarea class="bilan-txt" id="bilan-modifs" placeholder="Ce que tu aimerais changer ou ajuster dans le programme..." oninput="saveBilan('modifs',this.value)"></textarea>
+    <div class="bilan-label">À garder pour le prochain cycle <span class="bilan-scale-hint">tu me le diras à ce moment-là</span></div>
+    <textarea class="bilan-txt" id="bilan-modifs" placeholder="Ce que tu voudras changer, les exos à garder, ceux dont tu ne veux plus. Note-le maintenant, tu auras tout oublié dans six semaines." oninput="saveBilan('modifs',this.value)"></textarea>
   </div>
 
-  <div class="bilan-field">
-    <div class="bilan-label">Question pour le coach</div>
-    <textarea class="bilan-txt" id="bilan-question" placeholder="Une question, un doute, autre chose à me dire..." oninput="saveBilan('question',this.value)"></textarea>
-  </div>
-
-  <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveBilanComplet()">ENREGISTRER LE BILAN</button>
+  <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveBilanComplet()">ENREGISTRER</button>
   <div class="spacer"></div>
 </div>
 
@@ -342,7 +333,7 @@ const PROGRAMME = {
 };
 
 const MENSURATIONS = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
-const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
+const BILAN_FIELDS = ['poids','sommeil','energie','seances','fatigue','ressenti','difficultes','modifs'];
 const SESSIONS = Object.keys(PROGRAMME);
 let currentWeek = 1;
 
@@ -544,9 +535,14 @@ function resetSession(session){
 }
 
 /* ===== BILAN HEBDO ===== */
+
+
 function saveBilan(field,value){
+  /* Carnet personnel : on écrit UNIQUEMENT en local.
+     Aucune synchro ici, volontairement — sa formule n'inclut pas de suivi
+     hebdo, donc ce qu'il note reste sur son téléphone. Ne pas rebrancher
+     syncFieldDebounced sans changer aussi le texte de la page. */
   localStorage.setItem(`bilan-${field}-w${currentWeek}`,value);
-  syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
 }
 function loadBilan(){
   BILAN_FIELDS.forEach(f=>{
@@ -557,14 +553,10 @@ function loadBilan(){
   if(pill) pill.textContent=`Semaine ${currentWeek}`;
 }
 function saveBilanComplet(){
-  BILAN_FIELDS.forEach(f=>{
-    const el=document.getElementById(`bilan-${f}`);
-    if(el && el.value!==''){
-      syncToCloud({client:CLIENT_ID,type:'bilan',field:f,week:currentWeek,value:el.value,ts:new Date().toISOString()});
-    }
-  });
+  /* Tout est déjà écrit en local au fil de la frappe. Ce bouton ne sert
+     qu'à donner un retour visuel. Rien ne part vers le cloud. */
   const btn=event.target; const orig=btn.textContent;
-  btn.textContent='BILAN ENREGISTRÉ ✓'; btn.classList.add('saved');
+  btn.textContent='ENREGISTRÉ ✓'; btn.classList.add('saved');
   setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
 }
 
