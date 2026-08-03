@@ -214,8 +214,8 @@
   </div>
 
   <div class="bilan-intro">
-    <b>Ta formule ne comprend pas de suivi hebdomadaire.</b> Je ne reçois pas cette page et je ne la lis pas : ce que tu écris ici reste sur ton téléphone. C'est ton carnet de bord perso, pour voir toi-même comment tu évolues sur les six semaines.<br><br>
-    Ce qui remonte de mon côté, ce sont uniquement <b>tes charges et tes séries</b>, et ça me sert à te construire ton prochain cycle quand tu voudras le renouveler. Si tu veux un vrai suivi avec un retour de ma part chaque semaine, c'est une autre formule, écris-moi.
+    <b>Ta formule ne comprend pas de suivi hebdomadaire.</b> Je ne lis pas cette page chaque semaine et je ne te ferai pas de retour dessus pendant tes six semaines. C'est d'abord ton carnet de bord : tu le remplis pour toi, pour voir toi-même comment tu évolues.<br><br>
+    Ce que tu notes est quand même <b>enregistré et conservé</b>. Le jour où tu renouvelles ton cycle ou où tu passes sur une formule avec suivi, on repart de tes vrais chiffres au lieu de repartir de zéro. Plus tu remplis, meilleur sera ton prochain programme.
   </div>
 
   <div class="bilan-field">
@@ -538,11 +538,12 @@ function resetSession(session){
 
 
 function saveBilan(field,value){
-  /* Carnet personnel : on écrit UNIQUEMENT en local.
-     Aucune synchro ici, volontairement — sa formule n'inclut pas de suivi
-     hebdo, donc ce qu'il note reste sur son téléphone. Ne pas rebrancher
-     syncFieldDebounced sans changer aussi le texte de la page. */
+  /* Local + cloud. Sa formule n'inclut pas de retour hebdo de ma part, mais
+     ses données sont conservées : elles serviront à construire son prochain
+     cycle s'il renouvelle. Le texte de la page dit exactement ça — si tu
+     recoupes la synchro, remets le texte en accord. */
   localStorage.setItem(`bilan-${field}-w${currentWeek}`,value);
+  syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
 }
 function loadBilan(){
   BILAN_FIELDS.forEach(f=>{
@@ -553,8 +554,12 @@ function loadBilan(){
   if(pill) pill.textContent=`Semaine ${currentWeek}`;
 }
 function saveBilanComplet(){
-  /* Tout est déjà écrit en local au fil de la frappe. Ce bouton ne sert
-     qu'à donner un retour visuel. Rien ne part vers le cloud. */
+  BILAN_FIELDS.forEach(f=>{
+    const el=document.getElementById(`bilan-${f}`);
+    if(el && el.value!==''){
+      syncToCloud({client:CLIENT_ID,type:'bilan',field:f,week:currentWeek,value:el.value,ts:new Date().toISOString()});
+    }
+  });
   const btn=event.target; const orig=btn.textContent;
   btn.textContent='ENREGISTRÉ ✓'; btn.classList.add('saved');
   setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
