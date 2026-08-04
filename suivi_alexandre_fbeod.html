@@ -74,9 +74,9 @@
   .tab { flex-shrink:0; padding:8px 15px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; border:none; background:var(--card); color:var(--text2); font-family:inherit; text-align:center; line-height:1.25; box-shadow:var(--shadow); transition:background 0.15s, color 0.15s; }
   .tab br { display:none; }
   .tab span { display:none !important; }
-  .tab.active-haut-a, .tab.active-bas-a, .tab.active-haut-b, .tab.active-bas-b, .tab.active-bilan { background:var(--accent); color:#fff; }
+  .tab.active-poussee, .tab.active-tirage, .tab.active-jambes, .tab.active-rappel, .tab.active-bilan { background:var(--accent); color:#fff; }
   .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:6px; vertical-align:middle; }
-  .tab.active-haut-a .done-dot, .tab.active-bas-a .done-dot, .tab.active-haut-b .done-dot, .tab.active-bas-b .done-dot { background:#fff; }
+  .tab.active-poussee .done-dot, .tab.active-tirage .done-dot, .tab.active-jambes .done-dot, .tab.active-rappel .done-dot { background:#fff; }
 
   .session { display:none; padding:0 20px; }
   .session.visible { display:block; animation:fadeUp 0.25s ease; }
@@ -85,7 +85,7 @@
 
   .session-header { padding:18px 0 0; margin-bottom:2px; }
   .session-tag { font-size:12px; font-weight:600; color:var(--accent); margin-bottom:3px; }
-  .tag-haut-a, .tag-bas-a, .tag-haut-b, .tag-bas-b { color:var(--accent); }
+  .tag-poussee, .tag-tirage, .tag-jambes, .tag-rappel { color:var(--accent); }
   .session-title { font-size:24px; font-weight:700; letter-spacing:-0.02em; line-height:1.1; }
   .session-week-pill { display:inline-block; font-size:11px; font-weight:600; color:var(--accent); background:var(--accent-dim); padding:3px 10px; border-radius:20px; margin-left:8px; vertical-align:middle; letter-spacing:0; }
   .session-sub { font-size:12.5px; color:var(--text2); margin-top:5px; }
@@ -100,7 +100,7 @@
   .exo-name { font-size:15px; font-weight:600; line-height:1.3; letter-spacing:-0.01em; }
   .exo-target { font-size:12px; color:var(--text2); margin-top:2px; }
   .exo-prescription { font-size:15px; font-weight:700; color:var(--accent); white-space:nowrap; flex-shrink:0; letter-spacing:-0.01em; }
-  .pres-haut-a, .pres-bas-a, .pres-haut-b, .pres-bas-b { color:var(--accent); }
+  .pres-poussee, .pres-tirage, .pres-jambes, .pres-rappel { color:var(--accent); }
 
   .exo-meta { display:flex; gap:6px; padding:2px 16px 11px; align-items:center; flex-wrap:wrap; }
   .chip { font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px; background:var(--seg-bg); color:var(--text2); border:none; font-family:inherit; line-height:1.5; }
@@ -179,7 +179,7 @@
 
 <div class="header">
   <div>
-    <div class="eyebrow">Alexandre · Haut / Bas</div>
+    <div class="eyebrow">Alexandre · Rotation 4 séances</div>
     <h1>Suivi</h1>
   </div>
   <div class="cycle-badge">Rotation<strong id="cycle-label">Haut A · Bas A · Haut B · Bas B</strong></div>
@@ -197,105 +197,109 @@
 </div>
 
 <div class="summary-bar">
-  <div class="summary-cell" onclick="switchTab('haut-a')"><div class="s-label">Haut A</div><div class="s-dot" id="dot-haut-a"></div></div>
-  <div class="summary-cell" onclick="switchTab('bas-a')"><div class="s-label">Bas A</div><div class="s-dot" id="dot-bas-a"></div></div>
-  <div class="summary-cell" onclick="switchTab('haut-b')"><div class="s-label">Haut B</div><div class="s-dot" id="dot-haut-b"></div></div>
-  <div class="summary-cell" onclick="switchTab('bas-b')"><div class="s-label">Bas B</div><div class="s-dot" id="dot-bas-b"></div></div>
+  <div class="summary-cell" onclick="switchTab('poussee')"><div class="s-label">1 · Poussée</div><div class="s-dot" id="dot-poussee"></div></div>
+  <div class="summary-cell" onclick="switchTab('tirage')"><div class="s-label">2 · Tirage</div><div class="s-dot" id="dot-tirage"></div></div>
+  <div class="summary-cell" onclick="switchTab('jambes')"><div class="s-label">3 · Jambes</div><div class="s-dot" id="dot-jambes"></div></div>
+  <div class="summary-cell" onclick="switchTab('rappel')"><div class="s-label">4 · Rappel</div><div class="s-dot" id="dot-rappel"></div></div>
 </div>
 
 <details class="principles">
-  <summary>Principes</summary>
-  <div class="p-item"><div class="p-num">1</div><div>Tu bats le log, pas ton ancien niveau. Reps d'abord dans la fourchette, puis charge (double progression).</div></div>
-  <div class="p-item"><div class="p-num">2</div><div>Douleur au-dessus de 3/10 pendant, ou qui traîne le lendemain : tu réduis, tu ne forces jamais à travers.</div></div>
-  <div class="p-item"><div class="p-num">3</div><div>Presses : jamais de verrouillage complet en haut, pas de bench — zone infra. Tirages : prise neutre, coudes serrés, jamais large — coude / nerf ulnaire. Arrière d'épaule : léger, jamais à l'échec.</div></div>
-  <div class="p-item"><div class="p-num">4</div><div>Machine au max : remplis d'abord 10 à 12 reps, puis négative 3-4 s avec pause en bas. Tu changes d'outil seulement quand tout ça devient facile.</div></div>
+  <summary>Règles et interdits</summary>
+  <div class="p-item"><div class="p-num">1</div><div>Rotation 1, 2, 3, 4, puis tu recommences. Quand tu peux, pas à date fixe.</div></div>
+  <div class="p-item"><div class="p-num">2</div><div>Double progression : tu montes en reps jusqu'en haut de la fourchette sur toutes les séries, puis tu ajoutes la plus petite charge et tu redescends en bas. Les montées en charge ne comptent jamais comme des séries.</div></div>
+  <div class="p-item"><div class="p-num">3</div><div>RIR 0-1 sur la dernière série de chaque exercice. <b>Sauf l'oiseau</b> : arrière d'épaule, léger, jamais à l'échec, stop à la moindre gêne.</div></div>
+  <div class="p-item"><div class="p-num">4</div><div>Repos 2-3 min sur les 3 premiers exercices, 1-2 min sur le reste.</div></div>
+  <div class="p-item"><div class="p-num">5</div><div>Nouvelle machine : 2 à 3 séances avant de la pousser près de l'échec. Point tous les 4 à 6 semaines.</div></div>
+  <div class="p-item"><div class="p-num">6</div><div><b>Interdits.</b> Soulevé de terre roumain, good morning, squat barre libre, soulevé de terre, hyperextensions chargées. Développé couché à plat lourd, développé militaire barre lourd. Dips.</div></div>
+  <div class="p-item"><div class="p-num">7</div><div>Douleur au-dessus de 3/10 pendant, ou qui traîne le lendemain : tu réduis, tu ne forces jamais à travers.</div></div>
 </details>
 
 <div class="tabs">
-  <button class="tab active-haut-a" id="tab-haut-a" onclick="switchTab('haut-a')">Haut A</button>
-  <button class="tab" id="tab-bas-a" onclick="switchTab('bas-a')">Bas A</button>
-  <button class="tab" id="tab-haut-b" onclick="switchTab('haut-b')">Haut B</button>
-  <button class="tab" id="tab-bas-b" onclick="switchTab('bas-b')">Bas B</button>
+  <button class="tab active-poussee" id="tab-poussee" onclick="switchTab('poussee')">1 · Poussée</button>
+  <button class="tab" id="tab-tirage" onclick="switchTab('tirage')">2 · Tirage</button>
+  <button class="tab" id="tab-jambes" onclick="switchTab('jambes')">3 · Jambes</button>
+  <button class="tab" id="tab-rappel" onclick="switchTab('rappel')">4 · Rappel</button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan</button>
 </div>
 
-<!-- HAUT A -->
-<div class="session visible" id="session-haut-a">
+<!-- 1 · POUSSÉE -->
+<div class="session visible" id="session-poussee">
   <div class="session-header">
-    <div class="session-tag tag-haut-a">Haut du corps · A</div>
-    <div class="session-title">Haut A<span class="session-week-pill" id="pill-haut-a">Semaine 1</span></div>
-    <div class="session-sub">Chest press incliné · Tirage vertical neutre · Latéral machine · Curl marteau · Extension triceps</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-haut-a"></div></div>
-    <div class="sess-progress-label" id="proglabel-haut-a">0 / 13 séries</div>
+    <div class="session-tag tag-poussee">Poussée · séance 1</div>
+    <div class="session-title">1 · Poussée<span class="session-week-pill" id="pill-poussee">Semaine 1</span></div>
+    <div class="session-sub">Développé incliné · Écarté machine · Militaire · Latéral poulie · Triceps uni</div>
+    <div class="sess-progress"><div class="sess-progress-fill" id="prog-poussee"></div></div>
+    <div class="sess-progress-label" id="proglabel-poussee">0 / 14 séries</div>
   </div>
-  <div class="exo-card" data-exo="exo1" data-name="Chest press incliné (Hammer)" data-target="Pec haut · incliné, jamais le chest press basique ni le bench — épaule. Stop avant le verrouillage complet en haut, zone infra sensible" data-pres="3 × 6–10" data-presclass="pres-haut-a" data-rpe="RIR 1–2" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Tirage vertical prise neutre" data-target="Dos · largeur. Prise neutre et coudes proches du corps, jamais large ni derrière la nuque — coude / nerf ulnaire. Sangles si les avant-bras lâchent avant le dos" data-pres="3 × 8–12" data-presclass="pres-haut-a" data-rpe="RIR 1–2" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Élévations latérales machine" data-target="Deltoïde latéral · pousse avec le bras contre le coussin, ne serre pas les poignées : c'est l'épaule qui travaille, pas la main" data-pres="3 × 12–20" data-presclass="pres-haut-a" data-rpe="RIR 0–1"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Curl marteau haltères" data-target="Biceps · brachial · prise neutre pour épargner le coude / nerf ulnaire. Assis dossier relevé plutôt que debout : moins de stabilisation, plus de tension" data-pres="2 × 10–15" data-presclass="pres-haut-a" data-rpe="RIR 0–1" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Extension triceps unilatérale à la poulie" data-target="Triceps · coudes serrés le long du corps" data-pres="2 × 10–15" data-presclass="pres-haut-a" data-rpe="RIR 0–1"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-haut-a">Semaine 1</span></div><textarea class="note-input" id="note-haut-a" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('haut-a')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('haut-a')">Effacer cette séance (semaine en cours)</button>
+  <div class="exo-card" data-exo="exo1" data-name="Développé incliné" data-target="Pec haut · machine ou haltères, jamais la barre lourde. Stop avant le verrouillage complet en haut, zone infra sensible" data-pres="3 × 6–10" data-presclass="pres-poussee" data-rpe="RIR 1–2" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Écarté machine (pec fly)" data-target="Pectoraux · amplitude modérée, pas d'étirement max en bas, stop si ça tire côté omoplate" data-pres="3 × 10–15" data-presclass="pres-poussee" data-rpe="RIR 0–1" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo3" data-name="Développé militaire" data-target="Deltoïde antérieur · machine ou haltères, jamais la barre lourde. Pas de verrouillage complet en haut" data-pres="3 × 8–12" data-presclass="pres-poussee" data-rpe="RIR 1–2" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo4" data-name="Élévations latérales à la poulie" data-target="Deltoïde latéral · cuff au poignet plutôt qu'une poignée serrée : c'est l'épaule qui tire, pas la main" data-pres="3 × 12–20" data-presclass="pres-poussee" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo5" data-name="Extension triceps unilatérale à la poulie" data-target="Triceps · coude serré le long du corps" data-pres="2 × 10–15" data-presclass="pres-poussee" data-rpe="RIR 0–1"></div>
+  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-poussee">Semaine 1</span></div><textarea class="note-input" id="note-poussee" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
+  <button class="save-btn" onclick="saveSession('poussee')">Enregistrer la séance</button>
+  <button class="reset-btn" onclick="resetSession('poussee')">Effacer cette séance (semaine en cours)</button>
   <div class="spacer"></div>
 </div>
 
-<!-- BAS A -->
-<div class="session" id="session-bas-a">
+<!-- 2 · TIRAGE -->
+<div class="session" id="session-tirage">
   <div class="session-header">
-    <div class="session-tag tag-bas-a">Bas du corps · A</div>
-    <div class="session-title">Bas A<span class="session-week-pill" id="pill-bas-a">Semaine 1</span></div>
-    <div class="session-sub">Pendulum squat · Leg extension · Leg curl assis · Adducteurs · Mollets</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-bas-a"></div></div>
-    <div class="sess-progress-label" id="proglabel-bas-a">0 / 11 séries</div>
+    <div class="session-tag tag-tirage">Tirage · séance 2</div>
+    <div class="session-title">2 · Tirage<span class="session-week-pill" id="pill-tirage">Semaine 1</span></div>
+    <div class="session-sub">Vertical pronation large · Horizontal coude ouvert · Pullover · Oiseau · Curl pupitre</div>
+    <div class="sess-progress"><div class="sess-progress-fill" id="prog-tirage"></div></div>
+    <div class="sess-progress-label" id="proglabel-tirage">0 / 12 séries</div>
   </div>
-  <div class="exo-card" data-exo="exo1" data-name="Pendulum squat" data-target="Quadriceps · Fessiers · dos calé, descends profond mais sans décoller le bassin" data-pres="2 × 8–12" data-presclass="pres-bas-a" data-rpe="RIR 1–2"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Leg extension" data-target="Quadriceps" data-pres="2 × 12–15" data-presclass="pres-bas-a" data-rpe="RIR 0–1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Leg curl assis" data-target="Ischio-jambiers" data-pres="3 × 8–12" data-presclass="pres-bas-a" data-rpe="RIR 0–1"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Machine adducteurs" data-target="Adducteurs" data-pres="2 × 12–15" data-presclass="pres-bas-a" data-rpe="RIR 0–1"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Mollets à la presse" data-target="Mollets · stop si douleur au tibia (doppler en cours)" data-pres="2 × 8–12" data-presclass="pres-bas-a" data-rpe="RIR 0–1" data-adapted="1"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-bas-a">Semaine 1</span></div><textarea class="note-input" id="note-bas-a" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('bas-a')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('bas-a')">Effacer cette séance (semaine en cours)</button>
+  <div class="exo-card" data-exo="exo1" data-name="Tirage vertical prise pronation large" data-target="Dos · largeur. Sangles si les avant-bras lâchent avant le dos. Réintroduction du large : au moindre signal côté coude ou avant-bras, tu repasses en neutre" data-pres="2 × 8–12" data-presclass="pres-tirage" data-rpe="RIR 1–2" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Tirage horizontal coude ouvert" data-target="Milieu du dos · coudes écartés, tu tires vers le sternum. C'est le complément du tirage coudes serrés de la séance 4" data-pres="2 × 8–12" data-presclass="pres-tirage" data-rpe="RIR 1–2"></div>
+  <div class="exo-card" data-exo="exo3" data-name="Pullover à la poulie" data-target="Grand dorsal en extension d'épaule · bras quasi tendus, le coude ne se plie pas. Amplitude confortable, pas d'étirement forcé en haut" data-pres="2 × 12–15" data-presclass="pres-tirage" data-rpe="RIR 0–1" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo4" data-name="Oiseau à la poulie" data-target="Arrière d'épaule · c'est ta zone douloureuse : léger, JAMAIS à l'échec, stop à la moindre gêne. Cuffs aux poignets, ce sont les bras qui tirent, pas les mains" data-pres="3 × 12–20" data-presclass="pres-tirage" data-rpe="RIR 2–3 · jamais à l'échec" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo5" data-name="Curl pupitre" data-target="Biceps · bras calés sur le pupitre, pas de triche. Prise qui ne force pas le poignet" data-pres="3 × 8–12" data-presclass="pres-tirage" data-rpe="RIR 0–1"></div>
+  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-tirage">Semaine 1</span></div><textarea class="note-input" id="note-tirage" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
+  <button class="save-btn" onclick="saveSession('tirage')">Enregistrer la séance</button>
+  <button class="reset-btn" onclick="resetSession('tirage')">Effacer cette séance (semaine en cours)</button>
   <div class="spacer"></div>
 </div>
 
-<!-- HAUT B -->
-<div class="session" id="session-haut-b">
+<!-- 3 · JAMBES -->
+<div class="session" id="session-jambes">
   <div class="session-header">
-    <div class="session-tag tag-haut-b">Haut du corps · B</div>
-    <div class="session-title">Haut B<span class="session-week-pill" id="pill-haut-b">Semaine 1</span></div>
-    <div class="session-sub">Pec fly Hammer · Tirage horizontal neutre · Oiseau poulie · Latéral machine · Pushdown</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-haut-b"></div></div>
-    <div class="sess-progress-label" id="proglabel-haut-b">0 / 14 séries</div>
+    <div class="session-tag tag-jambes">Jambes · séance 3</div>
+    <div class="session-title">3 · Jambes<span class="session-week-pill" id="pill-jambes">Semaine 1</span></div>
+    <div class="session-sub">Pendulum squat · Leg curl assis · Leg curl allongé · Adducteurs</div>
+    <div class="sess-progress"><div class="sess-progress-fill" id="prog-jambes"></div></div>
+    <div class="sess-progress-label" id="proglabel-jambes">0 / 11 séries</div>
   </div>
-  <div class="exo-card" data-exo="exo1" data-name="Pec fly Hammer (ou pec deck)" data-target="Pectoraux · amplitude modérée, pas d'étirement max en bas, stop si ça tire côté omoplate" data-pres="3 × 10–15" data-presclass="pres-haut-b" data-rpe="RIR 0–1" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Tirage horizontal prise neutre, coudes près du corps" data-target="Dos · grand dorsal. Tu tires vers le BAS DU VENTRE, pas vers la poitrine. Les coudes rasent tes côtes et partent vers l'arrière, jamais vers l'extérieur : c'est ce qui ramène le bras le long du corps et fait travailler le grand dorsal, là où le tirage coudes ouverts va chercher le milieu du dos. Coudes serrés = coude / nerf ulnaire épargné. Sangles si les avant-bras lâchent avant le dos" data-pres="3 × 8–12" data-presclass="pres-haut-b" data-rpe="RIR 1–2" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Oiseau à la poulie (prise neutre)" data-target="Arrière d'épaule · c'est ta zone douloureuse : reste léger, JAMAIS à l'échec, stop à la moindre gêne. Des cuffs aux poignets évitent de serrer les poignées : ce sont les bras qui tirent, pas les mains" data-pres="3 × 15–20" data-presclass="pres-haut-b" data-rpe="RIR 2–3 · jamais à l'échec" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Élévations latérales machine" data-target="Deltoïde latéral · pousse avec le bras contre le coussin, ne serre pas les poignées : c'est l'épaule qui travaille, pas la main" data-pres="3 × 12–20" data-presclass="pres-haut-b" data-rpe="RIR 0–1"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Pushdown à la poulie" data-target="Triceps · coudes serrés le long du corps" data-pres="2 × 10–15" data-presclass="pres-haut-b" data-rpe="RIR 0–1"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-haut-b">Semaine 1</span></div><textarea class="note-input" id="note-haut-b" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('haut-b')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('haut-b')">Effacer cette séance (semaine en cours)</button>
+  <div class="exo-card" data-exo="exo1" data-name="Pendulum squat" data-target="Quadriceps · Fessiers · dos calé, descends profond mais sans décoller le bassin" data-pres="3 × 8–12" data-presclass="pres-jambes" data-rpe="RIR 1–2"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Leg curl assis" data-target="Ischio-jambiers · hanche fléchie, l'ischio travaille en position étirée" data-pres="3 × 8–12" data-presclass="pres-jambes" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo3" data-name="Leg curl allongé" data-target="Ischio-jambiers · hanche tendue, autre position d'étirement que l'assis" data-pres="3 × 10–15" data-presclass="pres-jambes" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo4" data-name="Adducteurs machine" data-target="Adducteurs · amplitude confortable, pas le cran le plus large" data-pres="2 × 12–20" data-presclass="pres-jambes" data-rpe="RIR 0–1"></div>
+  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-jambes">Semaine 1</span></div><textarea class="note-input" id="note-jambes" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
+  <button class="save-btn" onclick="saveSession('jambes')">Enregistrer la séance</button>
+  <button class="reset-btn" onclick="resetSession('jambes')">Effacer cette séance (semaine en cours)</button>
   <div class="spacer"></div>
 </div>
 
-<!-- BAS B -->
-<div class="session" id="session-bas-b">
+<!-- 4 · RAPPEL -->
+<div class="session" id="session-rappel">
   <div class="session-header">
-    <div class="session-tag tag-bas-b">Bas du corps · B</div>
-    <div class="session-title">Bas B<span class="session-week-pill" id="pill-bas-b">Semaine 1</span></div>
-    <div class="session-sub">RDL Smith · Leg extension · Leg curl allongé · Adducteurs · Mollets assis</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-bas-b"></div></div>
-    <div class="sess-progress-label" id="proglabel-bas-b">0 / 11 séries</div>
+    <div class="session-tag tag-rappel">Rappel haut du corps · séance 4</div>
+    <div class="session-title">4 · Rappel<span class="session-week-pill" id="pill-rappel">Semaine 1</span></div>
+    <div class="session-sub">Couché à plat · Écarté poulie haute · Vertical neutre · Horizontal serré · Latéral · Curl marteau · Leg curl</div>
+    <div class="sess-progress"><div class="sess-progress-fill" id="prog-rappel"></div></div>
+    <div class="sess-progress-label" id="proglabel-rappel">0 / 19 séries</div>
   </div>
-  <div class="exo-card" data-exo="exo1" data-name="RDL à la Smith machine" data-target="Ischios · Fessiers · dos neutre" data-pres="2 × 8–12" data-presclass="pres-bas-b" data-rpe="RIR 1–2"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Leg extension" data-target="Quadriceps" data-pres="3 × 12–15" data-presclass="pres-bas-b" data-rpe="RIR 0–1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Leg curl allongé" data-target="Ischio-jambiers" data-pres="2 × 8–12" data-presclass="pres-bas-b" data-rpe="RIR 0–1"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Machine adducteurs" data-target="Adducteurs" data-pres="2 × 12–15" data-presclass="pres-bas-b" data-rpe="RIR 0–1"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Mollets assis" data-target="Soléaire · stop si douleur au tibia (doppler en cours)" data-pres="2 × 12–20" data-presclass="pres-bas-b" data-rpe="RIR 0–1" data-adapted="1"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-bas-b">Semaine 1</span></div><textarea class="note-input" id="note-bas-b" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('bas-b')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('bas-b')">Effacer cette séance (semaine en cours)</button>
+  <div class="exo-card" data-exo="exo1" data-name="Développé couché à plat" data-target="Pectoraux · charge modérée, jamais lourd, zone infra. Pas de verrouillage complet en haut" data-pres="3 × 10–15" data-presclass="pres-rappel" data-rpe="RIR 1–2" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo2" data-name="Écarté poulie haute vers le bas" data-target="Pec bas · amplitude modérée, stop si ça tire côté omoplate" data-pres="3 × 12–15" data-presclass="pres-rappel" data-rpe="RIR 0–1" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo3" data-name="Tirage vertical prise neutre" data-target="Dos · largeur. Prise neutre et coudes proches du corps, épargne le coude et le nerf ulnaire. Sangles si les avant-bras lâchent avant le dos" data-pres="3 × 8–12" data-presclass="pres-rappel" data-rpe="RIR 1–2" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo4" data-name="Tirage horizontal prise serrée neutre" data-target="Grand dorsal · tu tires vers le BAS DU VENTRE, les coudes rasent tes côtes et partent vers l'arrière, jamais vers l'extérieur. Coudes serrés = coude et nerf ulnaire épargnés" data-pres="3 × 8–12" data-presclass="pres-rappel" data-rpe="RIR 1–2" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo5" data-name="Élévations latérales" data-target="Deltoïde latéral · machine de préférence, pousse avec le bras contre le coussin, ne serre pas les poignées" data-pres="3 × 12–20" data-presclass="pres-rappel" data-rpe="RIR 0–1"></div>
+  <div class="exo-card" data-exo="exo6" data-name="Curl marteau" data-target="Biceps · brachial · prise neutre pour épargner le coude et le nerf ulnaire. Assis dossier relevé plutôt que debout" data-pres="2 × 10–15" data-presclass="pres-rappel" data-rpe="RIR 0–1" data-adapted="1"></div>
+  <div class="exo-card" data-exo="exo7" data-name="Leg curl assis" data-target="Ischio-jambiers · rappel de milieu de rotation" data-pres="2 × 10–15" data-presclass="pres-rappel" data-rpe="RIR 0–1"></div>
+  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-rappel">Semaine 1</span></div><textarea class="note-input" id="note-rappel" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
+  <button class="save-btn" onclick="saveSession('rappel')">Enregistrer la séance</button>
+  <button class="reset-btn" onclick="resetSession('rappel')">Effacer cette séance (semaine en cours)</button>
   <div class="spacer"></div>
 </div>
 
@@ -369,14 +373,14 @@ const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7v
 const CLIENT_ID = "alexandre_test";
 
 const CONFIG = {
-  'haut-a': {exo1:3,exo2:3,exo3:3,exo4:2,exo5:2},
-  'bas-a': {exo1:2,exo2:2,exo3:3,exo4:2,exo5:2},
-  'haut-b': {exo1:3,exo2:3,exo3:3,exo4:3,exo5:2},
-  'bas-b': {exo1:2,exo2:3,exo3:2,exo4:2,exo5:2}
+  'poussee': {exo1:3,exo2:3,exo3:3,exo4:3,exo5:2},
+  'tirage': {exo1:2,exo2:2,exo3:2,exo4:3,exo5:3},
+  'jambes': {exo1:3,exo2:3,exo3:3,exo4:2},
+  'rappel': {exo1:3,exo2:3,exo3:3,exo4:3,exo5:3,exo6:2,exo7:2}
 };
 
 const NB_SEMAINES = 8;
-const SESSIONS = ['haut-a','bas-a','haut-b','bas-b'];
+const SESSIONS = ['poussee','tirage','jambes','rappel'];
 const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 let currentWeek = 1;
 
@@ -427,16 +431,16 @@ function toggleKbd(btn){
 function updateNextBadge(){
   const el=document.getElementById('cycle-label');
   if(!el) return;
-  const label={'haut-a':'Haut A','bas-a':'Bas A','haut-b':'Haut B','bas-b':'Bas B'};
-  const map={'haut-a':'bas-a','bas-a':'haut-b','haut-b':'bas-b','bas-b':'haut-a'};
+  const label={'poussee':'1 · Poussée','tirage':'2 · Tirage','jambes':'3 · Jambes','rappel':'4 · Rappel'};
+  const map={'poussee':'tirage','tirage':'jambes','jambes':'rappel','rappel':'poussee'};
   const raw=localStorage.getItem('fbeod-last');
-  if(!raw){ el.textContent='Haut A · Bas A · Haut B · Bas B'; return; }
+  if(!raw){ el.textContent='Poussée · Tirage · Jambes · Rappel'; return; }
   try{
     const d=JSON.parse(raw);
     if(d && d.session && map[d.session]){
       el.textContent=`Dernière : ${label[d.session]} → Prochaine : ${label[map[d.session]]}`;
     }
-  }catch(e){ el.textContent='Haut A · Bas A · Haut B · Bas B'; }
+  }catch(e){ el.textContent='Poussée · Tirage · Jambes · Rappel'; }
 }
 
 function buildSession(session){
