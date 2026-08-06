@@ -353,7 +353,7 @@
 
   <div class="bilan-field">
     <div class="bilan-label">Tour de taille (cm) <span class="bilan-scale-hint">au nombril, sans rentrer le ventre</span></div>
-    <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-taille" oninput="saveBilan('taille',this.value)">
+    <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-taille" oninput="saveTaille(this.value)">
   </div>
 
   <div class="bilan-field">
@@ -434,7 +434,7 @@ const CONFIG = {
 
 const NB_SEMAINES = 8;
 const SESSIONS = ['push','pull','legs','upper','lower'];
-const BILAN_FIELDS = ['poids','taille','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
+const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 let currentWeek = 1;
 
 function getKey(s,exo,serie,field,week){ return `${s}-${exo}-s${serie}-${field}-w${week}`; }
@@ -605,6 +605,16 @@ function saveBilan(field,value){
   localStorage.setItem(`bilan-${field}-w${currentWeek}`,value);
   syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
 }
+/* Le tour de taille de la semaine passe par le canal 'perf', celui des séries.
+   Une ligne par semaine, séance « Corps », exercice « Tour de taille (cm) ».
+   Aucune modification du script : il sait déjà traiter ça. */
+function saveTaille(value){
+  const k = `bilan-taille-w${currentWeek}`;
+  localStorage.setItem(k, value);
+  syncFieldDebounced(k, {client:CLIENT_ID, type:'perf', week:currentWeek, session:'corps',
+    exo:'Tour de taille (cm)', serie:1, field:'kg', value:value, ts:new Date().toISOString()});
+}
+
 const MENS_ZONES = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
 const MENS_COLS = ['depart','m1','m2','m3'];
 
@@ -627,6 +637,8 @@ function loadBilan(){
     const el=document.getElementById(`bilan-${f}`);
     if(el) el.value=localStorage.getItem(`bilan-${f}-w${currentWeek}`)||'';
   });
+  const t=document.getElementById('bilan-taille');
+  if(t) t.value=localStorage.getItem(`bilan-taille-w${currentWeek}`)||'';
   const pill=document.getElementById('pill-bilan');
   if(pill) pill.textContent=`Semaine ${currentWeek}`;
   loadMens();
