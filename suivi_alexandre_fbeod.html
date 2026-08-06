@@ -150,6 +150,15 @@
   .bilan-txt { width:100%; background:none; border:none; color:var(--text); font-family:inherit; font-size:14px; font-weight:400; padding:11px 16px; resize:none; outline:none; line-height:1.55; min-height:64px; }
   .bilan-txt::placeholder { color:var(--text3); }
   .bilan-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .mens-card { margin-top:12px; background:var(--card); border-radius:14px; overflow:hidden; box-shadow:var(--shadow); }
+  .mens-row { display:grid; grid-template-columns:1.25fr repeat(4,1fr); align-items:center; border-bottom:0.5px solid var(--sep2); }
+  .mens-row:last-child { border-bottom:none; }
+  .mens-head { background:var(--card2); }
+  .mens-zone { font-size:12px; font-weight:600; color:var(--text2); padding:10px 0 10px 14px; }
+  .mens-h { font-size:10.5px; font-weight:600; color:var(--text3); text-align:center; padding:10px 0; }
+  .mens-in { width:100%; background:none; border:none; border-left:0.5px solid var(--sep2); color:var(--text); font-family:inherit; font-size:15px; font-weight:600; padding:11px 2px; text-align:center; outline:none; font-variant-numeric:tabular-nums; }
+  .mens-in::placeholder { color:var(--text3); font-weight:400; }
+  .mens-in:focus { background:var(--accent-dim); }
   .bilan-grid .bilan-field { margin-top:0; }
 
   /* ---------- Chronomètre de repos (prototype) ---------- */
@@ -343,6 +352,11 @@
   </div>
 
   <div class="bilan-field">
+    <div class="bilan-label">Tour de taille (cm) <span class="bilan-scale-hint">au nombril, sans rentrer le ventre</span></div>
+    <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-taille" oninput="saveBilan('taille',this.value)">
+  </div>
+
+  <div class="bilan-field">
     <div class="bilan-label">Calories moyennes <span class="bilan-scale-hint">kcal / jour, moyenne de la semaine</span></div>
     <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-calories" oninput="saveBilan('calories',this.value)">
   </div>
@@ -386,6 +400,22 @@
     <textarea class="bilan-txt" id="bilan-question" placeholder="Un doute, une idée, autre chose à noter..." oninput="saveBilan('question',this.value)"></textarea>
   </div>
 
+  <div class="bilan-intro" style="margin-top:22px">
+    <b>Mensurations, une fois par mois.</b> Même moment de la journée, à froid, sans contracter, mètre ruban à plat. À cette échelle un bras ne bouge pas d'une semaine sur l'autre : mesurer plus souvent ne mesure que ton hydratation.
+  </div>
+
+  <div class="mens-card">
+    <div class="mens-row mens-head"><div class="mens-zone">Zone (cm)</div><div class="mens-h">Départ</div><div class="mens-h">Mois 1</div><div class="mens-h">Mois 2</div><div class="mens-h">Mois 3</div></div>
+    <div class="mens-row"><div class="mens-zone">Poitrine</div><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-0-depart" oninput="saveMens(0,'depart',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-0-m1" oninput="saveMens(0,'m1',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-0-m2" oninput="saveMens(0,'m2',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-0-m3" oninput="saveMens(0,'m3',this.value)"></div>
+    <div class="mens-row"><div class="mens-zone">Taille</div><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-1-depart" oninput="saveMens(1,'depart',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-1-m1" oninput="saveMens(1,'m1',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-1-m2" oninput="saveMens(1,'m2',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-1-m3" oninput="saveMens(1,'m3',this.value)"></div>
+    <div class="mens-row"><div class="mens-zone">Hanches</div><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-2-depart" oninput="saveMens(2,'depart',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-2-m1" oninput="saveMens(2,'m1',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-2-m2" oninput="saveMens(2,'m2',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-2-m3" oninput="saveMens(2,'m3',this.value)"></div>
+    <div class="mens-row"><div class="mens-zone">Bras G</div><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-3-depart" oninput="saveMens(3,'depart',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-3-m1" oninput="saveMens(3,'m1',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-3-m2" oninput="saveMens(3,'m2',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-3-m3" oninput="saveMens(3,'m3',this.value)"></div>
+    <div class="mens-row"><div class="mens-zone">Bras D</div><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-4-depart" oninput="saveMens(4,'depart',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-4-m1" oninput="saveMens(4,'m1',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-4-m2" oninput="saveMens(4,'m2',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-4-m3" oninput="saveMens(4,'m3',this.value)"></div>
+    <div class="mens-row"><div class="mens-zone">Cuisse G</div><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-5-depart" oninput="saveMens(5,'depart',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-5-m1" oninput="saveMens(5,'m1',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-5-m2" oninput="saveMens(5,'m2',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-5-m3" oninput="saveMens(5,'m3',this.value)"></div>
+    <div class="mens-row"><div class="mens-zone">Cuisse D</div><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-6-depart" oninput="saveMens(6,'depart',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-6-m1" oninput="saveMens(6,'m1',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-6-m2" oninput="saveMens(6,'m2',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-6-m3" oninput="saveMens(6,'m3',this.value)"></div>
+    <div class="mens-row"><div class="mens-zone">Mollet G</div><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-7-depart" oninput="saveMens(7,'depart',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-7-m1" oninput="saveMens(7,'m1',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-7-m2" oninput="saveMens(7,'m2',this.value)"><input type="text" inputmode="decimal" class="mens-in" placeholder="—" id="mens-7-m3" oninput="saveMens(7,'m3',this.value)"></div>
+  </div>
+
   <button class="save-btn" onclick="saveBilanComplet()">Enregistrer le bilan</button>
   <div class="spacer"></div>
 </div>
@@ -404,7 +434,7 @@ const CONFIG = {
 
 const NB_SEMAINES = 8;
 const SESSIONS = ['push','pull','legs','upper','lower'];
-const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
+const BILAN_FIELDS = ['poids','taille','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 let currentWeek = 1;
 
 function getKey(s,exo,serie,field,week){ return `${s}-${exo}-s${serie}-${field}-w${week}`; }
@@ -575,6 +605,23 @@ function saveBilan(field,value){
   localStorage.setItem(`bilan-${field}-w${currentWeek}`,value);
   syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
 }
+const MENS_ZONES = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
+const MENS_COLS = ['depart','m1','m2','m3'];
+
+/* Les mensurations passent par le canal 'corp' du script, celui qui existe déjà
+   pour les clients. Rien à changer côté Apps Script pour cette partie. */
+function saveMens(zone, col, value){
+  const k = `mens-${zone}-${col}`;
+  localStorage.setItem(k, value);
+  syncFieldDebounced(k, {client:CLIENT_ID, type:'corp', field:`mens-${zone}-${col}`, value:value, ts:new Date().toISOString()});
+}
+function loadMens(){
+  MENS_ZONES.forEach((_,i)=>MENS_COLS.forEach(c=>{
+    const el=document.getElementById(`mens-${i}-${c}`);
+    if(el) el.value=localStorage.getItem(`mens-${i}-${c}`)||'';
+  }));
+}
+
 function loadBilan(){
   BILAN_FIELDS.forEach(f=>{
     const el=document.getElementById(`bilan-${f}`);
@@ -582,6 +629,7 @@ function loadBilan(){
   });
   const pill=document.getElementById('pill-bilan');
   if(pill) pill.textContent=`Semaine ${currentWeek}`;
+  loadMens();
 }
 function saveBilanComplet(){
   BILAN_FIELDS.forEach(f=>{
