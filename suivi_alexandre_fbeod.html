@@ -74,7 +74,7 @@
   .tab { flex-shrink:0; padding:8px 15px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; border:none; background:var(--card); color:var(--text2); font-family:inherit; text-align:center; line-height:1.25; box-shadow:var(--shadow); transition:background 0.15s, color 0.15s; }
   .tab br { display:none; }
   .tab span { display:none !important; }
-  .tab.active-push, .tab.active-pull, .tab.active-legs, .tab.active-upper, .tab.active-lower, .tab.active-bilan, .tab.active-mens { background:var(--accent); color:#fff; }
+  .tab.active-push, .tab.active-pull, .tab.active-legs, .tab.active-upper, .tab.active-lower, .tab.active-bilan, .tab.active-corp { background:var(--accent); color:#fff; }
   .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:6px; vertical-align:middle; }
   .tab.active-push .done-dot, .tab.active-pull .done-dot, .tab.active-legs .done-dot, .tab.active-upper .done-dot, .tab.active-lower .done-dot { background:#fff; }
 
@@ -232,7 +232,7 @@
   <button class="tab" id="tab-upper" onclick="switchTab('upper')">4 · Upper</button>
   <button class="tab" id="tab-lower" onclick="switchTab('lower')">5 · Lower</button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan</button>
-  <button class="tab" id="tab-mens" onclick="switchTab('mens')">Mensur.</button>
+  <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps</button>
 </div>
 
 <!-- 1 · PUSH -->
@@ -406,11 +406,11 @@
   <div class="spacer"></div>
 </div>
 
-<!-- MENSURATIONS -->
-<div class="session" id="session-mens">
+<!-- CORPS -->
+<div class="session" id="session-corp">
   <div class="session-header">
-    <div class="session-tag" style="color:var(--orange)">Mensurations</div>
-    <div class="session-title">Mensurations</div>
+    <div class="session-tag" style="color:var(--orange)">Suivi corporel</div>
+    <div class="session-title">Corps</div>
     <div class="session-sub">Une fois toutes les 4 semaines, en cm. Même moment de la journée, à froid, sans contracter, mètre ruban à plat.</div>
   </div>
 
