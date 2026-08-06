@@ -349,7 +349,7 @@
   <div class="session-header">
     <div class="session-tag" style="color:var(--gold)">Suivi corporel</div>
     <div class="session-title">CORPS — SUIVI</div>
-    <div class="session-sub">Poids 1×/sem, matin à jeun, mêmes conditions. Mensurations 1×/mois. On regarde la tendance.</div>
+    <div class="session-sub">Poids 1×/sem, matin à jeun, mêmes conditions. Mensurations 1×/mois, sur la semaine choisie en haut. On regarde la tendance.</div>
   </div>
 
   <div class="corp-section-title">Poids (chaque semaine)</div>
@@ -360,7 +360,7 @@
     <div class="series-rows" id="poids-rows"></div>
   </div>
 
-  <div class="corp-section-title">Mensurations de la semaine (cm) — une fois par mois suffit</div>
+  <div class="corp-section-title">Mensurations (cm)</div>
   <div class="exo-card">
     <div class="col-header" style="grid-template-columns:1.3fr 1fr">
       <div class="col-h" style="text-align:left;padding-left:8px">Zone</div><div class="col-h" id="mens-week-h">Semaine 1</div>
@@ -778,7 +778,7 @@ function saveBilanComplet(){
 /* ===== CORPOREL ===== */
 function buildPoids(){
   const c=document.getElementById('poids-rows'); let html='';
-  for(let w=1;w<=12;w++){
+  for(let w=1;w<=NB_SEMAINES;w++){
     html+=`<div class="poids-row">
       <div class="serie-num">S${w}</div>
       <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cpoids-w${w}" oninput="saveCorpField('poids',${w},this.value)">
@@ -834,7 +834,7 @@ function loadCorpMens(){
 function saveCorp(){ /* tout est déjà sauvé au fil de l'eau */ }
 function resetCorp(){
   if(!confirm('Effacer tout le suivi corporel ?')) return;
-  for(let w=1;w<=12;w++){ localStorage.removeItem(`corp-poids-w${w}`); localStorage.removeItem(`corp-rem-w${w}`); }
+  for(let w=1;w<=NB_SEMAINES;w++){ localStorage.removeItem(`corp-poids-w${w}`); localStorage.removeItem(`corp-rem-w${w}`); }
   MENSURATIONS.forEach((z,i)=>{for(let w=1;w<=NB_SEMAINES;w++) localStorage.removeItem(`corp-mens-${i}-${semKey(w)}`);});
   loadCorpPoids(); loadCorpMens();
 }
