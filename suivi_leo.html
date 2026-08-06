@@ -266,11 +266,10 @@
     <div class="series-rows" id="poids-rows"></div>
   </div>
 
-  <div class="corp-section-title">Mensurations (toutes les 4 semaines, cm)</div>
+  <div class="corp-section-title">Mensurations de la semaine (cm) — une fois par mois suffit</div>
   <div class="exo-card">
-    <div class="col-header" style="grid-template-columns:1.3fr 1fr 1fr 1fr">
-      <div class="col-h" style="text-align:left;padding-left:8px">Zone</div><div class="col-h">Départ</div><div class="col-h">S4</div><div class="col-h">S8</div>
-    </div>
+    <div class="col-header" style="grid-template-columns:1.3fr 1fr">
+      <div class="col-h" style="text-align:left;padding-left:8px">Zone</div><div class="col-h" id="mens-week-h">Semaine 1</div>
     </div>
     <div class="series-rows" id="mens-rows"></div>
   </div>
@@ -344,7 +343,6 @@ const PROGRAMME = {
   },
 };
 
-const MENS_COLS = ['depart', 's04', 's08'];
 const MENSURATIONS = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
 const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 const SESSIONS = Object.keys(PROGRAMME);
@@ -600,7 +598,7 @@ function switchWeek(week){
     const pill=document.getElementById(`pill-${sid}`); if(pill) pill.textContent=`Semaine ${week}`;
     const nl=document.getElementById(`notelabel-${sid}`); if(nl) nl.textContent=`Semaine ${week}`;
   });
-  loadAll();
+  loadAll(); loadCorpMens();
 }
 
 function switchTab(id){
@@ -608,7 +606,7 @@ function switchTab(id){
   document.querySelectorAll('.tab').forEach(t=>t.className='tab');
   document.getElementById(`session-${id}`).classList.add('visible');
   document.getElementById(`tab-${id}`).className=`tab active-${id}`;
-  document.getElementById('week-selector').style.display = (id==='corp') ? 'none' : 'flex';
+  document.getElementById('week-selector').style.display='flex';
   window.scrollTo(0,0);
 }
 
@@ -625,18 +623,16 @@ function buildPoids(){
   }
   c.innerHTML=html;
 }
+function semKey(w){ return 's' + (w<10 ? '0'+w : w); }
 function buildMens(){
   const c=document.getElementById('mens-rows'); let html='';
   MENSURATIONS.forEach((z,i)=>{
-    html+=`<div class="mens-row" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div class="mens-label">${z}</div>`;
-    MENS_COLS.forEach((col,ci)=>{
-      const last = ci===MENS_COLS.length-1 ? ' style="border-right:none"' : '';
-      html+=`<input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cmens-${i}-${col}"${last} oninput="saveCorpField('mens-${i}-${col}',0,this.value)">`;
-    });
-    html+='</div>';
+    html+=`<div class="mens-row" style="grid-template-columns:1.3fr 1fr"><div class="mens-label">${z}</div>`
+       +  `<input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cmens-${i}" style="border-right:none" oninput="saveMensSemaine(${i},this.value)"></div>`;
   });
   c.innerHTML=html;
 }
+function saveMensSemaine(i,value){ saveCorpField(`mens-${i}-${semKey(currentWeek)}`, 0, value); }
 function saveCorpField(field,w,value){
   const key = w>0 ? `corp-${field}-w${w}` : `corp-${field}`;
   localStorage.setItem(key,value);
@@ -664,16 +660,16 @@ function loadCorpPoids(){
 }
 function loadCorpMens(){
   MENSURATIONS.forEach((z,i)=>{
-    MENS_COLS.forEach(col=>{
-      const el=document.getElementById(`cmens-${i}-${col}`);
-      if(el) el.value=localStorage.getItem(`corp-mens-${i}-${col}`)||'';
-    });
+    const el=document.getElementById(`cmens-${i}`);
+    if(el) el.value=localStorage.getItem(`corp-mens-${i}-${semKey(currentWeek)}`)||'';
   });
+  const h=document.getElementById('mens-week-h');
+  if(h) h.textContent=`Semaine ${currentWeek}`;
 }
 function resetCorp(){
   if(!confirm('Effacer tout le suivi corporel ?')) return;
   for(let w=1;w<=12;w++){ localStorage.removeItem(`corp-poids-w${w}`); localStorage.removeItem(`corp-rem-w${w}`); }
-  MENSURATIONS.forEach((z,i)=>MENS_COLS.forEach(col=>localStorage.removeItem(`corp-mens-${i}-${col}`)));
+  MENSURATIONS.forEach((z,i)=>{for(let w=1;w<=NB_SEMAINES;w++) localStorage.removeItem(`corp-mens-${i}-${semKey(w)}`);});
   loadCorpPoids(); loadCorpMens();
 }
 
