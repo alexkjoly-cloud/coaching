@@ -180,9 +180,9 @@
 <div class="week-selector" id="week-selector"></div>
 
 <div class="tabs">
-  <button class="tab active-lower-a" id="tab-lower-a" onclick="switchTab('lower-a')">Lower A<br><span style="font-size:8px;color:var(--muted)">Force fessiers</span></button>
-  <button class="tab" id="tab-lower-b" onclick="switchTab('lower-b')">Lower B<br><span style="font-size:8px;color:var(--muted)">Quads · posture</span></button>
-  <button class="tab" id="tab-lower-c" onclick="switchTab('lower-c')">Lower C<br><span style="font-size:8px;color:var(--muted)">Ischios · posture</span></button>
+  <button class="tab active-lower-a" id="tab-lower-a" onclick="switchTab('lower-a')">Séance 1<br><span style="font-size:8px;color:var(--muted)">Position longue</span></button>
+  <button class="tab" id="tab-lower-b" onclick="switchTab('lower-b')">Séance 2<br><span style="font-size:8px;color:var(--muted)">Largeur</span></button>
+  <button class="tab" id="tab-lower-c" onclick="switchTab('lower-c')">Séance 3<br><span style="font-size:8px;color:var(--muted)">Contraction</span></button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
 </div>
@@ -291,36 +291,36 @@ const NB_SEMAINES = 8;
 
 const PROGRAMME = {
   'lower-a': {
-    nom:'LOWER A', couleur:'upper-a', tag:'Force fessiers / jambes',
+    nom:'SÉANCE 1', couleur:'upper-a', tag:'Fessiers · position longue',
     exos:[
-      {nom:'Presse à cuisses', target:'Quadriceps · Fessiers · ménage le bas du dos', series:2, pres:'2 × 8-10', repos:'Repos 3 min'},
-      {nom:'Hip thrust machine (lourd)', target:'Grand fessier', series:2, pres:'2 × 8-10', repos:'Repos 3 min'},
-      {nom:'Step-up Smith (par jambe)', target:'Fessiers · unilatéral', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
-      {nom:'Hyperextension (bias fessier)', target:'Fessiers · chaîne postérieure', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
-      {nom:'Abducteurs machine (buste penché)', target:'Moyen fessier', series:2, pres:'2 × 15-20', repos:'Repos 90 s'},
-      {nom:'Tractions (assistées ou lestées)', target:'Dos · largeur', series:2, pres:'2 × 6-10', repos:'Repos 2 min'},
+      {nom:'Presse à cuisses (pieds hauts et larges)', target:'Fessiers en position longue · Quadriceps. Pieds hauts et écartés, pointes légèrement ouvertes : c\'est ce qui met la charge sur le fessier plutôt que sur l\'avant de cuisse. Descends profond.', series:3, pres:'3 × 8-12', repos:'Repos 2 min'},
+      {nom:'Hip thrust machine', target:'Grand fessier · contraction maximale. Menton rentré, côtes basses, tu serres 1 seconde en haut sans cambrer le bas du dos.', series:3, pres:'3 × 8-12', repos:'Repos 2 min'},
+      {nom:'Fente bulgare buste penché (par jambe)', target:'Fessiers en position longue · le buste penché en avant à 45° déplace le travail du quadriceps vers le fessier. Grand pas.', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Abducteurs machine (buste penché)', target:'Moyen fessier · c\'est LUI qui fait la largeur. Buste penché en avant, c\'est la position qui le cible le mieux.', series:3, pres:'3 × 15-20', repos:'Repos 90 s'},
+      {nom:'Kickback à la poulie (par jambe)', target:'Grand fessier · isolation. Bassin fixe, tu ne cambres pas pour aller plus loin.', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
+      {nom:'Tractions (assistées ou lestées)', target:'Dos · posture. Le seul exo du haut du corps de la séance.', series:2, pres:'2 × 6-10', repos:'Repos 2 min'},
     ]
   },
   'lower-b': {
-    nom:'LOWER B', couleur:'lower-a', tag:'Quadriceps + posture',
+    nom:'SÉANCE 2', couleur:'lower-a', tag:'Fessiers · largeur',
     exos:[
-      {nom:'Hack squat', target:'Quadriceps · Fessiers', series:2, pres:'2 × 8-10', repos:'Repos 3 min'},
-      {nom:'Fente bulgare (par jambe)', target:'Fessiers · Quadriceps', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
-      {nom:'Leg curl allongé', target:'Ischio-jambiers', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
-      {nom:'Abducteurs machine (buste penché)', target:'Moyen fessier', series:2, pres:'2 × 15-20', repos:'Repos 90 s'},
-      {nom:'Hip thrust machine (volume)', target:'Grand fessier', series:2, pres:'2 × 10-12', repos:'Repos 2-3 min'},
-      {nom:'Face pull à la corde', target:'Arrière épaule · posture', series:2, pres:'2 × 15-20', repos:'Repos 60 s'},
+      {nom:'Hip thrust machine', target:'Grand fessier · séance en reps plus hautes que la 1', series:3, pres:'3 × 12-15', repos:'Repos 2 min'},
+      {nom:'Abduction à la poulie debout (par jambe)', target:'Moyen fessier · sangle à la cheville, tu montes la jambe sur le côté sans pencher le buste. Amplitude complète, léger.', series:3, pres:'3 × 12-15', repos:'Repos 90 s'},
+      {nom:'Step-up haut au Smith, buste penché (par jambe)', target:'Fessiers · banc haut, buste penché en avant. Tu pousses avec le talon de la jambe du haut, l\'autre ne fait qu\'effleurer le sol.', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Abducteurs machine (buste penché)', target:'Moyen fessier · deuxième passage de la séance', series:3, pres:'3 × 15-20', repos:'Repos 90 s'},
+      {nom:'Leg extension unilatérale (buste penché en arrière)', target:'Quadriceps · entretien', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
+      {nom:'Rowing appui poitrine', target:'Haut du dos · posture. Le seul exo du haut du corps de la séance.', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
     ]
   },
   'lower-c': {
-    nom:'LOWER C', couleur:'upper-b', tag:'Ischios / postérieur + posture',
+    nom:'SÉANCE 3', couleur:'upper-b', tag:'Fessiers · contraction',
     exos:[
-      {nom:'Soulevé de terre roumain barre', target:'Ischios · Fessiers', series:2, pres:'2 × 8-10', repos:'Repos 3-4 min'},
-      {nom:'Hip thrust machine', target:'Grand fessier', series:2, pres:'2 × 10-12', repos:'Repos 2-3 min'},
-      {nom:'Leg extension unilatérale (buste penché en arrière)', target:'Quadriceps · rectus femoris', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
-      {nom:'Kickback à la poulie (par jambe)', target:'Grand fessier · isolation', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
-      {nom:'Abducteurs machine (buste penché)', target:'Moyen fessier', series:2, pres:'2 × 15-20', repos:'Repos 90 s'},
-      {nom:'Rotation externe à la poulie (par bras)', target:'Coiffe · posture épaule', series:2, pres:'2 × 12-15', repos:'Repos 60 s'},
+      {nom:'Hip thrust machine', target:'Grand fessier · la charge la plus lourde des trois séances', series:3, pres:'3 × 8-12', repos:'Repos 2 min'},
+      {nom:'Hyperextension (bias fessier)', target:'Grand fessier · dos arrondi volontairement, menton rentré, tu montes uniquement par la hanche. Ce n\'est pas un exercice de lombaires.', series:3, pres:'3 × 12-15', repos:'Repos 90 s'},
+      {nom:'Soulevé de terre roumain unilatéral (par jambe)', target:'Ischios en entretien + moyen et petit fessier. Une seule jambe au sol : le bassin doit rester horizontal, et c\'est ça qui fait travailler le côté de la hanche.', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Abducteurs machine (buste penché)', target:'Moyen fessier · troisième passage de la semaine', series:3, pres:'3 × 15-20', repos:'Repos 90 s'},
+      {nom:'Fente inversée en déficit (par jambe)', target:'Fessiers en position longue · debout sur un step, tu recules la jambe vers le bas. L\'amplitude en plus va chercher le fessier étiré.', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Face pull à la corde', target:'Arrière d\'épaule · coiffe des rotateurs · posture. Le seul exo du haut du corps de la séance.', series:2, pres:'2 × 15-20', repos:'Repos 90 s'},
     ]
   },
 };
