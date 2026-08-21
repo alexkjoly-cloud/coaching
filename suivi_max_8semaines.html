@@ -115,6 +115,12 @@
   .pr-badge b { color:var(--gold); }
   .exo-prescription { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.05em; white-space:nowrap; flex-shrink:0; }
   .pres-upper-a { color:var(--red); } .pres-lower-a { color:var(--blue); } .pres-upper-b { color:var(--purple); } .pres-lower-b { color:var(--teal); } .pres-upper-c { color:var(--green); }
+  .tag-legs { color:var(--blue); } .tag-push { color:var(--red); } .tag-pull { color:var(--purple); } .tag-lower { color:var(--teal); } .tag-upper { color:var(--green); }
+  .pres-legs { color:var(--blue); } .pres-push { color:var(--red); } .pres-pull { color:var(--purple); } .pres-lower { color:var(--teal); } .pres-upper { color:var(--green); }
+  .exo-meta { flex-shrink:0; text-align:right; display:flex; flex-direction:column; align-items:flex-end; }
+  .prog-rule { margin-top:10px; padding:12px 14px; background:var(--gold-dim); border:1px solid rgba(201,168,76,0.28); border-radius:5px; font-size:11px; color:#d8c48a; font-weight:300; line-height:1.65; }
+  .prog-rule b { color:var(--gold); font-weight:500; }
+  .prog-rule + .exo-card { margin-top:10px; }
 
   .last-week-ref { font-size:9px; color:var(--muted); padding:0 14px 6px; font-style:italic; letter-spacing:0.03em; }
   .last-week-ref b { color:var(--white); font-style:normal; font-weight:400; }
@@ -381,53 +387,78 @@ const NB_SEMAINES = 8;
 
 const PROGRAMME = {
   'legs': {
-    nom:'LEGS', couleur:'legs', tag:'Jambes',
+    nom:'LEGS', couleur:'legs', tag:'Jambes · dominante quadriceps',
     exos:[
-      {nom:'Presse à cuisses / Hack', series:2},
-      {nom:'Leg extension', series:3},
-      {nom:'Leg curl (variante)', series:3},
-      {nom:'Adducteurs machine', series:2},
-      {nom:'Mollets 15-20 (charge légère, sans étirement max en bas)', series:2},
+      {nom:'Presse à cuisses', series:3, pres:'3 × 8-12', rpe:'RIR 1-2', repos:'Repos 3 min',
+       target:'Quadriceps · fessiers. On la garde tout le cycle, on ne change plus de machine : c\'est le seul moyen de voir si tu progresses vraiment.', adapted:1},
+      {nom:'Leg extension', series:3, pres:'3 × 10-15', rpe:'RIR 0-1', repos:'Repos 2 min',
+       target:'Quadriceps · tu bloquais dessus à 41 kg pour 7 reps à l\'échec. La fourchette monte à 10-15 : même charge, tu construis des reps avant de remonter.', adapted:1},
+      {nom:'Leg curl assis', series:2, pres:'2 × 8-12', rpe:'RIR 0-1', repos:'Repos 2 min',
+       target:'Ischio-jambiers · hanche fléchie, l\'ischio travaille en position étirée. Ce n\'est pas le même que celui de la séance Lower.'},
+      {nom:'Adducteurs machine', series:2, pres:'2 × 12-20', rpe:'RIR 1-2', repos:'Repos 90 s',
+       target:'Adducteurs · JAMAIS en premier exercice, c\'est là que tu as failli te blesser. Après la presse, hanche chaude, amplitude confortable, pas le cran le plus large.', adapted:1},
+      {nom:'Mollets debout', series:2, pres:'2 × 15-20', rpe:'RIR 0-1', repos:'Repos 90 s',
+       target:'Mollets · charge légère et pas d\'étirement max en bas. C\'est ce réglage qui a réglé ton tendon d\'Achille, on n\'y touche pas.', adapted:1},
     ]
   },
   'push': {
     nom:'PUSH', couleur:'push', tag:'Pec · Épaules · Triceps',
     exos:[
-      {nom:'Chest press Hammer', series:3},
-      {nom:'Pec fly machine', series:3},
-      {nom:'Développé militaire prise neutre', series:2},
-      {nom:'Élévations latérales (variante)', series:3},
-      {nom:'Extension triceps poulie', series:2},
+      {nom:'Chest press Hammer', series:3, pres:'3 × 8-12', rpe:'RIR 1-2', repos:'Repos 3 min',
+       target:'Pectoraux · poignet gauche bien droit dans l\'axe de l\'avant-bras, bandes si besoin. Machine plutôt qu\'haltères tant que ça tire.', adapted:1},
+      {nom:'Pec fly machine', series:3, pres:'3 × 10-15', rpe:'RIR 0-1', repos:'Repos 2 min',
+       target:'Pectoraux · c\'est le pattern écarté, il complète la poussée. Pas d\'étirement max en bas.'},
+      {nom:'Développé militaire prise neutre', series:2, pres:'2 × 8-12', rpe:'RIR 1-2', repos:'Repos 3 min',
+       target:'Deltoïde antérieur · prise neutre, poignet droit. Pas de verrouillage complet en haut.', adapted:1},
+      {nom:'Élévations latérales', series:3, pres:'3 × 12-20', rpe:'RIR 0-1', repos:'Repos 90 s',
+       target:'Deltoïde latéral · cuffs au poignet plutôt qu\'une poignée serrée : c\'est l\'épaule qui tire, pas la main. Ça épargne ton poignet.', adapted:1},
+      {nom:'Extension triceps poulie', series:2, pres:'2 × 10-15', rpe:'RIR 0-1', repos:'Repos 90 s',
+       target:'Triceps · coudes fixes le long du corps.'},
     ]
   },
   'pull': {
     nom:'PULL', couleur:'pull', tag:'Dos · Biceps',
     exos:[
-      {nom:'Tirage vertical Hammer neutre', series:3},
-      {nom:'Rowing uni neutre / DY row', series:3},
-      {nom:'Tirage horizontal poulie large', series:2},
-      {nom:'Rear delt fly', series:3},
-      {nom:'Curl biceps (variante)', series:2},
+      {nom:'Tirage vertical Hammer neutre', series:2, pres:'2 × 8-12', rpe:'RIR 1-2', repos:'Repos 3 min',
+       target:'Dos · largeur. Tu descends le coude vers la hanche, poitrine haute, sans chercher à serrer les omoplates.'},
+      {nom:'Rowing unilatéral prise neutre', series:2, pres:'2 × 8-12', rpe:'RIR 1-2', repos:'Repos 3 min',
+       target:'Grand dorsal · tu tires vers la hanche, le coude rase les côtes. C\'est le tirage coudes serrés.'},
+      {nom:'Tirage horizontal poulie large', series:2, pres:'2 × 10-15', rpe:'RIR 1-2', repos:'Repos 2 min',
+       target:'Milieu du dos · coudes écartés, tu tires vers le sternum. C\'est le troisième angle, celui que les deux autres ne couvrent pas.'},
+      {nom:'Rear delt fly', series:3, pres:'3 × 12-20', rpe:'RIR 2-3', repos:'Repos 90 s',
+       target:'Arrière d\'épaule · léger, ce sont les bras qui tirent, pas les mains.'},
+      {nom:'Curl biceps', series:3, pres:'3 × 8-12', rpe:'RIR 0-1', repos:'Repos 2 min',
+       target:'Biceps · la série en plus que tu demandais depuis la semaine 1. C\'est le seul exo bras de la séance.', adapted:1},
     ]
   },
   'lower': {
-    nom:'LOWER', couleur:'lower', tag:'Bas du corps complet',
+    nom:'LOWER', couleur:'lower', tag:'Bas du corps · dominante hanche',
     exos:[
-      {nom:'RDL (sangles)', series:2},
-      {nom:'Leg extension', series:3},
-      {nom:'Leg curl (variante)', series:3},
-      {nom:'Adducteurs machine', series:2},
-      {nom:'Mollets assis 15-20 (charge légère, sans étirement max en bas)', series:2},
+      {nom:'Soulevé de terre roumain', series:3, pres:'3 × 8-12', rpe:'RIR 1-2', repos:'Repos 3 min',
+       target:'Ischio-jambiers · fessiers. Sangles pour que la prise ne lâche pas avant les ischios. Dos plat, tu pousses les hanches vers l\'arrière.', adapted:1},
+      {nom:'Leg curl allongé', series:3, pres:'3 × 10-15', rpe:'RIR 0-1', repos:'Repos 2 min',
+       target:'Ischio-jambiers · hanche tendue, autre position d\'étirement que le leg curl assis de la séance Legs.'},
+      {nom:'Leg extension', series:2, pres:'2 × 10-15', rpe:'RIR 0-1', repos:'Repos 2 min',
+       target:'Quadriceps · deuxième passage de la semaine, plus court.'},
+      {nom:'Adducteurs machine', series:2, pres:'2 × 12-20', rpe:'RIR 1-2', repos:'Repos 90 s',
+       target:'Adducteurs · jamais en premier exercice. Amplitude confortable, pas le cran le plus large.', adapted:1},
+      {nom:'Mollets assis', series:2, pres:'2 × 15-20', rpe:'RIR 0-1', repos:'Repos 90 s',
+       target:'Mollets · charge légère, pas d\'étirement max en bas. Genou fléchi, c\'est le soléaire.', adapted:1},
     ]
   },
   'upper': {
     nom:'UPPER', couleur:'upper', tag:'Haut du corps complet',
     exos:[
-      {nom:'Chest press inclinée Hammer', series:3},
-      {nom:'Tirage vertical prise large', series:3},
-      {nom:'Rowing appui poitrine', series:3},
-      {nom:'Élévations latérales poulie uni', series:3},
-      {nom:'Curl poulie', series:2},
+      {nom:'Chest press inclinée Hammer', series:3, pres:'3 × 8-12', rpe:'RIR 1-2', repos:'Repos 3 min',
+       target:'Pec haut · poignet droit dans l\'axe. Stop avant le verrouillage complet.', adapted:1},
+      {nom:'Tirage vertical prise large', series:3, pres:'3 × 8-12', rpe:'RIR 1-2', repos:'Repos 3 min',
+       target:'Dos · largeur. Le coude descend vers la hanche, tu ne serres pas les omoplates.'},
+      {nom:'Rowing appui poitrine', series:3, pres:'3 × 10-15', rpe:'RIR 1-2', repos:'Repos 2 min',
+       target:'Milieu du dos · buste calé, coudes écartés vers le sternum.'},
+      {nom:'Élévations latérales poulie uni', series:3, pres:'3 × 12-20', rpe:'RIR 0-1', repos:'Repos 90 s',
+       target:'Deltoïde latéral · cuff au poignet, pas de poignée serrée.', adapted:1},
+      {nom:'Curl poulie', series:2, pres:'2 × 10-15', rpe:'RIR 0-1', repos:'Repos 90 s',
+       target:'Biceps · tension continue du début à la fin.'},
     ]
   },
 };
@@ -501,18 +532,28 @@ function buildSessions(){
       <div class="session-header">
         <div class="session-tag tag-${s.couleur}">${s.tag}</div>
         <div class="session-title">${s.nom}<span class="session-week-pill" id="pill-${sid}">Semaine 1</span></div>
-        <div class="session-sub">${s.exos.map(e=>e.nom.split(' ')[0]).join(' · ')}</div>
+        <div class="session-sub">${s.exos.map(e=>e.nom.split(' ')[0]).join(' · ')} · ${s.exos.reduce((a,e)=>a+e.series,0)} séries</div>
+      </div>
+      <div class="prog-rule">
+        <b>Tu montes la charge seulement quand tu touches le HAUT de la fourchette sur TOUTES tes séries.</b>
+        12 et 8 reps, tu gardes la même charge. 12 et 12, tu montes.<br>
+        <b>Le RIR, c'est ce que tu gardes en réserve.</b> RIR 1-2 veut dire que tu t'arrêtes en pouvant encore en faire une ou deux. Tout envoyer à l'échec sur chaque série, c'est exactement ce qui te bloque depuis deux mois.
       </div>`;
     s.exos.forEach((exo,ei)=>{
       const en = exo.nom.replace(/'/g, "\\'");
-      html+=`<div class="exo-card">
+      html+=`<div class="exo-card${exo.adapted?' adapted':''}">
         <div class="exo-top">
           <div class="exo-num">${String(ei+1).padStart(2,'0')}</div>
           <div class="exo-info">
             <div class="exo-name">${exo.nom}</div>
+            <div class="exo-target">${exo.target||''}</div>
             <div class="pr-badge" id="pr-${sid}-e${ei}"></div>
           </div>
-          <button class="rest-chip" onclick="restChrono.startFor()">Repos</button>
+          <div class="exo-meta">
+            <div class="exo-prescription pres-${s.couleur}">${exo.pres||''}</div>
+            <div class="exo-repos">${exo.rpe||''}</div>
+            <button class="rest-chip" onclick="restChrono.startFor()">${exo.repos||'Repos'}</button>
+          </div>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
         <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
