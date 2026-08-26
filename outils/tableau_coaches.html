@@ -1,0 +1,439 @@
+<title>Tableau de bord des coachés</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap">
+
+<style>
+:root{
+  --black:#0a0908; --dark:#100e0d; --card:#151211; --card2:#1b1716;
+  --border:#241e1d; --line:#181312;
+  --ink:#f1eee8; --ink2:#877c74; --ink3:#4b423e;
+  --red:#e63232; --red-dim:rgba(230,50,50,0.10);
+  --s1:#e63232; --s2:#4196df; --s3:#ad8d2b; --s4:#02a894; --s5:#997cdc; --s6:#2baa6d;
+  --ok:#2baa6d; --warn:#ad8d2b; --bad:#e63232;
+  --ok-dim:rgba(43,170,109,0.12); --warn-dim:rgba(173,141,43,0.12);
+  --mono:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--black); color:var(--ink);
+  font-family:'DM Sans',system-ui,-apple-system,sans-serif; font-weight:300;
+  font-size:14px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px; margin:0 auto; padding:26px 18px 70px;}
+h1,h2,h3,.num{font-family:'Bebas Neue','DM Sans',sans-serif; font-weight:400; letter-spacing:0.04em;}
+.eyebrow{font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink3); font-weight:500;}
+.tnum{font-variant-numeric:tabular-nums;}
+
+/* En-tête */
+header{display:flex; align-items:flex-end; justify-content:space-between; gap:18px; flex-wrap:wrap;
+  padding-bottom:16px; border-bottom:1px solid var(--border);}
+h1{font-size:34px; line-height:1; margin:4px 0 0;}
+h1 .dot{color:var(--red);}
+.hsub{font-size:12px; color:var(--ink2); margin-top:5px;}
+
+/* Rail clients */
+.rail{display:flex; gap:7px; overflow-x:auto; padding:16px 0 4px; scrollbar-width:thin;}
+.cbtn{flex:0 0 auto; display:flex; align-items:center; gap:8px; cursor:pointer;
+  background:var(--card); border:1px solid var(--border); border-radius:5px;
+  padding:9px 14px 9px 11px; color:var(--ink2); font-family:inherit; font-size:13px;
+  transition:border-color .18s, color .18s, background .18s;}
+.cbtn:hover{border-color:var(--ink3); color:var(--ink);}
+.cbtn[aria-pressed="true"]{background:var(--red-dim); border-color:rgba(230,50,50,0.45); color:var(--ink);
+  box-shadow:inset 0 2px 0 var(--red);}
+.cbtn:focus-visible{outline:2px solid var(--red); outline-offset:2px;}
+.pip{width:7px; height:7px; border-radius:50%; flex:0 0 auto;}
+.cbtn .wk{font-family:'Bebas Neue',sans-serif; font-size:12px; color:var(--ink3); letter-spacing:0.06em;}
+
+/* Tuiles */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:9px; margin-top:20px;}
+.tile{background:var(--card); border:1px solid var(--border); border-radius:5px; padding:13px 15px;}
+.tile .k{font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink3); font-weight:500;}
+.tile .v{font-family:'Bebas Neue',sans-serif; font-size:30px; line-height:1.05; margin-top:5px; letter-spacing:0.02em;}
+.tile .u{font-size:12px; color:var(--ink2); margin-left:3px; font-family:'DM Sans',sans-serif; font-weight:400;}
+.tile .d{font-size:11px; color:var(--ink2); margin-top:3px;}
+
+/* Grille de sections */
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:9px;}
+@media(max-width:820px){ .duo{grid-template-columns:1fr;} }
+.panel{background:var(--card); border:1px solid var(--border); border-radius:5px; padding:15px 16px 12px;}
+.panel h2{font-size:16px; margin:0; letter-spacing:0.08em; text-transform:uppercase;}
+.panel .ph{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:2px;}
+.panel .phn{font-size:11px; color:var(--ink2);}
+
+/* Graphiques */
+.chart{position:relative; margin-top:10px;}
+.chart svg{display:block; width:100%; height:auto; overflow:visible;}
+.gl{stroke:var(--border); stroke-width:1;}
+.ax{fill:var(--ink3); font-size:9.5px; font-family:'DM Sans',sans-serif; font-weight:400;}
+.tip{position:absolute; pointer-events:none; opacity:0; transition:opacity .12s;
+  background:var(--card2); border:1px solid var(--border); border-radius:4px;
+  padding:7px 10px; font-size:11.5px; white-space:nowrap; z-index:5;
+  box-shadow:0 8px 26px rgba(0,0,0,0.6);}
+.tip.on{opacity:1;}
+.tip .tw{font-family:'Bebas Neue',sans-serif; font-size:12px; color:var(--ink3); letter-spacing:0.06em;}
+.tip .tv{color:var(--ink); font-weight:500;}
+
+/* Petits multiples */
+.sm{display:grid; grid-template-columns:repeat(auto-fit,minmax(132px,1fr)); gap:9px; margin-top:10px;}
+.smc{background:var(--card2); border:1px solid var(--border); border-radius:4px; padding:10px 11px 7px;}
+.smc .l{font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink3); font-weight:500;
+  display:flex; align-items:center; gap:6px;}
+.smc .n{font-family:'Bebas Neue',sans-serif; font-size:22px; line-height:1.1; margin-top:3px;}
+.smc .n span{font-size:11px; color:var(--ink3); font-family:'DM Sans',sans-serif; font-weight:400;}
+
+/* Tableau exercices */
+.tbl-wrap{overflow-x:auto; margin-top:10px;}
+table{border-collapse:collapse; width:100%; min-width:620px; font-size:13px;}
+th{text-align:left; font-size:9.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--ink3);
+  font-weight:500; padding:0 10px 7px 0; border-bottom:1px solid var(--border); white-space:nowrap;}
+td{padding:9px 10px 9px 0; border-bottom:1px solid var(--line); vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+td.ex{font-weight:400; color:var(--ink); line-height:1.35;}
+td.ex .sea{display:block; font-size:9.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink3); margin-top:2px;}
+.chip{display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:500;
+  padding:3px 8px; border-radius:3px; white-space:nowrap; letter-spacing:0.02em;}
+.chip.up{background:var(--ok-dim); color:var(--ok);}
+.chip.flat{background:rgba(135,124,116,0.13); color:var(--ink2);}
+.chip.down{background:var(--red-dim); color:var(--red);}
+.chip.new{background:rgba(65,150,223,0.13); color:var(--s2);}
+.spark{display:block;}
+.flag{display:inline-block; margin-left:7px; font-size:10px; color:var(--warn); cursor:help;
+  border-bottom:1px dotted var(--warn);}
+
+/* Notes */
+.note{background:var(--card2); border-left:2px solid var(--ink3); border-radius:0 4px 4px 0;
+  padding:10px 13px; margin-top:8px; font-size:12.5px; line-height:1.65; color:#cfc7c0;}
+.note .m{font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink3);
+  font-weight:500; margin-bottom:4px;}
+.note.q{border-left-color:var(--red);}
+.note.q .m{color:var(--red);}
+
+.empty{color:var(--ink3); font-size:12.5px; font-style:italic; padding:16px 0 10px;}
+.sect{margin-top:26px;}
+.sect > .eyebrow{margin-bottom:9px; display:block;}
+.legend{display:flex; gap:14px; flex-wrap:wrap; font-size:11px; color:var(--ink2); margin-top:9px;}
+.legend i{display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:5px; vertical-align:-1px;}
+footer{margin-top:34px; padding-top:14px; border-top:1px solid var(--border); font-size:11px; color:var(--ink3);}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Alexandre Joly · coaching</div>
+      <h1>Tableau de bord des coachés<span class="dot">.</span></h1>
+      <div class="hsub" id="hsub"></div>
+    </div>
+    <div class="eyebrow" id="stamp"></div>
+  </header>
+
+  <nav class="rail" id="rail" aria-label="Choisir un coaché"></nav>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="duo">
+    <section class="panel">
+      <div class="ph"><h2>Poids</h2><div class="phn" id="pn"></div></div>
+      <div class="chart" id="cPoids"></div>
+    </section>
+    <section class="panel">
+      <div class="ph"><h2>Calories</h2><div class="phn" id="cn"></div></div>
+      <div class="chart" id="cCal"></div>
+    </section>
+  </div>
+
+  <div class="sect">
+    <span class="eyebrow">Ce qu'il déclare chaque dimanche</span>
+    <div class="panel">
+      <div class="ph"><h2>Adhérence et récupération</h2><div class="phn">Notes sur 10, semaine par semaine</div></div>
+      <div id="adh"></div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <span class="eyebrow">Ce que dit la barre</span>
+    <div class="panel">
+      <div class="ph"><h2>Progression par exercice</h2><div class="phn">Série la plus lourde de la semaine</div></div>
+      <div id="exos"></div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <span class="eyebrow">Ce qu'il écrit</span>
+    <div class="panel">
+      <div class="ph"><h2>Notes et bilans</h2><div class="phn" id="nn"></div></div>
+      <div id="notes"></div>
+    </div>
+  </div>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const DATA={"Max":{"perf":{"Legs":{"Adducteurs machine":{"1":[{"kg":72,"r":9,"rir":0},{"kg":72,"r":10,"rir":0}]},"Leg curl (variante)":{"1":[{"kg":54,"r":8,"rir":0},{"kg":50,"r":8,"rir":0},{"kg":50,"r":5,"rir":0}]},"Leg extension":{"1":[{"kg":41,"r":7,"rir":0},{"kg":41,"r":8,"rir":0},{"kg":41,"r":null,"rir":null}]},"Mollets 15-20 (charge légère, sans étirement max en bas)":{"1":[{"kg":131,"r":17,"rir":0},{"kg":131,"r":14,"rir":0}]},"Presse à cuisses / Hack":{"1":[{"kg":154,"r":10,"rir":0},{"kg":165,"r":8,"rir":0}]}},"Pull":{"Curl biceps (variante)":{"1":[{"kg":57,"r":8,"rir":0},{"kg":59.5,"r":7,"rir":0}]},"Rear delt fly":{"1":[{"kg":73,"r":8,"rir":0},{"kg":73,"r":7,"rir":0},{"kg":73,"r":6,"rir":0}]},"Rowing uni neutre / DY row":{"1":[{"kg":59,"r":6,"rir":0},{"kg":59,"r":7,"rir":0},{"kg":59,"r":7,"rir":0}]},"Tirage horizontal poulie large":{"1":[{"kg":59,"r":7,"rir":0},{"kg":59,"r":7,"rir":0}]},"Tirage vertical Hammer neutre":{"1":[{"kg":36,"r":8,"rir":0},{"kg":36,"r":8,"rir":0},{"kg":36,"r":6,"rir":0}]}},"Push":{"Chest press Hammer":{"1":[{"kg":50,"r":9,"rir":null},{"kg":50,"r":7,"rir":1},{"kg":50,"r":5,"rir":2}]},"Développé militaire prise neutre":{"1":[{"kg":45,"r":6,"rir":null},{"kg":45,"r":6,"rir":null}]},"Élévations latérales (variante)":{"1":[{"kg":42.5,"r":6,"rir":null},{"kg":40,"r":6,"rir":null},{"kg":null,"r":4,"rir":null}]},"Extension triceps poulie":{"1":[{"kg":17.5,"r":6,"rir":1},{"kg":null,"r":4,"rir":null}]},"Pec fly machine":{"1":[{"kg":72.5,"r":8,"rir":0},{"kg":72.5,"r":7,"rir":null},{"kg":72.5,"r":7,"rir":null}]}},"Upper":{"Curl poulie":{"1":[{"kg":57,"r":8,"rir":0},{"kg":57,"r":6,"rir":0}]},"Élévations latérales poulie uni":{"1":[{"kg":14,"r":8,"rir":0},{"kg":14,"r":6,"rir":0},{"kg":14,"r":7,"rir":0}]},"Rowing appui poitrine":{"1":[{"kg":null,"r":5,"rir":0}]},"Tirage vertical prise large":{"1":[{"kg":77,"r":7,"rir":0},{"kg":77,"r":7,"rir":0},{"kg":77,"r":7,"rir":0}]}}},"bilan":{},"notes":[{"w":1,"s":"Legs","t":"J’ai fais une leg presse au lieu de faire du squat"},{"w":1,"s":"Push","t":"Drop set a 15kg sur les extensions triceps"}],"poids":{},"mens":{},"maj":"21/08/2026","archive":false},"Théo":{"perf":{"Full Body A":{"Tirage vertical (prise neutre)":{"1":[{"kg":null,"r":null,"rir":null}]}}},"bilan":{},"notes":[],"poids":{},"mens":{},"maj":"03/08/2026","archive":false},"Romain":{"perf":{"Fb-c":{"Développé incliné machine":{"1":[{"kg":70,"r":9,"rir":9},{"kg":70,"r":8,"rir":10}],"2":[{"kg":50,"r":8,"rir":10},{"kg":50,"r":8,"rir":10}]},"Écarté aux poulies (câbles)":{"1":[{"kg":null,"r":12,"rir":9},{"kg":null,"r":10,"rir":9},{"kg":10,"r":9,"rir":10}],"2":[{"kg":10.4,"r":11,"rir":9},{"kg":10.4,"r":9,"rir":10},{"kg":null,"r":8,"rir":null}]},"Élévations latérales à la poulie":{"1":[{"kg":4.5,"r":10,"rir":10},{"kg":4.5,"r":8,"rir":10}]},"Leg curl assis":{"1":[{"kg":32,"r":10,"rir":9},{"kg":32,"r":10,"rir":10}]},"Tirage horizontal à la poulie (prise neutre)":{"1":[{"kg":73,"r":8,"rir":10},{"kg":66,"r":8,"rir":10}],"2":[{"kg":73,"r":9,"rir":10}]}},"Fb-a":{"Développé incliné machine Matrix":{"2":[{"kg":80,"r":8,"rir":10},{"kg":70,"r":8,"rir":10}],"3":[{"kg":80,"r":9,"rir":10},{"kg":70,"r":8,"rir":10}]},"Développé militaire machine":{"2":[{"kg":36,"r":8,"rir":10},{"kg":36,"r":8,"rir":10}]},"Extension triceps à la poulie":{"2":[{"kg":66,"r":10,"rir":8},{"kg":66,"r":10,"rir":8}]},"Leg extension":{"2":[{"kg":45,"r":15,"rir":10},{"kg":50,"r":11,"rir":9}]},"Tirage vertical (prise neutre)":{"2":[{"kg":73,"r":9,"rir":10},{"kg":73,"r":8,"rir":10}],"3":[{"kg":68,"r":14,"rir":10},{"kg":68,"r":12,"rir":10}]},"Leg curl allongé":{"3":[{"kg":32,"r":12,"rir":9},{"kg":32,"r":10,"rir":10}]}},"Fb-b":{"Adducteurs machine":{"2":[{"kg":27,"r":15,"rir":10},{"kg":32,"r":9,"rir":10}]},"Curl biceps à la poulie":{"2":[{"kg":36,"r":9,"rir":10},{"kg":32,"r":10,"rir":10}]},"Développé couché machine convergente":{"2":[{"kg":50,"r":9,"rir":9},{"kg":50,"r":8,"rir":10}]},"Rowing appui poitrine":{"2":[{"kg":73,"r":8,"rir":10},{"kg":63,"r":9,"rir":10}]}}},"bilan":{},"notes":[],"poids":{},"mens":{},"maj":"24/07/2026","archive":false},"Léo":{"perf":{"Lower A":{"Adducteurs machine":{"1":[{"kg":59,"r":15,"rir":10},{"kg":59,"r":15,"rir":10}],"2":[{"kg":52,"r":15,"rir":8},{"kg":59,"r":15,"rir":10}],"3":[{"kg":59,"r":15,"rir":8},{"kg":59,"r":15,"rir":9}],"4":[{"kg":66,"r":15,"rir":10},{"kg":66,"r":12,"rir":10}],"5":[{"kg":73,"r":15,"rir":10},{"kg":73,"r":15,"rir":10}],"7":[{"kg":79,"r":15,"rir":10},{"kg":79,"r":15,"rir":10}]},"Gainage planche":{"1":[{"kg":null,"r":1,"rir":6},{"kg":null,"r":1,"rir":6}],"2":[{"kg":2,"r":1,"rir":7},{"kg":2,"r":1,"rir":7}],"3":[{"kg":2,"r":1,"rir":8},{"kg":2,"r":1,"rir":8}],"4":[{"kg":2,"r":1,"rir":8},{"kg":2,"r":1,"rir":9}]},"Hip thrust (machine ou barre guidée)":{"1":[{"kg":72,"r":13,"rir":5},{"kg":90,"r":12,"rir":6}],"2":[{"kg":90,"r":12,"rir":9},{"kg":108,"r":12,"rir":9}],"3":[{"kg":108,"r":12,"rir":9},{"kg":108,"r":12,"rir":10}],"4":[{"kg":117,"r":12,"rir":10},{"kg":117,"r":12,"rir":10}],"5":[{"kg":117,"r":12,"rir":9},{"kg":117,"r":12,"rir":10}],"7":[{"kg":117,"r":12,"rir":10},{"kg":117,"r":12,"rir":10}]},"Leg curl assis":{"1":[{"kg":39,"r":12,"rir":8},{"kg":39,"r":12,"rir":8}],"2":[{"kg":39,"r":12,"rir":8},{"kg":3,"r":12,"rir":8}],"3":[{"kg":39,"r":12,"rir":9},{"kg":39,"r":12,"rir":9}],"4":[{"kg":45,"r":12,"rir":10},{"kg":45,"r":12,"rir":10}],"5":[{"kg":45,"r":12,"rir":9},{"kg":45,"r":12,"rir":9}],"7":[{"kg":52,"r":12,"rir":10},{"kg":52,"r":12,"rir":10}]},"Leg extension (charge légère, amplitude sans douleur)":{"1":[{"kg":32,"r":12,"rir":7},{"kg":3,"r":12,"rir":10}],"2":[{"kg":45,"r":15,"rir":9},{"kg":45,"r":15,"rir":9}],"3":[{"kg":39,"r":15,"rir":9},{"kg":39,"r":15,"rir":10}],"4":[{"kg":45,"r":15,"rir":10},{"kg":45,"r":15,"rir":10}],"5":[{"kg":45,"r":15,"rir":9},{"kg":52,"r":15,"rir":10}],"7":[{"kg":59,"r":15,"rir":10},{"kg":5,"r":15,"rir":10}]},"Mollets (debout ou à la presse)":{"1":[{"kg":80,"r":15,"rir":6},{"kg":80,"r":15,"rir":6}],"2":[{"kg":100,"r":15,"rir":8},{"kg":100,"r":15,"rir":10}],"3":[{"kg":100,"r":15,"rir":9},{"kg":100,"r":15,"rir":10}],"4":[{"kg":100,"r":15,"rir":10},{"kg":100,"r":15,"rir":10}],"5":[{"kg":100,"r":15,"rir":10},{"kg":100,"r":15,"rir":10}],"7":[{"kg":100,"r":15,"rir":10},{"kg":100,"r":15,"rir":10}]},"Gainage planche lestée (disque sur le haut du dos)":{"5":[{"kg":10,"r":45,"rir":8},{"kg":10,"r":45,"rir":9}],"7":[{"kg":10,"r":45,"rir":8},{"kg":10,"r":45,"rir":9}]}},"Lower B":{"Abducteurs machine":{"1":[{"kg":59,"r":15,"rir":9},{"kg":59,"r":15,"rir":10}],"2":[{"kg":66,"r":15,"rir":10},{"kg":66,"r":15,"rir":10}],"4":[{"kg":73,"r":15,"rir":10},{"kg":73,"r":15,"rir":10}]},"Crunch à la poulie ou machine":{"1":[{"kg":50,"r":12,"rir":10},{"kg":45,"r":15,"rir":9}],"2":[{"kg":45,"r":15,"rir":8},{"kg":45,"r":15,"rir":8}],"4":[{"kg":45,"r":15,"rir":8},{"kg":50,"r":15,"rir":9}]},"Leg curl allongé":{"1":[{"kg":40,"r":12,"rir":10},{"kg":40,"r":12,"rir":10}],"2":[{"kg":27,"r":15,"rir":9},{"kg":32,"r":15,"rir":9}],"4":[{"kg":32,"r":12,"rir":8},{"kg":36,"r":12,"rir":9}]},"Leg extension unilatérale (charge légère, contrôle total)":{"1":[{"kg":25,"r":13,"rir":10},{"kg":25,"r":13,"rir":10}],"2":[{"kg":25,"r":15,"rir":10},{"kg":25,"r":15,"rir":10}],"4":[{"kg":25,"r":15,"rir":10},{"kg":25,"r":15,"rir":10}]},"Mollets assis":{"1":[{"kg":66,"r":15,"rir":6},{"kg":79,"r":15,"rir":7}],"2":[{"kg":93,"r":15,"rir":9},{"kg":93,"r":15,"rir":10}],"4":[{"kg":93,"r":15,"rir":9},{"kg":93,"r":15,"rir":10}]},"Soulevé de terre roumain haltères (jambes presque tendues)":{"1":[{"kg":14,"r":15,"rir":6},{"kg":18,"r":15,"rir":7}],"2":[{"kg":20,"r":12,"rir":8},{"kg":20,"r":12,"rir":8}],"4":[{"kg":22,"r":12,"rir":8},{"kg":22,"r":12,"rir":8}]}},"Upper A":{"Curl pupitre machine (sinon poulie ou haltères)":{"1":[{"kg":23,"r":15,"rir":10},{"kg":23,"r":15,"rir":10}],"2":[{"kg":22.5,"r":12,"rir":10},{"kg":20.3,"r":12,"rir":10}],"3":[{"kg":20.3,"r":14,"rir":10},{"kg":20.3,"r":14,"rir":10}],"4":[{"kg":22.5,"r":15,"rir":10},{"kg":22.5,"r":14,"rir":10}],"5":[{"kg":25,"r":15,"rir":10},{"kg":25,"r":15,"rir":10}],"7":[{"kg":25,"r":15,"rir":10},{"kg":25,"r":15,"rir":10}]},"Développé épaules machine (amplitude sans douleur)":{"1":[{"kg":39,"r":15,"rir":10},{"kg":39,"r":14,"rir":10}],"2":[{"kg":23,"r":15,"rir":8},{"kg":23,"r":15,"rir":10}],"3":[{"kg":27,"r":15,"rir":10},{"kg":27,"r":12,"rir":10}],"4":[{"kg":27,"r":14,"rir":10},{"kg":27,"r":15,"rir":10}],"5":[{"kg":36,"r":15,"rir":10},{"kg":36,"r":15,"rir":10}],"7":[{"kg":41,"r":15,"rir":10},{"kg":41,"r":12,"rir":10}]},"Développé incliné haltères (banc à 30°)":{"1":[{"kg":26,"r":12,"rir":10},{"kg":26,"r":8,"rir":null}],"5":[{"kg":26,"r":12,"rir":10},{"kg":26,"r":8,"rir":10}],"7":[{"kg":26,"r":12,"rir":10},{"kg":26,"r":11,"rir":10}]},"Développé incliné machine (prise confortable, sans verrouiller en haut)":{"1":[{"kg":24,"r":12,"rir":9},{"kg":24,"r":12,"rir":9}],"2":[{"kg":26,"r":11,"rir":10},{"kg":26,"r":9,"rir":10}],"3":[{"kg":26,"r":11,"rir":10},{"kg":26,"r":8,"rir":10}],"4":[{"kg":26,"r":12,"rir":10},{"kg":26,"r":8,"rir":10}]},"Élévations latérales (machine en priorité, sinon poulie ou haltères)":{"1":[{"kg":6,"r":15,"rir":9},{"kg":6,"r":15,"rir":9}],"2":[{"kg":2.3,"r":15,"rir":7},{"kg":2.3,"r":15,"rir":8}],"3":[{"kg":2.3,"r":15,"rir":7},{"kg":2.3,"r":15,"rir":7}],"4":[{"kg":2.3,"r":15,"rir":7},{"kg":2.3,"r":15,"rir":8}],"5":[{"kg":9,"r":15,"rir":10},{"kg":9,"r":13,"rir":10}],"7":[{"kg":9,"r":15,"rir":10},{"kg":9,"r":15,"rir":10}]},"Extension triceps à la corde (ou unilatéral à la poulie)":{"1":[{"kg":18,"r":15,"rir":10},{"kg":18,"r":15,"rir":10}],"2":[{"kg":18,"r":15,"rir":10},{"kg":18,"r":15,"rir":10}],"3":[{"kg":20.3,"r":12,"rir":10},{"kg":20.3,"r":12,"rir":10}],"4":[{"kg":20.3,"r":14,"rir":10},{"kg":20.3,"r":13,"rir":10}],"5":[{"kg":36,"r":15,"rir":10},{"kg":36,"r":15,"rir":10}],"7":[{"kg":36,"r":15,"rir":10},{"kg":36,"r":15,"rir":10}]},"Tirage horizontal prise neutre serrée (avec support sur les pectoraux)":{"1":[{"kg":59,"r":12,"rir":9},{"kg":59,"r":12,"rir":9}],"2":[{"kg":66,"r":12,"rir":7},{"kg":73,"r":12,"rir":8}],"3":[{"kg":79,"r":12,"rir":10},{"kg":79,"r":12,"rir":10}],"4":[{"kg":59,"r":12,"rir":9},{"kg":59,"r":12,"rir":9}],"5":[{"kg":66,"r":12,"rir":10},{"kg":66,"r":10,"rir":10}],"7":[{"kg":66,"r":12,"rir":10},{"kg":66,"r":12,"rir":10}]}},"Upper B":{"Curl haltères (prise marteau)":{"1":[{"kg":12,"r":15,"rir":8},{"kg":12,"r":15,"rir":8}],"3":[{"kg":12,"r":15,"rir":9},{"kg":12,"r":15,"rir":10}],"4":[{"kg":22.5,"r":15,"rir":10},{"kg":22.5,"r":15,"rir":10}],"5":[{"kg":12,"r":15,"rir":9},{"kg":12,"r":15,"rir":10}]},"Développé pectoraux machine (trajectoire convergente si dispo)":{"1":[{"kg":59,"r":15,"rir":10},{"kg":59,"r":12,"rir":10}],"2":[{"kg":59,"r":15,"rir":null},{"kg":59,"r":15,"rir":null}],"3":[{"kg":59,"r":15,"rir":10},{"kg":59,"r":10,"rir":10}],"4":[{"kg":66,"r":14,"rir":10},{"kg":66,"r":14,"rir":10}],"5":[{"kg":66,"r":15,"rir":9},{"kg":66,"r":15,"rir":10}]},"Extension triceps à la corde (ou unilatéral à la poulie)":{"1":[{"kg":18,"r":15,"rir":9},{"kg":18,"r":15,"rir":9}],"3":[{"kg":18.1,"r":15,"rir":10},{"kg":18.1,"r":13,"rir":10}],"4":[{"kg":20.3,"r":15,"rir":10},{"kg":20.3,"r":15,"rir":10}],"5":[{"kg":36,"r":15,"rir":9},{"kg":36,"r":15,"rir":10}]},"Oiseau machine ou poulie (arrière d’épaule)":{"1":[{"kg":2.3,"r":15,"rir":7},{"kg":2.3,"r":15,"rir":7}],"3":[{"kg":2.3,"r":15,"rir":8},{"kg":2.3,"r":15,"rir":8}],"4":[{"kg":4.5,"r":12,"rir":10},{"kg":4.5,"r":12,"rir":10}],"5":[{"kg":4.5,"r":15,"rir":9},{"kg":4.5,"r":15,"rir":9}]},"Tirage horizontal à la poulie (prise neutre)":{"1":[{"kg":52,"r":15,"rir":10},{"kg":52,"r":13,"rir":10}],"3":[{"kg":59,"r":13,"rir":10},{"kg":52,"r":15,"rir":10}],"4":[{"kg":66,"r":13,"rir":10},{"kg":66,"r":10,"rir":10}],"5":[{"kg":66,"r":15,"rir":10},{"kg":66,"r":12,"rir":10}]},"Tirage vertical (prise neutre)":{"1":[{"kg":66,"r":12,"rir":10},{"kg":66,"r":12,"rir":10}],"2":[{"kg":59,"r":12,"rir":9},{"kg":59,"r":12,"rir":9}],"3":[{"kg":59,"r":12,"rir":10},{"kg":59,"r":12,"rir":10}],"4":[{"kg":59,"r":12,"rir":9},{"kg":59,"r":12,"rir":10}],"5":[{"kg":59,"r":12,"rir":9},{"kg":59,"r":12,"rir":10}]}},"Upper C":{"Curl pupitre machine ou poulie":{"3":[{"kg":41,"r":15,"rir":10},{"kg":36,"r":15,"rir":10}],"4":[{"kg":41,"r":15,"rir":10}],"5":[{"kg":41,"r":15,"rir":9},{"kg":41,"r":15,"rir":10}]},"Élévations latérales (machine en priorité, sinon poulie ou haltères)":{"3":[{"kg":4.5,"r":15,"rir":9},{"kg":4.5,"r":15,"rir":10}],"4":[{"kg":9,"r":14,"rir":10},{"kg":9,"r":12,"rir":10}],"5":[{"kg":9,"r":15,"rir":9},{"kg":9,"r":15,"rir":9}]},"Extension triceps à la corde (ou unilatéral à la poulie)":{"3":[{"kg":41,"r":15,"rir":10},{"kg":36,"r":15,"rir":10}],"4":[{"kg":41,"r":15,"rir":10}],"5":[{"kg":41,"r":15,"rir":10},{"kg":41,"r":15,"rir":10}]},"Pec fly machine (amplitude confortable)":{"3":[{"kg":93,"r":15,"rir":10},{"kg":93,"r":10,"rir":10}],"4":[{"kg":86,"r":15,"rir":10},{"kg":86,"r":14,"rir":10}],"5":[{"kg":86,"r":15,"rir":9},{"kg":86,"r":14,"rir":10}]},"Tirage horizontal unilatéral à la poulie":{"3":[{"kg":14,"r":15,"rir":8},{"kg":14,"r":15,"rir":9}],"4":[{"kg":25,"r":15,"rir":9},{"kg":25,"r":15,"rir":10}],"5":[{"kg":25,"r":15,"rir":10},{"kg":25,"r":15,"rir":10}]},"Tirage vertical (prise large)":{"3":[{"kg":59,"r":15,"rir":9},{"kg":66,"r":12,"rir":10}],"4":[{"kg":66,"r":12,"rir":10},{"kg":66,"r":12,"rir":10}],"5":[{"kg":66,"r":12,"rir":10},{"kg":59,"r":13,"rir":10}]}}},"bilan":{"4":{"calories":null,"nutrition":8,"sommeil":6,"energie":8,"fatigue":2}},"notes":[{"w":1,"s":"Upper C","t":"je suis allé a la salle avec des amis et nous étions pressé par le temps donc sa a dérivé en séance pecs / bras (avec du lourd et peu de reps au pecs a la barre)"},{"w":2,"s":"Lower A","t":"Gainage planche 2 minutes x 2 (je suis facile la dessus, faut il augmenter le nombre de serie ?)"},{"w":2,"s":"Upper A","t":"Développé incliné haltères car pas de machine"},{"w":2,"s":"Upper B","t":"Curl haltères (prise marteau) au haltères \nExtension triceps à la corde (les poids n’ont pas la même valeurs que ceux de la poulie que j’utilise d’habitude)"},{"w":3,"s":"Lower A","t":"Gainage = 2 min x 2"},{"w":3,"s":"Upper A","t":"Développé incliné fait au haltère"},{"w":3,"s":"Upper B","t":"Tirage horizontal a la machine car la poulie est cassée"},{"w":3,"s":"Upper C","t":"Pec fly deuxième série j’ai fais les 5 dernières reps a 79 kg pour faire 15 reps"},{"w":5,"s":"Upper A","t":"J’ai changé de salle, je m’entraîne toujours à Basic Fit, mais maintenant celui de ma ville. Les poids pour le développer épaule ne sont pas les mêmes ainsi que les poids pour le tirage horizontal et les extensions triceps a la poulie. Ce qui explique l’écart de poids entre ma dernière séance et celle d’aujourd’hui.  Je me suis dit faut que je jette un truc pour qu’il comprenne les cartes, excuse-moi frère"},{"w":5,"s":"Upper C","t":"Douleur a l’épaule sur le pecs fly ce qui explique la baisse des poids"},{"w":7,"s":"Upper A","t":"Curl a la barre"}],"poids":{"1":76.7,"3":75.5},"mens":{},"maj":"21/08/2026","archive":false},"Jean":{"perf":{"Legs":{"Hack squat ou Presse à cuisses":{"1":[{"kg":200,"r":8,"rir":8},{"kg":200,"r":7,"rir":8}]}},"Pull":{"Rear delt machine":{"1":[{"kg":65,"r":12,"rir":7},{"kg":65,"r":12,"rir":7},{"kg":65,"r":11,"rir":8}]},"Tirage horizontal machine":{"1":[{"kg":50,"r":12,"rir":8},{"kg":55,"r":11,"rir":9}]},"Tirage vertical prise neutre":{"1":[{"kg":105,"r":6,"rir":9},{"kg":105,"r":6,"rir":10}]},"Tirage vertical":{"1":[{"kg":100,"r":9,"rir":9},{"kg":100,"r":8,"rir":9},{"kg":90,"r":11,"rir":8}]}}},"bilan":{},"notes":[],"poids":{},"mens":{},"maj":"24/06/2026","archive":false},"Julie":{"perf":{"Lower A":{"Abducteurs machine (buste penché)":{"1":[{"kg":103,"r":15,"rir":null},{"kg":103,"r":15,"rir":null}],"2":[{"kg":15,"r":96,"rir":null}],"3":[{"kg":103,"r":15,"rir":null},{"kg":103,"r":13,"rir":null}]},"Hip thrust machine (lourd)":{"1":[{"kg":55,"r":8,"rir":null},{"kg":55,"r":8,"rir":null}],"2":[{"kg":55,"r":9,"rir":null},{"kg":55,"r":9,"rir":null}],"3":[{"kg":55,"r":10,"rir":null},{"kg":55,"r":9,"rir":null}]},"Hyperextension (bias fessier)":{"1":[{"kg":20,"r":12,"rir":null},{"kg":20,"r":12,"rir":null}],"2":[{"kg":20,"r":11,"rir":null}],"3":[{"kg":20,"r":15,"rir":null},{"kg":20,"r":15,"rir":null}]},"Squat barre":{"1":[{"kg":null,"r":10,"rir":null},{"kg":null,"r":10,"rir":null}],"2":[{"kg":null,"r":14,"rir":null},{"kg":65,"r":10,"rir":null}]},"Step-up Smith (par jambe)":{"1":[{"kg":10,"r":10,"rir":null},{"kg":10,"r":10,"rir":null}],"2":[{"kg":10,"r":10,"rir":null},{"kg":10,"r":10,"rir":null}],"3":[{"kg":10,"r":10,"rir":null},{"kg":10,"r":10,"rir":null}]},"Tractions (assistées ou lestées)":{"1":[{"kg":0,"r":8,"rir":null},{"kg":0,"r":6,"rir":null}]},"Abducteur machine (penchée)":{"2":[{"kg":110,"r":12,"rir":null},{"kg":110,"r":12,"rir":null}]},"Hyperextension fessier-bias":{"2":[{"kg":20,"r":10,"rir":null},{"kg":20,"r":10,"rir":null}]},"Presse à cuisses":{"2":[{"kg":67.5,"r":10,"rir":null},{"kg":67.5,"r":10,"rir":null}],"3":[{"kg":67.5,"r":10,"rir":null},{"kg":67.5,"r":10,"rir":null}]}},"Lower B":{"Abducteurs machine (buste penché)":{"1":[{"kg":103,"r":15,"rir":null},{"kg":103,"r":11,"rir":null}],"2":[{"kg":103,"r":15,"rir":null},{"kg":103,"r":15,"rir":null}]},"Face pull à la corde":{"1":[{"kg":18,"r":12,"rir":null},{"kg":18,"r":12,"rir":null}],"2":[{"kg":18,"r":12,"rir":null},{"kg":18,"r":12,"rir":null}]},"Fente bulgare (par jambe)":{"1":[{"kg":25,"r":10,"rir":null},{"kg":22.5,"r":10,"rir":null}],"2":[{"kg":25,"r":10,"rir":null},{"kg":25,"r":10,"rir":null}]},"Hack squat":{"1":[{"kg":27.5,"r":8,"rir":null},{"kg":25,"r":8,"rir":null}],"2":[{"kg":27.5,"r":6,"rir":null},{"kg":25,"r":8,"rir":null}]},"Hip thrust machine (volume)":{"1":[{"kg":52.5,"r":10,"rir":null}],"2":[{"kg":60,"r":12,"rir":null},{"kg":60,"r":10,"rir":null}]},"Leg curl allongé":{"1":[{"kg":15,"r":10,"rir":null},{"kg":15,"r":10,"rir":null}],"2":[{"kg":15,"r":12,"rir":null},{"kg":15,"r":10,"rir":null}]},"Tirage vertical (prise neutre)":{"1":[{"kg":60,"r":11,"rir":null},{"kg":60,"r":10,"rir":null}]}},"Lower-c":{"Hip thrust machine":{"1":[{"kg":60,"r":10,"rir":null},{"kg":60,"r":10,"rir":null}],"2":[{"kg":null,"r":10,"rir":null},{"kg":45,"r":10,"rir":null}]},"Kickback à la poulie (par jambe)":{"1":[{"kg":12.5,"r":15,"rir":null},{"kg":15,"r":15,"rir":null}],"2":[{"kg":16.5,"r":15,"rir":null},{"kg":16.5,"r":15,"rir":null}]},"Leg extension unilatérale (buste penché en arrière)":{"1":[{"kg":25,"r":11,"rir":11},{"kg":25,"r":11,"rir":null}],"2":[{"kg":25,"r":12,"rir":null},{"kg":25,"r":15,"rir":null}]},"Rotation externe à la poulie (par bras)":{"1":[{"kg":2.5,"r":12,"rir":null},{"kg":2.5,"r":12,"rir":null}],"2":[{"kg":2,"r":12,"rir":null},{"kg":2,"r":12,"rir":null}]},"Soulevé de terre roumain barre":{"1":[{"kg":32.5,"r":8,"rir":null},{"kg":32.5,"r":8,"rir":null}],"2":[{"kg":32.5,"r":9,"rir":null},{"kg":32.5,"r":9,"rir":null}]},"Abducteurs machine (buste penché)":{"2":[{"kg":103,"r":16,"rir":null},{"kg":103,"r":15,"rir":null}]}}},"bilan":{},"notes":[{"w":1,"s":"Lower A","t":"Jeudi 24/06 tour de fessiers 94cm"},{"w":1,"s":"Lower B","t":"Pas tirage vertical mais hiptrust"},{"w":2,"s":"Lower A","t":"J’ai trop donné lol"},{"w":3,"s":"Lower A","t":"Reverse fly au lieu des tractions. 2 séries de 12 à 29kg"}],"poids":{"1":55.4},"mens":{},"maj":"23/07/2026","archive":false},"Max — cycle 1":{"perf":{"Legs":{"Adducteurs machine":{"1":[{"kg":125,"r":11,"rir":1},{"kg":130,"r":8,"rir":0}],"3":[{"kg":72,"r":7,"rir":null},{"kg":72,"r":7,"rir":null}],"4":[{"kg":72,"r":7,"rir":1},{"kg":72,"r":7,"rir":0}],"5":[{"kg":72,"r":7,"rir":0},{"kg":72,"r":7,"rir":0}],"6":[{"kg":72,"r":7,"rir":1},{"kg":72,"r":8,"rir":0}],"7":[{"kg":68,"r":8,"rir":2},{"kg":68,"r":8,"rir":0}],"8":[{"kg":68,"r":10,"rir":1},{"kg":72,"r":9,"rir":0}]},"Leg curl (variante)":{"1":[{"kg":65,"r":8,"rir":0},{"kg":65,"r":7,"rir":0},{"kg":65,"r":7,"rir":0}],"3":[{"kg":50,"r":6,"rir":null},{"kg":50,"r":7,"rir":null},{"kg":50,"r":7,"rir":null}],"4":[{"kg":50,"r":8,"rir":1},{"kg":54,"r":6,"rir":0},{"kg":54,"r":7,"rir":0}],"5":[{"kg":54,"r":6,"rir":0},{"kg":54,"r":6,"rir":0},{"kg":54,"r":6,"rir":0}],"6":[{"kg":50,"r":7,"rir":1},{"kg":50,"r":7,"rir":0},{"kg":50,"r":7,"rir":0}],"7":[{"kg":45,"r":10,"rir":1},{"kg":45,"r":8,"rir":0},{"kg":45,"r":6,"rir":0}],"8":[{"kg":50,"r":6,"rir":3},{"kg":54,"r":6,"rir":0},{"kg":54,"r":6,"rir":0}]},"Leg extension":{"1":[{"kg":57.5,"r":8,"rir":0},{"kg":57.5,"r":8,"rir":0},{"kg":57.5,"r":6,"rir":0}],"3":[{"kg":41,"r":7,"rir":null},{"kg":41,"r":6,"rir":null},{"kg":41,"r":6,"rir":null}],"4":[{"kg":41,"r":7,"rir":0},{"kg":41,"r":6,"rir":0},{"kg":41,"r":5,"rir":0}],"5":[{"kg":41,"r":7,"rir":0},{"kg":41,"r":7,"rir":0},{"kg":41,"r":7,"rir":0}],"6":[{"kg":41,"r":7,"rir":0},{"kg":41,"r":7,"rir":0},{"kg":36,"r":7,"rir":0}],"7":[{"kg":36,"r":6,"rir":2},{"kg":36,"r":6,"rir":2},{"kg":36,"r":6,"rir":1}],"8":[{"kg":41,"r":8,"rir":0},{"kg":41,"r":7,"rir":0},{"kg":41,"r":7,"rir":0}]},"Mollets (variante)":{"1":[{"kg":110,"r":8,"rir":1},{"kg":115,"r":10,"rir":1}],"3":[{"kg":154,"r":10,"rir":null},{"kg":154,"r":9,"rir":null},{"kg":154,"r":8,"rir":null}],"4":[{"kg":154,"r":10,"rir":0},{"kg":154,"r":9,"rir":0},{"kg":143,"r":10,"rir":0}]},"Presse à cuisses / Hack":{"1":[{"kg":200,"r":6,"rir":0},{"kg":200,"r":7,"rir":0}],"3":[{"kg":110,"r":6,"rir":null},{"kg":110,"r":6,"rir":null}],"4":[{"kg":110,"r":6,"rir":0},{"kg":110,"r":6,"rir":0}],"5":[{"kg":115,"r":5,"rir":0},{"kg":110,"r":6,"rir":0}],"6":[{"kg":100,"r":8,"rir":1},{"kg":100,"r":8,"rir":0}],"7":[{"kg":95,"r":10,"rir":1},{"kg":95,"r":8,"rir":1}],"8":[{"kg":80,"r":6,"rir":1},{"kg":80,"r":7,"rir":0}]},"Mollets 15-20 (charge légère, sans étirement max en bas)":{"5":[{"kg":131,"r":15,"rir":1},{"kg":131,"r":15,"rir":0}],"6":[{"kg":131,"r":15,"rir":2},{"kg":131,"r":15,"rir":2}],"7":[{"kg":131,"r":16,"rir":1},{"kg":131,"r":17,"rir":0}],"8":[{"kg":131,"r":17,"rir":0},{"kg":131,"r":15,"rir":0}]}},"Pull":{"Curl biceps (variante)":{"1":[{"kg":18,"r":6,"rir":1},{"kg":18,"r":7,"rir":0}],"3":[{"kg":20,"r":7,"rir":0},{"kg":20,"r":7,"rir":0}],"4":[{"kg":50,"r":7,"rir":0},{"kg":57,"r":6,"rir":0}],"5":[{"kg":50,"r":7,"rir":1},{"kg":52.5,"r":7,"rir":0}],"6":[{"kg":52.5,"r":7,"rir":1},{"kg":52.5,"r":7,"rir":0}],"7":[{"kg":50,"r":8,"rir":3},{"kg":57,"r":8,"rir":2}],"8":[{"kg":57,"r":7,"rir":0},{"kg":57,"r":5,"rir":0}]},"Rear delt fly":{"1":[{"kg":65,"r":6,"rir":0},{"kg":65,"r":6,"rir":0},{"kg":65,"r":5,"rir":0}],"3":[{"kg":66,"r":6,"rir":1},{"kg":73,"r":7,"rir":0},{"kg":73,"r":6,"rir":0}],"4":[{"kg":73,"r":6,"rir":0},{"kg":73,"r":6,"rir":0},{"kg":73,"r":6,"rir":0}],"5":[{"kg":73,"r":7,"rir":0},{"kg":73,"r":7,"rir":0},{"kg":73,"r":6,"rir":0}],"6":[{"kg":66,"r":8,"rir":0},{"kg":66,"r":8,"rir":0},{"kg":66,"r":7,"rir":0}],"7":[{"kg":66,"r":6,"rir":3},{"kg":66,"r":6,"rir":3},{"kg":66,"r":6,"rir":3}],"8":[{"kg":73,"r":8,"rir":0},{"kg":73,"r":7,"rir":0},{"kg":73,"r":6,"rir":0}]},"Rowing uni neutre / DY row":{"1":[{"kg":35,"r":9,"rir":2},{"kg":40,"r":null,"rir":0},{"kg":null,"r":9,"rir":null},{"kg":45,"r":7,"rir":0}],"3":[{"kg":66,"r":7,"rir":1},{"kg":73,"r":6,"rir":0},{"kg":70.6,"r":6,"rir":0}],"4":[{"kg":66,"r":8,"rir":0},{"kg":73,"r":6,"rir":0},{"kg":73,"r":6,"rir":0}],"5":[{"kg":73,"r":5,"rir":0},{"kg":66,"r":6,"rir":0},{"kg":66,"r":6,"rir":0}],"6":[{"kg":66,"r":8,"rir":0},{"kg":66,"r":6,"rir":1},{"kg":66,"r":7,"rir":0}],"7":[{"kg":61.3,"r":6,"rir":3},{"kg":61.3,"r":6,"rir":2},{"kg":61.3,"r":6,"rir":2}],"8":[{"kg":61.3,"r":6,"rir":2},{"kg":63.6,"r":6,"rir":0},{"kg":63.6,"r":6,"rir":0}]},"Tirage horizontal poulie large":{"1":[{"kg":80,"r":7,"rir":1},{"kg":80,"r":8,"rir":0}],"3":[{"kg":50,"r":8,"rir":2},{"kg":52.5,"r":10,"rir":2}],"4":[{"kg":57,"r":8,"rir":1},{"kg":57,"r":8,"rir":0}],"5":[{"kg":57,"r":7,"rir":0},{"kg":57,"r":8,"rir":0}],"6":[{"kg":52,"r":10,"rir":0},{"kg":52,"r":10,"rir":0}],"7":[{"kg":47.3,"r":10,"rir":4},{"kg":49.6,"r":10,"rir":3}],"8":[{"kg":59,"r":6,"rir":0},{"kg":59,"r":7,"rir":0}]},"Tirage vertical Hammer neutre":{"1":[{"kg":50,"r":7,"rir":0},{"kg":50,"r":7,"rir":0},{"kg":50,"r":null,"rir":0}],"3":[{"kg":36,"r":6,"rir":2},{"kg":36,"r":6,"rir":0},{"kg":36,"r":5,"rir":0}],"4":[{"kg":36,"r":8,"rir":0},{"kg":36,"r":6,"rir":0},{"kg":36,"r":6,"rir":0}],"5":[{"kg":36,"r":6,"rir":0},{"kg":36,"r":6,"rir":0},{"kg":31.5,"r":8,"rir":0}],"6":[{"kg":37.25,"r":6,"rir":0},{"kg":37.25,"r":null,"rir":0},{"kg":36,"r":6,"rir":0}],"7":[{"kg":36,"r":5,"rir":2},{"kg":36,"r":5,"rir":2},{"kg":36,"r":5,"rir":2}],"8":[{"kg":36,"r":8,"rir":1},{"kg":43,"r":5,"rir":0},{"kg":38.5,"r":5,"rir":0}]}},"Lower":{"Adducteurs machine":{"3":[{"kg":72,"r":8,"rir":0},{"kg":68,"r":7,"rir":0}],"4":[{"kg":72,"r":9,"rir":0},{"kg":72,"r":8,"rir":0}],"7":[{"kg":68,"r":10,"rir":2}],"8":[{"kg":68,"r":9,"rir":0},{"kg":72,"r":8,"rir":0}]},"Leg curl (variante)":{"3":[{"kg":50,"r":5,"rir":0},{"kg":45,"r":6,"rir":0},{"kg":45,"r":6,"rir":0}],"4":[{"kg":50,"r":6,"rir":0},{"kg":50,"r":6,"rir":0},{"kg":45,"r":5,"rir":0}],"7":[{"kg":45,"r":6,"rir":2},{"kg":45,"r":6,"rir":2},{"kg":45,"r":6,"rir":0}],"8":[{"kg":45,"r":7,"rir":0},{"kg":45,"r":7,"rir":0},{"kg":45,"r":5,"rir":0}]},"Leg extension":{"3":[{"kg":45,"r":7,"rir":1},{"kg":50,"r":6,"rir":0},{"kg":45,"r":6,"rir":0}],"4":[{"kg":45,"r":8,"rir":0},{"kg":45,"r":7,"rir":null},{"kg":45,"r":7,"rir":0}],"7":[{"kg":45,"r":6,"rir":2},{"kg":45,"r":6,"rir":1},{"kg":45,"r":6,"rir":0}],"8":[{"kg":41,"r":8,"rir":0},{"kg":41,"r":7,"rir":0},{"kg":41,"r":6,"rir":0}]},"Mollets assis":{"3":[{"kg":143,"r":10,"rir":1},{"kg":143,"r":10,"rir":0}],"4":[{"kg":143,"r":12,"rir":0},{"kg":143,"r":10,"rir":0}]},"RDL (sangles)":{"3":[{"kg":120,"r":9,"rir":1},{"kg":120,"r":8,"rir":0}],"4":[{"kg":120,"r":8,"rir":1},{"kg":125,"r":6,"rir":0}],"7":[{"kg":110,"r":6,"rir":3},{"kg":110,"r":6,"rir":2}],"8":[{"kg":130,"r":6,"rir":1},{"kg":110,"r":6,"rir":0}]},"Mollets assis 15-20 (charge légère, sans étirement max en bas)":{"7":[{"kg":120,"r":20,"rir":0},{"kg":120,"r":17,"rir":0}],"8":[{"kg":131,"r":17,"rir":1},{"kg":143,"r":12,"rir":0}]}},"Push":{"Chest press Hammer":{"3":[{"kg":60,"r":5,"rir":null},{"kg":55,"r":5,"rir":null},{"kg":50,"r":6,"rir":null}],"4":[{"kg":40,"r":4,"rir":0},{"kg":35,"r":7,"rir":0},{"kg":35,"r":6,"rir":0}],"5":[{"kg":35,"r":6,"rir":0},{"kg":35,"r":7,"rir":0},{"kg":35,"r":6,"rir":0}],"6":[{"kg":35,"r":8,"rir":0},{"kg":37.5,"r":5,"rir":0},{"kg":35,"r":6,"rir":0}],"7":[{"kg":32.5,"r":8,"rir":2},{"kg":32.5,"r":8,"rir":2},{"kg":32.5,"r":10,"rir":0}],"8":[{"kg":65,"r":5,"rir":0},{"kg":65,"r":5,"rir":0},{"kg":60,"r":5,"rir":0}]},"Développé militaire prise neutre":{"3":[{"kg":57,"r":5,"rir":null},{"kg":57,"r":5,"rir":null}],"4":[{"kg":57,"r":7,"rir":0},{"kg":57,"r":6,"rir":0}],"5":[{"kg":57,"r":6,"rir":0},{"kg":57,"r":null,"rir":null}],"6":[{"kg":57,"r":7,"rir":0},{"kg":57,"r":7,"rir":0}],"7":[{"kg":50,"r":6,"rir":3},{"kg":50,"r":6,"rir":3}],"8":[{"kg":55,"r":8,"rir":0},{"kg":55,"r":8,"rir":0}]},"Élévations latérales (variante)":{"3":[{"kg":14,"r":8,"rir":null},{"kg":14,"r":8,"rir":null},{"kg":14,"r":8,"rir":null}],"4":[{"kg":14,"r":8,"rir":0},{"kg":14,"r":8,"rir":0},{"kg":14,"r":7,"rir":0}],"5":[{"kg":14,"r":7,"rir":0},{"kg":14,"r":6,"rir":0},{"kg":14,"r":6,"rir":0}],"6":[{"kg":14,"r":7,"rir":0},{"kg":14,"r":6,"rir":0},{"kg":14,"r":6,"rir":0}],"7":[{"kg":11.3,"r":8,"rir":3},{"kg":11.3,"r":8,"rir":3},{"kg":11.3,"r":9,"rir":2}],"8":[{"kg":14,"r":6,"rir":2},{"kg":14,"r":8,"rir":0},{"kg":14,"r":8,"rir":0}]},"Extension triceps poulie":{"3":[{"kg":25,"r":7,"rir":null},{"kg":25,"r":5,"rir":null}],"4":[{"kg":25,"r":5,"rir":0},{"kg":25,"r":5,"rir":0}],"5":[{"kg":25,"r":6,"rir":0},{"kg":25,"r":6,"rir":0}],"6":[{"kg":27,"r":6,"rir":0},{"kg":25,"r":7,"rir":0}],"7":[{"kg":23,"r":8,"rir":2},{"kg":23,"r":7,"rir":1}],"8":[{"kg":23,"r":8,"rir":0},{"kg":23,"r":6,"rir":0}]},"Pec fly machine":{"3":[{"kg":93,"r":8,"rir":null},{"kg":100,"r":6,"rir":null},{"kg":100,"r":8,"rir":null}],"4":[{"kg":93,"r":9,"rir":0},{"kg":93,"r":7,"rir":0},{"kg":93,"r":7,"rir":0}],"5":[{"kg":100,"r":6,"rir":0},{"kg":100,"r":6,"rir":0},{"kg":9,"r":7,"rir":0}],"6":[{"kg":86,"r":10,"rir":0},{"kg":93,"r":8,"rir":0},{"kg":93,"r":8,"rir":0}],"7":[{"kg":86,"r":6,"rir":3},{"kg":86,"r":7,"rir":2},{"kg":86,"r":7,"rir":2}],"8":[{"kg":100,"r":9,"rir":0},{"kg":93,"r":6,"rir":1},{"kg":93,"r":7,"rir":0}]}},"Upper":{"Chest press inclinée Hammer":{"3":[{"kg":50,"r":7,"rir":0},{"kg":50,"r":6,"rir":0},{"kg":50,"r":5,"rir":0}],"4":[{"kg":50,"r":4,"rir":0},{"kg":45,"r":6,"rir":0},{"kg":45,"r":6,"rir":0}],"5":[{"kg":50,"r":8,"rir":0},{"kg":50,"r":7,"rir":0},{"kg":50,"r":6,"rir":0}],"6":[{"kg":50,"r":7,"rir":0},{"kg":50,"r":7,"rir":0},{"kg":50,"r":5,"rir":0}],"7":[{"kg":38,"r":6,"rir":0},{"kg":38,"r":5,"rir":0},{"kg":36,"r":6,"rir":0}],"8":[{"kg":50,"r":6,"rir":1},{"kg":50,"r":7,"rir":0},{"kg":50,"r":5,"rir":0}]},"Curl poulie":{"3":[{"kg":54,"r":8,"rir":0},{"kg":54,"r":8,"rir":0}],"4":[{"kg":32.5,"r":10,"rir":0},{"kg":33.75,"r":8,"rir":0}],"5":[{"kg":54,"r":8,"rir":1},{"kg":54,"r":8,"rir":0}],"6":[{"kg":54,"r":9,"rir":0},{"kg":54,"r":9,"rir":0}],"7":[{"kg":18,"r":6,"rir":0},{"kg":18,"r":6,"rir":0}],"8":[{"kg":57,"r":null,"rir":null},{"kg":null,"r":6,"rir":0}]},"Élévations latérales poulie uni":{"3":[{"kg":14,"r":7,"rir":0},{"kg":14,"r":7,"rir":0},{"kg":14,"r":6,"rir":0}],"4":[{"kg":40,"r":5,"rir":0},{"kg":35,"r":7,"rir":0},{"kg":37.5,"r":6,"rir":0}],"5":[{"kg":11.3,"r":8,"rir":0},{"kg":11.3,"r":8,"rir":0},{"kg":14,"r":5,"rir":0}],"6":[{"kg":14,"r":8,"rir":null},{"kg":14,"r":7,"rir":null},{"kg":14,"r":7,"rir":null}],"7":[{"kg":42.5,"r":6,"rir":1},{"kg":42.5,"r":5,"rir":0},{"kg":40,"r":6,"rir":0}],"8":[{"kg":14,"r":8,"rir":0},{"kg":14,"r":8,"rir":0},{"kg":14,"r":8,"rir":0}]},"Rowing appui poitrine":{"3":[{"kg":66,"r":6,"rir":0},{"kg":61.3,"r":7,"rir":0},{"kg":61.3,"r":8,"rir":0}],"4":[{"kg":70,"r":8,"rir":1},{"kg":70,"r":9,"rir":0},{"kg":70,"r":8,"rir":0}],"5":[{"kg":66,"r":7,"rir":0},{"kg":66,"r":6,"rir":1},{"kg":66,"r":7,"rir":0}],"6":[{"kg":66,"r":7,"rir":0},{"kg":66,"r":7,"rir":0},{"kg":66,"r":7,"rir":0}],"7":[{"kg":40,"r":6,"rir":0},{"kg":40,"r":8,"rir":0},{"kg":40,"r":null,"rir":null}],"8":[{"kg":66,"r":7,"rir":0},{"kg":66,"r":6,"rir":0},{"kg":73,"r":5,"rir":0}]},"Tirage vertical prise large":{"3":[{"kg":84,"r":7,"rir":0},{"kg":84,"r":7,"rir":0},{"kg":77,"r":8,"rir":0}],"4":[{"kg":90,"r":9,"rir":0},{"kg":100,"r":6,"rir":0},{"kg":90,"r":9,"rir":0}],"5":[{"kg":84,"r":7,"rir":0},{"kg":84,"r":7,"rir":0},{"kg":84,"r":7,"rir":0}],"6":[{"kg":84,"r":7,"rir":null},{"kg":84,"r":7,"rir":null},{"kg":77,"r":7,"rir":null}],"7":[{"kg":90,"r":8,"rir":1},{"kg":100,"r":6,"rir":0},{"kg":100,"r":6,"rir":0}],"8":[{"kg":90,"r":6,"rir":0},{"kg":84,"r":7,"rir":0},{"kg":77,"r":7,"rir":0}]}}},"bilan":{"6":{"poids":69.4,"calories":2700,"nutrition":6,"sommeil":6,"energie":7,"fatigue":2,"ressenti":"Les séances se passent bien malgré le fait que je stagne / baisse les charges sur certains exercices. J’ai du skip ma deuxième séance legs car j’étais chez mes cousins du vendredi au dimanche.","difficultes":"Je n’ai malheureusement pas tenu ma diete sur le week-end mais les excès n’étaient pas abusé et je pense que je n’ai pas tant dépassé mes kcals journaliers. J’ai une douleur au poignet qui gêne légèrement sur les exercices de poussée.","modifs":"Pas de changements en particulier.","question":"Pourquoi tu as rajouter les vacuum à faire et je voulais préciser que j’ai rempli le bilan de la semaine dernière en mettant mon poids à jeun d’aujourd’hui (mardi de la semaine 7) je ferai mon bilan de cette semaine dimanche. Quand allons nous savoir si la reverse touche à sa fin?"},"7":{"poids":70,"calories":2850,"nutrition":8,"sommeil":7,"energie":7,"fatigue":5,"ressenti":"Malgré la semaine de deload j’ai ressenti pas mal de fatigue nerveuse, pas la même capacité à grind et des courbatures plus prononcées sur le bas du corps.","difficultes":"Pas forcément de points de blocage. J’ai le poignet gauche complètement bousillé. J’espère que ça sera rétabli la semaine pro."},"8":{"poids":69.7,"calories":3000,"nutrition":8,"sommeil":8,"energie":8,"fatigue":7,"ressenti":"Une bonne force à l’entraînement. J’ai l’impression de progresser petit à petit sur certains mouvements. J’essaye de standardiser mes reps au maximum pour en être sur.","difficultes":"Je bloque sur les leg extension et je n’arrive pas à augmenter la charge voir je régresse certains jours. J’ai toujours mal au poignet gauche donc je fais attention à bien le garder droit sur les exercices de poussée et je mets les bandes de poignet. J’ai des courbatures de fdp au dos suite au rdl et le rowing coudes open.","question":"On augmente les kcal semaine pro ou non?"}},"notes":[{"w":1,"s":"Legs","t":"J’ai laissé la presse en dernier exo..😵"},{"w":1,"s":"Pull","t":"Bonne sensation dos, malgré un tout petit peu trop de volume (une série en moins sur le rowing serai bien à mon avis) et rajouter une série de plus sur les biceps. Maya zain!"},{"w":3,"s":"Legs","t":"Retour du squat, je sens que je peux rapidement progresser. Chiant car il n’y a ni hacksquat ni une vraie presse pour les quad dans la salle😵."},{"w":3,"s":"Lower","t":"J’ai failli me blesser sur le premier exo en faisant les adducteurs… tu as des conseils pour l’échauffement legs?"},{"w":3,"s":"Pull","t":"Il faut que je l’habitude au tirage horizontal poulie large car je n’arrive pas à déterminer mes charges."},{"w":3,"s":"Push","t":"Nouvelle salle, nouvelles machines donc charges nouvelles."},{"w":4,"s":"Legs","t":"45min de tapis en fin de chaque séance"},{"w":4,"s":"Lower","t":"Je ne sais pas pourquoi mais à chaque fois que je fais les mollets les jours d’après j’ai mal au tendon d’Achille comme si il y avait de l’inflammation. Je ne sais pas si c’est normal…"},{"w":4,"s":"Pull","t":"J’ai fait du curl pupitre au lieu de faire du curl haltère."},{"w":4,"s":"Upper","t":"Élévations latérales à la machine au lieu de faire poulie."},{"w":5,"s":"Legs","t":"J’ai fait une série de plus en backoff sur les mollets à 120"},{"w":5,"s":"Push","t":"Premier jour de reverse!"},{"w":6,"s":"Pull","t":"J’ai fais une série de plus pour les biceps et j’ai changé de machine pour faire le tirage horizontal prise large."},{"w":7,"s":"Lower","t":"La fatigue est présente😵"},{"w":7,"s":"Push","t":"Mes séances push je fais les haltères en exo 1"},{"w":8,"s":"Legs","t":"Je suis passé sur la smith pour faire du squat."},{"w":8,"s":"Lower","t":"J’ai baissé la charge sur la deuxième série de rdl parceque je suis une pute."},{"w":8,"s":"Pull","t":"J’ai envoyé la purée god damn"},{"w":8,"s":"Push","t":"J’ai fais du bench à la smith au lieu de faire les haltères aujourd’hui pour éviter d’aggraver mon poignet gauche.\n\nJ’ai baissé la charge sur les deux dernières séries de pec fly et j’ai bombé les pecs pour mieux les cibler😉"},{"w":8,"s":"Upper","t":"Je suis légèrement nerf sur mon exo de poussée a cause du poignet…"}],"poids":{"4":69.6,"5":70,"6":69.6,"8":69.5},"mens":{},"maj":"17/08/2026","archive":true}};
+const S={s1:'#e63232',s2:'#4196df',s3:'#ad8d2b',s4:'#02a894',s5:'#997cdc',s6:'#2baa6d'};
+const INK3='#4b423e', INK2='#877c74', BORD='#241e1d';
+const NOMS=Object.keys(DATA);
+let actif=NOMS[0];
+
+/* Un pas de graduation lisible : 1, 2, 5 ou 10 fois une puissance de dix. */
+function pasJoli(span, cible){
+  const brut=span/cible, mag=Math.pow(10,Math.floor(Math.log10(brut))), n=brut/mag;
+  return (n<1.5?1 : n<3?2 : n<7?5 : 10)*mag;
+}
+const esc=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const jour=s=>{const[d,m,y]=String(s||'').split('/').map(Number); return (d&&m&&y)?new Date(y,m-1,d):null;};
+const AUJ=new Date(2026,7,26);
+const depuis=s=>{const d=jour(s); return d?Math.round((AUJ-d)/864e5):null;};
+
+/* ---------- Agrégats ---------- */
+function serieTop(sets){                      // la série la plus lourde d'une semaine
+  let best=null;
+  for(const x of sets){
+    if(x.kg==null) continue;
+    if(!best || x.kg>best.kg || (x.kg===best.kg && (x.r||0)>(best.r||0))) best=x;
+  }
+  return best;
+}
+function louche(sets){                        // saisie manifestement inversée
+  return sets.some(x=>x.r!=null && x.r>40);
+}
+function exosDe(c){
+  const out=[];
+  for(const sea of Object.keys(c.perf)) for(const ex of Object.keys(c.perf[sea])){
+    const parSem=c.perf[sea][ex];
+    const sems=Object.keys(parSem).map(Number).sort((a,b)=>a-b);
+    const pts=[];
+    let alerte=false;
+    for(const w of sems){
+      const sets=parSem[String(w)];
+      if(louche(sets)) alerte=true;
+      const t=serieTop(sets);
+      if(t) pts.push({w, kg:t.kg, r:t.r});
+    }
+    if(!pts.length) continue;
+    const d=pts[pts.length-1];
+    const ref=pts[Math.max(0,pts.length-3)];          // 3 dernières semaines saisies
+    const delta=+(d.kg-ref.kg).toFixed(1);
+    let tend = pts.length<2 ? 'new' : (delta>0.4?'up':(delta<-0.4?'down':'flat'));
+    out.push({sea, ex, pts, best:Math.max(...pts.map(x=>x.kg)), delta, tend, alerte,
+              dernier:d, nbSem:pts.length});
+  }
+  const ordre={up:0,new:1,flat:2,down:3};
+  out.sort((a,b)=> (ordre[a.tend]-ordre[b.tend]) || a.sea.localeCompare(b.sea) || a.ex.localeCompare(b.ex));
+  return out;
+}
+function semainesRemplies(c){
+  const s=new Set();
+  for(const sea of Object.keys(c.perf)) for(const ex of Object.keys(c.perf[sea]))
+    for(const w of Object.keys(c.perf[sea][ex])) if(c.perf[sea][ex][w].some(x=>x.kg!=null||x.r!=null)) s.add(+w);
+  return [...s].sort((a,b)=>a-b);
+}
+function suiteBilan(c,champ){
+  return Object.keys(c.bilan).map(Number).sort((a,b)=>a-b)
+    .map(w=>({w, v:c.bilan[String(w)][champ]}))
+    .filter(x=>typeof x.v==='number');
+}
+function suitePoids(c){
+  const m=new Map();
+  Object.keys(c.poids).forEach(w=>{ if(typeof c.poids[w]==='number') m.set(+w,c.poids[w]); });
+  suiteBilan(c,'poids').forEach(x=>m.set(x.w,x.v));
+  return [...m.entries()].sort((a,b)=>a[0]-b[0]).map(([w,v])=>({w,v}));
+}
+function etat(c){
+  const j=depuis(c.maj);
+  if(c.archive) return {p:INK3, t:'archive'};
+  if(j===null) return {p:INK3, t:'—'};
+  if(j<=9)  return {p:S.s6, t:'à jour'};
+  if(j<=20) return {p:S.s3, t:'en retard'};
+  return {p:S.s1, t:'décroché'};
+}
+
+/* ---------- Graphiques ---------- */
+function ligne(hote, pts, opt){
+  const o=Object.assign({couleur:S.s1, unite:'', h:172, deci:1, empanMin:1, pas:1}, opt||{});
+  hote.innerHTML='';
+  if(!pts.length){ hote.innerHTML='<div class="empty">Rien de saisi pour le moment.</div>'; return; }
+  const W=520, H=o.h, ml=40, mr=14, mt=14, mb=26;
+  const xs=pts.map(p=>p.w), ys=pts.map(p=>p.v);
+  let lo=Math.min(...ys), hi=Math.max(...ys);
+  /* Un empan minimal : sans ça, 600 g de variation de poids remplissent
+     tout le cadre et le bruit du matin ressemble à une tendance. */
+  const empan=o.empanMin||1, mid=(hi+lo)/2;
+  if(hi-lo<empan){ lo=mid-empan/2; hi=mid+empan/2; }
+  else { const pad=(hi-lo)*0.16; lo-=pad; hi+=pad; }
+  /* Graduations rondes plutôt que 3048 / 2916 / 2784 */
+  const pas=pasJoli(hi-lo, 3.5);
+  lo=Math.floor(lo/pas)*pas; hi=Math.ceil(hi/pas)*pas;
+  if(hi<=lo) hi=lo+pas;
+  const nbT=Math.min(6, Math.round((hi-lo)/pas)+1);
+  const x0=Math.min(...xs), x1=Math.max(...xs);
+  const px=w=> ml + (x1===x0?0.5:(w-x0)/(x1-x0))*(W-ml-mr);
+  const py=v=> mt + (1-(v-lo)/(hi-lo))*(H-mt-mb);
+  const uid='g'+Math.random().toString(36).slice(2,8);
+
+  let g='';
+  for(let i=0;i<nbT;i++){ const v=hi-i*(hi-lo)/(nbT-1); const y=py(v);
+    g+=`<line class="gl" x1="${ml}" y1="${y.toFixed(1)}" x2="${W-mr}" y2="${y.toFixed(1)}"/>`;
+    g+=`<text class="ax tnum" x="${ml-7}" y="${(y+3.2).toFixed(1)}" text-anchor="end">${(+v.toFixed(4)).toFixed(o.deci)}</text>`;
+  }
+  const d=pts.map((p,i)=>`${i?'L':'M'}${px(p.w).toFixed(1)},${py(p.v).toFixed(1)}`).join(' ');
+  const aire=`${d} L${px(pts[pts.length-1].w).toFixed(1)},${(H-mb).toFixed(1)} L${px(pts[0].w).toFixed(1)},${(H-mb).toFixed(1)} Z`;
+  const dern=pts[pts.length-1];
+
+  hote.innerHTML=`
+  <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Évolution sur ${pts.length} semaines">
+    <defs><linearGradient id="${uid}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${o.couleur}" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="${o.couleur}" stop-opacity="0"/>
+    </linearGradient></defs>
+    ${g}
+    <path d="${aire}" fill="url(#${uid})"/>
+    <path d="${d}" fill="none" stroke="${o.couleur}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    ${pts.map(p=>`<circle cx="${px(p.w).toFixed(1)}" cy="${py(p.v).toFixed(1)}" r="3.4" fill="${o.couleur}" stroke="var(--card)" stroke-width="2"/>`).join('')}
+    <circle cx="${px(dern.w).toFixed(1)}" cy="${py(dern.v).toFixed(1)}" r="5.4" fill="${o.couleur}" stroke="var(--card)" stroke-width="2.4"/>
+    ${pts.map(p=>`<text class="ax tnum" x="${px(p.w).toFixed(1)}" y="${H-8}" text-anchor="middle">S${p.w}</text>`).join('')}
+    <line id="${uid}-cr" x1="0" y1="${mt}" x2="0" y2="${H-mb}" stroke="${INK2}" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>
+    <rect x="${ml}" y="0" width="${W-ml-mr}" height="${H}" fill="transparent" id="${uid}-hit"/>
+  </svg>
+  <div class="tip" id="${uid}-tip"></div>`;
+
+  const svg=hote.querySelector('svg'), cr=hote.querySelector(`#${uid}-cr`), tip=hote.querySelector(`#${uid}-tip`);
+  const bouge=e=>{
+    const b=svg.getBoundingClientRect();
+    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const vx=(cx-b.left)/b.width*W;
+    let m=pts[0], dm=1e9;
+    pts.forEach(p=>{const dd=Math.abs(px(p.w)-vx); if(dd<dm){dm=dd;m=p;}});
+    cr.setAttribute('x1',px(m.w)); cr.setAttribute('x2',px(m.w)); cr.setAttribute('opacity','1');
+    tip.className='tip on';
+    tip.innerHTML=`<span class="tw">Semaine ${m.w}</span> &nbsp;<span class="tv">${m.v}${o.unite}</span>`;
+    const l=px(m.w)/W*b.width;
+    tip.style.left=Math.max(4,Math.min(b.width-tip.offsetWidth-4,l-tip.offsetWidth/2))+'px';
+    tip.style.top=(py(m.v)/H*b.height-tip.offsetHeight-10)+'px';
+  };
+  svg.addEventListener('mousemove',bouge);
+  svg.addEventListener('touchmove',e=>{bouge(e);},{passive:true});
+  svg.addEventListener('mouseleave',()=>{cr.setAttribute('opacity','0'); tip.className='tip';});
+}
+
+function sparkline(pts, couleur){
+  if(pts.length<2){
+    return `<svg class="spark" width="94" height="26" aria-hidden="true"><circle cx="47" cy="13" r="3" fill="${couleur}"/></svg>`;
+  }
+  const W=94,H=26,m=4;
+  const ys=pts.map(p=>p.kg); let lo=Math.min(...ys), hi=Math.max(...ys);
+  if(hi===lo){hi=lo+1;lo=lo-1;}
+  const px=i=> m+(i/(pts.length-1))*(W-2*m);
+  const py=v=> m+(1-(v-lo)/(hi-lo))*(H-2*m);
+  const d=pts.map((p,i)=>`${i?'L':'M'}${px(i).toFixed(1)},${py(p.kg).toFixed(1)}`).join(' ');
+  const li=pts.length-1;
+  return `<svg class="spark" width="${W}" height="${H}" aria-hidden="true">
+    <path d="${d}" fill="none" stroke="${couleur}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+    <circle cx="${px(li).toFixed(1)}" cy="${py(pts[li].kg).toFixed(1)}" r="2.8" fill="${couleur}"/>
+  </svg>`;
+}
+
+/* ---------- Rendu ---------- */
+function rail(){
+  document.getElementById('rail').innerHTML=NOMS.map(n=>{
+    const c=DATA[n], e=etat(c), sems=semainesRemplies(c);
+    return `<button class="cbtn" role="button" aria-pressed="${n===actif}" data-n="${esc(n)}">
+      <span class="pip" style="background:${e.p}"></span>${esc(n)}
+      <span class="wk">${sems.length?('S'+sems[sems.length-1]):'—'}</span></button>`;
+  }).join('');
+  document.querySelectorAll('.cbtn').forEach(b=>b.onclick=()=>{actif=b.dataset.n; rail(); dessine();});
+}
+
+function dessine(){
+  const c=DATA[actif], e=etat(c), sems=semainesRemplies(c), j=depuis(c.maj);
+  const poids=suitePoids(c), cal=suiteBilan(c,'calories'), exos=exosDe(c);
+  const monte=exos.filter(x=>x.tend==='up').length, baisse=exos.filter(x=>x.tend==='down').length;
+  const suspects=exos.filter(x=>x.alerte).length;
+
+  document.getElementById('hsub').textContent =
+    `${NOMS.length} dossiers · lecture du tableau SUIVI FINAL`;
+  document.getElementById('stamp').textContent = `Données au 26/08/2026`;
+
+  const dp = poids.length>1 ? +(poids[poids.length-1].v-poids[0].v).toFixed(1) : null;
+  document.getElementById('tiles').innerHTML=[
+    ['Dernière saisie', j===null?'—':(j===0?'today':j), j===null?'':(j===0?'':'<span class="u">j</span>'),
+      `<span style="color:${e.p}">${e.t}</span>`],
+    ['Semaines remplies', sems.length, '', sems.length?`de S${sems[0]} à S${sems[sems.length-1]}`:'aucune'],
+    ['Poids', poids.length?poids[poids.length-1].v:'—', poids.length?'<span class="u">kg</span>':'',
+      dp===null?'un seul relevé':`${dp>0?'+':''}${dp} kg sur ${poids.length} relevés`],
+    ['Exercices suivis', exos.length, '', `${monte} montent · ${baisse} baissent`],
+    ['Saisies douteuses', suspects, '', suspects?'kg et reps inversés':'rien à signaler'],
+  ].map(([k,v,u,d])=>`<div class="tile"><div class="k">${k}</div><div class="v tnum">${v}${u||''}</div><div class="d">${d}</div></div>`).join('');
+
+  document.getElementById('pn').textContent = poids.length?`${poids.length} relevés`:'';
+  document.getElementById('cn').textContent = cal.length?`${cal.length} semaines déclarées`:'';
+  ligne(document.getElementById('cPoids'), poids, {couleur:S.s1, unite:' kg',   deci:1, empanMin:3,   pas:0.5});
+  ligne(document.getElementById('cCal'),   cal,   {couleur:S.s2, unite:' kcal', deci:0, empanMin:400, pas:100});
+
+  /* Adhérence */
+  const champs=[['nutrition','Nutrition',S.s3],['sommeil','Sommeil',S.s4],['energie','Énergie',S.s5],['fatigue','Fatigue',S.s6]];
+  const dispo=champs.map(([k,l,col])=>[k,l,col,suiteBilan(c,k)]).filter(x=>x[3].length);
+  const adh=document.getElementById('adh');
+  if(!dispo.length){
+    adh.innerHTML='<div class="empty">Aucun bilan hebdomadaire rempli. Rien à afficher, et c\'est déjà une information.</div>';
+  } else {
+    adh.innerHTML='<div class="sm">'+dispo.map(([k,l,col,pts])=>{
+      const der=pts[pts.length-1].v, moy=(pts.reduce((a,b)=>a+b.v,0)/pts.length).toFixed(1);
+      return `<div class="smc"><div class="l"><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${col}"></i>${l}</div>
+        <div class="n tnum">${der}<span>/10 · moy ${moy}</span></div>
+        <div class="sk">${sparkline(pts.map(p=>({kg:p.v})),col)}</div></div>`;
+    }).join('')+'</div>'
+    + `<div class="legend">${dispo.map(([k,l,col])=>`<span><i style="background:${col}"></i>${l}</span>`).join('')}</div>`;
+  }
+
+  /* Exercices */
+  const box=document.getElementById('exos');
+  if(!exos.length){ box.innerHTML='<div class="empty">Aucune performance saisie.</div>'; }
+  else{
+    const lib={up:'monte',flat:'stable',down:'baisse',new:'1 semaine'};
+    box.innerHTML='<div class="tbl-wrap"><table><thead><tr>'
+      +'<th>Exercice</th><th>Sur 3 semaines</th><th>Courbe</th><th>Départ</th><th>Dernier</th><th>Record</th><th>Semaines</th>'
+      +'</tr></thead><tbody>'
+      + exos.map(x=>{
+        const col = x.tend==='up'?S.s6 : x.tend==='down'?S.s1 : x.tend==='new'?S.s2 : INK2;
+        const dep=x.pts[0];
+        return `<tr>
+          <td class="ex">${esc(x.ex)}${x.alerte?'<span class="flag" title="Une série dépasse 40 répétitions : les kg et les reps ont sans doute été saisis à l\'envers.">saisie douteuse</span>':''}<span class="sea">${esc(x.sea)}</span></td>
+          <td><span class="chip ${x.tend}">${lib[x.tend]}${x.tend==='up'||x.tend==='down'?` ${x.delta>0?'+':''}${x.delta} kg`:''}</span></td>
+          <td>${sparkline(x.pts,col)}</td>
+          <td class="tnum" style="color:var(--ink2)">${dep.kg} × ${dep.r??'—'}</td>
+          <td class="tnum">${x.dernier.kg} × ${x.dernier.r??'—'}</td>
+          <td class="tnum" style="color:var(--ink2)">${x.best} kg</td>
+          <td class="tnum" style="color:var(--ink3)">${x.nbSem}</td>
+        </tr>`;
+      }).join('')+'</tbody></table></div>';
+  }
+
+  /* Notes et bilans */
+  const nb=document.getElementById('notes');
+  const items=[];
+  Object.keys(c.bilan).map(Number).sort((a,b)=>b-a).forEach(w=>{
+    const b=c.bilan[String(w)];
+    [['ressenti','Ressenti des séances'],['difficultes','Difficultés'],['modifs','Modifications demandées'],['question','Question pour le coach']]
+      .forEach(([k,l])=>{ if(typeof b[k]==='string' && b[k].trim())
+        items.push({w, m:`Semaine ${w} · ${l}`, t:b[k], q:k==='question'}); });
+  });
+  c.notes.slice().sort((a,b)=>b.w-a.w).forEach(n=>items.push({w:n.w, m:`Semaine ${n.w} · ${n.s}`, t:n.t}));
+  items.sort((a,b)=>b.w-a.w);
+  document.getElementById('nn').textContent = items.length?`${items.length} entrées`:'';
+  nb.innerHTML = items.length
+    ? items.map(i=>`<div class="note${i.q?' q':''}"><div class="m">${esc(i.m)}</div>${esc(i.t)}</div>`).join('')
+    : '<div class="empty">Aucune note de séance ni bilan écrit.</div>';
+
+  document.getElementById('foot').innerHTML =
+    `Lecture directe du tableau SUIVI FINAL. La tendance compare la série la plus lourde de la dernière semaine saisie à celle d'il y a trois semaines, `
+    + `pas au tout début : sinon un changement de salle passe pour une progression. Au-delà de 400 g d'écart on parle de montée ou de baisse. `
+    + `Les graphiques gardent un empan minimal pour que le bruit du matin ne ressemble pas à une tendance. `
+    + `Et une chute de charge pendant qu'un exercice voisin monte veut souvent dire changement de machine, pas régression : lire les notes avant de conclure.`;
+}
+
+rail(); dessine();
+
+</script>
