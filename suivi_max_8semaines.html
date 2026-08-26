@@ -121,6 +121,22 @@
   .prog-rule { margin-top:10px; padding:12px 14px; background:var(--gold-dim); border:1px solid rgba(201,168,76,0.28); border-radius:5px; font-size:11px; color:#d8c48a; font-weight:300; line-height:1.65; }
   .prog-rule b { color:var(--gold); font-weight:500; }
   .prog-rule + .exo-card { margin-top:10px; }
+  .tab.active-histo { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); box-shadow:inset 0 2px 0 var(--gold); }
+  .h-sea { margin-top:16px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); padding-bottom:6px; border-bottom:1px solid var(--border); }
+  .h-exo { margin-top:9px; background:var(--card); border:1px solid var(--border); border-radius:5px; padding:10px 13px; }
+  .h-exo .n { font-size:13px; font-weight:500; line-height:1.3; }
+  .h-best { font-size:9px; color:var(--gold); letter-spacing:0.05em; margin-top:2px; }
+  .h-grid { margin-top:7px; display:flex; flex-direction:column; gap:2px; }
+  .h-row { display:grid; grid-template-columns:28px 1fr; align-items:baseline; gap:8px; font-size:11px; }
+  .h-row .w { font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:0.05em; color:var(--muted2); }
+  .h-row .v { color:var(--white); font-weight:300; }
+  .h-tl { margin-top:10px; display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; }
+  .h-tl .c { flex:0 0 auto; min-width:62px; background:var(--card); border:1px solid var(--border); border-radius:4px; padding:7px 8px; text-align:center; }
+  .h-tl .c .w { font-family:'Bebas Neue',sans-serif; font-size:11px; color:var(--muted2); letter-spacing:0.06em; }
+  .h-tl .c .p { font-family:'Bebas Neue',sans-serif; font-size:17px; color:var(--gold); letter-spacing:0.03em; line-height:1.2; }
+  .h-tl .c .k { font-size:9px; color:var(--muted); }
+  .h-note { margin-top:7px; padding:8px 11px; background:var(--dark); border-left:2px solid var(--muted2); border-radius:3px; font-size:10.5px; color:var(--muted); font-weight:300; line-height:1.6; font-style:italic; }
+  .h-note b { color:var(--white); font-style:normal; font-weight:400; }
 
   .last-week-ref { font-size:9px; color:var(--muted); padding:0 14px 6px; font-style:italic; letter-spacing:0.03em; }
   .last-week-ref b { color:var(--white); font-style:normal; font-weight:400; }
@@ -222,6 +238,7 @@
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
   <button class="tab" id="tab-transverse" onclick="switchTab('transverse')">Transverse<br><span style="font-size:8px;color:var(--muted)">Vacuum · Quotidien</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
+  <button class="tab" id="tab-histo" onclick="switchTab('histo')">Historique<br><span style="font-size:8px;color:var(--muted)">8 sem. précédentes</span></button>
 </div>
 
 <!-- Rappel vacuum : suit Max sur tous les onglets tant que le jour n'est pas coché -->
@@ -730,8 +747,9 @@ function switchTab(id){
   document.querySelectorAll('.tab').forEach(t=>t.className='tab');
   document.getElementById(`session-${id}`).classList.add('visible');
   document.getElementById(`tab-${id}`).className=`tab active-${id}`;
-  document.getElementById('week-selector').style.display='flex';
+  document.getElementById('week-selector').style.display = (id==='histo') ? 'none' : 'flex';
   if(id==='transverse') loadTransverse();
+  if(id==='histo') buildHisto();
   window.scrollTo(0,0);
 }
 
@@ -915,6 +933,55 @@ function seedDataMax(){
   localStorage.setItem('max-seed-v1','done');
 }
 
+
+/* ===== HISTORIQUE — les 8 premières semaines, figées.
+   Extraites du Sheet au moment de l'archivage. Lecture seule, aucune synchro. */
+const HISTO = {"perf":{"Legs":{"Adducteurs machine":{"S1":"125×11 · 130×8","S3":"72×7 · 72×7","S4":"72×7 · 72×7","S5":"72×7 · 72×7","S6":"72×7 · 72×8","S7":"68×8 · 68×8","S8":"68×10 · 72×9"},"Leg curl (variante)":{"S1":"65×8 · 65×7 · 65×7","S3":"50×6 · 50×7 · 50×7","S4":"50×8 · 54×6 · 54×7","S5":"54×6 · 54×6 · 54×6","S6":"50×7 · 50×7 · 50×7","S7":"45×10 · 45×8 · 45×6","S8":"50×6 · 54×6 · 54×6"},"Leg extension":{"S1":"57.5×8 · 57.5×8 · 57.5×6","S3":"41×7 · 41×6 · 41×6","S4":"41×7 · 41×6 · 41×5","S5":"41×7 · 41×7 · 41×7","S6":"41×7 · 41×7 · 36×7","S7":"36×6 · 36×6 · 36×6","S8":"41×8 · 41×7 · 41×7"},"Mollets (variante)":{"S1":"110×8 · 115×10","S3":"154×10 · 154×9 · 154×8","S4":"154×10 · 154×9 · 143×10"},"Presse à cuisses / Hack":{"S1":"200×6 · 200×7","S3":"110×6 · 110×6","S4":"110×6 · 110×6","S5":"115×5 · 110×6","S6":"100×8 · 100×8","S7":"95×10 · 95×8","S8":"80×6 · 80×7"},"Mollets 15-20 (charge légère, sans étirement max en bas)":{"S5":"131×15 · 131×15","S6":"131×15 · 131×15","S7":"131×16 · 131×17","S8":"131×17 · 131×15"}},"Pull":{"Curl biceps (variante)":{"S1":"18×6 · 18×7","S3":"20×7 · 20×7","S4":"50×7 · 57×6","S5":"50×7 · 52.5×7","S6":"52.5×7 · 52.5×7","S7":"50×8 · 57×8","S8":"57×7 · 57×5"},"Rear delt fly":{"S1":"65×6 · 65×6 · 65×5","S3":"66×6 · 73×7 · 73×6","S4":"73×6 · 73×6 · 73×6","S5":"73×7 · 73×7 · 73×6","S6":"66×8 · 66×8 · 66×7","S7":"66×6 · 66×6 · 66×6","S8":"73×8 · 73×7 · 73×6"},"Rowing uni neutre / DY row":{"S1":"35×9 · 40×None · None×9 · 45×7","S3":"66×7 · 73×6 · 70.6×6","S4":"66×8 · 73×6 · 73×6","S5":"73×5 · 66×6 · 66×6","S6":"66×8 · 66×6 · 66×7","S7":"61.3×6 · 61.3×6 · 61.3×6","S8":"61.3×6 · 63.6×6 · 63.6×6"},"Tirage horizontal poulie large":{"S1":"80×7 · 80×8","S3":"50×8 · 52.5×10","S4":"57×8 · 57×8","S5":"57×7 · 57×8","S6":"52×10 · 52×10","S7":"47.3×10 · 49.6×10","S8":"59×6 · 59×7"},"Tirage vertical Hammer neutre":{"S1":"50×7 · 50×7 · 50×None","S3":"36×6 · 36×6 · 36×5","S4":"36×8 · 36×6 · 36×6","S5":"36×6 · 36×6 · 31.5×8","S6":"37.2×6 · 37.2×None · 36×6","S7":"36×5 · 36×5 · 36×5","S8":"36×8 · 43×5 · 38.5×5"}},"Lower":{"Adducteurs machine":{"S3":"72×8 · 68×7","S4":"72×9 · 72×8","S7":"68×10","S8":"68×9 · 72×8"},"Leg curl (variante)":{"S3":"50×5 · 45×6 · 45×6","S4":"50×6 · 50×6 · 45×5","S7":"45×6 · 45×6 · 45×6","S8":"45×7 · 45×7 · 45×5"},"Leg extension":{"S3":"45×7 · 50×6 · 45×6","S4":"45×8 · 45×7 · 45×7","S7":"45×6 · 45×6 · 45×6","S8":"41×8 · 41×7 · 41×6"},"Mollets assis":{"S3":"143×10 · 143×10","S4":"143×12 · 143×10"},"RDL (sangles)":{"S3":"120×9 · 120×8","S4":"120×8 · 125×6","S7":"110×6 · 110×6","S8":"130×6 · 110×6"},"Mollets assis 15-20 (charge légère, sans étirement max en bas)":{"S7":"120×20 · 120×17","S8":"131×17 · 143×12"}},"Push":{"Chest press Hammer":{"S3":"60×5 · 55×5 · 50×6","S4":"40×4 · 35×7 · 35×6","S5":"35×6 · 35×7 · 35×6","S6":"35×8 · 37.5×5 · 35×6","S7":"32.5×8 · 32.5×8 · 32.5×10","S8":"65×5 · 65×5 · 60×5"},"Développé militaire prise neutre":{"S3":"57×5 · 57×5","S4":"57×7 · 57×6","S5":"57×6 · 57×None","S6":"57×7 · 57×7","S7":"50×6 · 50×6","S8":"55×8 · 55×8"},"Élévations latérales (variante)":{"S3":"14×8 · 14×8 · 14×8","S4":"14×8 · 14×8 · 14×7","S5":"14×7 · 14×6 · 14×6","S6":"14×7 · 14×6 · 14×6","S7":"11.3×8 · 11.3×8 · 11.3×9","S8":"14×6 · 14×8 · 14×8"},"Extension triceps poulie":{"S3":"25×7 · 25×5","S4":"25×5 · 25×5","S5":"25×6 · 25×6","S6":"27×6 · 25×7","S7":"23×8 · 23×7","S8":"23×8 · 23×6"},"Pec fly machine":{"S3":"93×8 · 100×6 · 100×8","S4":"93×9 · 93×7 · 93×7","S5":"100×6 · 100×6 · 9×7","S6":"86×10 · 93×8 · 93×8","S7":"86×6 · 86×7 · 86×7","S8":"100×9 · 93×6 · 93×7"}},"Upper":{"Chest press inclinée Hammer":{"S3":"50×7 · 50×6 · 50×5","S4":"50×4 · 45×6 · 45×6","S5":"50×8 · 50×7 · 50×6","S6":"50×7 · 50×7 · 50×5","S7":"38×6 · 38×5 · 36×6","S8":"50×6 · 50×7 · 50×5"},"Curl poulie":{"S3":"54×8 · 54×8","S4":"32.5×10 · 33.8×8","S5":"54×8 · 54×8","S6":"54×9 · 54×9","S7":"18×6 · 18×6","S8":"57×None · None×6"},"Élévations latérales poulie uni":{"S3":"14×7 · 14×7 · 14×6","S4":"40×5 · 35×7 · 37.5×6","S5":"11.3×8 · 11.3×8 · 14×5","S6":"14×8 · 14×7 · 14×7","S7":"42.5×6 · 42.5×5 · 40×6","S8":"14×8 · 14×8 · 14×8"},"Rowing appui poitrine":{"S3":"66×6 · 61.3×7 · 61.3×8","S4":"70×8 · 70×9 · 70×8","S5":"66×7 · 66×6 · 66×7","S6":"66×7 · 66×7 · 66×7","S7":"40×6 · 40×8 · 40×None","S8":"66×7 · 66×6 · 73×5"},"Tirage vertical prise large":{"S3":"84×7 · 84×7 · 77×8","S4":"90×9 · 100×6 · 90×9","S5":"84×7 · 84×7 · 84×7","S6":"84×7 · 84×7 · 77×7","S7":"90×8 · 100×6 · 100×6","S8":"90×6 · 84×7 · 77×7"}}},"notes":{"S1":{"Legs":"J’ai laissé la presse en dernier exo..😵","Pull":"Bonne sensation dos, malgré un tout petit peu trop de volume (une série en moins sur le rowing serai bien à mon avis) et rajouter une série de plus sur les biceps. Maya zain!"},"S3":{"Legs":"Retour du squat, je sens que je peux rapidement progresser. Chiant car il n’y a ni hacksquat ni une vraie presse pour les quad dans la salle😵.","Lower":"J’ai failli me blesser sur le premier exo en faisant les adducteurs… tu as des conseils pour l’échauffement legs?","Pull":"Il faut que je l’habitude au tirage horizontal poulie large car je n’arrive pas à déterminer mes charges.","Push":"Nouvelle salle, nouvelles machines donc charges nouvelles."},"S4":{"Legs":"45min de tapis en fin de chaque séance","Lower":"Je ne sais pas pourquoi mais à chaque fois que je fais les mollets les jours d’après j’ai mal au tendon d’Achille comme si il y avait de l’inflammation. Je ne sais pas si c’est normal…","Pull":"J’ai fait du curl pupitre au lieu de faire du curl haltère.","Upper":"Élévations latérales à la machine au lieu de faire poulie."},"S5":{"Legs":"J’ai fait une série de plus en backoff sur les mollets à 120","Push":"Premier jour de reverse!"},"S8":{"Legs":"Je suis passé sur la smith pour faire du squat.","Lower":"J’ai baissé la charge sur la deuxième série de rdl parceque je suis une pute.","Pull":"J’ai envoyé la purée god damn","Push":"J’ai fais du bench à la smith au lieu de faire les haltères aujourd’hui pour éviter d’aggraver mon poignet gauche.\n\nJ’ai baissé la charge sur les deux dernières séries de pec fly et j’ai bombé les pecs pour mieux les cibler😉","Upper":"Je suis légèrement nerf sur mon exo de poussée a cause du poignet…"},"S7":{"Lower":"La fatigue est présente😵","Push":"Mes séances push je fais les haltères en exo 1"},"S6":{"Pull":"J’ai fais une série de plus pour les biceps et j’ai changé de machine pour faire le tirage horizontal prise large."}},"poids":{"S6":69.4,"S7":70,"S8":69.7,"S4":69.6,"S5":70},"cal":{"S6":2700,"S7":2850,"S8":3000}};
+
+function numSem(w){ const m=String(w).match(/(\d+)/); return m?+m[1]:99; }
+
+function buildHisto(){
+  const box=document.getElementById('histo-body'); if(!box) return;
+  let h='';
+
+  /* Poids et calories, semaine par semaine */
+  const sems=[...new Set([...Object.keys(HISTO.poids),...Object.keys(HISTO.cal)])].sort((a,b)=>numSem(a)-numSem(b));
+  if(sems.length){
+    h+='<div class="h-sea">Poids et calories</div><div class="h-tl">';
+    sems.forEach(w=>{
+      h+=`<div class="c"><div class="w">${w}</div><div class="p">${HISTO.poids[w]!==undefined?HISTO.poids[w]:'—'}</div><div class="k">${HISTO.cal[w]!==undefined?HISTO.cal[w]+' kcal':'kg'}</div></div>`;
+    });
+    h+='</div>';
+  }
+
+  /* Perfs, séance par séance */
+  Object.keys(HISTO.perf).sort().forEach(sea=>{
+    h+=`<div class="h-sea">${sea}</div>`;
+    Object.keys(HISTO.perf[sea]).sort().forEach(exo=>{
+      const d=HISTO.perf[sea][exo];
+      const ws=Object.keys(d).sort((a,b)=>numSem(a)-numSem(b));
+      /* meilleure charge vue sur l'exercice */
+      let best=0;
+      ws.forEach(w=>String(d[w]).split('·').forEach(t=>{const v=parseFloat(t); if(!isNaN(v)&&v>best) best=v;}));
+      h+=`<div class="h-exo"><div class="n">${exo}</div>`;
+      if(best>0) h+=`<div class="h-best">Charge la plus lourde : ${best} kg</div>`;
+      h+='<div class="h-grid">';
+      ws.forEach(w=>{ h+=`<div class="h-row"><div class="w">${w}</div><div class="v">${d[w]||'—'}</div></div>`; });
+      h+='</div></div>';
+    });
+  });
+
+  /* Notes de séance, dans l'ordre des semaines */
+  const nw=Object.keys(HISTO.notes).sort((a,b)=>numSem(a)-numSem(b));
+  if(nw.length){
+    h+='<div class="h-sea">Ce que tu avais noté</div>';
+    nw.forEach(w=>Object.keys(HISTO.notes[w]).sort().forEach(sea=>{
+      h+=`<div class="h-note"><b>${w} · ${sea}</b><br>${HISTO.notes[w][sea].replace(/</g,'&lt;')}</div>`;
+    }));
+  }
+  box.innerHTML=h;
+}
+
 seedDataMax();
 buildWeekSelector();
 buildSessions();
@@ -925,6 +992,20 @@ loadAll();
 loadCorpPoids();
 loadCorpMens();
 </script>
+
+<div class="session" id="session-histo">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--gold)">Cycle précédent</div>
+    <div class="session-title">HISTORIQUE</div>
+    <div class="session-sub">Tes 8 premières semaines, en lecture seule. Rien ici ne se modifie et rien n'est envoyé au coach.</div>
+  </div>
+  <div class="prog-rule">
+    <b>À quoi ça sert.</b> Retrouver tes charges quand tu reprends un mouvement.<br>
+    <b>Attention aux salles.</b> Tu as changé de salle en semaine 3, et les machines ne sont pas étalonnées pareil d'une salle à l'autre. Compare les semaines entre elles, pas une salle à l'autre, et refais un calibrage sur une machine que tu ne connais pas.
+  </div>
+  <div id="histo-body"></div>
+  <div class="spacer"></div>
+</div>
 
 <!-- Chronomètre de repos -->
 <div id="rest-chrono">
