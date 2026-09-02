@@ -31,14 +31,12 @@
     -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   }
   :focus-visible { outline:2px solid var(--red-line); outline-offset:1px; }
-
   .header { padding:24px 16px 16px; border-bottom:1px solid var(--border); display:flex; align-items:flex-end; justify-content:space-between; position:sticky; top:0; background:linear-gradient(var(--black),rgba(10,9,8,0.9)); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:100; }
   .eyebrow { font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--red); margin-bottom:4px; font-weight:500; }
   h1 { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:0.04em; line-height:1; }
   h1 span { color:var(--red); }
   .cycle-badge { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); text-align:right; line-height:1.5; }
   .cycle-badge strong { color:var(--gold); font-weight:500; display:block; font-size:11px; letter-spacing:0.06em; }
-
   .week-selector { display:flex; gap:6px; padding:12px; background:var(--dark); border-bottom:1px solid var(--border); position:sticky; top:69px; z-index:99; overflow-x:auto; scrollbar-width:none; }
   .week-selector::-webkit-scrollbar { display:none; }
   .week-btn { flex:0 0 auto; min-width:46px; padding:9px 0; border-radius:4px; font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.06em; cursor:pointer; border:1px solid var(--border); background:var(--card); color:var(--muted); transition:color .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease); text-align:center; }
@@ -46,7 +44,6 @@
   .week-btn.active { background:var(--red-dim); border-color:var(--red-line); color:var(--red); }
   .week-btn .wk-fill { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:3px; vertical-align:middle; opacity:0; transition:opacity .2s; }
   .week-btn.has-data .wk-fill { opacity:1; }
-
   .tabs { display:flex; overflow-x:auto; padding:12px 12px 0; gap:6px; scrollbar-width:none; border-bottom:1px solid var(--border); }
   .tabs::-webkit-scrollbar { display:none; }
   .tab { flex-shrink:0; padding:8px 13px; border-radius:4px 4px 0 0; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; border:1px solid var(--border); border-bottom:none; background:transparent; color:var(--muted); font-family:inherit; text-align:center; line-height:1.35; transition:color .18s, background .18s, border-color .18s; }
@@ -59,7 +56,6 @@
   .tab.active-corp { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); box-shadow:inset 0 2px 0 var(--gold); }
   .tab.active-bilan { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); box-shadow:inset 0 2px 0 var(--gold); }
   .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:4px; vertical-align:middle; }
-
   .session { display:none; padding:0 16px; }
   .session.visible { display:block; }
   .session-header { padding:16px 0 12px; border-bottom:1px solid var(--border); margin-bottom:4px; }
@@ -68,7 +64,6 @@
   .session-title { font-family:'Bebas Neue',sans-serif; font-size:23px; letter-spacing:0.05em; line-height:1; }
   .session-week-pill { display:inline-block; font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); background:var(--gold-dim); padding:2px 8px; border-radius:3px; margin-left:8px; vertical-align:middle; }
   .session-sub { font-size:11px; color:var(--muted); margin-top:4px; font-weight:300; }
-
   .exo-card { margin-top:10px; background:var(--card); border:1px solid var(--border); border-radius:5px; overflow:hidden; }
   .exo-card.adapted { border-left:2px solid var(--orange); }
   .exo-top { padding:11px 14px 8px; display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
@@ -81,10 +76,8 @@
   .pr-badge b { color:var(--gold); }
   .exo-prescription { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.05em; white-space:nowrap; flex-shrink:0; }
   .pres-upper-a { color:var(--red); } .pres-lower-a { color:var(--blue); } .pres-upper-b { color:var(--purple); } .pres-lower-b { color:var(--teal); } .pres-upper-c { color:var(--green); }
-
   .last-week-ref { font-size:9px; color:var(--muted); padding:0 14px 6px; font-style:italic; letter-spacing:0.03em; }
   .last-week-ref b { color:var(--white); font-style:normal; font-weight:400; }
-
   .col-header { display:grid; grid-template-columns:30px 1fr 1fr 1fr 38px; padding:6px 0 4px; border-top:1px solid var(--border); }
   .col-h { font-size:8px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted2); text-align:center; }
   .series-rows { display:flex; flex-direction:column; }
@@ -104,26 +97,22 @@
   .check-btn { width:23px; height:23px; border-radius:50%; border:1px solid var(--muted2); background:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:11px; color:transparent; transition:transform .16s var(--ease), background .16s, border-color .16s, box-shadow .16s; }
   .check-btn:active { transform:scale(0.86); }
   .check-btn.checked { background:var(--green); border-color:var(--green); color:#04140c; box-shadow:0 0 0 3px var(--green-dim); }
-
   .note-area { margin-top:10px; background:var(--card); border:1px solid var(--border); border-radius:5px; overflow:hidden; }
   .note-label { font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); padding:8px 14px 6px; border-bottom:1px solid var(--border); }
   .note-input { width:100%; background:none; border:none; color:var(--white); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:300; padding:10px 14px; resize:none; outline:none; line-height:1.6; min-height:56px; font-style:italic; }
   .note-input::placeholder { color:var(--muted2); }
-
   .save-btn { margin-top:16px; width:100%; padding:14px; background:var(--red); color:#fff; border:none; border-radius:4px; font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.15em; cursor:pointer; box-shadow:0 6px 22px rgba(230,50,50,0.18); transition:transform .12s var(--ease), background .2s, box-shadow .2s; }
   .save-btn:active { transform:translateY(1px); }
   .save-btn.saved { background:var(--green); box-shadow:0 6px 22px rgba(62,184,122,0.22); }
   .reset-btn { margin-top:8px; width:100%; padding:10px; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:4px; font-family:'DM Sans',sans-serif; font-size:11px; cursor:pointer; transition:color .18s, border-color .18s; }
   .reset-btn:hover { color:var(--white); border-color:#352b2a; }
   .spacer { height:16px; }
-
   .corp-section-title { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin:18px 0 4px; padding-bottom:6px; border-bottom:1px solid var(--border); }
   .poids-row { display:grid; grid-template-columns:54px 1fr 1fr 1.4fr; align-items:center; border-bottom:1px solid var(--line-soft); }
   .poids-row:last-child { border-bottom:none; }
   .mens-row { display:grid; align-items:center; border-bottom:1px solid var(--line-soft); }
   .mens-row:last-child { border-bottom:none; }
   .mens-label { font-size:11px; color:var(--white); padding:11px 8px; border-right:1px solid var(--line-soft); }
-
   /* Bilan hebdo */
   .bilan-intro { margin-top:14px; padding:14px 16px; background:var(--gold-dim); border:1px solid rgba(201,168,76,0.3); border-radius:5px; font-size:12px; color:#cbb87a; font-weight:300; line-height:1.6; }
   .bilan-intro b { color:var(--gold); font-weight:500; }
@@ -137,8 +126,6 @@
   .bilan-txt::placeholder { color:var(--muted2); font-style:italic; }
   .bilan-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
   .bilan-grid .bilan-field { margin-top:0; }
-
-
   /* ---------- Chronomètre de repos ---------- */
   .rest-chip { margin-top:6px; font-family:'DM Sans',sans-serif; font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:4px 9px; border-radius:3px; background:var(--red-dim); color:var(--red); border:1px solid rgba(230,50,50,0.25); line-height:1.4; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:background 0.15s, transform 0.1s; }
   .rest-chip:hover { background:rgba(230,50,50,0.16); }
@@ -162,17 +149,14 @@
 </style>
 </head>
 <body>
-
 <div class="header">
   <div>
     <div class="eyebrow">Suivi d'entraînement</div>
     <h1>LÉO<span>.</span></h1>
   </div>
-  <div class="cycle-badge">Cycle de 8 semaines<strong id="cycle-label">Upper · Lower</strong></div>
+  <div class="cycle-badge">Cycle de 13 semaines<strong id="cycle-label">Upper · Lower</strong></div>
 </div>
-
 <div class="week-selector" id="week-selector"></div>
-
 <div class="tabs">
   <button class="tab active-upper-a" id="tab-upper-a" onclick="switchTab('upper-a')">Upper A<br><span style="font-size:8px;color:var(--muted)">Poussée</span></button>
   <button class="tab" id="tab-lower-a" onclick="switchTab('lower-a')">Lower A<br><span style="font-size:8px;color:var(--muted)">Jambes</span></button>
@@ -182,7 +166,6 @@
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
 </div>
-
 <div id="sessions-container"></div>
 
 <!-- BILAN HEBDO -->
@@ -192,21 +175,17 @@
     <div class="session-title">BILAN<span class="session-week-pill" id="pill-bilan">Semaine 1</span></div>
     <div class="session-sub">À remplir chaque dimanche. Sois honnête, c'est comme ça que j'ajuste.</div>
   </div>
-
   <div class="bilan-intro">
     <b>C'est toi qui m'envoies ton bilan chaque dimanche.</b> Je ne viens pas le réclamer. Tu remplis tout ici, tu enregistres, et tu m'envoies un message pour me dire que c'est fait. Ta régularité fait partie du suivi. Et si tu veux, envoie-moi des vidéos de tes exercices avec ton bilan : c'est un vrai plus pour que je corrige ta technique, mais pas une obligation.
   </div>
-
   <div class="bilan-field">
     <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">matin à jeun</span></div>
     <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-poids" oninput="saveBilan('poids',this.value)">
   </div>
-
   <div class="bilan-field">
     <div class="bilan-label">Calories moyennes <span class="bilan-scale-hint">kcal / jour, moyenne de la semaine</span></div>
     <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-calories" oninput="saveBilan('calories',this.value)">
   </div>
-
   <div class="bilan-grid">
     <div class="bilan-field">
       <div class="bilan-label">Nutrition tenue <span class="bilan-scale-hint">1 à 10</span></div>
@@ -225,27 +204,22 @@
       <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-fatigue" oninput="saveBilan('fatigue',this.value)">
     </div>
   </div>
-
   <div class="bilan-field">
     <div class="bilan-label">Ressenti des séances</div>
     <textarea class="bilan-txt" id="bilan-ressenti" placeholder="Ce qui s'est bien passé, tes sensations, les exos où tu t'es senti fort..." oninput="saveBilan('ressenti',this.value)"></textarea>
   </div>
-
   <div class="bilan-field">
     <div class="bilan-label">Difficultés / douleurs</div>
     <textarea class="bilan-txt" id="bilan-difficultes" placeholder="Exos qui coincent, douleurs (genou, épaule...), séances manquées et pourquoi..." oninput="saveBilan('difficultes',this.value)"></textarea>
   </div>
-
   <div class="bilan-field">
     <div class="bilan-label">Modifications à apporter</div>
     <textarea class="bilan-txt" id="bilan-modifs" placeholder="Ce que tu aimerais changer ou ajuster dans le programme..." oninput="saveBilan('modifs',this.value)"></textarea>
   </div>
-
   <div class="bilan-field">
     <div class="bilan-label">Question pour le coach</div>
     <textarea class="bilan-txt" id="bilan-question" placeholder="Une question, un doute, autre chose à me dire..." oninput="saveBilan('question',this.value)"></textarea>
   </div>
-
   <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveBilanComplet()">ENREGISTRER LE BILAN</button>
   <div class="spacer"></div>
 </div>
@@ -257,7 +231,6 @@
     <div class="session-title">CORPS — SUIVI</div>
     <div class="session-sub">Poids 1×/sem, matin à jeun, mêmes conditions. Mensurations 1×/mois, sur la semaine choisie en haut. On regarde la tendance.</div>
   </div>
-
   <div class="corp-section-title">Poids (chaque semaine)</div>
   <div class="exo-card">
     <div class="col-header" style="grid-template-columns:54px 1fr 1fr 1.4fr">
@@ -265,7 +238,6 @@
     </div>
     <div class="series-rows" id="poids-rows"></div>
   </div>
-
   <div class="corp-section-title">Mensurations (cm)</div>
   <div class="exo-card">
     <div class="col-header" style="grid-template-columns:1.3fr 1fr">
@@ -273,7 +245,6 @@
     </div>
     <div class="series-rows" id="mens-rows"></div>
   </div>
-
   <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveSession('corp')">ENREGISTRER</button>
   <button class="reset-btn" onclick="resetCorp()">Effacer le suivi corporel</button>
   <div class="spacer"></div>
@@ -282,8 +253,7 @@
 <script>
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
 const CLIENT_ID = "leo";
-
-const NB_SEMAINES = 8;
+const NB_SEMAINES = 13;
 
 const PROGRAMME = {
   'upper-a': {
@@ -346,7 +316,9 @@ const PROGRAMME = {
 const MENSURATIONS = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
 const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 const SESSIONS = Object.keys(PROGRAMME);
+
 let currentWeek = 1;
+let currentTab = 'upper-a';
 
 function getKey(s,exoIdx,serie,field,week){ return `${s}-e${exoIdx}-s${serie}-${field}-w${week}`; }
 
@@ -365,16 +337,19 @@ function showSyncStatus(ok){
   clearTimeout(syncStatusTimer);
   syncStatusTimer=setTimeout(()=>{ el.style.opacity='0'; },1800);
 }
+
 function syncToCloud(payload){
   if(!SYNC_URL) return;
   fetch(SYNC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
     .then(()=>{ showSyncStatus(true); }).catch(()=>{ showSyncStatus(false); });
 }
+
 const _syncTimers = {};
 function syncFieldDebounced(timerKey, payload){
   clearTimeout(_syncTimers[timerKey]);
   _syncTimers[timerKey] = setTimeout(()=>{ syncToCloud(payload); }, 600);
 }
+
 function syncField(session,exoIdx,exoName,serie,field,value,week){
   const timerKey = `${session}-e${exoIdx}-s${serie}-${field}-w${week}`;
   syncFieldDebounced(timerKey, {client:CLIENT_ID,type:'perf',week:week,session:session,exo:exoName,serie:serie,field:field,value:value,ts:new Date().toISOString()});
@@ -419,381 +394,294 @@ function buildSessions(){
           <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><div class="exo-repos">${exo.repos||''}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
-        <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
+        <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RIR</div><div class="col-h">✓</div></div>
         <div class="series-rows">`;
-      for(let s2=1;s2<=exo.series;s2++){
+      for(let sr=1;sr<=exo.series;sr++){
         html+=`<div class="serie-row">
-          <div class="serie-num">S${s2}</div>
+          <div class="serie-num">S${sr}</div>
           <div class="kg-wrap">
-            <input type="text" inputmode="decimal" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${sid}-e${ei}-s${s2}-kg" oninput="save('${sid}',${ei},'${en}',${s2},'kg',this.value)">
-            <button class="kbd-toggle" onclick="toggleKbd(this)" title="Basculer clavier texte">✎</button>
+            <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="${getKey(sid,ei,sr,'kg',1)}" oninput="onInputPerf('${sid}',${ei},'${en}',${sr},'kg',this.value)">
+            <button type="button" class="kbd-toggle" onclick="toggleKbd(this)" title="Basculer clavier texte">⌨</button>
           </div>
-          <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${sid}-e${ei}-s${s2}-reps" oninput="save('${sid}',${ei},'${en}',${s2},'reps',this.value)">
-          <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input rir" placeholder="—" id="${sid}-e${ei}-s${s2}-rir" oninput="save('${sid}',${ei},'${en}',${s2},'rir',this.value)">
-          <div class="serie-check"><button class="check-btn" id="chk-${sid}-e${ei}-s${s2}" onclick="toggleCheck('${sid}',${ei},${s2})"></button></div>
+          <input type="text" inputmode="numeric" class="serie-input" placeholder="—" id="${getKey(sid,ei,sr,'reps',1)}" oninput="onInputPerf('${sid}',${ei},'${en}',${sr},'reps',this.value)">
+          <input type="text" inputmode="numeric" class="serie-input rir" placeholder="—" id="${getKey(sid,ei,sr,'rir',1)}" oninput="onInputPerf('${sid}',${ei},'${en}',${sr},'rir',this.value)">
+          <div class="serie-check"><button class="check-btn" id="${getKey(sid,ei,sr,'chk',1)}" onclick="toggleCheck('${sid}',${ei},'${en}',${sr})">✓</button></div>
         </div>`;
       }
       html+=`</div></div>`;
     });
-    html+=`<div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-${sid}">Semaine 1</span></div><textarea class="note-input" id="note-${sid}" placeholder="Si tu changes un exercice, note-le ici. Douleur genou ou épaule sur un exo, note-le aussi. Ressenti, ajustements..."></textarea></div>
-      <button class="save-btn" onclick="saveSession('${sid}')">ENREGISTRER LA SÉANCE</button>
-      <button class="reset-btn" onclick="resetSession('${sid}')">Effacer cette séance (semaine en cours)</button>
-      <div class="spacer"></div></div>`;
+    html+=`<div class="note-area">
+      <div class="note-label">Notes de séance</div>
+      <textarea class="note-input" id="${sid}-note-w1" placeholder="Sensations, douleurs, matériel..." oninput="onInputNote('${sid}',this.value)"></textarea>
+    </div>
+    <button class="save-btn" onclick="saveSession('${sid}')">ENREGISTRER LA SÉANCE</button>
+    <button class="reset-btn" onclick="resetSession('${sid}')">Effacer la séance S<span class="rst-wk">1</span></button>
+    <div class="spacer"></div>
+    </div>`;
   });
   container.innerHTML=html;
 }
 
-function save(session,exoIdx,exoName,serie,field,value){
-  localStorage.setItem(getKey(session,exoIdx,serie,field,currentWeek),value);
-  syncField(session,exoIdx,exoName,serie,field,value,currentWeek);
-  if(field==='kg') updatePR(session,exoIdx);
-  updateWeekFills();
-}
-
-function loadAll(){
-  SESSIONS.forEach(sid=>{
-    PROGRAMME[sid].exos.forEach((exo,ei)=>{
-      for(let s=1;s<=exo.series;s++){
-        ['kg','reps','rir'].forEach(f=>{
-          const el=document.getElementById(`${sid}-e${ei}-s${s}-${f}`);
-          if(el) el.value=localStorage.getItem(getKey(sid,ei,s,f,currentWeek))||'';
-        });
-        const chk=localStorage.getItem(getKey(sid,ei,s,'chk',currentWeek))==='1';
-        const chkEl=document.getElementById(`chk-${sid}-e${ei}-s${s}`);
-        if(chkEl){chkEl.className='check-btn'+(chk?' checked':'');chkEl.textContent=chk?'✓':'';}
-      }
-      updateRef(sid,ei);
-      updatePR(sid,ei);
-    });
-    const noteEl=document.getElementById(`note-${sid}`);
-    if(noteEl) noteEl.value=localStorage.getItem(`${sid}-note-w${currentWeek}`)||'';
-  });
-  loadBilan();
-  updateWeekFills();
-}
-
-function updatePR(session,exoIdx){
-  const exo=PROGRAMME[session].exos[exoIdx];
-  let best=null, bestReps=null;
+function buildCorp(){
+  let htmlPoids='';
   for(let w=1;w<=NB_SEMAINES;w++){
-    for(let s=1;s<=exo.series;s++){
-      const kg=parseFloat((localStorage.getItem(getKey(session,exoIdx,s,'kg',w))||'').replace(',','.'));
-      const reps=localStorage.getItem(getKey(session,exoIdx,s,'reps',w))||'';
-      if(!isNaN(kg)&&kg>0){
-        if(best===null || kg>best){ best=kg; bestReps=reps; }
-        else if(kg===best){
-          const nr=parseFloat(String(reps).replace(',','.'));
-          const br=parseFloat(String(bestReps).replace(',','.'));
-          if(!isNaN(nr)&&(isNaN(br)||nr>br)) bestReps=reps;
-        }
-      }
-    }
+    htmlPoids+=`<div class="poids-row">
+      <div class="serie-num">S${w}</div>
+      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="poids-w${w}" oninput="saveCorpPoids(${w})">
+      <div class="serie-num" id="poids-diff-w${w}" style="font-size:11px">—</div>
+      <input type="text" class="serie-input" style="text-align:left;padding-left:8px;font-size:11px" placeholder="Remarque..." id="poids-rem-w${w}" oninput="saveCorpPoidsRem(${w})">
+    </div>`;
   }
-  const el=document.getElementById(`pr-${session}-e${exoIdx}`);
-  if(el){
-    if(best!==null){ el.innerHTML=`PR : <b>${best} kg${bestReps?(' × '+bestReps):''}</b>`; }
-    else { el.innerHTML=''; }
-  }
-}
+  document.getElementById('poids-rows').innerHTML=htmlPoids;
 
-function updateRef(session,exoIdx){
-  const refEl=document.getElementById(`ref-${session}-e${exoIdx}`);
-  if(!refEl) return;
-  if(currentWeek===1){ refEl.innerHTML=''; return; }
-  const prevWeek=currentWeek-1;
-  const exo=PROGRAMME[session].exos[exoIdx];
-  let parts=[];
-  for(let s=1;s<=exo.series;s++){
-    const kg=localStorage.getItem(getKey(session,exoIdx,s,'kg',prevWeek))||'';
-    const reps=localStorage.getItem(getKey(session,exoIdx,s,'reps',prevWeek))||'';
-    if(kg!=='' || reps!==''){ parts.push(`${kg||'?'}×${reps||'?'}`); }
-  }
-  refEl.innerHTML = parts.length>0 ? `Semaine ${prevWeek} : <b>${parts.join('  ·  ')}</b>` : '';
-}
-
-function toggleCheck(session,exoIdx,serie){
-  const key=getKey(session,exoIdx,serie,'chk',currentWeek);
-  const cur=localStorage.getItem(key)==='1';
-  localStorage.setItem(key,cur?'0':'1');
-  const btn=document.getElementById(`chk-${session}-e${exoIdx}-s${serie}`);
-  if(!cur){btn.classList.add('checked');btn.textContent='✓';} else {btn.classList.remove('checked');btn.textContent='';}
-  const exoName=PROGRAMME[session].exos[exoIdx].nom;
-  syncField(session,exoIdx,exoName,serie,'chk',cur?'0':'1',currentWeek);
-  updateWeekFills();
-}
-
-function saveSession(session){
-  if(session==='corp'){ /* sauvé au fil de l'eau */ }
-  else {
-    const noteEl=document.getElementById(`note-${session}`);
-    if(noteEl){ localStorage.setItem(`${session}-note-w${currentWeek}`,noteEl.value);
-      syncToCloud({client:CLIENT_ID,type:'note',session:session,week:currentWeek,value:noteEl.value,ts:new Date().toISOString()}); }
-  }
-  const btn=event.target; const orig=btn.textContent;
-  btn.textContent='ENREGISTRÉ ✓'; btn.classList.add('saved');
-  setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
-}
-
-function resetSession(session){
-  if(!confirm(`Effacer les données de cette séance pour la semaine ${currentWeek} ?`)) return;
-  PROGRAMME[session].exos.forEach((exo,ei)=>{
-    for(let s=1;s<=exo.series;s++){
-      ['kg','reps','rir','chk'].forEach(f=>localStorage.removeItem(getKey(session,ei,s,f,currentWeek)));
-    }
+  let htmlMens='';
+  MENSURATIONS.forEach((m,i)=>{
+    htmlMens+=`<div class="mens-row" style="grid-template-columns:1.3fr 1fr">
+      <div class="mens-label">${m}</div>
+      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="mens-m${i}-w1" oninput="saveCorpMens(${i})">
+    </div>`;
   });
-  localStorage.removeItem(`${session}-note-w${currentWeek}`);
-  loadAll();
+  document.getElementById('mens-rows').innerHTML=htmlMens;
 }
 
-/* ===== BILAN HEBDO ===== */
-function saveBilan(field,value){
-  localStorage.setItem(`bilan-${field}-w${currentWeek}`,value);
-  syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
-}
-function loadBilan(){
-  BILAN_FIELDS.forEach(f=>{
-    const el=document.getElementById(`bilan-${f}`);
-    if(el) el.value=localStorage.getItem(`bilan-${f}-w${currentWeek}`)||'';
+function switchWeek(w){
+  currentWeek=w;
+  document.querySelectorAll('.week-btn').forEach(b=>{
+    b.classList.toggle('active', parseInt(b.dataset.week)===w);
   });
-  const pill=document.getElementById('pill-bilan');
-  if(pill) pill.textContent=`Semaine ${currentWeek}`;
+  document.querySelectorAll('.session-week-pill').forEach(p=>p.textContent=`Semaine ${w}`);
+  document.querySelectorAll('.rst-wk').forEach(p=>p.textContent=w);
+  document.getElementById('mens-week-h').textContent=`Semaine ${w}`;
+  loadWeekData(w);
 }
+
+function switchTab(tabId){
+  currentTab=tabId;
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.className='tab';
+    if(t.id===`tab-${tabId}`) t.classList.add(`active-${tabId}`);
+  });
+  document.querySelectorAll('.session').forEach(s=>{
+    s.classList.toggle('visible', s.id===`session-${tabId}`);
+  });
+}
+
+function onInputPerf(sid,ei,en,sr,field,val){
+  const k=getKey(sid,ei,sr,field,currentWeek);
+  localStorage.setItem(k,val);
+  syncField(sid,ei,en,sr,field,val,currentWeek);
+}
+
+function toggleCheck(sid,ei,en,sr){
+  const btn=document.getElementById(getKey(sid,ei,sr,'chk',currentWeek));
+  if(!btn) return;
+  const isC=btn.classList.toggle('checked');
+  const val=isC?'1':'0';
+  localStorage.setItem(getKey(sid,ei,sr,'chk',currentWeek),val);
+  syncField(sid,ei,en,sr,'chk',val,currentWeek);
+}
+
+function onInputNote(sid,val){
+  const k=`${sid}-note-w${currentWeek}`;
+  localStorage.setItem(k,val);
+}
+
+function saveBilan(field,val){
+  localStorage.setItem(`bilan-${field}-w${currentWeek}`,val);
+}
+
 function saveBilanComplet(){
   BILAN_FIELDS.forEach(f=>{
     const el=document.getElementById(`bilan-${f}`);
-    if(el && el.value!==''){
-      syncToCloud({client:CLIENT_ID,type:'bilan',field:f,week:currentWeek,value:el.value,ts:new Date().toISOString()});
-    }
+    if(el) localStorage.setItem(`bilan-${f}-w${currentWeek}`,el.value);
   });
-  const btn=event.target; const orig=btn.textContent;
-  btn.textContent='BILAN ENREGISTRÉ ✓'; btn.classList.add('saved');
-  setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
+  syncToCloud({client:CLIENT_ID,type:'bilan',week:currentWeek,ts:new Date().toISOString()});
+  showSaveAnim(document.querySelector('#session-bilan .save-btn'));
 }
 
-function weekHasData(week){
-  for(const sid of SESSIONS){
-    const exos=PROGRAMME[sid].exos;
-    for(let ei=0;ei<exos.length;ei++){
-      for(let s=1;s<=exos[ei].series;s++){
-        if((localStorage.getItem(getKey(sid,ei,s,'kg',week))||'')!=='') return true;
-        if((localStorage.getItem(getKey(sid,ei,s,'reps',week))||'')!=='') return true;
-        if(localStorage.getItem(getKey(sid,ei,s,'chk',week))==='1') return true;
-      }
-    }
-  }
-  return false;
-}
-function updateWeekFills(){
-  document.querySelectorAll('.week-btn').forEach(btn=>{
-    const w=parseInt(btn.dataset.week);
-    if(weekHasData(w)) btn.classList.add('has-data'); else btn.classList.remove('has-data');
-  });
+function saveCorpPoids(w){
+  const v=document.getElementById(`poids-w${w}`).value;
+  localStorage.setItem(`corp-poids-w${w}`,v);
+  updatePoidsDiffs();
 }
 
-function switchWeek(week){
-  currentWeek=week;
-  document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelector(`.week-btn[data-week="${week}"]`).classList.add('active');
-  SESSIONS.forEach(sid=>{
-    const pill=document.getElementById(`pill-${sid}`); if(pill) pill.textContent=`Semaine ${week}`;
-    const nl=document.getElementById(`notelabel-${sid}`); if(nl) nl.textContent=`Semaine ${week}`;
-  });
-  loadAll(); loadCorpMens();
+function saveCorpPoidsRem(w){
+  const v=document.getElementById(`poids-rem-w${w}`).value;
+  localStorage.setItem(`corp-poids-rem-w${w}`,v);
 }
 
-function switchTab(id){
-  document.querySelectorAll('.session').forEach(s=>s.classList.remove('visible'));
-  document.querySelectorAll('.tab').forEach(t=>t.className='tab');
-  document.getElementById(`session-${id}`).classList.add('visible');
-  document.getElementById(`tab-${id}`).className=`tab active-${id}`;
-  document.getElementById('week-selector').style.display='flex';
-  window.scrollTo(0,0);
+function saveCorpMens(i){
+  const v=document.getElementById(`mens-m${i}-w${currentWeek}`).value;
+  localStorage.setItem(`corp-mens-m${i}-w${currentWeek}`,v);
 }
 
-/* ===== CORPOREL ===== */
-function buildPoids(){
-  const c=document.getElementById('poids-rows'); let html='';
+function updatePoidsDiffs(){
   for(let w=1;w<=NB_SEMAINES;w++){
-    html+=`<div class="poids-row">
-      <div class="serie-num">S${w}</div>
-      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cpoids-w${w}" oninput="saveCorpField('poids',${w},this.value)">
-      <div class="serie-input" id="cdelta-w${w}" style="border-right:1px solid #131313;color:var(--muted)">—</div>
-      <input type="text" inputmode="text" autocapitalize="off" class="serie-input" placeholder="—" id="crem-w${w}" style="border-right:none;font-size:11px" oninput="saveCorpField('rem',${w},this.value)">
-    </div>`;
-  }
-  c.innerHTML=html;
-}
-function semKey(w){ return 's' + (w<10 ? '0'+w : w); }
-function buildMens(){
-  const c=document.getElementById('mens-rows'); let html='';
-  MENSURATIONS.forEach((z,i)=>{
-    html+=`<div class="mens-row" style="grid-template-columns:1.3fr 1fr"><div class="mens-label">${z}</div>`
-       +  `<input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cmens-${i}" style="border-right:none" oninput="saveMensSemaine(${i},this.value)"></div>`;
-  });
-  c.innerHTML=html;
-}
-function saveMensSemaine(i,value){ saveCorpField(`mens-${i}-${semKey(currentWeek)}`, 0, value); }
-function saveCorpField(field,w,value){
-  const key = w>0 ? `corp-${field}-w${w}` : `corp-${field}`;
-  localStorage.setItem(key,value);
-  syncFieldDebounced(key, {client:CLIENT_ID,type:'corp',field:field,week:(w>0?w:'-'),value:value,ts:new Date().toISOString()});
-  if(field==='poids') loadCorpPoids();
-}
-function loadCorpPoids(){
-  let prev=null;
-  for(let w=1;w<=12;w++){
-    const val=localStorage.getItem(`corp-poids-w${w}`)||'';
-    const el=document.getElementById(`cpoids-w${w}`);
-    const dEl=document.getElementById(`cdelta-w${w}`);
-    if(el) el.value=val;
-    const rem=localStorage.getItem(`corp-rem-w${w}`)||'';
-    const remEl=document.getElementById(`crem-w${w}`); if(remEl) remEl.value=rem;
-    if(dEl){
-      const valN=parseFloat(String(val).replace(',','.')), prevN=parseFloat(String(prev).replace(',','.'));
-      if(!isNaN(valN)&&!isNaN(prevN)){
-        const d=valN-prevN; dEl.textContent=(d>0?'+':'')+d.toFixed(1);
-        dEl.style.color = d>0?'var(--red)':d<0?'var(--green)':'var(--muted)';
-      } else { dEl.textContent='—'; dEl.style.color='var(--muted)'; }
+    const cur=parseFloat(localStorage.getItem(`corp-poids-w${w}`));
+    const prev=parseFloat(localStorage.getItem(`corp-poids-w${w-1}`));
+    const diffEl=document.getElementById(`poids-diff-w${w}`);
+    if(diffEl){
+      if(!isNaN(cur) && !isNaN(prev)){
+        const diff=(cur-prev).toFixed(1);
+        diffEl.textContent=(diff>0?`+${diff}`:diff)+' kg';
+        diffEl.style.color=diff>0?'var(--orange)':'var(--green)';
+      } else {
+        diffEl.textContent='—';
+        diffEl.style.color='var(--muted2)';
+      }
     }
-    if(val!=='') prev=val;
   }
 }
-function loadCorpMens(){
-  MENSURATIONS.forEach((z,i)=>{
-    const el=document.getElementById(`cmens-${i}`);
-    if(el) el.value=localStorage.getItem(`corp-mens-${i}-${semKey(currentWeek)}`)||'';
+
+function loadWeekData(w){
+  SESSIONS.forEach(sid=>{
+    const s=PROGRAMME[sid];
+    s.exos.forEach((exo,ei)=>{
+      for(let sr=1;sr<=exo.series;sr++){
+        ['kg','reps','rir'].forEach(f=>{
+          const input=document.getElementById(getKey(sid,ei,sr,f,w));
+          if(input) input.value=localStorage.getItem(getKey(sid,ei,sr,f,w))||'';
+        });
+        const chkBtn=document.getElementById(getKey(sid,ei,sr,'chk',w));
+        if(chkBtn){
+          chkBtn.classList.toggle('checked', localStorage.getItem(getKey(sid,ei,sr,'chk',w))==='1');
+        }
+      }
+    });
+    const noteArea=document.getElementById(`${sid}-note-w${w}`);
+    if(noteArea) noteArea.value=localStorage.getItem(`${sid}-note-w${w}`)||'';
   });
-  const h=document.getElementById('mens-week-h');
-  if(h) h.textContent=`Semaine ${currentWeek}`;
+
+  BILAN_FIELDS.forEach(f=>{
+    const el=document.getElementById(`bilan-${f}`);
+    if(el) el.value=localStorage.getItem(`bilan-${f}-w${w}`)||'';
+  });
+
+  MENSURATIONS.forEach((_,i)=>{
+    const el=document.getElementById(`mens-m${i}-w${w}`);
+    if(el) el.value=localStorage.getItem(`corp-mens-m${i}-w${w}`)||'';
+  });
 }
+
+function saveSession(sid){
+  const btn=document.querySelector(`#session-${sid} .save-btn`);
+  showSaveAnim(btn);
+  syncToCloud({client:CLIENT_ID,type:'session_complete',session:sid,week:currentWeek,ts:new Date().toISOString()});
+}
+
+function showSaveAnim(btn){
+  if(!btn) return;
+  const origTxt=btn.textContent;
+  btn.textContent='ENREGISTRÉ !';
+  btn.classList.add('saved');
+  setTimeout(()=>{
+    btn.textContent=origTxt;
+    btn.classList.remove('saved');
+  },1500);
+}
+
+function resetSession(sid){
+  if(!confirm(`Effacer les données de la séance pour la semaine ${currentWeek} ?`)) return;
+  const s=PROGRAMME[sid];
+  s.exos.forEach((exo,ei)=>{
+    for(let sr=1;sr<=exo.series;sr++){
+      ['kg','reps','rir','chk'].forEach(f=>{
+        localStorage.removeItem(getKey(sid,ei,sr,f,currentWeek));
+      });
+    }
+  });
+  localStorage.removeItem(`${sid}-note-w${currentWeek}`);
+  loadWeekData(currentWeek);
+}
+
 function resetCorp(){
-  if(!confirm('Effacer tout le suivi corporel ?')) return;
-  for(let w=1;w<=NB_SEMAINES;w++){ localStorage.removeItem(`corp-poids-w${w}`); localStorage.removeItem(`corp-rem-w${w}`); }
-  MENSURATIONS.forEach((z,i)=>{for(let w=1;w<=NB_SEMAINES;w++) localStorage.removeItem(`corp-mens-${i}-${semKey(w)}`);});
-  loadCorpPoids(); loadCorpMens();
+  if(!confirm("Effacer tout le suivi corporel ?")) return;
+  for(let w=1;w<=NB_SEMAINES;w++){
+    localStorage.removeItem(`corp-poids-w${w}`);
+    localStorage.removeItem(`corp-poids-rem-w${w}`);
+    MENSURATIONS.forEach((_,i)=>localStorage.removeItem(`corp-mens-m${i}-w${w}`));
+  }
+  location.reload();
 }
 
-document.addEventListener('input',e=>{
-  if(e.target.id && e.target.id.startsWith('note-')){
-    const session=e.target.id.replace('note-','');
-    if(PROGRAMME[session]) localStorage.setItem(`${session}-note-w${currentWeek}`,e.target.value);
+// Rest Chrono Manager
+const restChrono = {
+  sec: 0,
+  timer: null,
+  init() {
+    const div = document.createElement('div');
+    div.id = 'rest-chrono';
+    div.innerHTML = `
+      <div class="rc-top">
+        <span class="rc-label">Chronomètre de repos</span>
+        <button class="rc-close" onclick="restChrono.hide()">×</button>
+      </div>
+      <div class="rc-time" id="rc-display">00:00</div>
+      <div class="rc-controls">
+        <button class="rc-btn primary" id="rc-start-btn" onclick="restChrono.toggle()">DÉMARRER</button>
+        <button class="rc-btn" onclick="restChrono.reset()">RAZ</button>
+      </div>`;
+    document.body.appendChild(div);
+  },
+  show() { document.getElementById('rest-chrono').classList.add('visible'); },
+  hide() { this.stop(); document.getElementById('rest-chrono').classList.remove('visible'); },
+  startFor() {
+    this.show();
+    this.reset();
+    this.start();
+  },
+  toggle() {
+    if(this.timer) this.stop();
+    else this.start();
+  },
+  start() {
+    if(this.timer) return;
+    const btn = document.getElementById('rc-start-btn');
+    if(btn) btn.textContent = 'PAUSE';
+    document.getElementById('rc-display').classList.add('running');
+    this.timer = setInterval(() => {
+      this.sec++;
+      this.updateDisplay();
+    }, 1000);
+  },
+  stop() {
+    clearInterval(this.timer);
+    this.timer = null;
+    const btn = document.getElementById('rc-start-btn');
+    if(btn) btn.textContent = 'REPRENDRE';
+    document.getElementById('rc-display').classList.remove('running');
+  },
+  reset() {
+    this.stop();
+    this.sec = 0;
+    this.updateDisplay();
+    const btn = document.getElementById('rc-start-btn');
+    if(btn) btn.textContent = 'DÉMARRER';
+  },
+  updateDisplay() {
+    const m = String(Math.floor(this.sec / 60)).padStart(2, '0');
+    const s = String(this.sec % 60).padStart(2, '0');
+    document.getElementById('rc-display').textContent = `${m}:${s}`;
   }
+};
+
+window.addEventListener('DOMContentLoaded', ()=>{
+  buildWeekSelector();
+  buildSessions();
+  buildCorp();
+  restChrono.init();
+  
+  for(let w=1;w<=NB_SEMAINES;w++){
+    const v=localStorage.getItem(`corp-poids-w${w}`)||'';
+    const rem=localStorage.getItem(`corp-poids-rem-w${w}`)||'';
+    const inputP=document.getElementById(`poids-w${w}`);
+    const inputR=document.getElementById(`poids-rem-w${w}`);
+    if(inputP) inputP.value=v;
+    if(inputR) inputR.value=rem;
+  }
+  updatePoidsDiffs();
+  loadWeekData(1);
 });
-
-buildWeekSelector();
-buildSessions();
-buildPoids();
-buildMens();
-loadAll();
-loadCorpPoids();
-loadCorpMens();
 </script>
-
-<!-- Chronomètre de repos -->
-<div id="rest-chrono">
-  <div class="rc-top">
-    <span class="rc-label">Chrono repos</span>
-    <button class="rc-close" onclick="restChrono.hide()" aria-label="Fermer">×</button>
-  </div>
-  <div class="rc-time" id="rc-time">0:00</div>
-  <div class="rc-controls">
-    <button class="rc-btn primary" id="rc-toggle" onclick="restChrono.toggle()">Départ</button>
-    <button class="rc-btn" onclick="restChrono.reset()">Reset</button>
-  </div>
-</div>
-
-<script>
-/* ================= CHRONOMÈTRE DE REPOS ================= */
-/* Basé sur l'horloge + mémorisé : survit au passage en arrière-plan ET au
-   rechargement de l'onglet. Sur les iPhone avec peu de mémoire (12/13...),
-   iOS recharge la page Safari quand on la quitte — c'est ce qui remettait le
-   chrono à zéro. On stocke l'heure de départ pour reprendre pile où on en était. */
-const restChrono = (function(){
-  const LS_KEY = 'rest-chrono-state';
-  let elapsed=0, running=false, tick=null, startStamp=0, baseElapsed=0;
-
-  const box = () => document.getElementById('rest-chrono');
-  const timeEl = () => document.getElementById('rc-time');
-  const toggleBtn = () => document.getElementById('rc-toggle');
-  const isVisible = () => { const b=box(); return !!(b && b.classList.contains('visible')); };
-
-  function fmt(s){ const m=Math.floor(s/60); const r=s%60; return m+':'+String(r).padStart(2,'0'); }
-
-  function persist(){
-    try {
-      if(running || elapsed>0 || baseElapsed>0){
-        localStorage.setItem(LS_KEY, JSON.stringify({running, startStamp, baseElapsed, visible:isVisible()}));
-      } else {
-        localStorage.removeItem(LS_KEY);
-      }
-    } catch(e){}
-  }
-
-  function render(){
-    const t=timeEl(); if(!t) return;
-    t.textContent = fmt(elapsed);
-    t.classList.toggle('running', running);
-  }
-
-  function recompute(){ if(running) elapsed = baseElapsed + Math.round((Date.now()-startStamp)/1000); }
-  function loop(){ recompute(); render(); }
-  function startTick(){ clearInterval(tick); tick=setInterval(loop, 250); }
-
-  return {
-    open(){ box().classList.add('visible'); persist(); },
-    // lancé depuis le bouton "Repos" d'un exo : ouvre + repart de zéro + démarre
-    startFor(){
-      this.open();
-      elapsed=0; baseElapsed=0; startStamp=Date.now(); running=true;
-      toggleBtn().textContent='Stop';
-      render(); startTick(); persist();
-    },
-    toggle(){
-      if(running){
-        running=false; clearInterval(tick); tick=null;
-        recompute(); baseElapsed=elapsed;
-        toggleBtn().textContent='Reprendre';
-        render(); persist();
-      } else {
-        running=true; startStamp=Date.now();
-        toggleBtn().textContent='Stop';
-        startTick(); render(); persist();
-      }
-    },
-    reset(){
-      running=false; clearInterval(tick); tick=null;
-      elapsed=0; baseElapsed=0;
-      toggleBtn().textContent='Départ';
-      render(); persist();
-    },
-    hide(){ box().classList.remove('visible'); persist(); },
-    // rattrape l'affichage au retour d'arrière-plan (Safari gèle les timers)
-    sync(){ if(running){ recompute(); render(); if(!tick) startTick(); } },
-    // restaure l'état après un rechargement complet de l'onglet
-    restore(){
-      let s=null; try { s=JSON.parse(localStorage.getItem(LS_KEY)||'null'); } catch(e){}
-      if(!s) return;
-      running=!!s.running; baseElapsed=s.baseElapsed||0; startStamp=s.startStamp||Date.now();
-      if(running){
-        recompute();
-        toggleBtn().textContent='Stop';
-        if(s.visible) box().classList.add('visible');
-        render(); startTick();
-      } else if(baseElapsed>0){
-        elapsed=baseElapsed;
-        toggleBtn().textContent='Reprendre';
-        if(s.visible) box().classList.add('visible');
-        render();
-      }
-    }
-  };
-})();
-
-/* Reprend là où on en était : au retour dans l'onglet et au rechargement de la page. */
-document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) restChrono.sync(); });
-window.addEventListener('pageshow', ()=>restChrono.sync());
-restChrono.restore();
-</script>
-
 </body>
 </html>
