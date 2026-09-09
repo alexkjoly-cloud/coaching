@@ -61,6 +61,10 @@
   .s-dot.done { background:var(--green); }
   .s-dot.partial { background:var(--orange); }
 
+  .bandeau { margin:10px 0 0; padding:11px 14px; background:var(--card2,#f7f4ef); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:6px; font-size:12.5px; line-height:1.55; }
+  .bandeau.derniere { border-left-color:#c0392b; }
+  .bandeau b { font-weight:600; }
+  .bandeau-note { color:var(--text2); margin-top:3px; font-size:11.5px; }
   .principles { margin:12px 20px 0; background:var(--card); border-radius:14px; box-shadow:var(--shadow); overflow:hidden; }
   .principles summary { list-style:none; cursor:pointer; padding:13px 16px; font-size:14px; font-weight:600; color:var(--text); display:flex; justify-content:space-between; align-items:center; }
   .principles summary::-webkit-details-marker { display:none; }
@@ -203,125 +207,35 @@
   <button class="week-btn" data-week="6" onclick="switchWeek(6)">S6<span class="wk-sub"></span><span class="wk-fill"></span></button>
   <button class="week-btn" data-week="7" onclick="switchWeek(7)">S7<span class="wk-sub"></span><span class="wk-fill"></span></button>
   <button class="week-btn" data-week="8" onclick="switchWeek(8)">S8<span class="wk-sub"></span><span class="wk-fill"></span></button>
+  <button class="week-btn" data-week="9" onclick="switchWeek(9)">S9<span class="wk-sub"></span><span class="wk-fill"></span></button>
+  <button class="week-btn" data-week="10" onclick="switchWeek(10)">S10<span class="wk-sub"></span><span class="wk-fill"></span></button>
+  <button class="week-btn" data-week="11" onclick="switchWeek(11)">S11<span class="wk-sub"></span><span class="wk-fill"></span></button>
+  <button class="week-btn" data-week="12" onclick="switchWeek(12)">S12<span class="wk-sub"></span><span class="wk-fill"></span></button>
+  <button class="week-btn" data-week="13" onclick="switchWeek(13)">S13<span class="wk-sub"></span><span class="wk-fill"></span></button>
 </div>
 
-<div class="summary-bar">
-  <div class="summary-cell" onclick="switchTab('push')"><div class="s-label">1 · Push A</div><div class="s-dot" id="dot-push"></div></div>
-  <div class="summary-cell" onclick="switchTab('pull')"><div class="s-label">2 · Pull A</div><div class="s-dot" id="dot-pull"></div></div>
-  <div class="summary-cell" onclick="switchTab('push2')"><div class="s-label">3 · Push B</div><div class="s-dot" id="dot-push2"></div></div>
-  <div class="summary-cell" onclick="switchTab('pull2')"><div class="s-label">4 · Pull B</div><div class="s-dot" id="dot-pull2"></div></div>
-</div>
+<div class="summary-bar" id="summary-bar"></div>
 
 <details class="principles">
   <summary>Règles et interdits</summary>
-  <div class="p-item"><div class="p-num">1</div><div>Rotation 1, 2, 3, 4, 5, puis tu recommences. Quand tu peux, pas à date fixe.</div></div>
-  <div class="p-item"><div class="p-num">2</div><div>2 séries par exercice. <b>3 quand l'exercice porte seul un muscle sur la séance</b>, comme les bras en Push et en Pull : 2 séries pour tout le muscle, ce n'est pas assez. 4 sur les ischios, le point faible.</div></div>
+  <div class="p-item"><div class="p-num">1</div><div>Push A, Pull A, Push B, Pull B, puis tu recommences. Quand tu peux, pas à date fixe. <b>Cycle de 13 semaines</b>, soit trois mois : quand le sélecteur affiche S13, c'est la dernière.</div></div>
+  <div class="p-item"><div class="p-num">2</div><div>2 séries par exercice. <b>3 quand l'exercice porte seul un muscle sur la séance</b>, comme les bras en Push et en Pull : 2 séries pour tout le muscle, ce n'est pas assez. 3 sur les ischios, le point faible, depuis que le roumain est sorti.</div></div>
   <div class="p-item"><div class="p-num">3</div><div>Double progression : tu montes en reps jusqu'en haut de la fourchette sur toutes les séries, puis tu ajoutes la plus petite charge et tu redescends en bas. Les montées en charge ne comptent jamais comme des séries.</div></div>
   <div class="p-item"><div class="p-num">4</div><div>RIR 0-1 sur la dernière série de chaque exercice. <b>Sauf l'oiseau</b> : arrière d'épaule, léger, jamais à l'échec, stop à la moindre gêne.</div></div>
-  <div class="p-item"><div class="p-num">5</div><div>Le repos est écrit sur le bouton de chaque exercice. Legs et Lower sont la même séance, seule la variante de leg curl change.</div></div>
-  <div class="p-item"><div class="p-num">6</div><div>Nouvelle machine : 2 à 3 séances avant de la pousser près de l'échec. Point tous les 4 à 6 semaines.</div></div>
+  <div class="p-item"><div class="p-num">5</div><div>Le repos est écrit sur le bouton de chaque exercice. Push A et Push B sont identiques, Pull A et Pull B aussi : ce sont les deux passages de la semaine, notés séparément pour se comparer d'une semaine à l'autre.</div></div>
+  <div class="p-item"><div class="p-num">6</div><div>Nouvelle machine : 2 à 3 séances avant de la pousser près de l'échec. Point tous les 4 à 6 semaines. Quand le programme change, les semaines déjà faites gardent l'ancien, tu peux toujours les relire.</div></div>
   <div class="p-item"><div class="p-num">7</div><div><b>Interdits.</b> Soulevé de terre roumain, good morning, squat barre libre, soulevé de terre, hyperextensions chargées. Développé couché à plat lourd, développé militaire barre lourd. Dips.</div></div>
   <div class="p-item"><div class="p-num">8</div><div>Douleur au-dessus de 3/10 pendant, ou qui traîne le lendemain : tu réduis, tu ne forces jamais à travers.</div></div>
 </details>
 
-<div class="tabs">
-  <button class="tab active-push" id="tab-push" onclick="switchTab('push')">1 · Push A</button>
-  <button class="tab" id="tab-pull" onclick="switchTab('pull')">2 · Pull A</button>
-  <button class="tab" id="tab-push2" onclick="switchTab('push2')">3 · Push B</button>
-  <button class="tab" id="tab-pull2" onclick="switchTab('pull2')">4 · Pull B</button>
+<div class="tabs" id="tabs">
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan</button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps</button>
 </div>
 
-<!-- 1 · PUSH -->
-<div class="session visible" id="session-push">
-  <div class="session-header">
-    <div class="session-tag tag-push">Push A · séance 1 · ~73 min</div>
-    <div class="session-title">1 · Push A<span class="session-week-pill" id="pill-push">Semaine 1</span></div>
-    <div class="session-sub">Pec fly · Incliné · Militaire · Latéral poulie · Triceps uni · Leg extension · Adducteurs</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-push"></div></div>
-    <div class="sess-progress-label" id="proglabel-push">0 / 20 séries</div>
-  </div>
-  <div class="exo-card" data-exo="exo1" data-name="Écarté machine (pec fly)" data-target="Pectoraux · tu le fais en premier depuis fin août, on l'acte. Amplitude modérée, pas d'étirement max en bas, stop si ça tire côté omoplate" data-pres="3 × 10–15" data-presclass="pres-push" data-rpe="RIR 0–1" data-repos="2 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Développé incliné, prise semi-neutre" data-target="Pec haut · la prise semi-neutre est plus douce pour l'épaule que la pronation. Stop avant le verrouillage complet en haut, zone infra sensible" data-pres="3 × 6–10" data-presclass="pres-push" data-rpe="RIR 1–2" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Développé militaire" data-target="Deltoïde antérieur · machine ou haltères, jamais la barre lourde. Pas de verrouillage complet en haut" data-pres="3 × 8–12" data-presclass="pres-push" data-rpe="RIR 1–2" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Élévations latérales à la poulie" data-target="Deltoïde latéral · cuff au poignet plutôt qu'une poignée serrée : c'est l'épaule qui tire, pas la main" data-pres="3 × 12–20" data-presclass="pres-push" data-rpe="RIR 0–1" data-repos="2 min"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Extension triceps unilatérale à la poulie" data-target="Triceps · coude fixe le long du corps, tu ne le laisses pas partir en avant" data-pres="3 × 10–15" data-presclass="pres-push" data-rpe="RIR 0–1" data-repos="2 min"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Leg extension" data-target="Quadriceps · le seul créneau quad de la semaine maintenant que les jours de jambes sautent. Unilatéral ou bilatéral, mais tu gardes le même d'une semaine à l'autre sinon tu ne lis plus rien" data-pres="3 × 10–15" data-presclass="pres-push" data-rpe="RIR 0–1" data-repos="2 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo7" data-name="Adducteurs machine" data-target="Adducteurs · amplitude confortable, pas le cran le plus large" data-pres="2 × 12–20" data-presclass="pres-push" data-rpe="RIR 0–1" data-repos="90 s"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-push">Semaine 1</span></div><textarea class="note-input" id="note-push" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('push')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('push')">Effacer cette séance (semaine en cours)</button>
-  <div class="spacer"></div>
-</div>
+<div id="bandeau-bloc"></div>
 
-<!-- 2 · PULL -->
-<div class="session" id="session-pull">
-  <div class="session-header">
-    <div class="session-tag tag-pull">Pull A · séance 2 · ~80 min</div>
-    <div class="session-title">2 · Pull A<span class="session-week-pill" id="pill-pull">Semaine 1</span></div>
-    <div class="session-sub">Coude ouvert · Serré neutre · Vertical large · Leg curl · Oiseau · Curl · Mollets · Abdos</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-pull"></div></div>
-    <div class="sess-progress-label" id="proglabel-pull">0 / 21 séries</div>
-  </div>
-  <div class="exo-card" data-exo="exo1" data-name="Tirage horizontal coude ouvert" data-target="Milieu du dos · coudes écartés, tu tires vers le sternum. Tu ouvres par lui depuis le 1er septembre, on l'acte" data-pres="3 × 8–12" data-presclass="pres-pull" data-rpe="RIR 1–2" data-repos="3 min"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Tirage horizontal prise serrée neutre" data-target="Grand dorsal · tu tires vers le BAS DU VENTRE, les coudes rasent tes côtes et partent vers l'arrière. Coudes serrés = coude et nerf ulnaire épargnés" data-pres="2 × 8–12" data-presclass="pres-pull" data-rpe="RIR 1–2" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Tirage vertical prise pronation large" data-target="Dos · largeur. Tu descends le COUDE vers la hanche, poitrine haute, sans chercher à serrer les omoplates : dès que tu serres, ça devient du milieu du dos. Sangles si les avant-bras lâchent avant le dos. Au moindre signal côté coude ou avant-bras, tu repasses en neutre" data-pres="3 × 8–12" data-presclass="pres-pull" data-rpe="RIR 1–2" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Leg curl assis" data-target="Ischio-jambiers · FOCUS de la séance. Hanche fléchie, l'ischio travaille en position étirée. Seul exo ischios de la séance depuis que le roumain saute, d'où les 3 séries" data-pres="3 × 8–12" data-presclass="pres-pull" data-rpe="RIR 0–1" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Oiseau à la poulie" data-target="Arrière d'épaule · c'est ta zone douloureuse : léger, JAMAIS à l'échec, stop à la moindre gêne. Cuffs aux poignets, ce sont les bras qui tirent, pas les mains" data-pres="3 × 12–20" data-presclass="pres-pull" data-rpe="RIR 2–3 · jamais à l'échec" data-repos="2 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Curl pupitre" data-target="Biceps · bras calés sur le pupitre, pas de triche. Seul exo bras de la séance" data-pres="3 × 8–12" data-presclass="pres-pull" data-rpe="RIR 0–1" data-repos="2 min"></div>
-  <div class="exo-card" data-exo="exo7" data-name="Mollets" data-target="Mollets · charge légère et pas d'étirement max en bas. Stop si douleur au tibia (doppler)" data-pres="2 × 15–20" data-presclass="pres-pull" data-rpe="RIR 0–1" data-repos="90 s" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo8" data-name="Crunch lesté" data-target="Grand droit · tu enroules le buste, tu ne plies pas à la hanche. Charge tenue pour rester dans la fourchette de reps" data-pres="2 × 10–15" data-presclass="pres-pull" data-rpe="RIR 0–1" data-repos="90 s"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-pull">Semaine 1</span></div><textarea class="note-input" id="note-pull" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('pull')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('pull')">Effacer cette séance (semaine en cours)</button>
-  <div class="spacer"></div>
-</div>
-
-<!-- 3 · PUSH B -->
-<div class="session" id="session-push2">
-  <div class="session-header">
-    <div class="session-tag tag-push2">Push B · séance 3 · ~73 min</div>
-    <div class="session-title">3 · Push B<span class="session-week-pill" id="pill-push2">Semaine 1</span></div>
-    <div class="session-sub">Pec fly · Incliné · Militaire · Latéral poulie · Triceps uni · Leg extension · Adducteurs</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-push2"></div></div>
-    <div class="sess-progress-label" id="proglabel-push2">0 / 20 séries</div>
-  </div>
-  <div class="exo-card" data-exo="exo1" data-name="Écarté machine (pec fly)" data-target="Pectoraux · tu le fais en premier depuis fin août, on l'acte. Amplitude modérée, pas d'étirement max en bas, stop si ça tire côté omoplate" data-pres="3 × 10–15" data-presclass="pres-push2" data-rpe="RIR 0–1" data-repos="2 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Développé incliné, prise semi-neutre" data-target="Pec haut · la prise semi-neutre est plus douce pour l'épaule que la pronation. Stop avant le verrouillage complet en haut, zone infra sensible" data-pres="3 × 6–10" data-presclass="pres-push2" data-rpe="RIR 1–2" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Développé militaire" data-target="Deltoïde antérieur · machine ou haltères, jamais la barre lourde. Pas de verrouillage complet en haut" data-pres="3 × 8–12" data-presclass="pres-push2" data-rpe="RIR 1–2" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Élévations latérales à la poulie" data-target="Deltoïde latéral · cuff au poignet plutôt qu'une poignée serrée : c'est l'épaule qui tire, pas la main" data-pres="3 × 12–20" data-presclass="pres-push2" data-rpe="RIR 0–1" data-repos="2 min"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Extension triceps unilatérale à la poulie" data-target="Triceps · coude fixe le long du corps, tu ne le laisses pas partir en avant" data-pres="3 × 10–15" data-presclass="pres-push2" data-rpe="RIR 0–1" data-repos="2 min"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Leg extension" data-target="Quadriceps · le seul créneau quad de la semaine maintenant que les jours de jambes sautent. Unilatéral ou bilatéral, mais tu gardes le même d'une semaine à l'autre sinon tu ne lis plus rien" data-pres="3 × 10–15" data-presclass="pres-push2" data-rpe="RIR 0–1" data-repos="2 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo7" data-name="Adducteurs machine" data-target="Adducteurs · amplitude confortable, pas le cran le plus large" data-pres="2 × 12–20" data-presclass="pres-push2" data-rpe="RIR 0–1" data-repos="90 s"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-push2">Semaine 1</span></div><textarea class="note-input" id="note-push2" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('push2')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('push2')">Effacer cette séance (semaine en cours)</button>
-  <div class="spacer"></div>
-</div>
-
-<!-- 4 · PULL B -->
-<div class="session" id="session-pull2">
-  <div class="session-header">
-    <div class="session-tag tag-pull2">Pull B · séance 4 · ~80 min</div>
-    <div class="session-title">4 · Pull B<span class="session-week-pill" id="pill-pull2">Semaine 1</span></div>
-    <div class="session-sub">Coude ouvert · Serré neutre · Vertical large · Leg curl · Oiseau · Curl · Mollets · Abdos</div>
-    <div class="sess-progress"><div class="sess-progress-fill" id="prog-pull2"></div></div>
-    <div class="sess-progress-label" id="proglabel-pull2">0 / 21 séries</div>
-  </div>
-  <div class="exo-card" data-exo="exo1" data-name="Tirage horizontal coude ouvert" data-target="Milieu du dos · coudes écartés, tu tires vers le sternum. Tu ouvres par lui depuis le 1er septembre, on l'acte" data-pres="3 × 8–12" data-presclass="pres-pull2" data-rpe="RIR 1–2" data-repos="3 min"></div>
-  <div class="exo-card" data-exo="exo2" data-name="Tirage horizontal prise serrée neutre" data-target="Grand dorsal · tu tires vers le BAS DU VENTRE, les coudes rasent tes côtes et partent vers l'arrière. Coudes serrés = coude et nerf ulnaire épargnés" data-pres="2 × 8–12" data-presclass="pres-pull2" data-rpe="RIR 1–2" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo3" data-name="Tirage vertical prise pronation large" data-target="Dos · largeur. Tu descends le COUDE vers la hanche, poitrine haute, sans chercher à serrer les omoplates : dès que tu serres, ça devient du milieu du dos. Sangles si les avant-bras lâchent avant le dos. Au moindre signal côté coude ou avant-bras, tu repasses en neutre" data-pres="3 × 8–12" data-presclass="pres-pull2" data-rpe="RIR 1–2" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo4" data-name="Leg curl assis" data-target="Ischio-jambiers · FOCUS de la séance. Hanche fléchie, l'ischio travaille en position étirée. Seul exo ischios de la séance depuis que le roumain saute, d'où les 3 séries" data-pres="3 × 8–12" data-presclass="pres-pull2" data-rpe="RIR 0–1" data-repos="3 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo5" data-name="Oiseau à la poulie" data-target="Arrière d'épaule · c'est ta zone douloureuse : léger, JAMAIS à l'échec, stop à la moindre gêne. Cuffs aux poignets, ce sont les bras qui tirent, pas les mains" data-pres="3 × 12–20" data-presclass="pres-pull2" data-rpe="RIR 2–3 · jamais à l'échec" data-repos="2 min" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo6" data-name="Curl pupitre" data-target="Biceps · bras calés sur le pupitre, pas de triche. Seul exo bras de la séance" data-pres="3 × 8–12" data-presclass="pres-pull2" data-rpe="RIR 0–1" data-repos="2 min"></div>
-  <div class="exo-card" data-exo="exo7" data-name="Mollets" data-target="Mollets · charge légère et pas d'étirement max en bas. Stop si douleur au tibia (doppler)" data-pres="2 × 15–20" data-presclass="pres-pull2" data-rpe="RIR 0–1" data-repos="90 s" data-adapted="1"></div>
-  <div class="exo-card" data-exo="exo8" data-name="Crunch lesté" data-target="Grand droit · tu enroules le buste, tu ne plies pas à la hanche. Charge tenue pour rester dans la fourchette de reps" data-pres="2 × 10–15" data-presclass="pres-pull2" data-rpe="RIR 0–1" data-repos="90 s"></div>
-  <div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-pull2">Semaine 1</span></div><textarea class="note-input" id="note-pull2" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
-  <button class="save-btn" onclick="saveSession('pull2')">Enregistrer la séance</button>
-  <button class="reset-btn" onclick="resetSession('pull2')">Effacer cette séance (semaine en cours)</button>
-  <div class="spacer"></div>
-</div>
+<div id="sessions-container"></div>
 
 <!-- BILAN HEBDO -->
 <div class="session" id="session-bilan">
@@ -424,15 +338,108 @@
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
 const CLIENT_ID = "alexandre_test";
 
-const CONFIG = {
-  'push':  {exo1:3,exo2:3,exo3:3,exo4:3,exo5:3,exo6:3,exo7:2},
-  'pull':  {exo1:3,exo2:2,exo3:3,exo4:3,exo5:3,exo6:3,exo7:2,exo8:2},
-  'push2': {exo1:3,exo2:3,exo3:3,exo4:3,exo5:3,exo6:3,exo7:2},
-  'pull2': {exo1:3,exo2:2,exo3:3,exo4:3,exo5:3,exo6:3,exo7:2,exo8:2}
-};
+/* ===== LE PROGRAMME, DÉCOUPÉ EN BLOCS =====
+   Chaque bloc s'applique à partir de sa semaine de départ, jusqu'au bloc
+   suivant. Quand le programme change en cours de cycle, on AJOUTE un bloc :
+   les semaines déjà faites gardent leur programme, leurs exercices et leurs
+   données. On ne réécrit jamais un bloc passé. */
+const BLOCS = [
+  { desDe:1, nom:"PPLUL, 5 séances", note:"Le programme des trois premières semaines. On n'y touche plus, il est là pour relire ce que tu as fait.", sessions:{
+    "push": {tag:"Push · séance 1 · ~50 min", tagclass:"tag-push", titre:"1 · Push", sub:"Incliné · Pec fly · Militaire · Latéral poulie · Triceps uni", exos:[
+      {exo:"exo1", nom:"Développé incliné, prise semi-neutre", cible:"Pec haut · la prise semi-neutre est plus douce pour l'épaule que la pronation. Stop avant le verrouillage complet en haut, zone infra sensible", pres:"3 × 6–10", presclass:"pres-push", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo2", nom:"Écarté machine (pec fly)", cible:"Pectoraux · amplitude modérée, pas d'étirement max en bas, stop si ça tire côté omoplate", pres:"3 × 10–15", presclass:"pres-push", rpe:"RIR 0–1", repos:"2 min", series:3, adapte:1},
+      {exo:"exo3", nom:"Développé militaire", cible:"Deltoïde antérieur · machine ou haltères, jamais la barre lourde. Pas de verrouillage complet en haut", pres:"3 × 8–12", presclass:"pres-push", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo4", nom:"Élévations latérales à la poulie", cible:"Deltoïde latéral · cuff au poignet plutôt qu'une poignée serrée : c'est l'épaule qui tire, pas la main", pres:"3 × 12–20", presclass:"pres-push", rpe:"RIR 0–1", repos:"2 min", series:3},
+      {exo:"exo5", nom:"Extension triceps unilatérale à la poulie", cible:"Triceps · coude serré le long du corps", pres:"3 × 10–15", presclass:"pres-push", rpe:"RIR 0–1", repos:"2 min", series:3}
+    ]},
+    "pull": {tag:"Pull · séance 2 · ~52 min", tagclass:"tag-pull", titre:"2 · Pull", sub:"Vertical large · Horizontal serré neutre · Horizontal coude ouvert · Oiseau · Curl pupitre", exos:[
+      {exo:"exo1", nom:"Tirage vertical prise pronation large", cible:"Dos · largeur. Tu descends le COUDE vers la hanche, poitrine haute, sans chercher à serrer les omoplates : dès que tu serres, ça devient du milieu du dos et tu perds ce que tu es venu chercher. Sangles si les avant-bras lâchent avant le dos. Au moindre signal côté coude ou avant-bras, tu repasses en neutre", pres:"3 × 8–12", presclass:"pres-pull", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo2", nom:"Tirage horizontal prise serrée neutre", cible:"Grand dorsal · tu tires vers le BAS DU VENTRE, les coudes rasent tes côtes et partent vers l'arrière. Coudes serrés = coude et nerf ulnaire épargnés", pres:"2 × 8–12", presclass:"pres-pull", rpe:"RIR 1–2", repos:"3 min", series:2, adapte:1},
+      {exo:"exo3", nom:"Tirage horizontal coude ouvert", cible:"Milieu du dos · coudes écartés, tu tires vers le sternum. C'est le troisième angle, celui que les deux autres ne couvrent pas", pres:"3 × 8–12", presclass:"pres-pull", rpe:"RIR 1–2", repos:"3 min", series:3},
+      {exo:"exo4", nom:"Oiseau à la poulie", cible:"Arrière d'épaule · c'est ta zone douloureuse : léger, JAMAIS à l'échec, stop à la moindre gêne. Cuffs aux poignets, ce sont les bras qui tirent, pas les mains", pres:"3 × 12–20", presclass:"pres-pull", rpe:"RIR 2–3 · jamais à l'échec", repos:"2 min", series:3, adapte:1},
+      {exo:"exo5", nom:"Curl pupitre", cible:"Biceps · bras calés sur le pupitre, pas de triche", pres:"3 × 8–12", presclass:"pres-pull", rpe:"RIR 0–1", repos:"2 min", series:3}
+    ]},
+    "legs": {tag:"Legs · séance 3 · ~37 min", tagclass:"tag-legs", titre:"3 · Legs", sub:"Pendulum squat · Leg curl ASSIS · Adducteurs · Mollets · Crunch lesté", exos:[
+      {exo:"exo1", nom:"Pendulum squat", cible:"Quadriceps · Fessiers · dos calé, descends profond mais sans décoller le bassin", pres:"3 × 8–12", presclass:"pres-legs", rpe:"RIR 1–2", repos:"3 min", series:3},
+      {exo:"exo2", nom:"Leg curl ASSIS", cible:"Ischio-jambiers · ton point faible, d'où les 4 séries. Hanche fléchie, l'ischio travaille en position étirée", pres:"4 × 8–12", presclass:"pres-legs", rpe:"RIR 0–1", repos:"3 min", series:4},
+      {exo:"exo3", nom:"Adducteurs machine", cible:"Adducteurs · amplitude confortable, pas le cran le plus large", pres:"2 × 12–20", presclass:"pres-legs", rpe:"RIR 0–1", repos:"2 min", series:2},
+      {exo:"exo4", nom:"Mollets", cible:"Mollets · stop si douleur au tibia (doppler)", pres:"2 × 10–15", presclass:"pres-legs", rpe:"RIR 0–1", repos:"2 min", series:2, adapte:1},
+      {exo:"exo5", nom:"Crunch lesté", cible:"Grand droit · tu enroules le buste, tu ne plies pas à la hanche. Charge tenue pour rester dans la fourchette de reps, sinon ça devient de l'endurance", pres:"3 × 10–15", presclass:"pres-legs", rpe:"RIR 0–1", repos:"90 s", series:3}
+    ]},
+    "upper": {tag:"Upper · séance 4 · ~60 min", tagclass:"tag-upper", titre:"4 · Upper", sub:"Vertical neutre · Horizontal ouvert · Couché à plat · Pec fly · Latéral · Triceps · Curl marteau", exos:[
+      {exo:"exo1", nom:"Tirage vertical prise neutre", cible:"Dos · largeur. Prise neutre et coudes proches du corps, épargne le coude et le nerf ulnaire. Tu descends le coude vers la hanche, poitrine haute, tu ne serres pas les omoplates. Sangles si les avant-bras lâchent avant le dos", pres:"3 × 8–12", presclass:"pres-upper", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo2", nom:"Tirage horizontal coude ouvert", cible:"Milieu du dos · coudes écartés, tu tires vers le sternum", pres:"3 × 8–12", presclass:"pres-upper", rpe:"RIR 1–2", repos:"3 min", series:3},
+      {exo:"exo3", nom:"Développé couché à plat", cible:"Pectoraux · charge modérée, jamais lourd, zone infra. Pas de verrouillage complet en haut", pres:"3 × 10–15", presclass:"pres-upper", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo4", nom:"Écarté machine (pec fly)", cible:"Pectoraux · amplitude modérée, pas d'étirement max en bas, stop si ça tire côté omoplate", pres:"3 × 12–15", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:3, adapte:1},
+      {exo:"exo5", nom:"Élévations latérales", cible:"Deltoïde latéral · machine de préférence, pousse avec le bras contre le coussin, ne serre pas les poignées", pres:"3 × 12–20", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:3},
+      {exo:"exo6", nom:"Extension triceps", cible:"Triceps · coudes serrés le long du corps", pres:"2 × 10–15", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:2},
+      {exo:"exo7", nom:"Curl marteau", cible:"Biceps · brachial · prise neutre pour épargner le coude et le nerf ulnaire. Assis dossier relevé plutôt que debout", pres:"2 × 10–15", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:2, adapte:1}
+    ]},
+    "lower": {tag:"Lower · séance 5 · ~37 min", tagclass:"tag-lower", titre:"5 · Lower", sub:"Pendulum squat · Leg curl ALLONGÉ · Adducteurs · Mollets · Crunch lesté", exos:[
+      {exo:"exo1", nom:"Pendulum squat", cible:"Quadriceps · Fessiers · dos calé, descends profond mais sans décoller le bassin", pres:"3 × 8–12", presclass:"pres-lower", rpe:"RIR 1–2", repos:"3 min", series:3},
+      {exo:"exo2", nom:"Leg curl ALLONGÉ", cible:"Ischio-jambiers · ton point faible, d'où les 4 séries. Hanche tendue, autre position d'étirement que l'assis", pres:"4 × 10–15", presclass:"pres-lower", rpe:"RIR 0–1", repos:"3 min", series:4},
+      {exo:"exo3", nom:"Adducteurs machine", cible:"Adducteurs · amplitude confortable, pas le cran le plus large", pres:"2 × 12–20", presclass:"pres-lower", rpe:"RIR 0–1", repos:"2 min", series:2},
+      {exo:"exo4", nom:"Mollets", cible:"Mollets · stop si douleur au tibia (doppler)", pres:"2 × 10–15", presclass:"pres-lower", rpe:"RIR 0–1", repos:"2 min", series:2, adapte:1},
+      {exo:"exo5", nom:"Crunch lesté", cible:"Grand droit · deuxième passage de la semaine, en reps plus basses donc plus lourd que le lundi. Le bas du dos reste plaqué, c'est le rachis qui s'enroule, pas la hanche qui plie", pres:"3 × 8–12", presclass:"pres-lower", rpe:"RIR 0–1", repos:"2 min", series:3}
+    ]}
+  }},
+  { desDe:4, nom:"Push / Pull, 4 séances", note:"Les jours de jambes sautent, les jambes sont réparties dans les deux séances, qui tournent deux fois par semaine.", sessions:{
+    "push": {tag:"Push A · séance 1 · ~73 min", tagclass:"tag-push", titre:"1 · Push A", sub:"Pec fly · Incliné · Militaire · Latéral poulie · Triceps uni · Leg extension · Adducteurs", exos:[
+      {exo:"exo1", nom:"Écarté machine (pec fly)", cible:"Pectoraux · tu le fais en premier depuis fin août, on l'acte. Amplitude modérée, pas d'étirement max en bas, stop si ça tire côté omoplate", pres:"3 × 10–15", presclass:"pres-push", rpe:"RIR 0–1", repos:"2 min", series:3, adapte:1},
+      {exo:"exo2", nom:"Développé incliné, prise semi-neutre", cible:"Pec haut · la prise semi-neutre est plus douce pour l'épaule que la pronation. Stop avant le verrouillage complet en haut, zone infra sensible", pres:"3 × 6–10", presclass:"pres-push", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo3", nom:"Développé militaire", cible:"Deltoïde antérieur · machine ou haltères, jamais la barre lourde. Pas de verrouillage complet en haut", pres:"3 × 8–12", presclass:"pres-push", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo4", nom:"Élévations latérales à la poulie", cible:"Deltoïde latéral · cuff au poignet plutôt qu'une poignée serrée : c'est l'épaule qui tire, pas la main", pres:"3 × 12–20", presclass:"pres-push", rpe:"RIR 0–1", repos:"2 min", series:3},
+      {exo:"exo5", nom:"Extension triceps unilatérale à la poulie", cible:"Triceps · coude fixe le long du corps, tu ne le laisses pas partir en avant", pres:"3 × 10–15", presclass:"pres-push", rpe:"RIR 0–1", repos:"2 min", series:3},
+      {exo:"exo6", nom:"Leg extension", cible:"Quadriceps · le seul créneau quad de la semaine maintenant que les jours de jambes sautent. Unilatéral ou bilatéral, mais tu gardes le même d'une semaine à l'autre sinon tu ne lis plus rien", pres:"3 × 10–15", presclass:"pres-push", rpe:"RIR 0–1", repos:"2 min", series:3, adapte:1},
+      {exo:"exo7", nom:"Adducteurs machine", cible:"Adducteurs · amplitude confortable, pas le cran le plus large", pres:"2 × 12–20", presclass:"pres-push", rpe:"RIR 0–1", repos:"90 s", series:2}
+    ]},
+    "pull": {tag:"Pull A · séance 2 · ~80 min", tagclass:"tag-pull", titre:"2 · Pull A", sub:"Coude ouvert · Serré neutre · Vertical large · Leg curl · Oiseau · Curl · Mollets · Abdos", exos:[
+      {exo:"exo1", nom:"Tirage horizontal coude ouvert", cible:"Milieu du dos · coudes écartés, tu tires vers le sternum. Tu ouvres par lui depuis le 1er septembre, on l'acte", pres:"3 × 8–12", presclass:"pres-pull", rpe:"RIR 1–2", repos:"3 min", series:3},
+      {exo:"exo2", nom:"Tirage horizontal prise serrée neutre", cible:"Grand dorsal · tu tires vers le BAS DU VENTRE, les coudes rasent tes côtes et partent vers l'arrière. Coudes serrés = coude et nerf ulnaire épargnés", pres:"2 × 8–12", presclass:"pres-pull", rpe:"RIR 1–2", repos:"3 min", series:2, adapte:1},
+      {exo:"exo3", nom:"Tirage vertical prise pronation large", cible:"Dos · largeur. Tu descends le COUDE vers la hanche, poitrine haute, sans chercher à serrer les omoplates : dès que tu serres, ça devient du milieu du dos. Sangles si les avant-bras lâchent avant le dos. Au moindre signal côté coude ou avant-bras, tu repasses en neutre", pres:"3 × 8–12", presclass:"pres-pull", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo4", nom:"Leg curl assis", cible:"Ischio-jambiers · FOCUS de la séance. Hanche fléchie, l'ischio travaille en position étirée. Seul exo ischios de la séance depuis que le roumain saute, d'où les 3 séries", pres:"3 × 8–12", presclass:"pres-pull", rpe:"RIR 0–1", repos:"3 min", series:3, adapte:1},
+      {exo:"exo5", nom:"Oiseau à la poulie", cible:"Arrière d'épaule · c'est ta zone douloureuse : léger, JAMAIS à l'échec, stop à la moindre gêne. Cuffs aux poignets, ce sont les bras qui tirent, pas les mains", pres:"3 × 12–20", presclass:"pres-pull", rpe:"RIR 2–3 · jamais à l'échec", repos:"2 min", series:3, adapte:1},
+      {exo:"exo6", nom:"Curl pupitre", cible:"Biceps · bras calés sur le pupitre, pas de triche. Seul exo bras de la séance", pres:"3 × 8–12", presclass:"pres-pull", rpe:"RIR 0–1", repos:"2 min", series:3},
+      {exo:"exo7", nom:"Mollets", cible:"Mollets · charge légère et pas d'étirement max en bas. Stop si douleur au tibia (doppler)", pres:"2 × 15–20", presclass:"pres-pull", rpe:"RIR 0–1", repos:"90 s", series:2, adapte:1},
+      {exo:"exo8", nom:"Crunch lesté", cible:"Grand droit · tu enroules le buste, tu ne plies pas à la hanche. Charge tenue pour rester dans la fourchette de reps", pres:"2 × 10–15", presclass:"pres-pull", rpe:"RIR 0–1", repos:"90 s", series:2}
+    ]},
+    "push2": {tag:"Push B · séance 3 · ~73 min", tagclass:"tag-push2", titre:"3 · Push B", sub:"Pec fly · Incliné · Militaire · Latéral poulie · Triceps uni · Leg extension · Adducteurs", exos:[
+      {exo:"exo1", nom:"Écarté machine (pec fly)", cible:"Pectoraux · tu le fais en premier depuis fin août, on l'acte. Amplitude modérée, pas d'étirement max en bas, stop si ça tire côté omoplate", pres:"3 × 10–15", presclass:"pres-push2", rpe:"RIR 0–1", repos:"2 min", series:3, adapte:1},
+      {exo:"exo2", nom:"Développé incliné, prise semi-neutre", cible:"Pec haut · la prise semi-neutre est plus douce pour l'épaule que la pronation. Stop avant le verrouillage complet en haut, zone infra sensible", pres:"3 × 6–10", presclass:"pres-push2", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo3", nom:"Développé militaire", cible:"Deltoïde antérieur · machine ou haltères, jamais la barre lourde. Pas de verrouillage complet en haut", pres:"3 × 8–12", presclass:"pres-push2", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo4", nom:"Élévations latérales à la poulie", cible:"Deltoïde latéral · cuff au poignet plutôt qu'une poignée serrée : c'est l'épaule qui tire, pas la main", pres:"3 × 12–20", presclass:"pres-push2", rpe:"RIR 0–1", repos:"2 min", series:3},
+      {exo:"exo5", nom:"Extension triceps unilatérale à la poulie", cible:"Triceps · coude fixe le long du corps, tu ne le laisses pas partir en avant", pres:"3 × 10–15", presclass:"pres-push2", rpe:"RIR 0–1", repos:"2 min", series:3},
+      {exo:"exo6", nom:"Leg extension", cible:"Quadriceps · le seul créneau quad de la semaine maintenant que les jours de jambes sautent. Unilatéral ou bilatéral, mais tu gardes le même d'une semaine à l'autre sinon tu ne lis plus rien", pres:"3 × 10–15", presclass:"pres-push2", rpe:"RIR 0–1", repos:"2 min", series:3, adapte:1},
+      {exo:"exo7", nom:"Adducteurs machine", cible:"Adducteurs · amplitude confortable, pas le cran le plus large", pres:"2 × 12–20", presclass:"pres-push2", rpe:"RIR 0–1", repos:"90 s", series:2}
+    ]},
+    "pull2": {tag:"Pull B · séance 4 · ~80 min", tagclass:"tag-pull2", titre:"4 · Pull B", sub:"Coude ouvert · Serré neutre · Vertical large · Leg curl · Oiseau · Curl · Mollets · Abdos", exos:[
+      {exo:"exo1", nom:"Tirage horizontal coude ouvert", cible:"Milieu du dos · coudes écartés, tu tires vers le sternum. Tu ouvres par lui depuis le 1er septembre, on l'acte", pres:"3 × 8–12", presclass:"pres-pull2", rpe:"RIR 1–2", repos:"3 min", series:3},
+      {exo:"exo2", nom:"Tirage horizontal prise serrée neutre", cible:"Grand dorsal · tu tires vers le BAS DU VENTRE, les coudes rasent tes côtes et partent vers l'arrière. Coudes serrés = coude et nerf ulnaire épargnés", pres:"2 × 8–12", presclass:"pres-pull2", rpe:"RIR 1–2", repos:"3 min", series:2, adapte:1},
+      {exo:"exo3", nom:"Tirage vertical prise pronation large", cible:"Dos · largeur. Tu descends le COUDE vers la hanche, poitrine haute, sans chercher à serrer les omoplates : dès que tu serres, ça devient du milieu du dos. Sangles si les avant-bras lâchent avant le dos. Au moindre signal côté coude ou avant-bras, tu repasses en neutre", pres:"3 × 8–12", presclass:"pres-pull2", rpe:"RIR 1–2", repos:"3 min", series:3, adapte:1},
+      {exo:"exo4", nom:"Leg curl assis", cible:"Ischio-jambiers · FOCUS de la séance. Hanche fléchie, l'ischio travaille en position étirée. Seul exo ischios de la séance depuis que le roumain saute, d'où les 3 séries", pres:"3 × 8–12", presclass:"pres-pull2", rpe:"RIR 0–1", repos:"3 min", series:3, adapte:1},
+      {exo:"exo5", nom:"Oiseau à la poulie", cible:"Arrière d'épaule · c'est ta zone douloureuse : léger, JAMAIS à l'échec, stop à la moindre gêne. Cuffs aux poignets, ce sont les bras qui tirent, pas les mains", pres:"3 × 12–20", presclass:"pres-pull2", rpe:"RIR 2–3 · jamais à l'échec", repos:"2 min", series:3, adapte:1},
+      {exo:"exo6", nom:"Curl pupitre", cible:"Biceps · bras calés sur le pupitre, pas de triche. Seul exo bras de la séance", pres:"3 × 8–12", presclass:"pres-pull2", rpe:"RIR 0–1", repos:"2 min", series:3},
+      {exo:"exo7", nom:"Mollets", cible:"Mollets · charge légère et pas d'étirement max en bas. Stop si douleur au tibia (doppler)", pres:"2 × 15–20", presclass:"pres-pull2", rpe:"RIR 0–1", repos:"90 s", series:2, adapte:1},
+      {exo:"exo8", nom:"Crunch lesté", cible:"Grand droit · tu enroules le buste, tu ne plies pas à la hanche. Charge tenue pour rester dans la fourchette de reps", pres:"2 × 10–15", presclass:"pres-pull2", rpe:"RIR 0–1", repos:"90 s", series:2}
+    ]}
+  }}
+];
 
-const NB_SEMAINES = 8;
-const SESSIONS = ['push','pull','push2','pull2'];
+function blocPour(w){ let out=BLOCS[0]; for(const b of BLOCS) if(b.desDe<=w) out=b; return out; }
+function finDuBloc(b){ const i=BLOCS.indexOf(b); return i<BLOCS.length-1 ? BLOCS[i+1].desDe-1 : NB_SEMAINES; }
+/* Toutes les séances vues dans le cycle, tous blocs confondus : sert à savoir
+   si une semaine contient des données même si son programme a changé depuis. */
+const TOUTES = (()=>{ const m={}; for(const b of BLOCS) for(const s of Object.keys(b.sessions)){
+  m[s]=m[s]||{}; b.sessions[s].exos.forEach(e=>{ m[s][e.exo]=Math.max(m[s][e.exo]||0, e.series); }); } return m; })();
+
+let BLOC=null, SESSIONS=[], CONFIG={};
+let _ongletActif='push';
+function appliquerBloc(w){
+  BLOC=blocPour(w); SESSIONS=Object.keys(BLOC.sessions); CONFIG={};
+  for(const s of SESSIONS){ CONFIG[s]={}; BLOC.sessions[s].exos.forEach(e=>{ CONFIG[s][e.exo]=e.series; }); }
+}
+
+const NB_SEMAINES = 13;   // trois mois
 const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 let currentWeek = 1;
 
@@ -483,48 +490,84 @@ function toggleKbd(btn){
 function updateNextBadge(){
   const el=document.getElementById('cycle-label');
   if(!el) return;
-  const label={'push':'1 · Push A','pull':'2 · Pull A','push2':'3 · Push B','pull2':'4 · Pull B'};
-  const map={'push':'pull','pull':'push2','push2':'pull2','pull2':'push'};
+  const ordre=SESSIONS;
+  const defaut=`${ordre.length} séances en rotation`;
   const raw=localStorage.getItem('fbeod-last');
-  if(!raw){ el.textContent='4 séances : Push et Pull, deux fois'; return; }
+  if(!raw){ el.textContent=defaut; return; }
   try{
     const d=JSON.parse(raw);
-    if(d && d.session && map[d.session]){
-      el.textContent=`Dernière : ${label[d.session]} → Prochaine : ${label[map[d.session]]}`;
-    }
-  }catch(e){ el.textContent='4 séances : Push et Pull, deux fois'; }
+    const i=ordre.indexOf(d && d.session);
+    if(i<0){ el.textContent=defaut; return; }
+    const suiv=ordre[(i+1)%ordre.length];
+    el.textContent=`Dernière : ${BLOC.sessions[ordre[i]].titre} → Prochaine : ${BLOC.sessions[suiv].titre}`;
+  }catch(e){ el.textContent=defaut; }
 }
 
 function buildSession(session){
-  const sessionEl = document.getElementById(`session-${session}`);
-  const cards = sessionEl.querySelectorAll('.exo-card[data-exo]');
-  cards.forEach((card,idx)=>{
-    const exo = card.dataset.exo;
-    EXO_NAMES[session] = EXO_NAMES[session] || {};
-    EXO_NAMES[session][exo] = card.dataset.name;
-    const count = CONFIG[session][exo];
+  const def = BLOC.sessions[session];
+  let html = `<div class="session-header">
+    <div class="session-tag ${def.tagclass}">${def.tag}</div>
+    <div class="session-title">${def.titre}<span class="session-week-pill" id="pill-${session}">Semaine ${currentWeek}</span></div>
+    <div class="session-sub">${def.sub}</div>
+    <div class="sess-progress"><div class="sess-progress-fill" id="prog-${session}"></div></div>
+    <div class="sess-progress-label" id="proglabel-${session}">0 / ${def.exos.reduce((a,e)=>a+e.series,0)} séries</div>
+  </div>`;
+  EXO_NAMES[session] = EXO_NAMES[session] || {};
+  def.exos.forEach((e,idx)=>{
+    EXO_NAMES[session][e.exo] = e.nom;
     const num = String(idx+1).padStart(2,'0');
-    if(card.dataset.adapted){ card.classList.add('adapted'); }
-    let html = `<div class="exo-top"><div class="exo-num">${num}</div><div class="exo-info"><div class="exo-name">${card.dataset.name}</div><div class="exo-target">${card.dataset.target}</div><div class="pr-badge" id="pr-${session}-${exo}"></div></div><div class="exo-prescription ${card.dataset.presclass}">${card.dataset.pres}</div></div>`;
-    html += `<div class="exo-meta"><span class="chip">${card.dataset.rpe}</span>${card.dataset.adapted?'<span class="chip chip-adapt">Adapté blessure</span>':''}<button class="rest-chip" onclick="restChrono.startFor()">Repos ${card.dataset.repos||''}</button></div>`;
-    html += `<div class="last-week-ref" id="ref-${session}-${exo}"></div>`;
+    html += `<div class="exo-card${e.adapte?' adapted':''}">`;
+    html += `<div class="exo-top"><div class="exo-num">${num}</div><div class="exo-info"><div class="exo-name">${e.nom}</div><div class="exo-target">${e.cible}</div><div class="pr-badge" id="pr-${session}-${e.exo}"></div></div><div class="exo-prescription ${e.presclass}">${e.pres}</div></div>`;
+    html += `<div class="exo-meta"><span class="chip">${e.rpe}</span>${e.adapte?'<span class="chip chip-adapt">Adapté blessure</span>':''}<button class="rest-chip" onclick="restChrono.startFor()">Repos ${e.repos||''}</button></div>`;
+    html += `<div class="last-week-ref" id="ref-${session}-${e.exo}"></div>`;
     html += `<div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>`;
-    html += `<div class="series-rows" id="${session}-${exo}">`;
-    for(let s=1;s<=count;s++){
+    html += `<div class="series-rows" id="${session}-${e.exo}">`;
+    for(let n=1;n<=e.series;n++){
       html += `<div class="serie-row">
-        <div class="serie-num">S${s}</div>
+        <div class="serie-num">S${n}</div>
         <div class="kg-wrap">
-          <input type="text" inputmode="decimal" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${session}-${exo}-s${s}-kg" oninput="save('${session}','${exo}',${s},'kg',this.value)">
+          <input type="text" inputmode="decimal" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${session}-${e.exo}-s${n}-kg" oninput="save('${session}','${e.exo}',${n},'kg',this.value)">
           <button class="kbd-toggle" onclick="toggleKbd(this)" title="Basculer clavier texte">✎</button>
         </div>
-        <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${session}-${exo}-s${s}-reps" oninput="save('${session}','${exo}',${s},'reps',this.value)">
-        <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input rir" placeholder="—" id="${session}-${exo}-s${s}-rir" oninput="save('${session}','${exo}',${s},'rir',this.value)">
-        <div class="serie-check"><button class="check-btn" id="chk-${session}-${exo}-s${s}" onclick="toggleCheck('${session}','${exo}',${s})"></button></div>
+        <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${session}-${e.exo}-s${n}-reps" oninput="save('${session}','${e.exo}',${n},'reps',this.value)">
+        <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input rir" placeholder="—" id="${session}-${e.exo}-s${n}-rir" oninput="save('${session}','${e.exo}',${n},'rir',this.value)">
+        <div class="serie-check"><button class="check-btn" id="chk-${session}-${e.exo}-s${n}" onclick="toggleCheck('${session}','${e.exo}',${n})"></button></div>
       </div>`;
     }
-    html += `</div>`;
-    card.innerHTML = html;
+    html += `</div></div>`;
   });
+  html += `<div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-${session}">Semaine ${currentWeek}</span></div><textarea class="note-input" id="note-${session}" placeholder="Ressenti, douleurs, substitutions..."></textarea></div>
+    <button class="save-btn" onclick="saveSession('${session}')">Enregistrer la séance</button>
+    <button class="reset-btn" onclick="resetSession('${session}')">Effacer cette séance (semaine en cours)</button>
+    <div class="spacer"></div>`;
+  const el=document.createElement('div');
+  el.className='session'; el.id='session-'+session; el.innerHTML=html;
+  return el;
+}
+
+/* Les onglets, la barre de résumé et le bandeau suivent le bloc de la semaine. */
+function buildChrome(){
+  const bar=document.getElementById('summary-bar');
+  bar.innerHTML = SESSIONS.map(s=>{
+    const t=BLOC.sessions[s].titre;
+    return `<div class="summary-cell" onclick="switchTab('${s}')"><div class="s-label">${t}</div><div class="s-dot" id="dot-${s}"></div></div>`;
+  }).join('');
+  const tabs=document.getElementById('tabs');
+  [...tabs.querySelectorAll('.tab')].forEach(t=>{ if(t.id!=='tab-bilan' && t.id!=='tab-corp') t.remove(); });
+  const avant=document.getElementById('tab-bilan');
+  SESSIONS.forEach(s=>{
+    const b=document.createElement('button');
+    b.className='tab'; b.id='tab-'+s; b.textContent=BLOC.sessions[s].titre;
+    b.onclick=()=>switchTab(s);
+    tabs.insertBefore(b, avant);
+  });
+  const fin=finDuBloc(BLOC);
+  const derniere = currentWeek===NB_SEMAINES;
+  document.getElementById('bandeau-bloc').innerHTML =
+    `<div class="bandeau${derniere?' derniere':''}">
+       <b>${BLOC.nom}</b> · semaines ${BLOC.desDe} à ${fin}${BLOC.desDe>1?' · le programme a changé à la semaine '+BLOC.desDe:''}
+       <div class="bandeau-note">${derniere ? 'Dernière semaine du cycle de '+NB_SEMAINES+' semaines.' : BLOC.note}</div>
+     </div>`;
 }
 
 const _prCache = {};
@@ -558,7 +601,13 @@ function updatePR(session,exo){
 }
 
 function buildAll(){
-  SESSIONS.forEach(buildSession);
+  appliquerBloc(currentWeek);
+  const box=document.getElementById('sessions-container');
+  box.innerHTML='';
+  SESSIONS.forEach(s=>box.appendChild(buildSession(s)));
+  buildChrome();
+  const actif = SESSIONS.includes(_ongletActif) ? _ongletActif : SESSIONS[0];
+  switchTab(actif);
   loadAll();
   updateNextBadge();
 }
@@ -735,8 +784,8 @@ function updateDots(){
 }
 
 function weekHasData(week){
-  for(const session of SESSIONS){
-    const exos=CONFIG[session];
+  for(const session of Object.keys(TOUTES)){
+    const exos=TOUTES[session];
     for(const [exo,count] of Object.entries(exos)){
       for(let s=1;s<=count;s++){
         if((localStorage.getItem(getKey(session,exo,s,'kg',week))||'')!=='') return true;
@@ -756,17 +805,21 @@ function updateWeekFills(){
 }
 
 function switchWeek(week){
+  const changeDeBloc = blocPour(week) !== blocPour(currentWeek);
   currentWeek=week;
   document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
   document.querySelector(`.week-btn[data-week="${week}"]`).classList.add('active');
+  if(changeDeBloc){ buildAll(); return; }
   SESSIONS.forEach(session=>{
     const pill=document.getElementById(`pill-${session}`); if(pill) pill.textContent=`Semaine ${week}`;
     const nl=document.getElementById(`notelabel-${session}`); if(nl) nl.textContent=`Semaine ${week}`;
   });
+  buildChrome();
   loadAll();
 }
 
 function switchTab(id){
+  if(id!=='bilan' && id!=='corp') _ongletActif=id;
   document.querySelectorAll('.session').forEach(s=>s.classList.remove('visible'));
   document.querySelectorAll('.tab').forEach(t=>t.className='tab');
   document.getElementById(`session-${id}`).classList.add('visible');
