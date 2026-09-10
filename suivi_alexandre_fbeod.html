@@ -433,7 +433,11 @@ const TOUTES = (()=>{ const m={}; for(const b of BLOCS) for(const s of Object.ke
   m[s]=m[s]||{}; b.sessions[s].exos.forEach(e=>{ m[s][e.exo]=Math.max(m[s][e.exo]||0, e.series); }); } return m; })();
 
 let BLOC=null, SESSIONS=[], CONFIG={};
-let _ongletActif='push';
+/* Le dernier onglet consulté, lu UNE FOIS au démarrage. buildAll() rappelle
+   switchTab, qui réécrit la clé : sans cette copie, la valeur d'origine serait
+   perdue avant d'avoir servi. */
+const ONGLET_MEMO = (()=>{ try{ return localStorage.getItem(CLIENT_ID+'-onglet'); }catch(e){ return null; } })();
+let _ongletActif = (ONGLET_MEMO && ONGLET_MEMO!=='bilan' && ONGLET_MEMO!=='corp') ? ONGLET_MEMO : 'push';
 function appliquerBloc(w){
   BLOC=blocPour(w); SESSIONS=Object.keys(BLOC.sessions); CONFIG={};
   for(const s of SESSIONS){ CONFIG[s]={}; BLOC.sessions[s].exos.forEach(e=>{ CONFIG[s][e.exo]=e.series; }); }
@@ -819,7 +823,11 @@ function switchWeek(week){
 }
 
 function switchTab(id){
+  /* Un onglet mémorisé peut ne pas exister dans le bloc de la semaine
+     affichée : on sort sans rien casser. */
+  if(!document.getElementById('session-'+id)) return;
   if(id!=='bilan' && id!=='corp') _ongletActif=id;
+  try{ localStorage.setItem(CLIENT_ID+'-onglet', id); }catch(e){}
   document.querySelectorAll('.session').forEach(s=>s.classList.remove('visible'));
   document.querySelectorAll('.tab').forEach(t=>t.className='tab');
   document.getElementById(`session-${id}`).classList.add('visible');
@@ -942,6 +950,22 @@ const restChrono = (function(){
 document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) restChrono.sync(); });
 window.addEventListener('pageshow', ()=>restChrono.sync());
 restChrono.restore();
+
+/* Rouvrir le dernier onglet consulté. La clé porte le nom du client :
+   toutes les applis partagent la même origine, donc le même localStorage.
+   On passe par un setTimeout pour repasser APRÈS l'init de l'appli, qui
+   dans certains fichiers tourne dans un écouteur DOMContentLoaded et
+   remettrait l'onglet par défaut. */
+(function(){
+  const rouvrir = () => {
+    try{
+      const id = (typeof ONGLET_MEMO !== 'undefined') ? ONGLET_MEMO : localStorage.getItem(CLIENT_ID+'-onglet');
+      if(id && document.getElementById('session-'+id) && document.getElementById('tab-'+id)) switchTab(id);
+    }catch(e){}
+  };
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ()=>setTimeout(rouvrir,0));
+  else setTimeout(rouvrir,0);
+})();
 </script>
 
 </body>
