@@ -709,20 +709,52 @@ function saveBilanComplet(){
   setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
 }
 
+/* Rafraîchit les rappels de charge d'une séance. Appelé en changeant
+   d'onglet : ce qu'on vient de saisir dans Push A doit apparaître en
+   arrivant sur Push B, sans recharger la page. */
+function refreshRefs(session){
+  const def=BLOC.sessions[session];
+  if(!def) return;
+  def.exos.forEach(e=>updateRef(session,e.exo));
+}
+
 function updateRef(session,exo){
   const refEl=document.getElementById(`ref-${session}-${exo}`);
   if(!refEl) return;
-  if(currentWeek===1){ refEl.innerHTML=''; return; }
-  const prevWeek=currentWeek-1;
-  const count=CONFIG[session][exo];
-  let parts=[];
-  for(let s=1;s<=count;s++){
-    const kg=localStorage.getItem(getKey(session,exo,s,'kg',prevWeek))||'';
-    const reps=localStorage.getItem(getKey(session,exo,s,'reps',prevWeek))||'';
-    if(kg!==''||reps!==''){ parts.push(`${kg||'?'}×${reps||'?'}`); }
+  const def=BLOC.sessions[session].exos.find(e=>e.exo===exo);
+  if(!def){ refEl.innerHTML=''; return; }
+
+  /* On cherche la dernière fois que CE mouvement a été fait, peu importe
+     dans quelle séance. Push A et Push B partagent presque tous leurs
+     exercices : sans ça il faudrait aller voir l'autre onglet à chaque fois.
+     On remonte semaine par semaine, et pour chaque semaine on ne regarde que
+     les créneaux du bloc qui s'appliquait CETTE semaine-là : un même
+     emplacement a pu porter un autre exercice avant un changement de prog. */
+  for(let w=currentWeek; w>=1; w--){
+    const b=blocPour(w);
+    const cands=[];
+    for(const sid of Object.keys(b.sessions))
+      b.sessions[sid].exos.forEach(e=>{
+        if(e.nom===def.nom) cands.push({sid, exo:e.exo, series:e.series, titre:b.sessions[sid].titre});
+      });
+    /* Sa propre séance d'abord, l'autre passage ensuite. */
+    cands.sort((x,y)=>(x.sid===session?0:1)-(y.sid===session?0:1));
+    for(const pl of cands){
+      if(w===currentWeek && pl.sid===session) continue;   // ce qu'il est en train de saisir
+      const parts=[];
+      for(let n=1;n<=pl.series;n++){
+        const kg=localStorage.getItem(getKey(pl.sid,pl.exo,n,'kg',w))||'';
+        const reps=localStorage.getItem(getKey(pl.sid,pl.exo,n,'reps',w))||'';
+        if(kg!==''||reps!==''){ parts.push(`${kg||'?'}×${reps||'?'}`); }
+      }
+      if(parts.length){
+        const ou = (pl.sid===session) ? `Semaine ${w}` : `${pl.titre.replace(/^\d+\s*·\s*/,'')}, semaine ${w}`;
+        refEl.innerHTML=`${ou} : <b>${parts.join('  ·  ')}</b>`;
+        return;
+      }
+    }
   }
-  if(parts.length>0){ refEl.innerHTML=`Semaine ${prevWeek} : <b>${parts.join('  ·  ')}</b>`; }
-  else { refEl.innerHTML=''; }
+  refEl.innerHTML='';
 }
 
 function toggleCheck(session,exo,serie){
@@ -826,7 +858,7 @@ function switchTab(id){
   /* Un onglet mémorisé peut ne pas exister dans le bloc de la semaine
      affichée : on sort sans rien casser. */
   if(!document.getElementById('session-'+id)) return;
-  if(id!=='bilan' && id!=='corp') _ongletActif=id;
+  if(id!=='bilan' && id!=='corp'){ _ongletActif=id; refreshRefs(id); }
   try{ localStorage.setItem(CLIENT_ID+'-onglet', id); }catch(e){}
   document.querySelectorAll('.session').forEach(s=>s.classList.remove('visible'));
   document.querySelectorAll('.tab').forEach(t=>t.className='tab');
