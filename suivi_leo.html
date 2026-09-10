@@ -400,19 +400,19 @@ function buildSessions(){
         html+=`<div class="serie-row">
           <div class="serie-num">S${sr}</div>
           <div class="kg-wrap">
-            <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="${getKey(sid,ei,sr,'kg',1)}" oninput="onInputPerf('${sid}',${ei},'${en}',${sr},'kg',this.value)">
+            <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="${domId(sid,ei,sr,'kg')}" oninput="onInputPerf('${sid}',${ei},'${en}',${sr},'kg',this.value)">
             <button type="button" class="kbd-toggle" onclick="toggleKbd(this)" title="Basculer clavier texte">⌨</button>
           </div>
-          <input type="text" inputmode="numeric" class="serie-input" placeholder="—" id="${getKey(sid,ei,sr,'reps',1)}" oninput="onInputPerf('${sid}',${ei},'${en}',${sr},'reps',this.value)">
-          <input type="text" inputmode="numeric" class="serie-input rir" placeholder="—" id="${getKey(sid,ei,sr,'rir',1)}" oninput="onInputPerf('${sid}',${ei},'${en}',${sr},'rir',this.value)">
-          <div class="serie-check"><button class="check-btn" id="${getKey(sid,ei,sr,'chk',1)}" onclick="toggleCheck('${sid}',${ei},'${en}',${sr})">✓</button></div>
+          <input type="text" inputmode="numeric" class="serie-input" placeholder="—" id="${domId(sid,ei,sr,'reps')}" oninput="onInputPerf('${sid}',${ei},'${en}',${sr},'reps',this.value)">
+          <input type="text" inputmode="numeric" class="serie-input rir" placeholder="—" id="${domId(sid,ei,sr,'rir')}" oninput="onInputPerf('${sid}',${ei},'${en}',${sr},'rir',this.value)">
+          <div class="serie-check"><button class="check-btn" id="${domId(sid,ei,sr,'chk')}" onclick="toggleCheck('${sid}',${ei},'${en}',${sr})">✓</button></div>
         </div>`;
       }
       html+=`</div></div>`;
     });
     html+=`<div class="note-area">
       <div class="note-label">Notes de séance</div>
-      <textarea class="note-input" id="${sid}-note-w1" placeholder="Sensations, douleurs, matériel..." oninput="onInputNote('${sid}',this.value)"></textarea>
+      <textarea class="note-input" id="${sid}-note" placeholder="Sensations, douleurs, matériel..." oninput="onInputNote('${sid}',this.value)"></textarea>
     </div>
     <button class="save-btn" onclick="saveSession('${sid}')">ENREGISTRER LA SÉANCE</button>
     <button class="reset-btn" onclick="resetSession('${sid}')">Effacer la séance S<span class="rst-wk">1</span></button>
@@ -438,7 +438,7 @@ function buildCorp(){
   MENSURATIONS.forEach((m,i)=>{
     htmlMens+=`<div class="mens-row" style="grid-template-columns:1.3fr 1fr">
       <div class="mens-label">${m}</div>
-      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="mens-m${i}-w1" oninput="saveCorpMens(${i})">
+      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="mens-m${i}" oninput="saveCorpMens(${i})">
     </div>`;
   });
   document.getElementById('mens-rows').innerHTML=htmlMens;
@@ -451,6 +451,7 @@ function switchWeek(w){
   });
   document.querySelectorAll('.session-week-pill').forEach(p=>p.textContent=`Semaine ${w}`);
   document.querySelectorAll('.rst-wk').forEach(p=>p.textContent=w);
+  document.querySelectorAll('.note-label').forEach(p=>p.textContent=`Notes de séance · Semaine ${w}`);
   document.getElementById('mens-week-h').textContent=`Semaine ${w}`;
   loadWeekData(w);
 }
@@ -471,10 +472,11 @@ function onInputPerf(sid,ei,en,sr,field,val){
   const k=getKey(sid,ei,sr,field,currentWeek);
   localStorage.setItem(k,val);
   syncField(sid,ei,en,sr,field,val,currentWeek);
+  if(field==='kg'||field==='reps') updatePR(sid,ei);
 }
 
 function toggleCheck(sid,ei,en,sr){
-  const btn=document.getElementById(getKey(sid,ei,sr,'chk',currentWeek));
+  const btn=document.getElementById(domId(sid,ei,sr,'chk'));
   if(!btn) return;
   const isC=btn.classList.toggle('checked');
   const val=isC?'1':'0';
@@ -512,7 +514,9 @@ function saveCorpPoidsRem(w){
 }
 
 function saveCorpMens(i){
-  const v=document.getElementById(`mens-m${i}-w${currentWeek}`).value;
+  const el=document.getElementById(`mens-m${i}`);
+  if(!el) return;
+  const v=el.value;
   localStorage.setItem(`corp-mens-m${i}-w${currentWeek}`,v);
 }
 
@@ -534,22 +538,63 @@ function updatePoidsDiffs(){
   }
 }
 
+/* L'identifiant HTML ne doit PAS contenir la semaine : le DOM est construit
+   une fois, alors que la semaine change. C'est ce qui cassait tout à partir
+   de la semaine 2, les recherches d'éléments ne trouvaient plus rien. */
+function domId(sid,ei,sr,f){ return `${sid}-e${ei}-s${sr}-${f}`; }
+
+/* Le meilleur soulevé sur l'exercice, toutes semaines confondues. */
+function updatePR(sid,ei){
+  const exo=PROGRAMME[sid].exos[ei];
+  let best=null, bestReps=null;
+  for(let w=1;w<=NB_SEMAINES;w++){
+    for(let sr=1;sr<=exo.series;sr++){
+      const kg=parseFloat((localStorage.getItem(getKey(sid,ei,sr,'kg',w))||'').replace(',','.'));
+      const reps=localStorage.getItem(getKey(sid,ei,sr,'reps',w))||'';
+      if(isNaN(kg)||kg<=0) continue;
+      if(best===null || kg>best){ best=kg; bestReps=reps; }
+      else if(kg===best){
+        const nr=parseFloat(String(reps).replace(',','.')), br=parseFloat(String(bestReps).replace(',','.'));
+        if(!isNaN(nr)&&(isNaN(br)||nr>br)) bestReps=reps;
+      }
+    }
+  }
+  const el=document.getElementById(`pr-${sid}-e${ei}`);
+  if(el) el.innerHTML = best!==null ? `PR : <b>${best} kg${bestReps?(' × '+bestReps):''}</b>` : '';
+}
+
+/* Ce qu'il a fait la semaine dernière sur le même exercice. */
+function updateRef(sid,ei){
+  const refEl=document.getElementById(`ref-${sid}-e${ei}`);
+  if(!refEl) return;
+  if(currentWeek<=1){ refEl.innerHTML=''; return; }
+  const prev=currentWeek-1, exo=PROGRAMME[sid].exos[ei], parts=[];
+  for(let sr=1;sr<=exo.series;sr++){
+    const kg=localStorage.getItem(getKey(sid,ei,sr,'kg',prev))||'';
+    const reps=localStorage.getItem(getKey(sid,ei,sr,'reps',prev))||'';
+    if(kg!==''||reps!=='') parts.push(`${kg||'?'}×${reps||'?'}`);
+  }
+  refEl.innerHTML = parts.length ? `Semaine ${prev} : <b>${parts.join('  ·  ')}</b>` : '';
+}
+
 function loadWeekData(w){
   SESSIONS.forEach(sid=>{
     const s=PROGRAMME[sid];
     s.exos.forEach((exo,ei)=>{
       for(let sr=1;sr<=exo.series;sr++){
         ['kg','reps','rir'].forEach(f=>{
-          const input=document.getElementById(getKey(sid,ei,sr,f,w));
+          const input=document.getElementById(domId(sid,ei,sr,f));
           if(input) input.value=localStorage.getItem(getKey(sid,ei,sr,f,w))||'';
         });
-        const chkBtn=document.getElementById(getKey(sid,ei,sr,'chk',w));
+        const chkBtn=document.getElementById(domId(sid,ei,sr,'chk'));
         if(chkBtn){
           chkBtn.classList.toggle('checked', localStorage.getItem(getKey(sid,ei,sr,'chk',w))==='1');
         }
       }
+      updatePR(sid,ei);
+      updateRef(sid,ei);
     });
-    const noteArea=document.getElementById(`${sid}-note-w${w}`);
+    const noteArea=document.getElementById(`${sid}-note`);
     if(noteArea) noteArea.value=localStorage.getItem(`${sid}-note-w${w}`)||'';
   });
 
@@ -559,7 +604,7 @@ function loadWeekData(w){
   });
 
   MENSURATIONS.forEach((_,i)=>{
-    const el=document.getElementById(`mens-m${i}-w${w}`);
+    const el=document.getElementById(`mens-m${i}`);
     if(el) el.value=localStorage.getItem(`corp-mens-m${i}-w${w}`)||'';
   });
 }
