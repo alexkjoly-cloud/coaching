@@ -737,8 +737,11 @@ function updateRef(session,exo){
       b.sessions[sid].exos.forEach(e=>{
         if(e.nom===def.nom) cands.push({sid, exo:e.exo, series:e.series, titre:b.sessions[sid].titre});
       });
-    /* Sa propre séance d'abord, l'autre passage ensuite. */
-    cands.sort((x,y)=>(x.sid===session?0:1)-(y.sid===session?0:1));
+    /* Dans l'ordre réel de la semaine, la plus récente d'abord. Push B tombe
+       après Push A dans la rotation, donc sur Push A c'est bien le Push B de
+       la semaine précédente qu'on veut voir, pas son propre Push A. */
+    const ordre=Object.keys(b.sessions);
+    cands.sort((x,y)=>ordre.indexOf(y.sid)-ordre.indexOf(x.sid));
     for(const pl of cands){
       if(w===currentWeek && pl.sid===session) continue;   // ce qu'il est en train de saisir
       const parts=[];
@@ -748,7 +751,8 @@ function updateRef(session,exo){
         if(kg!==''||reps!==''){ parts.push(`${kg||'?'}×${reps||'?'}`); }
       }
       if(parts.length){
-        const ou = (pl.sid===session) ? `Semaine ${w}` : `${pl.titre.replace(/^\d+\s*·\s*/,'')}, semaine ${w}`;
+        const nom=pl.titre.replace(/^\d+\s*·\s*/,'');
+        const ou = (pl.sid===session) ? `Semaine ${w}` : `${nom}, semaine ${w}`;
         refEl.innerHTML=`${ou} : <b>${parts.join('  ·  ')}</b>`;
         return;
       }
