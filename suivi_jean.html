@@ -98,6 +98,9 @@
   .mens-row:last-child { border-bottom:none; }
   .mens-label { font-size:11px; color:var(--white); padding:11px 8px; border-right:1px solid #131313; }
 
+.prog-rule { margin-top:12px; padding:12px 14px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--gold); border-radius:0 2px 2px 0; font-size:11.5px; line-height:1.6; color:var(--muted); font-weight:300; }
+  .prog-rule b { color:var(--white); font-weight:500; }
+
   /* Bilan hebdo */
   .bilan-intro { margin-top:14px; padding:14px 16px; background:var(--gold-dim); border:1px solid rgba(201,168,76,0.3); border-radius:2px; font-size:12px; color:#cbb87a; font-weight:300; line-height:1.6; }
   .bilan-intro b { color:var(--gold); font-weight:500; }
@@ -160,7 +163,7 @@
     <div class="eyebrow">Suivi d'entraînement</div>
     <h1>JEAN<span>.</span></h1>
   </div>
-  <div class="cycle-badge">Cycle de 8 semaines<strong id="cycle-label">PPL · Upper · Lower</strong></div>
+  <div class="cycle-badge">Cycle de 13 semaines<strong id="cycle-label">PPL · Upper · Lower</strong></div>
 </div>
 
 <div class="week-selector" id="week-selector"></div>
@@ -168,9 +171,9 @@
 <div class="tabs">
   <button class="tab active-push" id="tab-push" onclick="switchTab('push')">Push<br><span style="font-size:8px;color:var(--muted)">Pec · Épaules · Tri</span></button>
   <button class="tab" id="tab-pull" onclick="switchTab('pull')">Pull<br><span style="font-size:8px;color:var(--muted)">Dos · Biceps</span></button>
-  <button class="tab" id="tab-legs" onclick="switchTab('legs')">Legs<br><span style="font-size:8px;color:var(--muted)">Jambes</span></button>
+  <button class="tab" id="tab-legs" onclick="switchTab('legs')">Legs<br><span style="font-size:8px;color:var(--muted)">Quadriceps</span></button>
   <button class="tab" id="tab-upper" onclick="switchTab('upper')">Upper<br><span style="font-size:8px;color:var(--muted)">Haut complet</span></button>
-  <button class="tab" id="tab-lower" onclick="switchTab('lower')">Lower<br><span style="font-size:8px;color:var(--muted)">Bas complet</span></button>
+  <button class="tab" id="tab-lower" onclick="switchTab('lower')">Lower<br><span style="font-size:8px;color:var(--muted)">Hanche · Ischios</span></button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
 </div>
@@ -276,64 +279,64 @@ const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7v
 const CLIENT_ID = "jean";
 
 // Programme non réglé : suivi verrouillé. Passer à false pour rouvrir l'accès.
-const CLIENT_LOCKED = true;
+const CLIENT_LOCKED = false;
 if(CLIENT_LOCKED){
   document.body.classList.add('locked');
   document.getElementById('lock-overlay').classList.add('visible');
 }
 
-const NB_SEMAINES = 8;
+const NB_SEMAINES = 13;
 
 const PROGRAMME = {
   'push': {
-    nom:'PUSH', couleur:'push', tag:'Pec · Épaules · Triceps',
+    nom:'PUSH', couleur:'push', tag:'Pectoraux · Épaules · Triceps',
     exos:[
-      {nom:'Bench press machine', series:3, target:'Pectoraux · Triceps', pres:'3 × 6-8'},
-      {nom:'Développé incliné Hammer', series:2, target:'Haut pec · Deltoïde ant.', pres:'2 × 8-10'},
-      {nom:'Développé militaire machine', series:2, target:'Épaules · Deltoïde ant.', pres:'2 × 8-10'},
-      {nom:'Élévations latérales câble uni', series:3, target:'Deltoïde latéral', pres:'3 × 12-15'},
-      {nom:'Extension triceps poulie unilatérale', series:3, target:'Triceps', pres:'3 × 10-12'},
+      {nom:'Développé incliné machine', series:3, target:"Haut des pectoraux · RIR 1-2 · 3 min de repos", pres:'3 × 8-12'},
+      {nom:'Écarté machine', series:3, target:"Pectoraux · RIR 0-1 · 2 min", pres:'3 × 10-15'},
+      {nom:'Développé épaules machine', series:2, target:"Deltoïde antérieur · RIR 1-2 · 3 min", pres:'2 × 8-12'},
+      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 90 s", pres:'3 × 10-15'},
+      {nom:'Extension triceps à la poulie', series:3, target:"Triceps · RIR 0-1 · 90 s", pres:'3 × 10-15'},
     ]
   },
   'pull': {
-    nom:'PULL', couleur:'pull', tag:'Dos · Biceps',
+    nom:'PULL', couleur:'pull', tag:'Dos · Arrière d&rsquo;épaule · Biceps',
     exos:[
-      {nom:'Tirage vertical', series:3, target:'Grand dorsal · Biceps', pres:'3 × 6-8'},
-      {nom:'Tirage horizontal machine', series:2, target:'Dos · Rhomboïdes', pres:'2 × 8-10'},
-      {nom:'Tirage vertical prise neutre', series:2, target:'Dos · épaisseur', pres:'2 × 10-12'},
-      {nom:'Rear delt machine', series:3, target:'Deltoïde postérieur', pres:'3 × 12-15'},
-      {nom:'Curl pupitre machine', series:3, target:'Biceps', pres:'3 × 10-12'},
+      {nom:'Tirage vertical prise large', series:3, target:"Grand dorsal · RIR 1-2 · 3 min", pres:'3 × 8-12'},
+      {nom:'Tirage horizontal coudes ouverts', series:3, target:"Milieu du dos · RIR 1-2 · 2 min · Coudes écartés à 45°, tu tires vers le haut du ventre", pres:'3 × 10-15'},
+      {nom:'Tirage horizontal prise serrée neutre', series:2, target:"Grand dorsal, épaisseur · RIR 1-2 · 3 min", pres:'2 × 8-12'},
+      {nom:'Oiseau à la poulie', series:3, target:"Arrière d&rsquo;épaule · RIR 1-2 · 90 s", pres:'3 × 10-15'},
+      {nom:'Curl pupitre', series:3, target:"Biceps · RIR 0-1 · 2 min", pres:'3 × 8-12'},
     ]
   },
   'legs': {
-    nom:'LEGS', couleur:'legs', tag:'Jambes',
+    nom:'LEGS', couleur:'legs', tag:'Quadriceps · Ischios · Mollets · Abdos',
     exos:[
-      {nom:'Hack squat ou Presse à cuisses', series:2, target:'Quadriceps · Fessiers', pres:'2 × 6-10'},
-      {nom:'Leg extension', series:3, target:'Quadriceps', pres:'3 × 10-15'},
-      {nom:'Leg curl (assis ou couché)', series:3, target:'Ischio-jambiers', pres:'3 × 10-12'},
-      {nom:'Mollets presse', series:3, target:'Soléaire · Gastrocnémiens', pres:'3 × 10-15'},
-      {nom:'Abdos (gainage / crunch câble)', series:3, target:'Abdominaux · Gainage', pres:'3 ×'},
+      {nom:'Presse à cuisses, réglage quadriceps', series:3, target:"Quadriceps · RIR 1-2 · 3 min · Pieds bas sur la plateforme, largeur de bassin, talons collés, le bas du dos ne décolle jamais", pres:'3 × 8-12'},
+      {nom:'Leg extension', series:3, target:"Quadriceps · RIR 0-1 · 2 min", pres:'3 × 10-15'},
+      {nom:'Leg curl assis', series:3, target:"Ischio-jambiers · RIR 1-2 · 2 min", pres:'3 × 8-12'},
+      {nom:'Mollets debout', series:2, target:"Mollets · RIR 0-1 · 90 s", pres:'2 × 12-15'},
+      {nom:'Crunch lesté', series:2, target:"Abdominaux · RIR 0-1 · 90 s", pres:'2 × 10-15'},
     ]
   },
   'upper': {
     nom:'UPPER', couleur:'upper', tag:'Haut du corps complet',
     exos:[
-      {nom:'Développé incliné machine', series:3, target:'Haut pec · Deltoïde ant.', pres:'3 × 6-10'},
-      {nom:'Tirage vertical prise large', series:3, target:'Grand dorsal · largeur', pres:'3 × 8-10'},
-      {nom:'Rowing appui poitrine', series:2, target:'Dos · Rhomboïdes', pres:'2 × 10-12'},
-      {nom:'Élévations latérales poulie uni', series:3, target:'Deltoïde latéral', pres:'3 × 12-15'},
-      {nom:'Curl poulie', series:2, target:'Biceps', pres:'2 × 10-12'},
-      {nom:'Extension triceps overhead câble', series:2, target:'Triceps · longue portion', pres:'2 × 10-12'},
+      {nom:'Développé couché machine', series:3, target:"Pectoraux · RIR 1-2 · 3 min", pres:'3 × 8-12'},
+      {nom:'Tirage vertical prise neutre', series:3, target:"Grand dorsal · RIR 1-2 · 3 min", pres:'3 × 8-12'},
+      {nom:'Rowing appui poitrine', series:3, target:"Milieu du dos · RIR 1-2 · 2 min", pres:'3 × 10-15'},
+      {nom:'Élévations latérales', series:3, target:"Deltoïde latéral · RIR 0-1 · 90 s", pres:'3 × 10-15'},
+      {nom:'Extension triceps', series:2, target:"Triceps · RIR 0-1 · 90 s", pres:'2 × 10-15'},
+      {nom:'Curl marteau', series:2, target:"Biceps et brachial · RIR 0-1 · 90 s", pres:'2 × 10-15'},
     ]
   },
   'lower': {
-    nom:'LOWER', couleur:'lower', tag:'Bas du corps complet',
+    nom:'LOWER', couleur:'lower', tag:'Charnière de hanche · Ischios · Mollets',
     exos:[
-      {nom:'RDL', series:2, target:'Ischio-jambiers · Fessiers', pres:'2 × 6-10'},
-      {nom:'Leg extension', series:3, target:'Quadriceps', pres:'3 × 10-15'},
-      {nom:'Leg curl allongé', series:3, target:'Ischio-jambiers', pres:'3 × 10-12'},
-      {nom:'Adducteurs machine', series:2, target:'Adducteurs', pres:'2 × 12-15'},
-      {nom:'Vacuum (transverse)', series:3, target:'Transverse · sangle abdo', pres:'3 ×'},
+      {nom:'Soulevé de terre roumain', series:3, target:"Ischios et fessiers · RIR 1-2 · 3 min · Genoux à peine fléchis et figés, barre collée aux cuisses, tu t&rsquo;arrêtes avant que le bas du dos s&rsquo;arrondisse", pres:'3 × 8-12'},
+      {nom:'Presse à cuisses, réglage global', series:3, target:"Quadriceps et fessiers · RIR 1-2 · 3 min · Pieds au milieu de la plateforme, la charge sera différente de celle du Legs, c&rsquo;est normal", pres:'3 × 8-12'},
+      {nom:'Leg curl allongé', series:3, target:"Ischio-jambiers · RIR 0-1 · 2 min", pres:'3 × 10-15'},
+      {nom:'Adducteurs machine', series:2, target:"Adducteurs · RIR 1-2 · 90 s", pres:'2 × 10-15'},
+      {nom:'Mollets assis', series:2, target:"Soléaire · RIR 0-1 · 90 s", pres:'2 × 12-15'},
     ]
   },
 };
@@ -401,7 +404,8 @@ function buildSessions(){
         <div class="session-tag tag-${s.couleur}">${s.tag}</div>
         <div class="session-title">${s.nom}<span class="session-week-pill" id="pill-${sid}">Semaine 1</span></div>
         <div class="session-sub">${s.exos.map(e=>e.nom.split(' ')[0]).join(' · ')}</div>
-      </div>`;
+      </div>
+      <div class="prog-rule"><b>Double progression.</b> Tu gardes la même charge tant que tu n'as pas atteint le haut de la fourchette sur <b>toutes</b> tes séries. Le jour où c'est fait, tu montes d'un cran au prochain passage, et tu redescends dans le bas de la fourchette : c'est normal, c'est le signe que ça a marché.<br><b>Le RIR</b>, c'est ce qu'il te reste dans le réservoir. RIR 1-2 sur les gros exercices, RIR 0-1 sur les machines et l'isolation.</div>`;
     s.exos.forEach((exo,ei)=>{
       html+=`<div class="exo-card">
         <div class="exo-top">
