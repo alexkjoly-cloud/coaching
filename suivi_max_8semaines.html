@@ -58,6 +58,32 @@
   .tab.active-lower { background:var(--teal-dim); border-color:rgba(93,184,168,0.3); color:var(--teal); box-shadow:inset 0 2px 0 var(--teal); }
   .tab.active-corp { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); box-shadow:inset 0 2px 0 var(--gold); }
   .tab.active-bilan { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); box-shadow:inset 0 2px 0 var(--gold); }
+  /* ---------- Diète ---------- */
+  .tab.active-diete { background:rgba(62,184,122,0.10); border-color:rgba(62,184,122,0.35); color:var(--green); }
+  .diete-intro { margin-top:10px; padding:13px 15px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--green); border-radius:0 2px 2px 0; font-size:12px; color:var(--muted); font-weight:300; line-height:1.65; }
+  .diete-intro b { color:var(--white); font-weight:500; }
+  .macro-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; }
+  .macro { background:var(--card); border:1px solid var(--border); border-radius:2px; padding:11px 6px; text-align:center; }
+  .macro .k { font-size:8.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--muted2); font-weight:500; }
+  .macro .v { font-family:'Bebas Neue',sans-serif; font-size:23px; line-height:1.1; margin-top:2px; letter-spacing:0.03em; }
+  .macro.kcal .v { color:var(--green); }
+  .cible { margin-top:10px; padding:13px 15px; background:var(--gold-dim); border:1px solid rgba(201,168,76,0.3); border-radius:2px; font-size:12px; color:#cbb87a; line-height:1.65; font-weight:300; }
+  .cible b { color:var(--gold); font-weight:500; }
+  .diete-jour { margin-top:8px; background:var(--card); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
+  .dj-head { padding:10px 14px; border-bottom:1px solid var(--border); display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .dj-head .n { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.08em; }
+  .dj-head .m { font-size:10px; color:var(--muted2); font-variant-numeric:tabular-nums; }
+  .dj-repas { padding:9px 14px; border-bottom:1px solid var(--border); }
+  .dj-repas:last-child { border-bottom:none; }
+  .dj-repas .r { font-size:8.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--muted2); font-weight:500; margin-bottom:3px; }
+  .dj-repas .a { font-size:12.5px; line-height:1.6; color:var(--muted); font-weight:300; }
+  .dj-repas .a b { color:var(--white); font-weight:500; }
+  .diete-sec { font-size:9.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted2); font-weight:500; margin:22px 0 0; display:block; }
+  ul.courses { columns:2; column-gap:20px; margin:8px 0 0; padding-left:16px; }
+  ul.courses li { padding:2px 0; font-size:12px; color:var(--muted); font-weight:300; break-inside:avoid; }
+  ul.courses li b { color:var(--white); font-weight:400; }
+  @media(max-width:480px){ ul.courses{columns:1;} .macro-grid{grid-template-columns:repeat(2,1fr);} }
+
   .tab.active-transverse { background:var(--teal-dim); border-color:rgba(93,184,168,0.4); color:var(--teal); box-shadow:inset 0 2px 0 var(--teal); }
   .tab-alert { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--teal); margin-left:4px; vertical-align:middle; }
 
@@ -235,6 +261,7 @@
   <button class="tab" id="tab-pull" onclick="switchTab('pull')">Pull<br><span style="font-size:8px;color:var(--muted)">Dos · Biceps</span></button>
   <button class="tab" id="tab-lower" onclick="switchTab('lower')">Lower<br><span style="font-size:8px;color:var(--muted)">Bas complet</span></button>
   <button class="tab" id="tab-upper" onclick="switchTab('upper')">Upper<br><span style="font-size:8px;color:var(--muted)">Haut complet</span></button>
+  <button class="tab" id="tab-diete" onclick="switchTab('diete')">Diète<br><span style="font-size:8px;color:var(--muted)">Macros · Cible</span></button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
   <button class="tab" id="tab-transverse" onclick="switchTab('transverse')">Transverse<br><span style="font-size:8px;color:var(--muted)">Vacuum · Quotidien</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
@@ -248,6 +275,45 @@
 </div>
 
 <div id="sessions-container"></div>
+
+<!-- DIETE -->
+<div class="session" id="session-diete">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--green)">Nutrition</div>
+    <div class="session-title">MACROS</div>
+    <div class="session-sub">Tes chiffres de la semaine et la cible. Pas de menu imposé, tu manges ce que tu veux dedans.</div>
+  </div>
+
+  <div class="macro-grid">
+    <div class="macro kcal"><div class="k">Calories</div><div class="v">3000</div></div>
+    <div class="macro"><div class="k">Protéines</div><div class="v">145 g</div></div>
+    <div class="macro"><div class="k">Glucides</div><div class="v">425 g</div></div>
+    <div class="macro"><div class="k">Lipides</div><div class="v">80 g</div></div>
+  </div>
+
+  <div class="cible">
+    <b>La cible : 75 kg.</b> Tu es autour de 71,7 kg. On y va à <b>200 à 300 g par semaine</b>, pas plus. Le corps construit à vitesse limitée, tout ce que tu prends au-dessus part en gras et se paie en sèche derrière. À ce rythme-là ça fait <b>trois à quatre mois</b>, et tu arrives à 75 kg avec un taux de gras qui n'a presque pas bougé.
+  </div>
+
+  <div class="diete-intro">
+    <b>Les protéines sont le seul chiffre à ne jamais rater.</b> 145 g, soit 2 g par kilo. Au-delà ce sont des glucides en moins, donc des séances moins bonnes, et avec ton volume c'est toi qui paierais.<br>
+    <b>Les glucides sont ta priorité numéro deux.</b> 425 g, c'est ce qui fait tes séances. Si tu dois rater quelque chose dans la journée, que ce soit les lipides.<br>
+    <b>Tout se pèse cru.</b> Riz, pâtes, viandes et poissons sont pesés avant cuisson. 100 g de riz cru font presque 300 g cuits.
+  </div>
+
+  <span class="diete-sec">Comment on pilote</span>
+  <div class="diete-intro">
+    Tu te pèses <b>tous les matins à jeun</b> et on ne regarde que la <b>moyenne de la semaine</b>. Le poids du matin varie de plus d'un kilo pour des raisons qui n'ont rien à voir avec la masse, un chiffre isolé ne veut rien dire.<br><br>
+    <b>Si tu prends moins de 200 g par semaine</b> sur deux semaines d'affilée, on monte de 200 kcal en glucides.<br>
+    <b>Si tu prends plus de 400 g par semaine</b>, on redescend de 200. À ce rythme tu prends du gras que tu devras enlever après.<br>
+    <b>Si le tour de taille grimpe plus vite que le poids</b>, c'est le signal le plus fiable qu'on est allé trop haut. Prends-le une fois par semaine.
+  </div>
+
+  <div class="cible" style="border-color:rgba(230,50,50,0.3);background:var(--red-dim);color:var(--muted)">
+    <b style="color:var(--red)">Le point honnête.</b> Tu ne comptes plus tes calories, et ça marche pour l'instant puisque le poids monte tranquillement. Tant que la moyenne hebdo avance dans la bonne fourchette, on ne touche à rien. Le jour où ça stagne trois semaines, il faudra retracker une semaine pour savoir où tu en es réellement, sinon on ajuste à l'aveugle.
+  </div>
+  <div class="spacer"></div>
+</div>
 
 <!-- BILAN HEBDO -->
 <div class="session" id="session-bilan">
