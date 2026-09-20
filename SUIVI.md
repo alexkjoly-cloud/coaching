@@ -1,0 +1,179 @@
+# SUIVI CLIENTS — fiche de pilotage
+
+**Ce fichier est la mémoire du suivi.** Une conversation qui démarre sans contexte
+lit ce fichier et sait quoi faire. Il se met à jour à chaque décision.
+
+Dernière mise à jour : **20/09/2026**
+Méthode appliquée : skill `methode-alex`, mot-témoin `cru-20`.
+
+---
+
+## LA PROCÉDURE HEBDOMADAIRE
+
+À faire le **lundi**, pour chaque client actif.
+
+1. **Lire la Sheet.** `SUIVI FINAL !`, id `1KVVjEU4onfNoesgMpgqpj7ZghiggfGJ9j_MreO7CbDQ`.
+   ⚠️ `read_file_content` tronque vers 226 lignes par onglet : passer par
+   `download_file_content` en `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`,
+   décoder le base64, lire avec openpyxl.
+   Format des clés : `perf|WW|séance|exo|série` · `bilan|WW|OO-champ` · `note|séance|WW`
+   · `corp|WW` · `poids|WW` · `mens|ZZ|col`.
+   📌 **Le tour de taille de certains clients est une ligne `perf` sur la séance `corps`**,
+   exercice « Tour de taille (cm) ». Ne pas le filtrer par erreur.
+
+2. **Lire les perfs exercice par exercice.** On cherche une seule chose :
+   **qui a touché le haut de la fourchette sur toutes ses séries.** Ceux-là montent
+   d'un cran au prochain passage. Ceux qui stagnent trois semaines sur la même charge
+   sans atteindre le haut, on regarde la récupération avant de toucher au volume.
+
+3. **Lire le bilan.** Poids, tour de taille, sommeil, énergie, fatigue, ressenti.
+   Le poids se lit en **moyenne de la semaine**, jamais sur un chiffre isolé.
+
+4. **Décider la diète** avec la règle d'ajustement du client (plus bas). Si la cible
+   change, **réécrire les journées** de l'onglet Diète, pas seulement le chiffre.
+
+5. **Écrire la réponse au bilan.** Ton d'Alex, tutoiement, concis, zéro marqueur IA.
+   Alexandre veut **le message final prêt à envoyer**, pas un rapport.
+
+6. **Pousser.** Branche `claude/weekly-coaching-reviews-ecbvwm` puis `main` en
+   `--ff-only`, et vérifier que les quatre SHAs concordent.
+
+⚠️ **Ne jamais écrire dans l'appli d'un client pour tester** : la saisie part dans la
+Sheet à son nom et pollue son suivi.
+
+---
+
+## ALEXIA M
+
+| | |
+|---|---|
+| Formule | Suivi 3 mois + nutrition, **300 € payés**, mais **un seul mois réglé** → appli calée sur **4 semaines** |
+| Contact | Instagram `vanuzzaaa` · ravanuzzaa@gmail.com · pas de numéro |
+| Profil | 26 ans, 166 cm, **73 kg au départ**, bureau, 7 000 pas, 4 séances |
+| Objectif | Perte de gras, « un beau physique ». Priorité déclarée au **fessier**. |
+| Bilan | **Lundi** |
+| Appli | `suivi_alexia.html` |
+
+**Entraînement.** 4 séances, 64 séries. 3 Lower + 1 Upper, parce que 3 de ses 5
+priorités sont en bas. Chaque séance fait 16 séries et 6 séries lourdes, pour que
+l'effort soit le même d'une séance à l'autre : elle l'a demandé explicitement.
+Grand fessier 14 séries la semaine sur quatre angles, moyen fessier 8, ischios 9,
+quadriceps 8, dos 12.
+
+**Diète.** 1 700 kcal · 147 g de protéines · 140 de glucides · 57 de lipides.
+Maintenance estimée 2 150 (Mifflin 1 477 × 1,45), donc **−450 kcal**, soit 0,5 kg
+par semaine. 7 journées différentes construites sur **sa liste** (voir plus bas).
+
+**Règle d'ajustement** (appliquée automatiquement par l'appli, à confirmer à la main) :
+- perte < 0,3 kg/semaine → **−150 kcal** en glucides
+- perte > 0,8 kg/semaine → **+150 kcal**
+- entre les deux → on ne touche à rien
+- **les protéines ne bougent jamais**
+
+**Sa liste d'aliments, donnée le 19/09.** Adore : tomates, courgettes, épinards,
+champignons, concombre, flageolets, pommes de terre, riz, pâtes, tous les fromages,
+viande rouge, poulet, abats, tous les poissons et fruits de mer (gros kiff saumon et
+saumon fumé), fruits rouges, kiwi, raisin, banane, mangue, kaki, flocons d'avoine,
+muesli, beurre de cacahuète. **Elle mange du skyr** (confirmé le 20/09).
+Plats préférés : pâtes carbo, lasagnes, **banana bread qu'elle aime préparer**.
+⛔ **Déteste le brocoli.** Ouverte à tout le reste.
+
+**Ce qui manque encore :** ses **mensurations et ses photos de départ**. Relancer
+tant qu'on ne les a pas, sans ça il n'y aura rien à montrer à la fin.
+
+---
+
+## JEAN ESCLAPEZ
+
+| | |
+|---|---|
+| Formule | **Un mois réglé** → appli calée sur **4 semaines** |
+| Contact | 06 46 60 57 77 · esclapez2007@gmail.com |
+| Profil | 19 ans, 171 cm, **71 kg**, On Air, 5 séances |
+| Objectif | **« 75 kg sec »** → recomposition, puis prise de masse propre |
+| Bilan | **Dimanche** |
+| Appli | `suivi_jean.html` |
+
+**Entraînement.** 5 séances, 70 séries. Push / Pull / Legs / Upper / Lower.
+Il stagne depuis des mois avec beaucoup de volume et peu d'intensité : **on a baissé
+le volume et monté la proximité de l'échec.** Plusieurs muscles sont sous le plancher
+de 12 séries, **c'est volontaire** et ça vaudra jusqu'à ce qu'il choisisse ses
+priorités.
+⛔ **Interdits** : squat barre libre, développé militaire barre (détestés sur ses deux
+formulaires).
+
+**Diète.** 2 500 kcal · 146 g de protéines · 303 de glucides · 67 de lipides.
+Maintenance estimée 2 500 (Mifflin 1 689), donc **au maintien, en recomposition**.
+⚠️ **Sa maintenance est incertaine entre 2 320 et 2 700** : il a coché 10 000 pas ET
+« légèrement actif ». Le chiffre est un pari au milieu, ce sont ses pesées qui
+trancheront.
+
+**Règle d'ajustement** :
+- tour de taille +0,5 cm ou plus → **−150 kcal** en glucides
+- ni le poids ni la taille ne bougent → **+150 kcal** (il doit finir par prendre)
+- poids stable et taille qui descend → **on ne touche à rien**, c'est le but
+- **les protéines ne bougent jamais**
+
+📌 **Lui redire que la balance ne bougera presque pas.** En recomposition c'est le
+tour de taille qui parle. Sans ça il croira qu'il ne se passe rien.
+
+**Ce qui manque encore :** ses **deux ou trois muscles prioritaires** (il a coché les
+huit), sa **réponse sur le soulevé de terre roumain** (il avait écrit « squat
+deadlift » dans les détestés en juin mais pas en septembre), et ses **mensurations et
+photos de départ**.
+
+---
+
+## CE QUE L'APPLI FAIT TOUTE SEULE
+
+Depuis le 20/09, l'onglet **Diète** des deux applis porte un bloc **objectif de la
+semaine** qui suit le sélecteur de semaine. Il lit le **poids** et le **tour de
+taille** saisis dans le bilan (ou à défaut dans l'onglet Corps), compare les deux
+dernières semaines renseignées et **recalcule les calories** avec la règle du client.
+
+⚠️ **Il recalcule la cible, il ne réécrit pas les sept menus.** Quand la cible bouge,
+c'est à nous de refaire les journées et de pousser.
+
+⚠️ Le stockage local est partagé entre toutes les applis (même domaine, clés sans
+nom de client). Sans conséquence pour les clients, qui n'ouvrent que la leur.
+**La Sheet reste la source de vérité.**
+
+---
+
+## LA TABLE CIQUAL
+
+Les diètes sont calculées sur la **table CIQUAL 2025 officielle** fournie par
+Alexandre le 20/09 (`Table_Ciqual_2025_FR_2025_11_03.xls`, 3 485 aliments).
+Colonnes utilisées : énergie règlement UE 1169/2011 (kcal), protéines N × Jones,
+glucides, lipides.
+
+🔴 **Tout se pèse cru et se calcule sur la ligne CRU.** La mention va **sur chaque
+ligne** de la diète, pas en note de bas de page. Rien à mentionner sur ce qui n'a pas
+d'état cru : conserves égouttées, laitages, pain, fruits, huile.
+
+📌 **Le skyr n'est pas dans CIQUAL.** Valeur d'étiquette donnée par Alexandre :
+**60 kcal · 10 g de protéines · 4,9 de glucides · 0,3 de lipides.**
+
+⚠️ **ciqual.anses.fr et data.gouv.fr sont bloqués par le proxy** depuis
+l'environnement d'exécution. Pour revérifier une valeur, il faut qu'Alexandre
+renvoie le fichier.
+
+---
+
+## CLIENTS INACTIFS
+
+- **Max** — suivi terminé. Ne plus le traiter. Son appli porte encore un onglet
+  Macros avec des chiffres jamais validés par Alexandre : à retirer si son appli
+  reste en ligne.
+- **Léo** — mois 2 terminé le 3 septembre. Il s'entraînait encore seul mi-septembre.
+  Statut à clarifier avec Alexandre.
+- **Julie, Romain, Théo** — voir l'onglet `Formules` de la Sheet, plusieurs dates de
+  fin y sont fausses.
+
+---
+
+## L'ONGLET FORMULES EST À CORRIGER
+
+Connu et pas encore fait : Alexia n'y a **aucune ligne**, Jean y figure encore sur
+son ancien cycle (23 juin au 3 août), Léo est noté « 1 mois », Max a une fin au
+29 juillet, et `alexandre_test` porte une durée parasite.
