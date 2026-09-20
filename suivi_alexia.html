@@ -62,6 +62,21 @@
   .tab.active-bilan { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); box-shadow:inset 0 2px 0 var(--gold); }
   /* ---------- Diète ---------- */
   .tab.active-diete { background:rgba(62,184,122,0.10); border-color:rgba(62,184,122,0.35); color:var(--green); }
+  /* ---------- Objectif de la semaine ---------- */
+  .cible-sem { margin-top:12px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--gold); border-radius:0 2px 2px 0; padding:13px 15px; }
+  .cs-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:9px; }
+  .cs-top .w { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.08em; color:var(--gold); }
+  .cs-top .p { font-size:11px; color:var(--muted2); }
+  .cs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(84px,1fr)); gap:7px; }
+  .cs-c { background:var(--dark); border:1px solid var(--border); border-radius:2px; padding:8px 6px; text-align:center; }
+  .cs-c .k { font-size:8px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); font-weight:500; }
+  .cs-c .v { font-family:'Bebas Neue',sans-serif; font-size:18px; line-height:1.15; margin-top:1px; letter-spacing:0.03em; }
+  .cs-c.gold .v { color:var(--gold); }
+  .cs-msg { font-size:12px; color:var(--muted); font-weight:300; line-height:1.6; margin-top:10px; }
+  .cs-msg b { color:var(--white); font-weight:500; }
+  .cs-msg.up b { color:var(--green); }
+  .cs-msg.down b { color:var(--red); }
+
   .diete-intro { margin-top:10px; padding:13px 15px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--green); border-radius:0 2px 2px 0; font-size:12px; color:var(--muted); font-weight:300; line-height:1.65; }
   .diete-intro b { color:var(--white); font-weight:500; }
   .macro-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; }
@@ -230,10 +245,12 @@
 
   <div class="macro-grid">
     <div class="macro kcal"><div class="k">Calories</div><div class="v">1700</div></div>
-    <div class="macro"><div class="k">Protéines</div><div class="v">150 g</div></div>
-    <div class="macro"><div class="k">Glucides</div><div class="v">145 g</div></div>
-    <div class="macro"><div class="k">Lipides</div><div class="v">58 g</div></div>
+    <div class="macro"><div class="k">Protéines</div><div class="v">147 g</div></div>
+    <div class="macro"><div class="k">Glucides</div><div class="v">140 g</div></div>
+    <div class="macro"><div class="k">Lipides</div><div class="v">57 g</div></div>
   </div>
+
+  <div class="cible-sem" id="cible-sem"></div>
 
   <div class="cible">
     <b>La cible.</b> Tu es partie de 73 kg. On vise environ <b>0,5 kg par semaine</b>, donc <b>2 kg sur le mois</b>. Assez pour que ça bouge vite, assez peu pour que tu gardes ta force sur les charges pendant qu'on installe la progression.
@@ -247,7 +264,7 @@
 
   <span class="diete-sec">Jour 1 · poulet et riz</span>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">JOUR 1</span><span class="m">1710 kcal · P148 · G139 · L56</span></div>
+    <div class="dj-head"><span class="n">JOUR 1</span><span class="m">1703 kcal · P145 · G141 · L56</span></div>
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a">Skyr 0 % <b>250 g</b> · Flocons d'avoine <b>35 g secs</b> · Banane <b>80 g</b></div></div>
     <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Blanc de poulet <b>180 g cru</b> · Riz <b>40 g cru</b> · Courgettes <b>250 g crues</b> · Huile d'olive <b>10 g</b></div></div>
     <div class="dj-repas"><div class="r">Collation</div><div class="a">Fromage blanc 0 % <b>150 g</b> · Beurre de cacahuète <b>25 g</b></div></div>
@@ -256,34 +273,34 @@
 
   <span class="diete-sec">Jour 2 · les pâtes carbo</span>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">JOUR 2</span><span class="m">1746 kcal · P147 · G146 · L57</span></div>
+    <div class="dj-head"><span class="n">JOUR 2</span><span class="m">1714 kcal · P147 · G140 · L57</span></div>
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a"><b>3 œufs</b> · Pain complet <b>50 g</b> · Tomates <b>150 g</b></div></div>
-    <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Pâtes <b>95 g crues</b> · Steak haché 5 % <b>185 g cru</b> · Champignons <b>200 g crus</b> · Parmesan <b>15 g</b> · Huile d'olive <b>5 g</b></div></div>
-    <div class="dj-repas"><div class="r">Collation</div><div class="a">Skyr 0 % <b>250 g</b> · Fruits rouges <b>150 g</b></div></div>
+    <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Pâtes <b>80 g crues</b> · Steak haché 5 % <b>185 g cru</b> · Champignons <b>200 g crus</b> · Parmesan <b>15 g</b> · Huile d'olive <b>5 g</b></div></div>
+    <div class="dj-repas"><div class="r">Collation</div><div class="a">Skyr 0 % <b>300 g</b> · Fruits rouges <b>150 g</b></div></div>
     <div class="dj-repas"><div class="r">Dîner</div><div class="a">Saumon <b>100 g cru</b> · Flageolets <b>180 g égouttés</b> · Concombre <b>150 g</b> · Huile d'olive <b>5 g</b></div></div>
   </div>
 
   <span class="diete-sec">Jour 3 · bavette et crevettes</span>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">JOUR 3</span><span class="m">1723 kcal · P145 · G143 · L56</span></div>
+    <div class="dj-head"><span class="n">JOUR 3</span><span class="m">1702 kcal · P147 · G137 · L56</span></div>
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a">Flocons d'avoine <b>45 g secs</b> · Skyr 0 % <b>200 g</b> · Kiwi <b>150 g</b></div></div>
     <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Bavette <b>150 g crue</b> · Pommes de terre <b>220 g crues</b> · Épinards <b>200 g crus</b> · Huile d'olive <b>10 g</b></div></div>
     <div class="dj-repas"><div class="r">Collation</div><div class="a">Fromage blanc 0 % <b>200 g</b> · Amandes <b>12 g</b></div></div>
-    <div class="dj-repas"><div class="r">Dîner</div><div class="a">Crevettes <b>210 g cuites</b> · Riz <b>45 g cru</b> · Courgettes <b>250 g crues</b> · Feta <b>40 g</b> · Huile d'olive <b>13 g</b></div></div>
+    <div class="dj-repas"><div class="r">Dîner</div><div class="a">Crevettes <b>230 g cuites</b> · Riz <b>35 g cru</b> · Courgettes <b>250 g crues</b> · Feta <b>40 g</b> · Huile d'olive <b>13 g</b></div></div>
   </div>
 
   <span class="diete-sec">Jour 4 · foie de veau et saumon fume</span>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">JOUR 4</span><span class="m">1727 kcal · P146 · G140 · L59</span></div>
+    <div class="dj-head"><span class="n">JOUR 4</span><span class="m">1717 kcal · P147 · G137 · L60</span></div>
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a">Muesli sans sucre ajouté <b>40 g</b> · Skyr 0 % <b>250 g</b> · Mangue <b>100 g</b></div></div>
-    <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Foie de veau <b>210 g cru</b> · Pommes de terre <b>150 g crues</b> · Champignons <b>250 g crus</b> · Huile d'olive <b>9 g</b></div></div>
+    <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Foie de veau <b>235 g cru</b> · Pommes de terre <b>110 g crues</b> · Champignons <b>250 g crus</b> · Huile d'olive <b>9 g</b></div></div>
     <div class="dj-repas"><div class="r">Collation</div><div class="a">Fromage blanc 0 % <b>300 g</b> · Raisin <b>40 g</b> · Amandes <b>10 g</b></div></div>
     <div class="dj-repas"><div class="r">Dîner</div><div class="a">Saumon fumé <b>160 g</b> · Pâtes <b>35 g crues</b> · Tomates <b>150 g</b> · Mozzarella <b>50 g</b> · Huile d'olive <b>5 g</b></div></div>
   </div>
 
   <span class="diete-sec">Jour 5 · lasagnes</span>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">JOUR 5</span><span class="m">1741 kcal · P154 · G140 · L56</span></div>
+    <div class="dj-head"><span class="n">JOUR 5</span><span class="m">1734 kcal · P152 · G143 · L56</span></div>
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a">Skyr 0 % <b>250 g</b> · Flocons d'avoine <b>40 g secs</b> · Kaki <b>120 g</b></div></div>
     <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Feuilles de lasagne <b>55 g crues</b> · Steak haché 5 % <b>180 g cru</b> · Sauce tomate <b>150 g</b> · Mozzarella <b>40 g</b> · Parmesan <b>10 g</b></div></div>
     <div class="dj-repas"><div class="r">Collation</div><div class="a">Fromage blanc 0 % <b>200 g</b> · Fruits rouges <b>150 g</b></div></div>
@@ -292,7 +309,7 @@
 
   <span class="diete-sec">Jour 6 · poulet et saumon fume</span>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">JOUR 6</span><span class="m">1706 kcal · P150 · G139 · L55</span></div>
+    <div class="dj-head"><span class="n">JOUR 6</span><span class="m">1698 kcal · P147 · G141 · L56</span></div>
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a"><b>3 œufs</b> · Pain complet <b>45 g</b> · Tomates <b>150 g</b></div></div>
     <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Blanc de poulet <b>180 g cru</b> · Riz <b>65 g cru</b> · Champignons <b>250 g crus</b> · Huile d'olive <b>5 g</b></div></div>
     <div class="dj-repas"><div class="r">Collation</div><div class="a">Skyr 0 % <b>250 g</b> · Banane <b>100 g</b> · Beurre de cacahuète <b>8 g</b></div></div>
@@ -318,14 +335,14 @@
 
   <span class="diete-sec">Tes courses pour la semaine</span>
   <ul class="courses">
-    <li><b>Skyr 0 %</b> 1,45 kg</li>
+    <li><b>Skyr 0 %</b> 1,50 kg</li>
     <li><b>Fromage blanc 0 %</b> 1,30 kg</li>
-    <li><b>Pommes de terre</b> 900 g</li>
+    <li><b>Pommes de terre</b> 860 g</li>
     <li><b>Courgettes</b> 750 g</li>
     <li><b>Champignons</b> 700 g</li>
     <li><b>Épinards</b> 650 g</li>
     <li><b>Tomates</b> 650 g</li>
-    <li><b>Crevettes</b> 435 g</li>
+    <li><b>Crevettes</b> 455 g</li>
     <li><b>Flageolets</b> 380 g</li>
     <li><b>Steak haché 5 %</b> 365 g</li>
     <li><b>Blanc de poulet</b> 360 g</li>
@@ -335,13 +352,13 @@
     <li><b>Concombre</b> 300 g</li>
     <li><b>Bavette</b> 290 g</li>
     <li><b>Saumon fumé</b> 280 g</li>
+    <li><b>Foie de veau</b> 235 g</li>
     <li><b>Mangue</b> 220 g</li>
-    <li><b>Foie de veau</b> 210 g</li>
     <li><b>Banane</b> 180 g</li>
-    <li><b>Pâtes</b> 160 g</li>
-    <li><b>Riz</b> 150 g</li>
     <li><b>Kiwi</b> 150 g</li>
     <li><b>Sauce tomate</b> 150 g</li>
+    <li><b>Pâtes</b> 145 g</li>
+    <li><b>Riz</b> 140 g</li>
     <li><b>Flocons d'avoine</b> 120 g</li>
     <li><b>Kaki</b> 120 g</li>
     <li><b>Huile d'olive</b> 116 g</li>
@@ -770,7 +787,7 @@ function switchWeek(week){
     const pill=document.getElementById(`pill-${sid}`); if(pill) pill.textContent=`Semaine ${week}`;
     const nl=document.getElementById(`notelabel-${sid}`); if(nl) nl.textContent=`Semaine ${week}`;
   });
-  loadAll(); loadCorpMens();
+  loadAll(); loadCorpMens(); majCible();
 }
 
 function switchTab(id){
@@ -853,6 +870,46 @@ document.addEventListener('input',e=>{
   }
 });
 
+/* ===== OBJECTIF DE LA SEMAINE ===== */
+function lireNum(cle){ try{ const v=localStorage.getItem(cle); if(!v) return null; const x=parseFloat(String(v).replace(',','.')); return isNaN(x)?null:x; }catch(e){ return null; } }
+function lirePoids(w){ return lireNum(`corp-poids-w${w}`); }
+function lireTaille(w){ return lireNum(`corp-mens-${PLAN.tailleIdx}-${semKey(w)}`); }
+function serie(f){ const o=[]; for(let i=1;i<=NB_SEMAINES;i++){ const v=f(i); if(v!==null) o.push({w:i,v}); } return o; }
+function fr(x,d){ return x.toFixed(d).replace('.',','); }
+function carteCible(w,poidsVise,kcal,msg,cls){
+  const el=document.getElementById('cible-sem'); if(!el) return;
+  const p=lirePoids(w), dG=Math.round(PLAN.G+(kcal-PLAN.kcal)/4);
+  el.innerHTML = `<div class="cs-top"><span class="w">Semaine ${w} sur ${NB_SEMAINES}</span>`
+    + `<span class="p">${p!==null?('pesée cette semaine : '+fr(p,1)+' kg'):'pas encore pesée'}</span></div>`
+    + `<div class="cs-grid">`
+    + `<div class="cs-c gold"><div class="k">Poids visé</div><div class="v">${poidsVise}</div></div>`
+    + `<div class="cs-c"><div class="k">Calories</div><div class="v">${kcal}</div></div>`
+    + `<div class="cs-c"><div class="k">Protéines</div><div class="v">${PLAN.P} g</div></div>`
+    + `<div class="cs-c"><div class="k">Glucides</div><div class="v">${dG} g</div></div>`
+    + `<div class="cs-c"><div class="k">Lipides</div><div class="v">${PLAN.L} g</div></div>`
+    + `</div><div class="cs-msg ${cls||''}">${msg}</div>`;
+}
+
+const PLAN = { depart:73, parSem:-0.5, kcal:1700, P:147, G:140, L:57, pas:150, minVar:0.3, maxVar:0.8, tailleIdx:1 };
+function majCible(){
+  const w=currentWeek, vise=fr(PLAN.depart+PLAN.parSem*w,1)+' kg';
+  const ps=serie(lirePoids).filter(x=>x.w<w);
+  let kcal=PLAN.kcal, msg='', cls='';
+  if(ps.length>=2){
+    const a=ps[ps.length-2], b=ps[ps.length-1], perte=(a.v-b.v)/(b.w-a.w);
+    if(perte<PLAN.minVar){ kcal=PLAN.kcal-PLAN.pas; cls='down';
+      msg=`Tu perds <b>${fr(perte,2)} kg</b> par semaine, c'est sous la fourchette. On descend à <b>${kcal} kcal</b> en retirant des glucides. <b>On ne touche jamais aux protéines.</b>`; }
+    else if(perte>PLAN.maxVar){ kcal=PLAN.kcal+PLAN.pas; cls='up';
+      msg=`Tu perds <b>${fr(perte,2)} kg</b> par semaine, c'est trop vite. On remonte à <b>${kcal} kcal</b> : à ce rythme-là tu paierais en force et en muscle.`; }
+    else msg=`Tu perds <b>${fr(perte,2)} kg</b> par semaine, pile dans la fourchette. <b>On ne touche à rien.</b>`;
+  } else if(ps.length===1){
+    msg=`Une seule pesée enregistrée. Il en faut deux pour décider quoi que ce soit, donc cette semaine <b>on ne change rien, on mesure</b>.`;
+  } else {
+    msg=`Pas encore de pesée. Rentre ton poids dans l'onglet <b>Corps</b> chaque semaine : c'est lui qui pilote la diète, pas le calcul de départ.`;
+  }
+  carteCible(w,vise,kcal,msg,cls);
+}
+
 buildWeekSelector();
 buildSessions();
 buildPoids();
@@ -860,6 +917,7 @@ buildMens();
 loadAll();
 loadCorpPoids();
 loadCorpMens();
+majCible();
 </script>
 
 <!-- Chronomètre de repos -->

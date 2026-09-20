@@ -44,6 +44,21 @@
   .tab.active-bilan { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); }
   /* ---------- Diète ---------- */
   .tab.active-diete { background:rgba(62,184,122,0.10); border-color:rgba(62,184,122,0.35); color:var(--green); }
+  /* ---------- Objectif de la semaine ---------- */
+  .cible-sem { margin-top:12px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--gold); border-radius:0 2px 2px 0; padding:13px 15px; }
+  .cs-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:9px; }
+  .cs-top .w { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.08em; color:var(--gold); }
+  .cs-top .p { font-size:11px; color:var(--muted2); }
+  .cs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(84px,1fr)); gap:7px; }
+  .cs-c { background:var(--dark); border:1px solid var(--border); border-radius:2px; padding:8px 6px; text-align:center; }
+  .cs-c .k { font-size:8px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); font-weight:500; }
+  .cs-c .v { font-family:'Bebas Neue',sans-serif; font-size:18px; line-height:1.15; margin-top:1px; letter-spacing:0.03em; }
+  .cs-c.gold .v { color:var(--gold); }
+  .cs-msg { font-size:12px; color:var(--muted); font-weight:300; line-height:1.6; margin-top:10px; }
+  .cs-msg b { color:var(--white); font-weight:500; }
+  .cs-msg.up b { color:var(--green); }
+  .cs-msg.down b { color:var(--red); }
+
   .diete-intro { margin-top:10px; padding:13px 15px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--green); border-radius:0 2px 2px 0; font-size:12px; color:var(--muted); font-weight:300; line-height:1.65; }
   .diete-intro b { color:var(--white); font-weight:500; }
   .macro-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; }
@@ -217,10 +232,12 @@
 
   <div class="macro-grid">
     <div class="macro kcal"><div class="k">Calories</div><div class="v">2500</div></div>
-    <div class="macro"><div class="k">Protéines</div><div class="v">145 g</div></div>
-    <div class="macro"><div class="k">Glucides</div><div class="v">305 g</div></div>
-    <div class="macro"><div class="k">Lipides</div><div class="v">70 g</div></div>
+    <div class="macro"><div class="k">Protéines</div><div class="v">146 g</div></div>
+    <div class="macro"><div class="k">Glucides</div><div class="v">303 g</div></div>
+    <div class="macro"><div class="k">Lipides</div><div class="v">67 g</div></div>
   </div>
+
+  <div class="cible-sem" id="cible-sem"></div>
 
   <div class="cible">
     <b>La cible, et pourquoi tu ne verras pas la balance bouger.</b> « 75 kg sec » à 171 cm en partant de 71 kg, c'est une recomposition : on te met à ta maintenance avec beaucoup de protéines et c'est l'entraînement qui fait le travail. Donc <b>le poids bouge peu, c'est le tour de taille qui doit descendre</b>. Prends-le une fois par semaine, au même endroit, le matin.
@@ -243,7 +260,7 @@
 
   <span class="diete-sec">Jour 2 · boeuf et pates</span>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">JOUR 2</span><span class="m">2497 kcal · P144 · G311 · L65</span></div>
+    <div class="dj-head"><span class="n">JOUR 2</span><span class="m">2491 kcal · P142 · G313 · L66</span></div>
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a"><b>2 œufs</b> · Pain complet <b>115 g</b> · Emmental râpé <b>20 g</b> · Banane <b>150 g</b></div></div>
     <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Steak haché 5 % <b>145 g cru</b> · Pâtes <b>130 g crues</b> · Sauce tomate <b>150 g</b> · Parmesan <b>15 g</b> · Huile d'olive <b>8 g</b></div></div>
     <div class="dj-repas"><div class="r">Collation</div><div class="a">Skyr 0 % <b>200 g</b> · Flocons d'avoine <b>50 g secs</b> · Fruits rouges <b>100 g</b></div></div>
@@ -261,7 +278,7 @@
 
   <span class="diete-sec">Jour 4 · thon et semoule</span>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">JOUR 4</span><span class="m">2518 kcal · P148 · G307 · L66</span></div>
+    <div class="dj-head"><span class="n">JOUR 4</span><span class="m">2514 kcal · P147 · G308 · L66</span></div>
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a">Flocons d'avoine <b>70 g secs</b> · Lait demi-écrémé <b>300 ml</b> · Banane <b>130 g</b> · Miel <b>10 g</b></div></div>
     <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Thon au naturel <b>145 g égoutté</b> · Semoule <b>140 g crue</b> · Courgettes <b>250 g crues</b> · Huile d'olive <b>14 g</b></div></div>
     <div class="dj-repas"><div class="r">Collation</div><div class="a">Skyr 0 % <b>150 g</b> · Pain complet <b>100 g</b> · Beurre de cacahuète <b>20 g</b></div></div>
@@ -288,7 +305,7 @@
 
   <span class="diete-sec">Jour 7 · bavette et thon</span>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">JOUR 7</span><span class="m">2506 kcal · P147 · G298 · L68</span></div>
+    <div class="dj-head"><span class="n">JOUR 7</span><span class="m">2500 kcal · P145 · G300 · L68</span></div>
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a">Flocons d'avoine <b>70 g secs</b> · Lait demi-écrémé <b>300 ml</b> · Pomme <b>150 g</b> · Miel <b>15 g</b></div></div>
     <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Bavette <b>145 g crue</b> · Pommes de terre <b>470 g crues</b> · Épinards <b>250 g crus</b> · Huile d'olive <b>12 g</b></div></div>
     <div class="dj-repas"><div class="r">Collation</div><div class="a">Skyr 0 % <b>200 g</b> · Pain complet <b>90 g</b> · Beurre de cacahuète <b>20 g</b></div></div>
@@ -751,7 +768,7 @@ function switchWeek(week){
     const pill=document.getElementById(`pill-${sid}`); if(pill) pill.textContent=`Semaine ${week}`;
     const nl=document.getElementById(`notelabel-${sid}`); if(nl) nl.textContent=`Semaine ${week}`;
   });
-  loadAll(); loadCorpMens();
+  loadAll(); loadCorpMens(); majCible();
 }
 
 function switchTab(id){
@@ -835,6 +852,46 @@ document.addEventListener('input',e=>{
   }
 });
 
+/* ===== OBJECTIF DE LA SEMAINE ===== */
+function lireNum(cle){ try{ const v=localStorage.getItem(cle); if(!v) return null; const x=parseFloat(String(v).replace(',','.')); return isNaN(x)?null:x; }catch(e){ return null; } }
+function lirePoids(w){ return lireNum(`corp-poids-w${w}`); }
+function lireTaille(w){ return lireNum(`corp-mens-${PLAN.tailleIdx}-${semKey(w)}`); }
+function serie(f){ const o=[]; for(let i=1;i<=NB_SEMAINES;i++){ const v=f(i); if(v!==null) o.push({w:i,v}); } return o; }
+function fr(x,d){ return x.toFixed(d).replace('.',','); }
+function carteCible(w,poidsVise,kcal,msg,cls){
+  const el=document.getElementById('cible-sem'); if(!el) return;
+  const p=lirePoids(w), dG=Math.round(PLAN.G+(kcal-PLAN.kcal)/4);
+  el.innerHTML = `<div class="cs-top"><span class="w">Semaine ${w} sur ${NB_SEMAINES}</span>`
+    + `<span class="p">${p!==null?('pesée cette semaine : '+fr(p,1)+' kg'):'pas encore pesée'}</span></div>`
+    + `<div class="cs-grid">`
+    + `<div class="cs-c gold"><div class="k">Poids visé</div><div class="v">${poidsVise}</div></div>`
+    + `<div class="cs-c"><div class="k">Calories</div><div class="v">${kcal}</div></div>`
+    + `<div class="cs-c"><div class="k">Protéines</div><div class="v">${PLAN.P} g</div></div>`
+    + `<div class="cs-c"><div class="k">Glucides</div><div class="v">${dG} g</div></div>`
+    + `<div class="cs-c"><div class="k">Lipides</div><div class="v">${PLAN.L} g</div></div>`
+    + `</div><div class="cs-msg ${cls||''}">${msg}</div>`;
+}
+
+const PLAN = { depart:71, parSem:0, kcal:2500, P:146, G:303, L:67, pas:150, tailleIdx:1 };
+function majCible(){
+  const w=currentWeek, vise=fr(PLAN.depart,0)+' kg';
+  const ps=serie(lirePoids).filter(x=>x.w<w), ts=serie(lireTaille).filter(x=>x.w<w);
+  let kcal=PLAN.kcal, msg='', cls='';
+  if(ps.length>=2){
+    const dP=ps[ps.length-1].v-ps[ps.length-2].v;
+    const dT=ts.length>=2 ? ts[ts.length-1].v-ts[ts.length-2].v : null;
+    const tTxt=dT!==null?(', tour de taille '+(dT>=0?'+':'')+fr(dT,1)+' cm'):'';
+    if(dT!==null && dT>0.5){ kcal=PLAN.kcal-PLAN.pas; cls='down';
+      msg=`Ton tour de taille a pris <b>${fr(dT,1)} cm</b>. On descend à <b>${kcal} kcal</b> en glucides : ce qui monte là n'est pas du muscle.`; }
+    else if(Math.abs(dP)<0.3 && (dT===null || dT>-0.3)){ kcal=PLAN.kcal+PLAN.pas; cls='up';
+      msg=`Poids ${dP>=0?'+':''}${fr(dP,1)} kg${tTxt}. Rien ne bouge, on monte à <b>${kcal} kcal</b> en glucides pour te donner de quoi construire.`; }
+    else msg=`Poids ${dP>=0?'+':''}${fr(dP,1)} kg${tTxt}. En recomposition c'est exactement ce qu'on veut : la balance ne bouge presque pas et la taille descend. <b>On ne touche à rien.</b>`;
+  } else {
+    msg=`Il faut deux semaines de pesées <b>et de tour de taille</b> avant de changer quoi que ce soit. Cette semaine <b>on ne change rien, on mesure</b>. Le tour de taille se prend dans l'onglet Corps, au même endroit, le matin.`;
+  }
+  carteCible(w,vise,kcal,msg,cls);
+}
+
 buildWeekSelector();
 buildSessions();
 buildPoids();
@@ -842,6 +899,7 @@ buildMens();
 loadAll();
 loadCorpPoids();
 loadCorpMens();
+majCible();
 </script>
 
 <!-- Chronomètre de repos -->
