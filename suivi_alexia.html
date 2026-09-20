@@ -393,12 +393,17 @@
   </div>
 
   <div class="bilan-intro">
-    <b>C'est toi qui m'envoies ton bilan chaque lundi.</b> Je ne viens pas le réclamer. Tu remplis tout ici, tu enregistres, et tu m'envoies un message pour me dire que c'est fait. Ta régularité fait partie du suivi. Et si tu veux, envoie-moi des vidéos de tes exercices avec ton bilan : c'est un vrai plus pour que je corrige ta technique, mais pas une obligation.
+    <b>C'est toi qui m'envoies ton bilan chaque lundi.</b> Je ne viens pas le réclamer. Tu remplis tout ici, tu enregistres, et tu m'envoies un message pour me dire que c'est fait. Ta régularité fait partie du suivi. <b>Le poids et le tour de taille pilotent ta diète</b> : l'onglet Diète recalcule tes calories de la semaine à partir de ces deux chiffres, donc si tu ne les remplis pas, rien ne s'ajuste. Et si tu veux, envoie-moi des vidéos de tes exercices avec ton bilan : c'est un vrai plus pour que je corrige ta technique, mais pas une obligation.
   </div>
 
   <div class="bilan-field">
     <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">matin à jeun</span></div>
     <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-poids" oninput="saveBilan('poids',this.value)">
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Tour de taille (cm) <span class="bilan-scale-hint">au nombril, matin à jeun, sans serrer</span></div>
+    <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-taille" oninput="saveBilan('taille',this.value)">
   </div>
 
   <div class="bilan-field">
@@ -532,7 +537,7 @@ const PROGRAMME = {
 };
 
 const MENSURATIONS = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
-const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
+const BILAN_FIELDS = ['poids','taille','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 const SESSIONS = Object.keys(PROGRAMME);
 let currentWeek = 1;
 
@@ -872,8 +877,8 @@ document.addEventListener('input',e=>{
 
 /* ===== OBJECTIF DE LA SEMAINE ===== */
 function lireNum(cle){ try{ const v=localStorage.getItem(cle); if(!v) return null; const x=parseFloat(String(v).replace(',','.')); return isNaN(x)?null:x; }catch(e){ return null; } }
-function lirePoids(w){ return lireNum(`corp-poids-w${w}`); }
-function lireTaille(w){ return lireNum(`corp-mens-${PLAN.tailleIdx}-${semKey(w)}`); }
+function lirePoids(w){ const a=lireNum(`corp-poids-w${w}`); return a!==null?a:lireNum(`bilan-poids-w${w}`); }
+function lireTaille(w){ const a=lireNum(`bilan-taille-w${w}`); return a!==null?a:lireNum(`corp-mens-${PLAN.tailleIdx}-${semKey(w)}`); }
 function serie(f){ const o=[]; for(let i=1;i<=NB_SEMAINES;i++){ const v=f(i); if(v!==null) o.push({w:i,v}); } return o; }
 function fr(x,d){ return x.toFixed(d).replace('.',','); }
 function carteCible(w,poidsVise,kcal,msg,cls){
