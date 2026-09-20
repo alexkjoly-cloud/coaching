@@ -403,7 +403,7 @@ function buildSessions(){
         <div class="session-tag tag-${s.couleur}">${s.tag}</div>
         <div class="session-title">${s.nom}<span class="session-week-pill" id="pill-${sid}">Semaine 1</span></div>
       </div>
-      <div class="prog-rule"><b>Double progression.</b> Tu gardes la même charge tant que tu n'as pas atteint le haut de la fourchette sur <b>toutes</b> tes séries. Le jour où c'est fait, tu montes d'un cran au prochain passage et tu redescends dans le bas de la fourchette : c'est normal, c'est le signe que ça a marché.<br><b>Le RIR</b>, c'est ce qu'il te reste dans le réservoir à la fin de la série. RIR 1-2 sur les gros exercices, RIR 0-1 sur les machines et l'isolation, là tu vas chercher la dernière répétition qui passe.<br><b>Le matériel.</b> Tout est faisable sur les machines à sélecteur que tu as l'habitude d'utiliser. Si une est prise, les Hammer à disques font le même travail, tu notes juste la charge à part.</div>`;
+      <div class="prog-rule"><b>Double progression.</b> Tu gardes la même charge tant que tu n'as pas atteint le haut de la fourchette sur <b>toutes</b> tes séries. Le jour où c'est fait, tu montes d'un cran au prochain passage et tu redescends dans le bas de la fourchette : c'est normal, c'est le signe que ça a marché.<br><b>Le RIR</b>, c'est ce qu'il te reste dans le réservoir à la fin de la série. RIR 1-2 sur les gros exercices, RIR 0-1 sur les machines et l'isolation, là tu vas chercher la dernière répétition qui passe.</div>`;
     s.exos.forEach((exo,ei)=>{
       const en = exo.nom.replace(/'/g, "\\'");
       html+=`<div class="exo-card${exo.adapted?' adapted':''}">
