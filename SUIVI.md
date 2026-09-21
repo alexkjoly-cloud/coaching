@@ -3,8 +3,54 @@
 **Ce fichier est la mémoire du suivi.** Une conversation qui démarre sans contexte
 lit ce fichier et sait quoi faire. Il se met à jour à chaque décision.
 
-Dernière mise à jour : **20/09/2026**
-Méthode appliquée : skill `methode-alex`, mot-témoin `cru-20`.
+Dernière mise à jour : **21/09/2026**
+Méthode appliquée : skill `methode-alex`.
+
+🔴🔴 **LE SKILL SE REMET À ZÉRO, PAS CE FICHIER.** Le 20/09 j'ai écrit trois règles
+dans `SKILL.md` (mot-témoin passé à `suivi-20`). Le 21/09 le skill était revenu à
+`contraintes-13` : le dossier `~/.claude/skills/synced/` est **resynchronisé depuis
+le serveur à chaque session**, donc tout ce qu'on y écrit depuis une session Claude
+Code disparaît. 🔑 **Une règle client ne se note que dans `SUIVI.md`, qui est versionné
+dans le dépôt.** Pour modifier le skill pour de vrai, c'est Alexandre qui l'édite
+depuis claude.ai.
+
+---
+
+## LA ROUTINE DU LUNDI (armée le 21/09/2026)
+
+`trig_01Wea6LLpGp8HinUDRFUKL1t` — « Bilan hebdo coaching — Alexia & Jean (lundi) ».
+Cron `0 6 * * 1` en UTC, soit **8 h à Lyon l'été, 7 h l'hiver**. Elle ouvre une
+session neuve à chaque fois, avec notification push et mail.
+
+Ce qu'elle fait : charge le skill, lit ce fichier, lit la Sheet, fait les deux bilans,
+pousse les modifs, et rend à Alexandre **les deux messages prêts à envoyer** plus un
+point en bullet points. ⛔ **Elle ne contacte jamais un client directement.**
+
+🔴 **Limite connue : la routine n'embarque aucun connecteur.** Les sessions qu'elle
+ouvre n'ont donc ni Google Drive ni Gmail, et **ne peuvent pas lire la Sheet**. Tant
+que ce n'est pas réglé, la routine sert de rappel et le bilan se fait dans une session
+normale. Pour la réparer, Alexandre la recrée depuis **claude.ai → Routines**, qui
+permet d'y attacher les connecteurs.
+
+---
+
+## LA DIÈTE VIT DANS L'APPLI, PAS DANS UN MESSAGE
+
+Sa demande du 20/09 : les clients doivent retrouver leur diète **dans l'onglet Diète
+de leur appli**, au même endroit que leurs séances. Jamais en PDF, jamais en artifact,
+jamais dans un message WhatsApp.
+
+Le niveau de détail dépend de la formule :
+
+| Client | Ce que l'onglet contient |
+|---|---|
+| **Alexia** (suivi + nutrition) | macros · **7 journées différentes** bâties sur sa liste de courses · les recettes · la liste de courses · la cible de poids |
+| **Jean** (suivi) | macros · **7 journées** en version simple · la cible de poids |
+
+📌 **Sept journées différentes, jamais trois ou quatre qui tournent.** Sa correction :
+répéter les menus tue l'adhérence d'un client qui paie pour de la nutrition.
+📌 Le bloc **objectif de la semaine** est en haut de l'onglet, il recalcule la cible
+tout seul à partir du bilan.
 
 ---
 
