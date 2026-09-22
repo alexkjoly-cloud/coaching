@@ -160,10 +160,36 @@ semaine-là, les 4 semaines payées courent jusqu'au 19/10.
 🎯 **Ses muscles prioritaires, donnés le 22/09** : **pectoraux, sangle abdominale,
 cuisses (« surtout ») et dos.** Quatre, donc, alors qu'on en demandait deux ou trois,
 et « surtout » met le quadriceps devant.
-⚠️ **Ça ne rentre pas dans 70 séries.** Aujourd'hui : pectoraux 9, quadriceps 9,
-grand dorsal 8, milieu du dos 6, abdominaux 2. Monter les quatre au plancher de 12
-demanderait **+26 séries**, soit un programme à 96. Arbitrage à trancher avec
-Alexandre avant de toucher au fichier.
+⚠️ **Ça ne rentrait pas dans 70 séries.** Monter les quatre au plancher de 12
+demandait +26 séries, soit un programme à 96. **Arbitrage tranché par Alexandre le
+22/09 : cuisses et pectoraux au plancher, le dos aussi haut que le budget le permet,
+les abdominaux restent secondaires.** Son « surtout » sur les cuisses a fait la
+hiérarchie, et la sangle abdominale se verra par le tour de taille, pas par le volume.
+
+**Programme v2, poussé le 22/09 — 72 séries.** Séries directes par semaine :
+
+| Muscle | Avant | Maintenant |
+|---|---|---|
+| Pectoraux | 9 | **12** ✅ |
+| Quadriceps | 9 | **12** ✅ |
+| Grand dorsal | 8 | 9 |
+| Milieu du dos | 6 | 9 |
+| Abdominaux | 2 | 6 |
+| Ischios | 9 | 6 |
+| Mollets | 4 | 3 |
+| Triceps (direct) | 5 | 4 |
+| Biceps (direct) | 5 | 2 |
+
+Ce qui a payé la hausse : adducteurs supprimés, leg curl allongé supprimé, curl
+marteau supprimé, et les séries de biceps, triceps, mollets et deltoïdes rabotées.
+Biceps et triceps restent autour de 8 à 9 séries **effectives** une fois l'indirect
+compté pour une demi-série, donc ils ne sont pas abandonnés.
+
+⚠️ **Le dos ne peut pas atteindre 12 par tissu sur 5 séances** sans casser autre
+chose. Grand dorsal et milieu du dos sont à 9 chacun, au maximum finançable.
+📌 Ajouts : **fente bulgare** en Lower (le quadriceps a perdu le hack squat),
+**écarté à la poulie** en Upper, **rowing machine assis** en Pull, **crunch machine**
+et **relevé de jambes** en Legs.
 
 **Diète.** 2 500 kcal · 146 g de protéines · 303 de glucides · 67 de lipides.
 Maintenance estimée 2 500 (Mifflin 1 689), donc **au maintien, en recomposition**.

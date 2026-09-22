@@ -212,9 +212,9 @@
 <div class="tabs">
   <button class="tab active-push" id="tab-push" onclick="switchTab('push')">Push<br><span style="font-size:8px;color:var(--muted)">Pec · Épaules · Tri</span></button>
   <button class="tab" id="tab-pull" onclick="switchTab('pull')">Pull<br><span style="font-size:8px;color:var(--muted)">Dos · Biceps</span></button>
-  <button class="tab" id="tab-legs" onclick="switchTab('legs')">Legs<br><span style="font-size:8px;color:var(--muted)">Quadriceps</span></button>
+  <button class="tab" id="tab-legs" onclick="switchTab('legs')">Legs<br><span style="font-size:8px;color:var(--muted)">Quadriceps · Abdos</span></button>
   <button class="tab" id="tab-upper" onclick="switchTab('upper')">Upper<br><span style="font-size:8px;color:var(--muted)">Haut complet</span></button>
-  <button class="tab" id="tab-lower" onclick="switchTab('lower')">Lower<br><span style="font-size:8px;color:var(--muted)">Hanche · Ischios</span></button>
+  <button class="tab" id="tab-lower" onclick="switchTab('lower')">Lower<br><span style="font-size:8px;color:var(--muted)">Quadriceps · Ischios</span></button>
   <button class="tab" id="tab-diete" onclick="switchTab('diete')">Diète<br><span style="font-size:8px;color:var(--muted)">Macros · Repas</span></button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
@@ -475,7 +475,7 @@ const PROGRAMME = {
       {nom:'Écarté machine', series:3, target:"Pectoraux · RIR 0-1 · 2 min", pres:'3 × 10-15'},
       {nom:'Développé épaules machine', series:2, target:"Deltoïde antérieur · RIR 1-2 · 3 min", pres:'2 × 8-12'},
       {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 90 s", pres:'3 × 10-15'},
-      {nom:'Extension triceps à la poulie', series:3, target:"Triceps · RIR 0-1 · 90 s", pres:'3 × 10-15'},
+      {nom:'Extension triceps à la poulie', series:2, target:"Triceps · RIR 0-1 · 90 s", pres:'2 × 10-15'},
     ]
   },
   'pull': {
@@ -483,40 +483,40 @@ const PROGRAMME = {
     exos:[
       {nom:'Tirage vertical prise large', series:3, target:"Grand dorsal · RIR 1-2 · 3 min", pres:'3 × 8-12'},
       {nom:'Tirage horizontal coudes ouverts', series:3, target:"Milieu du dos · RIR 1-2 · 2 min · Coudes écartés à 45°, tu tires vers le haut du ventre", pres:'3 × 10-15'},
-      {nom:'Tirage horizontal prise serrée neutre', series:2, target:"Grand dorsal, épaisseur · RIR 1-2 · 3 min", pres:'2 × 8-12'},
-      {nom:'Oiseau à la poulie', series:3, target:"Arrière d&rsquo;épaule · RIR 1-2 · 90 s", pres:'3 × 10-15'},
-      {nom:'Curl pupitre', series:3, target:"Biceps · RIR 0-1 · 2 min", pres:'3 × 8-12'},
+      {nom:'Tirage horizontal prise serrée neutre', series:3, target:"Grand dorsal, épaisseur · RIR 1-2 · 3 min", pres:'3 × 8-12'},
+      {nom:'Rowing machine assis, coudes ouverts', series:3, target:"Milieu du dos · RIR 1-2 · 2 min · Même consigne que le tirage poulie, coudes écartés, tu serres les omoplates en fin de course", pres:'3 × 10-15'},
+      {nom:'Oiseau à la poulie', series:2, target:"Arrière d&rsquo;épaule · RIR 1-2 · 90 s", pres:'2 × 10-15'},
+      {nom:'Curl pupitre', series:2, target:"Biceps · RIR 0-1 · 2 min", pres:'2 × 8-12'},
     ]
   },
   'legs': {
-    nom:'LEGS', couleur:'legs', tag:'Quadriceps · Ischios · Mollets · Abdos',
+    nom:'LEGS', couleur:'legs', tag:'Quadriceps · Ischios · Abdos',
     exos:[
       {nom:'Presse à cuisses, réglage quadriceps', series:3, target:"Quadriceps · RIR 1-2 · 3 min · Pieds bas sur la plateforme, largeur de bassin, talons collés, le bas du dos ne décolle jamais", pres:'3 × 8-12'},
       {nom:'Leg extension', series:3, target:"Quadriceps · RIR 0-1 · 2 min", pres:'3 × 10-15'},
       {nom:'Leg curl assis', series:3, target:"Ischio-jambiers · RIR 1-2 · 2 min", pres:'3 × 8-12'},
-      {nom:'Mollets debout', series:2, target:"Mollets · RIR 0-1 · 90 s", pres:'2 × 12-15'},
-      {nom:'Crunch lesté', series:2, target:"Abdominaux · RIR 0-1 · 90 s", pres:'2 × 10-15'},
+      {nom:'Crunch machine', series:3, target:"Abdominaux · RIR 0-1 · 90 s · Sur machine pour pouvoir monter la charge, c&rsquo;est ce qui fait progresser", pres:'3 × 10-15'},
+      {nom:'Relevé de jambes à la chaise romaine', series:3, target:"Bas des abdominaux · RIR 0-1 · 90 s · Tu enroules le bassin en fin de mouvement, tu ne balances pas les jambes", pres:'3 × 10-15'},
     ]
   },
   'upper': {
     nom:'UPPER', couleur:'upper', tag:'Haut du corps complet',
     exos:[
       {nom:'Développé couché machine', series:3, target:"Pectoraux · RIR 1-2 · 3 min", pres:'3 × 8-12'},
+      {nom:'Écarté à la poulie', series:3, target:"Pectoraux · RIR 0-1 · 2 min", pres:'3 × 10-15'},
       {nom:'Tirage vertical prise neutre', series:3, target:"Grand dorsal · RIR 1-2 · 3 min", pres:'3 × 8-12'},
       {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Milieu du dos · RIR 1-2 · 2 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 10-15'},
-      {nom:'Élévations latérales', series:3, target:"Deltoïde latéral · RIR 0-1 · 90 s", pres:'3 × 10-15'},
+      {nom:'Élévations latérales', series:2, target:"Deltoïde latéral · RIR 0-1 · 90 s", pres:'2 × 10-15'},
       {nom:'Extension triceps', series:2, target:"Triceps · RIR 0-1 · 90 s", pres:'2 × 10-15'},
-      {nom:'Curl marteau', series:2, target:"Biceps et brachial · RIR 0-1 · 90 s", pres:'2 × 10-15'},
     ]
   },
   'lower': {
-    nom:'LOWER', couleur:'lower', tag:'Charnière de hanche · Ischios · Mollets',
+    nom:'LOWER', couleur:'lower', tag:'Quadriceps · Ischios · Mollets',
     exos:[
       {nom:'Soulevé de terre roumain', series:3, target:"Ischios et fessiers · RIR 1-2 · 3 min · Genoux à peine fléchis et figés, barre collée aux cuisses, tu t&rsquo;arrêtes avant que le bas du dos s&rsquo;arrondisse", pres:'3 × 8-12'},
       {nom:'Presse à cuisses, réglage global', series:3, target:"Quadriceps et fessiers · RIR 1-2 · 3 min · Pieds au milieu de la plateforme, la charge sera différente de celle du Legs, c&rsquo;est normal", pres:'3 × 8-12'},
-      {nom:'Leg curl allongé', series:3, target:"Ischio-jambiers · RIR 0-1 · 2 min", pres:'3 × 10-15'},
-      {nom:'Adducteurs machine', series:2, target:"Adducteurs · RIR 1-2 · 90 s", pres:'2 × 10-15'},
-      {nom:'Mollets assis', series:2, target:"Soléaire · RIR 0-1 · 90 s", pres:'2 × 12-15'},
+      {nom:'Fente bulgare (par jambe)', series:3, target:"Quadriceps et fessiers · RIR 1-2 · 2 min · Pied arrière sur un banc, buste droit, tu descends le genou vers le sol. Haltères dans les mains", pres:'3 × 8-12'},
+      {nom:'Mollets assis', series:3, target:"Soléaire · RIR 0-1 · 90 s", pres:'3 × 12-15'},
     ]
   },
 };
