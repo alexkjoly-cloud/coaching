@@ -145,8 +145,25 @@ Il stagne depuis des mois avec beaucoup de volume et peu d'intensité : **on a b
 le volume et monté la proximité de l'échec.** Plusieurs muscles sont sous le plancher
 de 12 séries, **c'est volontaire** et ça vaudra jusqu'à ce qu'il choisisse ses
 priorités.
-⛔ **Interdits** : squat barre libre, développé militaire barre (détestés sur ses deux
-formulaires).
+⛔ **Interdits, version du 22/09** : **squat barre libre et hack squat**, et rien
+d'autre. Ses mots : *« j'ai aucun exo que j'aime pas sauf squat et hack squat »*.
+✅ **Le développé militaire barre n'est donc plus interdit** (il le détestait en juin,
+plus en septembre).
+✅ **Le soulevé de terre roumain est confirmé OK.** La question ouverte depuis juin
+est fermée, il reste au programme.
+⚠️ Le hack squat qui saute coûte cher maintenant que le quadriceps est sa priorité :
+il ne reste que la presse et le leg extension comme gros moteurs.
+
+📅 **Il démarre officiellement la semaine du 22/09/2026.** Semaine 1 = cette
+semaine-là, les 4 semaines payées courent jusqu'au 19/10.
+
+🎯 **Ses muscles prioritaires, donnés le 22/09** : **pectoraux, sangle abdominale,
+cuisses (« surtout ») et dos.** Quatre, donc, alors qu'on en demandait deux ou trois,
+et « surtout » met le quadriceps devant.
+⚠️ **Ça ne rentre pas dans 70 séries.** Aujourd'hui : pectoraux 9, quadriceps 9,
+grand dorsal 8, milieu du dos 6, abdominaux 2. Monter les quatre au plancher de 12
+demanderait **+26 séries**, soit un programme à 96. Arbitrage à trancher avec
+Alexandre avant de toucher au fichier.
 
 **Diète.** 2 500 kcal · 146 g de protéines · 303 de glucides · 67 de lipides.
 Maintenance estimée 2 500 (Mifflin 1 689), donc **au maintien, en recomposition**.
@@ -163,10 +180,8 @@ trancheront.
 📌 **Lui redire que la balance ne bougera presque pas.** En recomposition c'est le
 tour de taille qui parle. Sans ça il croira qu'il ne se passe rien.
 
-**Ce qui manque encore :** ses **deux ou trois muscles prioritaires** (il a coché les
-huit), sa **réponse sur le soulevé de terre roumain** (il avait écrit « squat
-deadlift » dans les détestés en juin mais pas en septembre), et ses **mensurations et
-photos de départ**.
+**Ce qui manque encore :** ses **mensurations**, qu'il fait ce week-end (annoncé le
+22/09), et ses **photos de départ**.
 
 ---
 
