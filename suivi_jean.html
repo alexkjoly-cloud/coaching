@@ -141,6 +141,9 @@
 
 .prog-rule { margin-top:12px; padding:12px 14px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--gold); border-radius:0 2px 2px 0; font-size:11.5px; line-height:1.6; color:var(--muted); font-weight:300; }
   .prog-rule b { color:var(--white); font-weight:500; }
+  .maj-bloc { margin-top:12px; padding:12px 14px; background:var(--green-dim,rgba(52,199,89,0.07)); border:1px solid var(--border); border-left:2px solid var(--green); border-radius:0 2px 2px 0; font-size:11.5px; line-height:1.6; color:var(--muted); font-weight:300; }
+  .maj-bloc b { color:var(--white); font-weight:500; }
+  .maj-bloc .mb-date { display:block; font-size:8.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--green); font-weight:500; margin-bottom:6px; }
 
   /* Bilan hebdo */
   .bilan-intro { margin-top:14px; padding:14px 16px; background:var(--gold-dim); border:1px solid rgba(201,168,76,0.3); border-radius:2px; font-size:12px; color:#cbb87a; font-weight:300; line-height:1.6; }
@@ -585,7 +588,8 @@ function buildSessions(){
         <div class="session-title">${s.nom}<span class="session-week-pill" id="pill-${sid}">Semaine 1</span></div>
         <div class="session-sub">${s.exos.map(e=>e.nom.split(' ')[0]).join(' · ')}</div>
       </div>
-      <div class="prog-rule"><b>Double progression.</b> Tu gardes la même charge tant que tu n'as pas atteint le haut de la fourchette sur <b>toutes</b> tes séries. Le jour où c'est fait, tu montes d'un cran au prochain passage, et tu redescends dans le bas de la fourchette : c'est normal, c'est le signe que ça a marché.<br><b>Le RIR</b>, c'est ce qu'il te reste dans le réservoir. RIR 1-2 sur les gros exercices, RIR 0-1 sur les machines et l'isolation.</div>`;
+      <div class="prog-rule"><b>Double progression.</b> Tu gardes la même charge tant que tu n'as pas atteint le haut de la fourchette sur <b>toutes</b> tes séries. Le jour où c'est fait, tu montes d'un cran au prochain passage, et tu redescends dans le bas de la fourchette : c'est normal, c'est le signe que ça a marché.<br><b>Le RIR</b>, c'est ce qu'il te reste dans le réservoir. RIR 1-2 sur les gros exercices, RIR 0-1 sur les machines et l'isolation.</div>
+      <div class="maj-bloc"><span class="mb-date">Mis à jour le 22 septembre</span>Tu m'as donné tes priorités : <b>pecs, abdos, cuisses surtout, et dos</b>. Les quatre ne rentraient pas dans un programme tenable, alors j'ai tranché dans le sens que tu as donné toi-même en écrivant « cuisses surtout ».<br><b>Cuisses et pectoraux passent à 12 séries par semaine</b>, le dos monte à 9 par zone, les abdos à 6. Pour payer ça j'ai retiré les adducteurs, le leg curl allongé et le curl marteau, et raboté mollets, épaules, biceps et triceps. Tes bras continuent de travailler sur chaque poussée et chaque tirage, ils ne sont pas abandonnés.<br>Le hack squat saute puisque tu n'en veux pas, c'est la <b>fente bulgare</b> qui prend sa place en Lower.<br>Un mot sur les abdos : à ton poids, ta sangle se verra quand ton tour de taille descendra, pas en ajoutant des séries de crunch. C'est le boulot de l'onglet Diète, et il est déjà calé pour ça.</div>`;
     s.exos.forEach((exo,ei)=>{
       html+=`<div class="exo-card">
         <div class="exo-top">
