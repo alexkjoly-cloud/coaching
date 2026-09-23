@@ -611,7 +611,7 @@ function buildSessions(){
             <div class="exo-target">${exo.target}</div>
             <div class="pr-badge" id="pr-${sid}-e${ei}"></div>
           </div>
-          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><button class="rest-chip" onclick="restChrono.startFor('${sid}',${ei})">Repos</button></div>
+          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
         <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
@@ -641,6 +641,7 @@ function buildSessions(){
 
 function save(session,exoIdx,exoName,serie,field,value){
   localStorage.setItem(getKey(session,exoIdx,serie,field,currentWeek),value);
+  if(String(value).trim()!==''){ try{ localStorage.setItem(`ts-${session}-e${exoIdx}-s${serie}-w${currentWeek}`, String(Date.now())); }catch(e){} }
   syncField(session,exoIdx,exoName,serie,field,value,currentWeek);
   if(field==='kg') updatePR(session,exoIdx);
   updateWeekFills();
@@ -902,8 +903,20 @@ function reposPrescrit(target){
   const v=parseFloat(m[1].replace(',','.'));
   return m[2]==='min' ? Math.round(v*60) : Math.round(v);
 }
+/* Le repos ne se chronometre pas : il se deduit de l'ecart entre deux series
+   saisies. L'ecart contient la serie elle-meme, donc le repos reel est plus court
+   de 30 a 60 s. On jette ce qui est sous 20 s (saisie groupee apres coup) et ce qui
+   depasse 15 min (telephone repose, seance finie). */
 function reposLus(sid,ei,w){
-  try{ const a=JSON.parse(localStorage.getItem(`repos-${sid}-e${ei}-w${w}`)||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; }
+  const n=PROGRAMME[sid].exos[ei].series, out=[];
+  let prev=null;
+  for(let s=1;s<=n;s++){
+    const v=localStorage.getItem(`ts-${sid}-e${ei}-s${s}-w${w}`);
+    const t=v?parseInt(v,10):null;
+    if(t && prev){ const d=Math.round((t-prev)/1000); if(d>20 && d<=900) out.push(d); }
+    if(t) prev=t;
+  }
+  return out;
 }
 function mediane(a){ if(!a.length) return null; const b=[...a].sort((x,y)=>x-y); const m=Math.floor(b.length/2); return b.length%2?b[m]:Math.round((b[m-1]+b[m])/2); }
 function fmtRepos(s){ return s>=60 ? Math.floor(s/60)+' min '+(s%60?String(s%60).padStart(2,'0'):'') : s+' s'; }
@@ -924,7 +937,7 @@ function majReposAnalyse(){
   });
   if(!total){
     el.innerHTML='<span class="ra-t">Temps de repos</span>'
-      +"Rien d'enregistré cette semaine. Le bouton <b>Repos</b> de chaque exercice lance le chrono, et le temps se range tout seul quand tu relances le chrono ou que tu l'arrêtes. Le repos est la donnée qu'on oublie toujours, et c'est souvent elle qui explique une charge qui ne monte plus.";
+      +"Rien à analyser pour l'instant. Le repos se calcule tout seul à partir du moment où tu notes chaque série, tu n'as aucun bouton à toucher. Il faut juste que tu remplisses <b>au moment où tu la fais</b>, pas toute la séance d'un coup à la fin.";
     return;
   }
   let msg='';
@@ -985,7 +998,6 @@ majCible();
 const restChrono = (function(){
   const LS_KEY = 'rest-chrono-state';
   let elapsed=0, running=false, tick=null, startStamp=0, baseElapsed=0;
-  let curSid=null, curEi=null, recorded=true;
 
   const box = () => document.getElementById('rest-chrono');
   const timeEl = () => document.getElementById('rc-time');
@@ -1011,32 +1023,14 @@ const restChrono = (function(){
   }
 
   function recompute(){ if(running) elapsed = baseElapsed + Math.round((Date.now()-startStamp)/1000); }
-  function recordRest(){
-    if(recorded || curSid===null) return;
-    recompute();
-    const d=elapsed;
-    if(d<10 || d>900){ recorded=true; return; }
-    const k=`repos-${curSid}-e${curEi}-w${currentWeek}`;
-    let arr=[]; try{ arr=JSON.parse(localStorage.getItem(k)||'[]'); if(!Array.isArray(arr)) arr=[]; }catch(e){ arr=[]; }
-    arr.push(d);
-    try{ localStorage.setItem(k, JSON.stringify(arr)); }catch(e){}
-    recorded=true;
-    try{
-      const exo=PROGRAMME[curSid].exos[curEi];
-      syncFieldDebounced(k, {client:CLIENT_ID,type:'perf',week:currentWeek,session:curSid,exo:exo.nom,serie:'repos',field:'repos',value:arr.join(','),ts:new Date().toISOString()});
-    }catch(e){}
-    try{ majReposAnalyse(); }catch(e){}
-  }
   function loop(){ recompute(); render(); }
   function startTick(){ clearInterval(tick); tick=setInterval(loop, 250); }
 
   return {
     open(){ box().classList.add('visible'); persist(); },
     // lancé depuis le bouton "Repos" d'un exo : ouvre + repart de zéro + démarre
-    startFor(sid,ei){
-      recordRest();
+    startFor(){
       this.open();
-      if(sid!==undefined){ curSid=sid; curEi=ei; recorded=false; } else { recorded=true; }
       elapsed=0; baseElapsed=0; startStamp=Date.now(); running=true;
       toggleBtn().textContent='Stop';
       render(); startTick(); persist();
@@ -1044,7 +1038,7 @@ const restChrono = (function(){
     toggle(){
       if(running){
         running=false; clearInterval(tick); tick=null;
-        recompute(); baseElapsed=elapsed; recordRest();
+        recompute(); baseElapsed=elapsed;
         toggleBtn().textContent='Reprendre';
         render(); persist();
       } else {

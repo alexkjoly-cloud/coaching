@@ -230,31 +230,41 @@ tour de taille qui parle. Sans ça il croira qu'il ne se passe rien.
 
 ---
 
-## LES TEMPS DE REPOS (ajouté le 23/09)
+## LES TEMPS DE REPOS (23/09)
 
 Sa demande : *« ça serait bien à rajouter une analyse avec les temps de repos dans
-les bilans »*. Avant ça le chrono s'affichait et s'oubliait, **aucun temps de repos
-n'existait nulle part**.
+les bilans »*.
 
-Ce qui a été fait dans `suivi_jean.html` et `suivi_alexia.html` :
-- le bouton **Repos** d'un exercice sait désormais de quel exercice il vient ;
-- le temps est rangé quand le client **relance le chrono ou l'arrête**, sous
-  `repos-{séance}-e{index}-w{semaine}`, en liste de secondes ;
-- on **ignore ce qui dure moins de 10 s ou plus de 15 min** (tap accidentel, chrono
-  oublié en partant) ;
-- l'onglet **Bilan** affiche, par exercice, le **temps réel médian face au temps
-  prescrit**, et sort un verdict : écourté sous 70 % du prescrit, trop long au-delà
-  de 150 %.
+🔴🔴 **SA CORRECTION, ET ELLE EST MEILLEURE QUE MA PREMIÈRE VERSION.** J'avais fait
+enregistrer le chronomètre de l'appli. Ses mots : *« on s'en fiche du chronomètre,
+parce qu'en fait tu sais quel temps de repos on a pris entre chaque série puisque tu
+sais quand est-ce qu'on note les séries »*.
+🔑 **Le repos ne se mesure pas, il se déduit de l'écart entre deux séries saisies.**
+Aucun bouton à toucher, aucune donnée nouvelle à capturer, et **ça marche
+rétroactivement sur tout l'historique**. Vérifié sur ses propres séances : **222
+écarts exploitables** sortis de la Sheet sans rien avoir instrumenté.
+⚠️ **Avant d'ajouter une capture, chercher si la donnée n'est pas déjà déductible de
+ce qu'on enregistre.** Un horodatage vaut souvent un capteur.
 
-⚠️ **La prescription se lit dans `exo.repos` chez Alexia et dans `exo.target` chez
-Jean.** Les deux formats sont gérés, mais un nouveau client repart d'un des deux.
+**Comment on le calcule, côté Sheet (pour les bilans) :**
+- colonne **MAJ**, à la minute près, sur chaque ligne `perf` ;
+- on groupe par (jour, séance, exercice), on trie par numéro de série, on prend
+  l'écart entre séries **consécutives** ;
+- on jette **≤ 20 s** (saisie groupée après coup) et **> 15 min** (téléphone reposé,
+  séance finie) ;
+- ⚠️ **l'écart contient la série elle-même**, donc le repos réel est plus court de
+  30 à 60 s. Ne jamais présenter l'écart brut comme du repos.
 
-🔴 **Côté Sheet, ce n'est pas garanti.** L'envoi part en `type:'perf'` avec
-`field:'repos'` et `serie:'repos'`. **Le script Apps Script n'est pas lisible depuis
-l'environnement d'exécution**, donc on ne sait pas s'il range ce champ ou s'il le
-jette. À vérifier dans la Sheet après la première séance : si la ligne n'apparaît
-pas, il faut qu'Alexandre ajoute une colonne Repos côté script. En attendant,
-**l'analyse marche dans l'appli** parce qu'elle lit le stockage local.
+**Côté appli**, même logique en local : chaque saisie écrit
+`ts-{séance}-e{index}-s{série}-w{semaine}`, et l'onglet **Bilan** affiche le réel
+médian face au prescrit, avec un verdict (écourté sous 70 %, trop long au-delà de
+150 %). La prescription se lit dans `exo.repos` chez Alexia, `exo.target` chez Jean.
+📌 Seule condition : que le client remplisse **au moment de la série**, pas toute la
+séance d'un coup à la fin. Les saisies groupées sont filtrées, elles ne faussent rien,
+elles disparaissent.
+
+📊 **Repère mesuré sur Alexandre, 222 écarts :** médiane **300 s** entre deux séries,
+soit environ 4 min de repos réel.
 
 ---
 
