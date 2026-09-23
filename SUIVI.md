@@ -173,8 +173,8 @@ hiérarchie, et la sangle abdominale se verra par le tour de taille, pas par le 
 | Pectoraux | 9 | **12** ✅ |
 | Quadriceps | 9 | **12** ✅ |
 | Grand dorsal | 8 | 9 |
-| Milieu du dos | 6 | 9 |
-| Abdominaux | 2 | 6 |
+| Milieu du dos | 6 | 6 |
+| Abdominaux | 2 | **9** |
 | Ischios | 9 | 6 |
 | Mollets | 4 | 3 |
 | Triceps (direct) | 5 | 4 |
@@ -185,11 +185,24 @@ marteau supprimé, et les séries de biceps, triceps, mollets et deltoïdes rabo
 Biceps et triceps restent autour de 8 à 9 séries **effectives** une fois l'indirect
 compté pour une demi-série, donc ils ne sont pas abandonnés.
 
-⚠️ **Le dos ne peut pas atteindre 12 par tissu sur 5 séances** sans casser autre
-chose. Grand dorsal et milieu du dos sont à 9 chacun, au maximum finançable.
+⚠️ **Le milieu du dos plafonne à 6 séries, et c'est structurel.** Il n'y a que deux
+séances qui tirent, Pull et Upper, donc deux créneaux, donc 6 séries au maximum sans
+répéter le même mouvement.
+🔴🔴 **23/09 — SA CORRECTION : J'AVAIS MIS DEUX FOIS LE MÊME EXERCICE DANS PULL.**
+« Tirage horizontal coudes ouverts » et « Rowing machine assis, coudes ouverts » sont
+le même tirage horizontal coudes ouverts sur le milieu du dos, à l'outil près. Je les
+avais mis pour afficher 9 séries de milieu du dos. Ses mots : *« il faut virer l'un
+des deux parce que c'est la même chose, la grosse erreur »*.
+🔑 **Changer d'outil ne fait pas un exercice différent.** Avant d'ajouter un exercice
+pour remplir un compteur, vérifier qu'il attaque le muscle sous un autre angle, pas
+avec une autre machine. Un compteur qu'on gonfle avec un doublon ment sur le
+programme.
+✅ Le doublon a été retiré, les 3 séries sont parties sur les abdominaux en Lower
+(crunch à la poulie), qui sont une de ses priorités déclarées et étaient les plus bas.
+
 📌 Ajouts : **fente bulgare** en Lower (le quadriceps a perdu le hack squat),
-**écarté à la poulie** en Upper, **rowing machine assis** en Pull, **crunch machine**
-et **relevé de jambes** en Legs.
+**écarté à la poulie** en Upper, **crunch machine** et **relevé de jambes** en Legs,
+**crunch à la poulie** en Lower.
 
 **Diète.** 2 500 kcal · 146 g de protéines · 303 de glucides · 67 de lipides.
 Maintenance estimée 2 500 (Mifflin 1 689), donc **au maintien, en recomposition**.
