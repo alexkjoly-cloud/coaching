@@ -186,6 +186,17 @@
   .rest-chip { margin-top:6px; font-family:'DM Sans',sans-serif; font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:4px 9px; border-radius:3px; background:var(--red-dim); color:var(--red); border:1px solid rgba(230,50,50,0.25); line-height:1.4; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:background 0.15s, transform 0.1s; }
   .rest-chip:hover { background:rgba(230,50,50,0.16); }
   .rest-chip:active { transform:scale(0.94); }
+  .repos-an { margin-top:14px; padding:13px 15px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--red); border-radius:0 2px 2px 0; font-size:11.5px; line-height:1.6; color:var(--muted); font-weight:300; }
+  .repos-an b { color:var(--white); font-weight:500; }
+  .repos-an .ra-t { display:block; font-size:8.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--red); font-weight:500; margin-bottom:7px; }
+  .repos-an .ra-l { display:flex; justify-content:space-between; gap:10px; padding:4px 0; border-bottom:1px solid var(--border); }
+  .repos-an .ra-l:last-of-type { border-bottom:none; }
+  .repos-an .ra-l .n { flex:1; }
+  .repos-an .ra-l .v { font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:0.03em; white-space:nowrap; }
+  .repos-an .ra-l.court .v { color:var(--red); }
+  .repos-an .ra-l.long .v { color:var(--gold); }
+  .repos-an .ra-l.ok .v { color:var(--green); }
+  .repos-an .ra-msg { margin-top:9px; }
   .rest-chip::before { content:'\23F1'; font-size:10px; }
   #rest-chrono { position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(160%); z-index:300; width:min(320px, calc(100vw - 28px)); background:var(--card-2); border:1px solid var(--border); border-radius:6px; box-shadow:var(--shadow); padding:14px 16px; opacity:0; transition:transform 0.32s var(--ease), opacity 0.28s; }
   #rest-chrono.visible { transform:translateX(-50%) translateY(0); opacity:1; }
@@ -395,6 +406,7 @@
   <div class="bilan-intro">
     <b>C'est toi qui m'envoies ton bilan chaque lundi.</b> Je ne viens pas le réclamer. Tu remplis tout ici, tu enregistres, et tu m'envoies un message pour me dire que c'est fait. Ta régularité fait partie du suivi. <b>Le poids et le tour de taille pilotent ta diète</b> : l'onglet Diète recalcule tes calories de la semaine à partir de ces deux chiffres, donc si tu ne les remplis pas, rien ne s'ajuste. Et si tu veux, envoie-moi des vidéos de tes exercices avec ton bilan : c'est un vrai plus pour que je corrige ta technique, mais pas une obligation.
   </div>
+  <div class="repos-an" id="repos-analyse"></div>
 
   <div class="bilan-field">
     <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">matin à jeun</span></div>
@@ -610,7 +622,7 @@ function buildSessions(){
             <div class="exo-target">${exo.target}</div>
             <div class="pr-badge" id="pr-${sid}-e${ei}"></div>
           </div>
-          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><div class="exo-repos">${exo.repos||''}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
+          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><div class="exo-repos">${exo.repos||''}</div><button class="rest-chip" onclick="restChrono.startFor('${sid}',${ei})">Repos</button></div>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
         <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
@@ -792,7 +804,7 @@ function switchWeek(week){
     const pill=document.getElementById(`pill-${sid}`); if(pill) pill.textContent=`Semaine ${week}`;
     const nl=document.getElementById(`notelabel-${sid}`); if(nl) nl.textContent=`Semaine ${week}`;
   });
-  loadAll(); loadCorpMens(); majCible();
+  loadAll(); loadCorpMens(); majCible(); majReposAnalyse();
 }
 
 function switchTab(id){
@@ -896,6 +908,46 @@ function carteCible(w,poidsVise,kcal,msg,cls){
 }
 
 const PLAN = { depart:73, parSem:-0.5, kcal:1700, P:147, G:140, L:57, pas:150, minVar:0.3, maxVar:0.8, tailleIdx:1 };
+
+/* ===== ANALYSE DES TEMPS DE REPOS ===== */
+function reposPrescrit(target){
+  const m=String(target).match(/(\d+(?:[.,]\d+)?)\s*(min|s)\b/);
+  if(!m) return null;
+  const v=parseFloat(m[1].replace(',','.'));
+  return m[2]==='min' ? Math.round(v*60) : Math.round(v);
+}
+function reposLus(sid,ei,w){
+  try{ const a=JSON.parse(localStorage.getItem(`repos-${sid}-e${ei}-w${w}`)||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; }
+}
+function mediane(a){ if(!a.length) return null; const b=[...a].sort((x,y)=>x-y); const m=Math.floor(b.length/2); return b.length%2?b[m]:Math.round((b[m-1]+b[m])/2); }
+function fmtRepos(s){ return s>=60 ? Math.floor(s/60)+' min '+(s%60?String(s%60).padStart(2,'0'):'') : s+' s'; }
+
+function majReposAnalyse(){
+  const el=document.getElementById('repos-analyse'); if(!el) return;
+  const w=currentWeek; const lignes=[]; let nCourt=0, nLong=0, total=0, nCompare=0;
+  SESSIONS.forEach(sid=>{
+    PROGRAMME[sid].exos.forEach((exo,ei)=>{
+      const vals=reposLus(sid,ei,w); if(!vals.length) return;
+      const reel=mediane(vals), pres=reposPrescrit(exo.repos||'')||reposPrescrit(exo.target);
+      total++;
+      let cls='ok', ratio=null;
+      if(pres){ nCompare++; ratio=reel/pres; if(ratio<0.7){cls='court';nCourt++;} else if(ratio>1.5){cls='long';nLong++;} } else { cls=''; }
+      lignes.push(`<div class="ra-l ${cls}"><span class="n">${PROGRAMME[sid].nom} · ${exo.nom}</span>`
+        +`<span class="v">${fmtRepos(reel)}${pres?(' / '+fmtRepos(pres)):''}</span></div>`);
+    });
+  });
+  if(!total){
+    el.innerHTML='<span class="ra-t">Temps de repos</span>'
+      +"Rien d'enregistré cette semaine. Le bouton <b>Repos</b> de chaque exercice lance le chrono, et le temps se range tout seul quand tu relances le chrono ou que tu l'arrêtes. Le repos est la donnée qu'on oublie toujours, et c'est souvent elle qui explique une charge qui ne monte plus.";
+    return;
+  }
+  let msg='';
+  if(nCourt) msg+=`Tu écourtes sur <b>${nCourt} exercice${nCourt>1?'s':''}</b>. Sur les gros mouvements, reprendre trop tôt te fait perdre des répétitions à charge égale, et la double progression s'arrête net. Le repos prescrit n'est pas du temps perdu, c'est lui qui rend la série suivante utile.<br>`;
+  if(nLong) msg+=`Tu dépasses largement sur <b>${nLong} exercice${nLong>1?'s':''}</b>. Ça ne casse rien, mais la séance s'allonge sans rien apporter de plus.<br>`;
+  if(!nCourt && !nLong) msg = nCompare ? 'Tes repos sont là où ils doivent être. Rien à changer.' : "Pas de repos prescrit à comparer sur ces exercices, je te donne juste ce que tu as pris.";
+  el.innerHTML='<span class="ra-t">Temps de repos · semaine '+w+'</span>'+lignes.join('')+'<div class="ra-msg">'+msg+'</div>';
+}
+
 function majCible(){
   const w=currentWeek, vise=fr(PLAN.depart+PLAN.parSem*w,1)+' kg';
   const ps=serie(lirePoids).filter(x=>x.w<w);
@@ -947,6 +999,7 @@ majCible();
 const restChrono = (function(){
   const LS_KEY = 'rest-chrono-state';
   let elapsed=0, running=false, tick=null, startStamp=0, baseElapsed=0;
+  let curSid=null, curEi=null, recorded=true;
 
   const box = () => document.getElementById('rest-chrono');
   const timeEl = () => document.getElementById('rc-time');
@@ -972,14 +1025,32 @@ const restChrono = (function(){
   }
 
   function recompute(){ if(running) elapsed = baseElapsed + Math.round((Date.now()-startStamp)/1000); }
+  function recordRest(){
+    if(recorded || curSid===null) return;
+    recompute();
+    const d=elapsed;
+    if(d<10 || d>900){ recorded=true; return; }
+    const k=`repos-${curSid}-e${curEi}-w${currentWeek}`;
+    let arr=[]; try{ arr=JSON.parse(localStorage.getItem(k)||'[]'); if(!Array.isArray(arr)) arr=[]; }catch(e){ arr=[]; }
+    arr.push(d);
+    try{ localStorage.setItem(k, JSON.stringify(arr)); }catch(e){}
+    recorded=true;
+    try{
+      const exo=PROGRAMME[curSid].exos[curEi];
+      syncFieldDebounced(k, {client:CLIENT_ID,type:'perf',week:currentWeek,session:curSid,exo:exo.nom,serie:'repos',field:'repos',value:arr.join(','),ts:new Date().toISOString()});
+    }catch(e){}
+    try{ majReposAnalyse(); }catch(e){}
+  }
   function loop(){ recompute(); render(); }
   function startTick(){ clearInterval(tick); tick=setInterval(loop, 250); }
 
   return {
     open(){ box().classList.add('visible'); persist(); },
     // lancé depuis le bouton "Repos" d'un exo : ouvre + repart de zéro + démarre
-    startFor(){
+    startFor(sid,ei){
+      recordRest();
       this.open();
+      if(sid!==undefined){ curSid=sid; curEi=ei; recorded=false; } else { recorded=true; }
       elapsed=0; baseElapsed=0; startStamp=Date.now(); running=true;
       toggleBtn().textContent='Stop';
       render(); startTick(); persist();
@@ -987,7 +1058,7 @@ const restChrono = (function(){
     toggle(){
       if(running){
         running=false; clearInterval(tick); tick=null;
-        recompute(); baseElapsed=elapsed;
+        recompute(); baseElapsed=elapsed; recordRest();
         toggleBtn().textContent='Reprendre';
         render(); persist();
       } else {

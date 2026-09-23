@@ -230,6 +230,34 @@ tour de taille qui parle. Sans ça il croira qu'il ne se passe rien.
 
 ---
 
+## LES TEMPS DE REPOS (ajouté le 23/09)
+
+Sa demande : *« ça serait bien à rajouter une analyse avec les temps de repos dans
+les bilans »*. Avant ça le chrono s'affichait et s'oubliait, **aucun temps de repos
+n'existait nulle part**.
+
+Ce qui a été fait dans `suivi_jean.html` et `suivi_alexia.html` :
+- le bouton **Repos** d'un exercice sait désormais de quel exercice il vient ;
+- le temps est rangé quand le client **relance le chrono ou l'arrête**, sous
+  `repos-{séance}-e{index}-w{semaine}`, en liste de secondes ;
+- on **ignore ce qui dure moins de 10 s ou plus de 15 min** (tap accidentel, chrono
+  oublié en partant) ;
+- l'onglet **Bilan** affiche, par exercice, le **temps réel médian face au temps
+  prescrit**, et sort un verdict : écourté sous 70 % du prescrit, trop long au-delà
+  de 150 %.
+
+⚠️ **La prescription se lit dans `exo.repos` chez Alexia et dans `exo.target` chez
+Jean.** Les deux formats sont gérés, mais un nouveau client repart d'un des deux.
+
+🔴 **Côté Sheet, ce n'est pas garanti.** L'envoi part en `type:'perf'` avec
+`field:'repos'` et `serie:'repos'`. **Le script Apps Script n'est pas lisible depuis
+l'environnement d'exécution**, donc on ne sait pas s'il range ce champ ou s'il le
+jette. À vérifier dans la Sheet après la première séance : si la ligne n'apparaît
+pas, il faut qu'Alexandre ajoute une colonne Repos côté script. En attendant,
+**l'analyse marche dans l'appli** parce qu'elle lit le stockage local.
+
+---
+
 ## CE QUE L'APPLI FAIT TOUTE SEULE
 
 Depuis le 20/09, l'onglet **Diète** des deux applis porte un bloc **objectif de la
