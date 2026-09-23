@@ -193,6 +193,12 @@ répéter le même mouvement.
 le même tirage horizontal coudes ouverts sur le milieu du dos, à l'outil près. Je les
 avais mis pour afficher 9 séries de milieu du dos. Ses mots : *« il faut virer l'un
 des deux parce que c'est la même chose, la grosse erreur »*.
+📐 **23/09 — LE REPÈRE : 5 EXERCICES PAR SÉANCE.** Sa validation après la correction
+du doublon : *« normalement ça donne 5 exercices sur le push et 5 sur le pull, c'est
+exactement ce qu'on veut »*. Push, Pull, Legs et Lower sont à 5. **Upper reste à 6**,
+parce qu'elle reprend tout le haut du corps ; exception assumée, à lui reproposer si
+elle devient un problème.
+
 🔑 **Changer d'outil ne fait pas un exercice différent.** Avant d'ajouter un exercice
 pour remplir un compteur, vérifier qu'il attaque le muscle sous un autre angle, pas
 avec une autre machine. Un compteur qu'on gonfle avec un doublon ment sur le
