@@ -304,6 +304,50 @@ renvoie le fichier.
 
 ---
 
+## VEILLE MÉTHODE — À REPORTER DANS LE SKILL
+
+⚠️ Le dossier `methode-alex` vit sur claude.ai, la copie d'ici se remet à zéro. Ce qui
+est écrit là doit être **recollé à la main par Alexandre** dans
+`references/entrainement.md`.
+
+### Les étirements, vérifié le 24/09/2026
+
+Le dossier du skill date du 15/08. Il tient, sauf **une ligne à corriger**.
+
+🔴 **À retirer : « preuve préliminaire sur les blessures musculo-tendineuses ».**
+Une revue de 2025 a screené **plus de 300 000 références**, retenu 19 études pour
+**plus de 9 000 participants**, et ne trouve **aucun effet protecteur** :
+**OR = 0,945, p = 0,396**. La première moitié de la ligne, elle, se renforce.
+⚠️ **La prise du contradicteur : les protocoles type FIFA 11+ réduisent bien les
+blessures de 30 à 46 %.** Mais c'est du renforcement et du neuromusculaire, pas de
+l'étirement. Le distinguer soi-même.
+
+📐 **Le chiffre qui tue l'argument hypertrophie.** Méta 2024, 42 études, 1 318
+participants : effet réel mais petit (**d = 0,20**), obtenu avec **15 minutes par
+séance, 3 fois par semaine** sur le même muscle. Presque une heure par semaine et par
+muscle. ✅ La formule : *ce n'est pas que ça ne marche pas, c'est le pire rapport
+temps/résultat de la salle.*
+
+**En fin de séance**, ajout du 24/09 :
+- la perte de force aiguë ne s'applique plus, **c'est donc le bon moment** ;
+- ❌ **aucun effet sur la récupération**. Méta 2021 sur les étirements post-séance :
+  rien sur la force, rien sur les courbatures à 24, 48 et 72 h. Méta d'octobre 2025,
+  15 études et 465 personnes : rien sur les courbatures, la force, la performance ni
+  le seuil de douleur. Revue parapluie 2024 : arrêter de le présenter comme un outil
+  de récupération ;
+- 🔑 **Piège de lecture dans la méta 2025** : elle annonce aussi « aucun effet sur la
+  souplesse ». Elle mesure la souplesse **comme marqueur de récupération** dans les
+  jours qui suivent, pas les gains d'un programme sur des semaines, qui eux sont
+  solides. Ne jamais laisser citer cette phrase hors contexte ;
+- ✅ Le seul argument à garder est **l'adhérence** : en fin de séance on est déjà sur
+  place, c'est le créneau où une habitude d'amplitude tient sans rien réorganiser.
+
+**Position tenable :** *« si tu t'étires parce que ça te fait du bien, continue. Si tu
+t'étires pour grossir ou pour ne pas te blesser, tu t'es trompé de raison. »*
+⛔ On ne dit pas « ça sert à rien » : c'est faux sur l'amplitude, et ça ouvre un flanc.
+
+---
+
 ## CLIENTS INACTIFS
 
 - **Max** — suivi terminé. Ne plus le traiter. Son appli porte encore un onglet
