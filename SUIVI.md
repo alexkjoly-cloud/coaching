@@ -124,8 +124,15 @@ muesli, beurre de cacahuète. **Elle mange du skyr** (confirmé le 20/09).
 Plats préférés : pâtes carbo, lasagnes, **banana bread qu'elle aime préparer**.
 ⛔ **Déteste le brocoli.** Ouverte à tout le reste.
 
-**Ce qui manque encore :** ses **mensurations et ses photos de départ**. Relancer
-tant qu'on ne les a pas, sans ça il n'y aura rien à montrer à la fin.
+✅ **Mensurations de départ reçues le 21/09** : poitrine 107 · **taille 86** · hanches
+106 · bras 34 / 34 · cuisses 64 / 63 · mollet G 38. **Poids 73,7 kg** (départ annoncé
+73). La taille à 86 cm est le repère qui pilotera tout le reste.
+
+**Ce qui manque encore :** ses **photos de départ**.
+
+🔴 **État au 27/09 : elle s'est arrêtée.** Deux séances seulement, Lower A le 20/09 et
+Upper A le 21/09, puis **plus rien pendant six jours**. Aucun bilan rempli. C'est le
+point à traiter avant toute question de diète ou de charges.
 
 ---
 
@@ -225,8 +232,25 @@ trancheront.
 📌 **Lui redire que la balance ne bougera presque pas.** En recomposition c'est le
 tour de taille qui parle. Sans ça il croira qu'il ne se passe rien.
 
-**Ce qui manque encore :** ses **mensurations**, qu'il fait ce week-end (annoncé le
-22/09), et ses **photos de départ**.
+**Ce qui manque encore :** ses **mensurations** (promises pour le week-end du 26/09,
+toujours rien au 27), ses **photos de départ**, et **son bilan**.
+
+✅ **État au 27/09 : il s'entraîne.** Push A le 22, Pull A le 23, Legs et Upper le 26,
+Lower entamé le 27. Il tient le rythme.
+📌 **Il saisit en différé.** Le 26/09 entre 13 h 37 et 13 h 39 il a rentré d'un coup
+des séries de quatre séances différentes, puis il a fait son Upper de 13 h 46 à
+14 h 04. **Ça casse l'analyse des temps de repos** sur les lignes rattrapées, qui
+sont filtrées, et ça décale les dates de séance. À lui redire.
+🔎 **À traiter au premier bilan :**
+- **Relevé de jambes 15, 15, 15** : haut de fourchette sur les trois séries, **il
+  monte en charge** au prochain passage (lest).
+- **Développé couché machine 40 kg × 12, 12, 10** : deux séries en haut de fourchette,
+  pas la troisième, donc on ne touche pas encore.
+- ⚠️ **Deux saisies aberrantes** : leg curl assis 57 kg × **2** au milieu de deux
+  séries à 12, et écarté à la poulie **1,5 kg** après deux séries à 12,5. Des fautes
+  de frappe, à confirmer avant de les lire comme des perfs.
+- ⚠️ **Presse à cuisses : seule la série 3 est saisie**, à 200 kg × 7, sous la
+  fourchette de 8-12. Les deux premières manquent.
 
 ---
 
