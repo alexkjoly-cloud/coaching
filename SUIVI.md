@@ -142,7 +142,7 @@ point à traiter avant toute question de diète ou de charges.
 |---|---|
 | Formule | **Un mois réglé** → appli calée sur **4 semaines** |
 | Contact | 06 46 60 57 77 · esclapez2007@gmail.com |
-| Profil | 19 ans, 171 cm, **71 kg**, On Air, 5 séances |
+| Profil | 19 ans, 171 cm, **74,9 kg** sur sa balance au 27/09 (le formulaire disait 71), On Air, 5 séances |
 | Objectif | **« 75 kg sec »** → recomposition, puis prise de masse propre |
 | Bilan | **Dimanche** |
 | Appli | `suivi_jean.html` |
@@ -289,6 +289,45 @@ elles disparaissent.
 
 📊 **Repère mesuré sur Alexandre, 222 écarts :** médiane **300 s** entre deux séries,
 soit environ 4 min de repos réel.
+
+---
+
+## JOURNAL DES BILANS
+
+### Jean · semaine 1 · bilan rempli le 27/09 à 20 h 16
+
+5 séances sur 5. Sommeil 8 · énergie 7 · fatigue 1 · nutrition tenue 7.
+*« Splendide très fort aucun crash »* · *« Fentes bulgares durs »* · aucune modif demandée.
+
+**Poids 74,9 kg, pas 71.** Pris comme référence : c'est sa balance, c'est elle qu'on
+suivra chaque semaine. Maintenance recalculée à 74,9 kg (Mifflin 1 728 × 1,48 ≈
+2 557) : **+57 kcal, dans le bruit, la cible reste à 2 500.** Il est déjà à 75 sur le
+poids, donc l'objectif devient 100 % tour de taille à poids égal. `PLAN.depart`
+passé à 74,9 dans l'appli, texte de la cible corrigé.
+**Calories déclarées 2 200 au lieu de 2 500** : pas d'ajustement, on lui demande de
+manger la diète écrite. Pas de décision calorique avant deux semaines de données.
+**Tour de taille non rempli** : réclamé. Mensurations toujours pas faites.
+
+Double progression, au prochain passage :
+- ⬆️ **tirage vertical prise large** 90 × 12, 12, 12
+- ⬆️ **curl pupitre** 30 × 12, 12
+- ⬆️ **relevé de jambes** 15, 15, 15 → haltère entre les pieds (consigne ajoutée
+  dans l'appli)
+- **écarté machine** : parti à 57,5 × 7 puis redescendu à 50 × 10, 10 → tout à 50
+  la semaine 2
+- **incliné 60 × 9, 9, 7** et **épaules 70 × 8, 7** : une série sous 8, on garde la
+  charge, à surveiller semaine 2
+- ⚠️ fautes de frappe à confirmer : leg curl série 2 à « 2 », écarté poulie série 3
+  à « 1,5 kg »
+- incomplets : presse quad (seule la série 3), tirage vertical neutre en Upper
+  (seule la série 1)
+
+Fente bulgare 20 × 11, 11, 10 : dure mais dans la fourchette, on garde. Consigne
+ajoutée : se tenir d'une main si l'équilibre lâche avant les jambes.
+
+### Alexia · semaine 1
+
+Rien. Deux séances (20 et 21/09), aucune depuis, aucun bilan. Relance à faire.
 
 ---
 
