@@ -416,8 +416,10 @@ t'étires pour grossir ou pour ne pas te blesser, tu t'es trompé de raison. »*
 - **Max** — suivi terminé. Ne plus le traiter. Son appli porte encore un onglet
   Macros avec des chiffres jamais validés par Alexandre : à retirer si son appli
   reste en ligne.
-- **Léo** — mois 2 terminé le 3 septembre. Il s'entraînait encore seul mi-septembre.
-  Statut à clarifier avec Alexandre.
+- **Léo** — **classé inactif le 29/09/2026 par Alexandre.** Mois 2 terminé le
+  3 septembre, pas de renouvellement. Dernier bilan le 4 août (semaine 4, à moitié
+  rempli), dernière séance notée le 18 septembre. Ne plus le traiter, ni dans les
+  bilans ni dans la routine du lundi.
 - **Julie, Romain, Théo** — voir l'onglet `Formules` de la Sheet, plusieurs dates de
   fin y sont fausses.
 
