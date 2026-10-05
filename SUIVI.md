@@ -232,6 +232,11 @@ trancheront.
 - tour de taille +0,5 cm ou plus → **−150 kcal** en glucides
 - ni le poids ni la taille ne bougent → **+150 kcal** (il doit finir par prendre)
 - poids stable et taille qui descend → **on ne touche à rien**, c'est le but
+- 🆕 05/10 : **poids qui descend de 0,5 kg ou plus** → on ne touche pas aux calories la
+  première semaine, il mange la diète en entier ; **si ça recommence la semaine
+  suivante → +150 kcal**. Il ne doit pas maigrir, l'objectif est le « sec » à poids égal.
+- 🆕 05/10 : **sans tour de taille, pas de +150.** Un poids stable ne dit rien tout
+  seul en recomposition. L'appli affiche « il manque ton tour de taille » et ne bouge pas.
 - **les protéines ne bougent jamais**
 
 📌 **Lui redire que la balance ne bougera presque pas.** En recomposition c'est le
@@ -329,6 +334,36 @@ Double progression, au prochain passage :
 
 Fente bulgare 20 × 11, 11, 10 : dure mais dans la fourchette, on garde. Consigne
 ajoutée : se tenir d'une main si l'équilibre lâche avant les jambes.
+
+### Jean · semaine 2 · bilan rempli le 05/10 à 9 h 27
+
+4 séances sur 5 (Push 28/09, Pull 29-30/09, Legs 30/09, Upper 01-02/10), **pas de
+Lower**. Sommeil 8 → **6** · énergie 7 · fatigue 1 · nutrition 7. *« Top encore une
+fois »*, aucune difficulté, aucune modif, aucune question.
+**Poids 74,9 → 74,0 (−0,9).** Calories déclarées **2 600** (semaine 1 : 2 200, ce qui
+explique sans doute une partie de la baisse). **Toujours pas de tour de taille, ni
+de mensurations.** Décision : calories inchangées à 2 500, nouvelle règle « poids qui
+descend » ajoutée (voir plus haut), branche ajoutée dans l'appli.
+
+⚠️ **Il a noté des séries sur la semaine 1 par erreur** (29/09 tirage vertical large,
+02/10 tirage vertical neutre) : le 90 × 12-12-12 de la semaine 1 au tirage vertical
+large est écrasé dans la Sheet. Lui dire de vérifier la semaine affichée avant de noter.
+⚠️ **Charges en forte baisse sans explication le 28 et le 30/09** : développé épaules
+70 → 40, écarté machine 50 → 42,5, leg curl 57 → 15, crunch machine 47 → 36,5,
+élévations poulie 10 → 7,5, triceps poulie 47 → 40. Hypothèse : autre salle ou autre
+machine. **Question posée, réponse à noter ici** avant de lire ces exos comme des
+régressions.
+⚠️ Les 3 montées de la semaine 1 n'ont pas été faites (tirage vertical large resté à
+90, curl à 30, relevé sans lest), et ne sont plus déclenchées en semaine 2.
+
+Montées au prochain passage :
+- ⬆️ **tirage vertical prise neutre** (Upper) 75 × 12-13-12
+- ⬆️ **extension triceps** (Upper) 47 × 15-15
+- ⬆️ **développé épaules** 40 × 15-14, au-dessus de la fourchette 8-12 : charge trop
+  légère, remonter franchement
+- ⬆️ **écarté machine** 42,5 × 15-14-18 : retour à 50
+- presse quad **200 × 12-11-11** (7 reps en semaine 1) : gros progrès, on garde 200
+- ⚠️ rowing appui poitrine série 3 à « 2 » : faute de frappe probable
 
 ### Alexia · semaine 1
 

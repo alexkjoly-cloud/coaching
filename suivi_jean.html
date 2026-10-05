@@ -966,11 +966,15 @@ function majCible(){
     const tTxt=dT!==null?(', tour de taille '+(dT>=0?'+':'')+fr(dT,1)+' cm'):'';
     if(dT!==null && dT>0.5){ kcal=PLAN.kcal-PLAN.pas; cls='down';
       msg=`Ton tour de taille a pris <b>${fr(dT,1)} cm</b>. On descend à <b>${kcal} kcal</b> en glucides : ce qui monte là n'est pas du muscle.`; }
-    else if(Math.abs(dP)<0.3 && (dT===null || dT>-0.3)){ kcal=PLAN.kcal+PLAN.pas; cls='up';
+    else if(dP<=-0.5){
+      msg=`Poids <b>${fr(dP,1)} kg</b>${tTxt}. En recomposition tu n'es pas censé maigrir : mange la diète en entier. <b>Si ça continue la semaine prochaine, on remonte de ${PLAN.pas} kcal.</b>`; }
+    else if(dT===null){
+      msg=`Poids ${dP>=0?'+':''}${fr(dP,1)} kg. <b>Il manque ton tour de taille</b> : sans lui je ne peux pas savoir si ce qui bouge est du gras ou du muscle, donc on ne touche à rien. Remplis-le dans ton bilan.`; }
+    else if(Math.abs(dP)<0.3 && dT>-0.3){ kcal=PLAN.kcal+PLAN.pas; cls='up';
       msg=`Poids ${dP>=0?'+':''}${fr(dP,1)} kg${tTxt}. Rien ne bouge, on monte à <b>${kcal} kcal</b> en glucides pour te donner de quoi construire.`; }
     else msg=`Poids ${dP>=0?'+':''}${fr(dP,1)} kg${tTxt}. En recomposition c'est exactement ce qu'on veut : la balance ne bouge presque pas et la taille descend. <b>On ne touche à rien.</b>`;
   } else {
-    msg=`Il faut deux semaines de pesées <b>et de tour de taille</b> avant de changer quoi que ce soit. Cette semaine <b>on ne change rien, on mesure</b>. Le tour de taille se prend dans l'onglet Corps, au même endroit, le matin.`;
+    msg=`Il faut deux semaines de pesées <b>et de tour de taille</b> avant de changer quoi que ce soit. Cette semaine <b>on ne change rien, on mesure</b>. Le tour de taille se note dans ton bilan, pris au même endroit, le matin.`;
   }
   carteCible(w,vise,kcal,msg,cls);
 }
