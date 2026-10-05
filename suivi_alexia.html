@@ -391,6 +391,12 @@
     <li><b>Parmesan</b> 25 g</li>
   </ul>
 
+  <span class="diete-sec">Les sorties et ton cycle</span>
+  <div class="diete-intro">
+    <b>On raisonne à la semaine, pas à la journée.</b> Une sortie ne casse rien. Le jour où tu sors, tu gardes tes protéines aux autres repas et tu allèges les féculents et le gras du midi. À la sortie tu manges normalement, et le lendemain tu reprends ta journée comme écrite, sans sauter de repas pour « rattraper ». Une à deux sorties par semaine rentrent dans ton déficit.<br><br>
+    <b>Ton cycle fait bouger la balance, pas ton gras.</b> Les jours avant tes règles, tu peux prendre 1 à 2 kg d'eau. Ce n'est pas une reprise. Compare ton poids avec <b>le même moment du cycle précédent</b>, et regarde la tendance sur quatre semaines, jamais d'une semaine à l'autre.
+  </div>
+
   <span class="diete-sec">Comment on pilote</span>
   <div class="diete-intro">
     Tu te pèses <b>tous les matins à jeun</b>, après être allée aux toilettes, et on ne regarde que la <b>moyenne de la semaine</b>. Le poids du matin varie de plus d'un kilo pour des raisons qui n'ont rien à voir avec le gras, donc un chiffre isolé ne veut rien dire.<br><br>
@@ -536,9 +542,9 @@ const PROGRAMME = {
   'lower-b': {
     nom:'LOWER B', couleur:'lower-b', tag:'Quadriceps · ischios',
     exos:[
-      {nom:'Presse à cuisses, réglage quadriceps', target:"Quadriceps. Pieds BAS sur la plateforme, largeur de bassin, pointes très légèrement vers l'extérieur, talons collés. Tu descends jusqu'à la butée sans laisser le bas du dos décoller du siège, et tu ne verrouilles jamais les genoux en haut.", series:3, pres:'3 × 8-12', repos:'RIR 1-2 · 3 min'},
+      {nom:'Presse à cuisses, réglage quadriceps', target:"Quadriceps. Pieds BAS sur la plateforme, largeur de bassin, pointes très légèrement vers l'extérieur, talons collés. Tu descends jusqu'à la butée sans laisser le bas du dos décoller du siège, et tu ne verrouilles jamais les genoux en haut. Si tu sens surtout les fessiers : pieds encore un peu plus bas et pousse avec tout le pied, pas seulement les talons. Les sentir un peu reste normal, ils travaillent aussi sur une presse.", series:3, pres:'3 × 8-12', repos:'RIR 1-2 · 3 min'},
       {nom:'Leg extension', target:"Quadriceps.", series:3, pres:'3 × 10-15', repos:'RIR 0-1 · 2 min'},
-      {nom:'Soulevé de terre roumain', target:"Ischios en cible, fessiers moteurs. Genoux à peine fléchis et figés, tu pousses les fesses vers l'arrière, la barre reste collée aux cuisses. Tu t'arrêtes avant que le bas du dos s'arrondisse.", series:3, pres:'3 × 8-12', repos:'RIR 1-2 · 3 min'},
+      {nom:'Soulevé de terre roumain', target:"Ischios en cible, fessiers moteurs. Genoux à peine fléchis et figés, tu pousses les fesses vers l'arrière, la barre reste collée aux cuisses. Tu t'arrêtes avant que le bas du dos s'arrondisse. Si tes mains lâchent avant tes ischios, prends des sangles : c'est ta prise qui limite, pas tes jambes, et c'est elles qu'on veut fatiguer.", series:3, pres:'3 × 8-12', repos:'RIR 1-2 · 3 min'},
       {nom:'Leg curl allongé', target:"Ischio-jambiers, hanche tendue.", series:3, pres:'3 × 10-15', repos:'RIR 0-1 · 2 min'},
       {nom:'Abducteurs machine', target:"Moyen fessier, deuxième passage de la semaine. Buste penché en avant.", series:2, pres:'2 × 10-15', repos:'RIR 0-1 · 90 s'},
       {nom:'Mollets', target:"Mollets.", series:2, pres:'2 × 12-15', repos:'RIR 0-1 · 90 s'},
@@ -808,6 +814,7 @@ function updateWeekFills(){
 
 function switchWeek(week){
   currentWeek=week;
+  try{ localStorage.setItem(CLIENT_ID+'-semaine', String(week)); }catch(e){}
   document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
   document.querySelector(`.week-btn[data-week="${week}"]`).classList.add('active');
   SESSIONS.forEach(sid=>{
@@ -997,6 +1004,13 @@ loadAll();
 loadCorpPoids();
 loadCorpMens();
 majCible();
+/* On rouvre sur la dernière semaine consultée. Sans ça l'appli repartait toujours
+   en semaine 1, et les séries se notaient dans la mauvaise semaine. */
+(function(){
+  let w=null; try{ w=parseInt(localStorage.getItem(CLIENT_ID+'-semaine'),10); }catch(e){}
+  if(!w || w<1 || w>NB_SEMAINES){ w=1; for(let i=NB_SEMAINES;i>=1;i--){ if(weekHasData(i)){ w=i; break; } } }
+  if(w!==1) switchWeek(w);
+})();
 </script>
 
 <!-- Chronomètre de repos -->

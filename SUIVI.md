@@ -367,7 +367,47 @@ Montées au prochain passage :
 
 ### Alexia · semaine 1
 
-Rien. Deux séances (20 et 21/09), aucune depuis, aucun bilan. Relance à faire.
+Rien. Deux séances (20 et 21/09), aucune depuis, aucun bilan. Relance faite le 28/09.
+
+### Alexia · semaine 2 · premier bilan rempli le 05/10 à 11 h 33 (étiqueté S1)
+
+**Repartie après la relance : 4 séances sur 4** (Lower A 28/09, Upper A 30/09,
+Lower B 03/10, Lower C 04/10). Sommeil 8 · énergie 8 · fatigue 4 · nutrition 7.
+*« J'aime toutes les séances, super programme »*, *« j'y prends du plaisir et c'est
+naturel de m'y tenir »*.
+**Poids 73,3** (73,7 le 21/09, soit −0,4 en deux semaines). **Calories déclarées
+1 800** au lieu de 1 700. Pas de nouveau tour de taille.
+
+**Décision diète : on ne touche pas aux calories**, alors que la règle (< 0,3 kg/sem →
+−150) le demanderait. Trois raisons : elle mange 100 kcal au-dessus de la cible, donc
+la règle n'est pas testée ; les deux poids sont des pesées isolées et pas des
+moyennes ; et la semaine 1 était blanche. On refait le point dans deux semaines sur
+des moyennes, en comparant au même moment de son cycle.
+
+Ses trois remarques et ce qui a été fait :
+- **RDL : sa prise lâche à la 7e répétition à 30 kg** → sangles, consigne ajoutée.
+- **Presse réglage quadriceps : elle sent surtout les fessiers** → consigne ajoutée
+  (pieds plus bas, pousser avec tout le pied). Pas un vrai problème, ses fessiers sont
+  sa priorité.
+- **Sa question : les sorties et le cycle lui font redouter une stagnation** → bloc
+  « Les sorties et ton cycle » ajouté dans l'onglet Diète : raisonner à la semaine,
+  ne pas compenser le lendemain, comparer le poids au même moment du cycle.
+
+📌 **Elle remplit la colonne RPE à sa façon** : 9-10 la plupart du temps, ce qui veut
+dire proche de l'échec. Mais elle met **6 quand elle ne sent pas le bon muscle**
+(abducteurs du Lower C). Lui expliquer que la colonne mesure l'effort, et que le
+ressenti va dans la note de séance.
+📌 **Elle monte la charge avant d'avoir le haut de la fourchette**, et mélange les
+charges dans un même exercice (hip thrust 110 → 120 à 8-8-7, kickback 35 → 40 à
+10-10, leg curl 35 puis 42,5). À recadrer : même charge sur toutes les séries, on
+monte quand toutes touchent le haut.
+⬆️ **Seule vraie montée : rowing appui poitrine** 8 kg × 15-15-15 à RPE 4-5, beaucoup
+trop léger.
+
+### Les deux applis rouvrent sur la dernière semaine consultée (05/10)
+
+Elles repartaient toujours en semaine 1 : c'est ce qui a fait noter Jean et Alexia
+dans la mauvaise semaine. Corrigé dans `suivi_jean.html` et `suivi_alexia.html`.
 
 ---
 

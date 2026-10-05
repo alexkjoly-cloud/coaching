@@ -793,6 +793,7 @@ function updateWeekFills(){
 
 function switchWeek(week){
   currentWeek=week;
+  try{ localStorage.setItem(CLIENT_ID+'-semaine', String(week)); }catch(e){}
   document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
   document.querySelector(`.week-btn[data-week="${week}"]`).classList.add('active');
   SESSIONS.forEach(sid=>{
@@ -987,6 +988,13 @@ loadAll();
 loadCorpPoids();
 loadCorpMens();
 majCible();
+/* On rouvre sur la dernière semaine consultée. Sans ça l'appli repartait toujours
+   en semaine 1, et les séries se notaient dans la mauvaise semaine. */
+(function(){
+  let w=null; try{ w=parseInt(localStorage.getItem(CLIENT_ID+'-semaine'),10); }catch(e){}
+  if(!w || w<1 || w>NB_SEMAINES){ w=1; for(let i=NB_SEMAINES;i>=1;i--){ if(weekHasData(i)){ w=i; break; } } }
+  if(w!==1) switchWeek(w);
+})();
 </script>
 
 <!-- Chronomètre de repos -->
