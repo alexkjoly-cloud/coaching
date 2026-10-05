@@ -84,6 +84,11 @@ tout seul à partir du bilan.
 6. **Pousser.** Branche `claude/weekly-coaching-reviews-ecbvwm` puis `main` en
    `--ff-only`, et vérifier que les quatre SHAs concordent.
 
+📣 **Depuis le 05/10, le client doit envoyer un message quand son bilan est rempli.**
+Bandeau rouge en tête de l'onglet Bilan (Jean, Alexia) : *« N'oublie pas de m'envoyer
+un message quand tu as fait ton bilan. Sans ça, je ne le fais pas. »* C'est la règle
+d'Alexandre, pas une menace en l'air : pas de message, pas de bilan.
+
 ⚠️ **Ne jamais écrire dans l'appli d'un client pour tester** : la saisie part dans la
 Sheet à son nom et pollue son suivi.
 
