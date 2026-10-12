@@ -530,8 +530,12 @@ diététicien diplômé en partenaire pour signer les plans.
   3 septembre, pas de renouvellement. Dernier bilan le 4 août (semaine 4, à moitié
   rempli), dernière séance notée le 18 septembre. Ne plus le traiter, ni dans les
   bilans ni dans la routine du lundi.
-- **Julie, Romain, Théo** — voir l'onglet `Formules` de la Sheet, plusieurs dates de
-  fin y sont fausses.
+- **Julie** — **la copine d'Alexandre, pas une cliente** (précisé le 12/10/2026). Elle
+  s'entraîne avec son appli (`suivi_julie.html`) mais n'est pas suivie comme une
+  cliente : pas de bilan à réclamer, pas de relance, pas de place dans la routine du
+  lundi. On ne la traite que si Alexandre le demande.
+- **Romain, Théo** — voir l'onglet `Formules` de la Sheet, plusieurs dates de fin y
+  sont fausses.
 
 ---
 
