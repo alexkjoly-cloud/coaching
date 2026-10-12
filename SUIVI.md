@@ -116,8 +116,11 @@ Maintenance estimée 2 150 (Mifflin 1 477 × 1,45), donc **−450 kcal**, soit 0
 par semaine. 7 journées différentes construites sur **sa liste** (voir plus bas).
 
 **Règle d'ajustement** (appliquée automatiquement par l'appli, à confirmer à la main) :
-- perte < 0,3 kg/semaine → **−150 kcal** en glucides
-- perte > 0,8 kg/semaine → **+150 kcal**
+- perte < 0,3 kg/semaine **deux semaines de suite** → **−150 kcal** en glucides
+- perte > 0,8 kg/semaine **deux semaines de suite** → **+150 kcal**
+- 🆕 12/10 : **une seule semaine hors fourchette ne déclenche rien**, l'appli affiche
+  « on ne touche à rien, si ça se répète on ajuste ». Son poids bouge avec l'eau et le
+  cycle, une pesée isolée ne suffit pas.
 - entre les deux → on ne touche à rien
 - **les protéines ne bougent jamais**
 
@@ -403,6 +406,36 @@ charges dans un même exercice (hip thrust 110 → 120 à 8-8-7, kickback 35 →
 monte quand toutes touchent le haut.
 ⬆️ **Seule vraie montée : rowing appui poitrine** 8 kg × 15-15-15 à RPE 4-5, beaucoup
 trop léger.
+
+### Alexia · semaine 3 · bilan rempli le 12/10 à 11 h 13 (bien étiqueté S3)
+
+4 séances sur 4, **mais du jeudi au dimanche d'affilée**. Sommeil 7 · énergie 8 ·
+**fatigue 7** (4 la semaine d'avant) · **nutrition 9/10** (7 avant) · **1 650 kcal**.
+**Poids 71,6** (73,7 le 21/09, 73,3 le 05/10) : −2,1 kg en 3 semaines, soit
+**0,7 kg/sem, dans la fourchette**, malgré le −1,7 de la dernière semaine (eau et cycle
+probables). **Décision : on ne touche à rien.** Règle de l'appli passée à « deux
+semaines de suite » pour qu'elle n'affiche pas +150 kcal sur une seule pesée.
+**Mensurations semaine 3** : taille **86 → 84**, poitrine 107 → 105, hanches 106 → 105,
+cuisses 64/63 → 64/64, mollet 38 = 38. Elle perd du gras sans perdre ses jambes.
+
+Ses notes :
+- **RDL** : bas du dos sur la 2e série à 50 kg ; à 40 kg elle ferait 15 reps proprement
+  → **45 kg**, et la série s'arrête dès que le dos prend le relais (consigne ajoutée).
+- **Presse quadri faite « chez les filles »** (93 × 10-8-8) : autre machine, nouvelle
+  référence, pas comparable aux 42,5-50 d'avant.
+- **Rowing appui poitrine** : passé des haltères de 8 kg à la machine, **30 au total
+  (15 par bras)**, 30 × 10-8-8. Nouvelle référence.
+- **Peur de prendre des mollets si elle charge** → réponse : 2 séries par semaine ne
+  feront pas de gros mollets ; proposition de retirer l'exercice si elle préfère.
+  **Réponse à noter ici.**
+
+⚠️ **RPE à 10 sur presque toutes les séries** + fatigue en hausse : on lui demande de
+garder 1-2 reps en réserve sur hip thrust, presse et RDL (c'est sa prescription), et
+d'espacer les séances plutôt que de les enchaîner.
+⚠️ Jeudi 08/10, plusieurs charges ont nettement baissé (hip thrust 120 → 100,
+kickback 40 → 20, curl poulie 30 → 16,5) : autre salle ou fatigue, à confirmer.
+⬆️ **Abducteurs (Lower B) 110 × 15-15** : monte. **Tirage horizontal** 35 × 12-12 puis
+32 × 12 : tout à 35, monte si 12 partout.
 
 ### Les deux applis rouvrent sur la dernière semaine consultée (05/10)
 

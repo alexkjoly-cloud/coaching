@@ -544,7 +544,7 @@ const PROGRAMME = {
     exos:[
       {nom:'Presse à cuisses, réglage quadriceps', target:"Quadriceps. Pieds BAS sur la plateforme, largeur de bassin, pointes très légèrement vers l'extérieur, talons collés. Tu descends jusqu'à la butée sans laisser le bas du dos décoller du siège, et tu ne verrouilles jamais les genoux en haut. Si tu sens surtout les fessiers : pieds encore un peu plus bas et pousse avec tout le pied, pas seulement les talons. Les sentir un peu reste normal, ils travaillent aussi sur une presse.", series:3, pres:'3 × 8-12', repos:'RIR 1-2 · 3 min'},
       {nom:'Leg extension', target:"Quadriceps.", series:3, pres:'3 × 10-15', repos:'RIR 0-1 · 2 min'},
-      {nom:'Soulevé de terre roumain', target:"Ischios en cible, fessiers moteurs. Genoux à peine fléchis et figés, tu pousses les fesses vers l'arrière, la barre reste collée aux cuisses. Tu t'arrêtes avant que le bas du dos s'arrondisse. Si tes mains lâchent avant tes ischios, prends des sangles : c'est ta prise qui limite, pas tes jambes, et c'est elles qu'on veut fatiguer.", series:3, pres:'3 × 8-12', repos:'RIR 1-2 · 3 min'},
+      {nom:'Soulevé de terre roumain', target:"Ischios en cible, fessiers moteurs. Genoux à peine fléchis et figés, tu pousses les fesses vers l'arrière, la barre reste collée aux cuisses. Tu t'arrêtes avant que le bas du dos s'arrondisse. Si tes mains lâchent avant tes ischios, prends des sangles : c'est ta prise qui limite, pas tes jambes, et c'est elles qu'on veut fatiguer. Et la série s'arrête dès que le bas du dos prend le relais, même avant 8 répétitions : une répétition faite avec le dos ne compte pas.", series:3, pres:'3 × 8-12', repos:'RIR 1-2 · 3 min'},
       {nom:'Leg curl allongé', target:"Ischio-jambiers, hanche tendue.", series:3, pres:'3 × 10-15', repos:'RIR 0-1 · 2 min'},
       {nom:'Abducteurs machine', target:"Moyen fessier, deuxième passage de la semaine. Buste penché en avant.", series:2, pres:'2 × 10-15', repos:'RIR 0-1 · 90 s'},
       {nom:'Mollets', target:"Mollets.", series:2, pres:'2 × 12-15', repos:'RIR 0-1 · 90 s'},
@@ -982,11 +982,21 @@ function majCible(){
   const ps=serie(lirePoids).filter(x=>x.w<w);
   let kcal=PLAN.kcal, msg='', cls='';
   if(ps.length>=2){
-    const a=ps[ps.length-2], b=ps[ps.length-1], perte=(a.v-b.v)/(b.w-a.w);
-    if(perte<PLAN.minVar){ kcal=PLAN.kcal-PLAN.pas; cls='down';
-      msg=`Tu perds <b>${fr(perte,2)} kg</b> par semaine, c'est sous la fourchette. On descend à <b>${kcal} kcal</b> en retirant des glucides. <b>On ne touche jamais aux protéines.</b>`; }
-    else if(perte>PLAN.maxVar){ kcal=PLAN.kcal+PLAN.pas; cls='up';
-      msg=`Tu perds <b>${fr(perte,2)} kg</b> par semaine, c'est trop vite. On remonte à <b>${kcal} kcal</b> : à ce rythme-là tu paierais en force et en muscle.`; }
+    /* Une seule semaine hors fourchette ne suffit pas : le poids bouge avec l'eau et
+       le cycle. On ne touche aux calories que si ça se répète deux semaines de suite. */
+    const rythme=(a,b)=>(a.v-b.v)/(b.w-a.w);
+    const perte=rythme(ps[ps.length-2],ps[ps.length-1]);
+    const avant=ps.length>=3 ? rythme(ps[ps.length-3],ps[ps.length-2]) : null;
+    if(perte<PLAN.minVar){
+      if(avant!==null && avant<PLAN.minVar){ kcal=PLAN.kcal-PLAN.pas; cls='down';
+        msg=`Deux semaines de suite sous la fourchette (<b>${fr(perte,2)} kg</b> par semaine). On descend à <b>${kcal} kcal</b> en retirant des glucides. <b>On ne touche jamais aux protéines.</b>`; }
+      else msg=`Tu perds <b>${fr(perte,2)} kg</b> par semaine depuis ta dernière pesée, c'est sous la fourchette. Une semaine ne suffit pas, le poids bouge avec l'eau et ton cycle : <b>on ne touche à rien</b>. Si ça se répète la semaine prochaine, on descend de ${PLAN.pas} kcal.`;
+    }
+    else if(perte>PLAN.maxVar){
+      if(avant!==null && avant>PLAN.maxVar){ kcal=PLAN.kcal+PLAN.pas; cls='up';
+        msg=`Deux semaines de suite trop vite (<b>${fr(perte,2)} kg</b> par semaine). On remonte à <b>${kcal} kcal</b> : à ce rythme-là tu paierais en force et en muscle.`; }
+      else msg=`Tu perds <b>${fr(perte,2)} kg</b> par semaine depuis ta dernière pesée, c'est plus vite que prévu. Une semaine ne suffit pas, ça peut être de l'eau : <b>on ne touche à rien</b>. Si ça se répète la semaine prochaine, on remonte de ${PLAN.pas} kcal.`;
+    }
     else msg=`Tu perds <b>${fr(perte,2)} kg</b> par semaine, pile dans la fourchette. <b>On ne touche à rien.</b>`;
   } else if(ps.length===1){
     msg=`Une seule pesée enregistrée. Il en faut deux pour décider quoi que ce soit, donc cette semaine <b>on ne change rien, on mesure</b>.`;
