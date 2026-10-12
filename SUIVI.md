@@ -1,5 +1,10 @@
 # SUIVI CLIENTS — fiche de pilotage
 
+🔴🔴 **CE DÉPÔT EST PUBLIC** (vérifié le 12/10/2026) : tout ce qui est écrit ici est
+lisible par n'importe qui. **Jamais de nom de famille, de téléphone, d'email ni de
+pseudo Instagram.** Les données de santé des clients (poids, mensurations, cycle)
+n'ont rien à faire ici non plus : voir la section « Confidentialité » plus bas.
+
 **Ce fichier est la mémoire du suivi.** Une conversation qui démarre sans contexte
 lit ce fichier et sait quoi faire. Il se met à jour à chaque décision.
 
@@ -94,12 +99,12 @@ Sheet à son nom et pollue son suivi.
 
 ---
 
-## ALEXIA M
+## ALEXIA
 
 | | |
 |---|---|
 | Formule | Suivi 3 mois + nutrition, **300 € payés**, mais **un seul mois réglé** → appli calée sur **4 semaines** |
-| Contact | Instagram `vanuzzaaa` · ravanuzzaa@gmail.com · pas de numéro |
+| Contact | WhatsApp (coordonnées dans le téléphone d'Alexandre, jamais ici) |
 | Profil | 26 ans, 166 cm, **73 kg au départ**, bureau, 7 000 pas, 4 séances |
 | Objectif | Perte de gras, « un beau physique ». Priorité déclarée au **fessier**. |
 | Bilan | **Lundi** |
@@ -144,12 +149,12 @@ point à traiter avant toute question de diète ou de charges.
 
 ---
 
-## JEAN ESCLAPEZ
+## JEAN
 
 | | |
 |---|---|
 | Formule | **Un mois réglé** → appli calée sur **4 semaines** |
-| Contact | 06 46 60 57 77 · esclapez2007@gmail.com |
+| Contact | WhatsApp (coordonnées dans le téléphone d'Alexandre, jamais ici) |
 | Profil | 19 ans, 171 cm, **74,9 kg** sur sa balance au 27/09 (le formulaire disait 71), On Air, 5 séances |
 | Objectif | **« 75 kg sec »** → recomposition, puis prise de masse propre |
 | Bilan | **Dimanche** |
@@ -427,7 +432,8 @@ Ses notes :
   (15 par bras)**, 30 × 10-8-8. Nouvelle référence.
 - **Peur de prendre des mollets si elle charge** → réponse : 2 séries par semaine ne
   feront pas de gros mollets ; proposition de retirer l'exercice si elle préfère.
-  **Réponse à noter ici.**
+  ✅ **12/10 : elle préfère, mollets retirés du Lower B** (14 séries au lieu de 16, et sa
+  fatigue est à 7, donc on n'ajoute rien à la place).
 
 ⚠️ **RPE à 10 sur presque toutes les séries** + fatigue en hausse : on lui demande de
 garder 1-2 reps en réserve sur hip thrust, presse et RDL (c'est sa prescription), et
@@ -551,6 +557,25 @@ est diététicien ». C'est vrai pour le **titre**, mais la loi protège aussi l
 aucun diagnostic, aucun régime thérapeutique, filtre santé à l'inscription, mention
 « ne remplace pas un avis médical ou diététique ». Pour une certitude : un avocat, ou un
 diététicien diplômé en partenaire pour signer les plans.
+
+
+---
+
+## CONFIDENTIALITÉ — À RÉGLER (12/10/2026)
+
+Le dépôt `alexkjoly-cloud/coaching` est **public**, et GitHub Pages publie aussi ses
+fichiers. Ce fichier contenait jusqu'au 12/10 les noms de famille, un téléphone, des
+emails et un pseudo Instagram : **retirés de la version actuelle, mais toujours
+lisibles dans l'historique Git.** Il contient encore les poids, mensurations et notes
+de santé des clients, qui sont des données de santé au sens du RGPD.
+
+Ce qu'il faut faire, avec l'accord d'Alexandre :
+1. **Sortir ce fichier dans un dépôt privé** (les applis, elles, restent publiques pour
+   que GitHub Pages continue de les servir).
+2. **Purger l'historique du dépôt public** (réécriture + push forcé), sinon les
+   anciennes versions restent consultables.
+3. Les applis clientes publiques ne doivent contenir ni nom de famille ni chiffre de
+   santé dans leur texte (Jean : « ta balance dit 74,9 kg » est à reformuler).
 
 ---
 
