@@ -489,6 +489,36 @@ temps/résultat de la salle.*
 t'étires pour grossir ou pour ne pas te blesser, tu t'es trompé de raison. »*
 ⛔ On ne dit pas « ça sert à rien » : c'est faux sur l'amplitude, et ça ouvre un flanc.
 
+
+### Nutrition sans diplôme : ce que dit vraiment la loi, vérifié le 12/10/2026
+
+🔴 **`legal.md` du skill est incomplet.** Il dit : « le seul titre protégé de ce côté
+est diététicien ». C'est vrai pour le **titre**, mais la loi protège aussi l'**activité** :
+- **L4371-1 CSP** définit le diététicien comme toute personne qui « habituellement,
+  dispense des conseils nutritionnels et, sur prescription médicale, participe à
+  l'éducation et à la rééducation nutritionnelle des patients atteints de troubles du
+  métabolisme ou de l'alimentation, par l'établissement d'un bilan diététique
+  personnalisé et une éducation diététique adaptée ».
+- **L4372-1** punit l'**exercice illégal** de la profession : 1 an et 15 000 €.
+  **L4372-2** punit l'usage du **titre** sans diplôme (usurpation, art. 433-17 C. pénal).
+- ⚠️ **Zone grise, non tranchée** : les diététiciens lisent « conseils nutritionnels »
+  seul comme réservé ; les coachs lisent le « et, sur prescription médicale … patients »
+  comme ce qui est réservé. **Aucune condamnation de coach nutrition trouvée**, contrôles
+  très rares, et une question écrite (AN n° 9716, 2023) plus une pétition demandent
+  justement d'encadrer les coachs, ce qui suggère qu'ils ne le sont pas clairement
+  aujourd'hui. **Réponse ministérielle non lue** (site inaccessible depuis ici).
+- « Nutritionniste » seul : **pas un titre protégé** d'après la plupart des sources ;
+  « médecin nutritionniste » l'est. « Diététicien(ne) », « diététicien-nutritionniste »,
+  « bilan diététique », « rééducation nutritionnelle », « patient » : **jamais**.
+- **Exercice illégal de la médecine (L4161-1)** : aucune pathologie prise en charge
+  (diabète, TCA, SOPK, thyroïde, grossesse, troubles digestifs, traitement en cours) →
+  renvoi au médecin ou à un diététicien.
+
+**Ce qui protège le plus** : public sain, objectif sportif ou de composition corporelle,
+aucun diagnostic, aucun régime thérapeutique, filtre santé à l'inscription, mention
+« ne remplace pas un avis médical ou diététique ». Pour une certitude : un avocat, ou un
+diététicien diplômé en partenaire pour signer les plans.
+
 ---
 
 ## CLIENTS INACTIFS
