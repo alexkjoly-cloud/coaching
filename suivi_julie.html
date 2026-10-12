@@ -305,7 +305,8 @@ const PROGRAMME = {
     nom:'SÉANCE 2', couleur:'lower-a', tag:'Fessiers · largeur',
     exos:[
       {nom:'Hip thrust', target:'Grand fessier · séance en reps plus hautes que la 1', series:3, pres:'3 × 12-15', repos:'Repos 2 min'},
-      {nom:'Abduction debout (par jambe)', target:'Moyen fessier · sangle à la cheville, tu montes la jambe sur le côté sans pencher le buste. Amplitude complète, léger.', series:3, pres:'3 × 12-15', repos:'Repos 90 s'},
+      {nom:'Leg curl assis', target:'Ischios · hanche fléchie, l\'ischio travaille en position étirée. Tu contrôles la remontée, tu ne laisses pas la charge retomber. Remplace l\'abduction debout depuis la semaine 8, à ta demande.', series:3, pres:'3 × 10-15', repos:'Repos 90 s',
+        depuis:8, avant:{nom:'Abduction debout (par jambe)', target:'Moyen fessier · sangle à la cheville, tu montes la jambe sur le côté sans pencher le buste. Amplitude complète, léger.', pres:'3 × 12-15', repos:'Repos 90 s'}},
       {nom:'Step-up haut, buste penché (par jambe)', target:'Fessiers · banc haut, buste penché en avant. Tu pousses avec le talon de la jambe du haut, l\'autre ne fait qu\'effleurer le sol.', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
       {nom:'Abducteurs (buste penché)', target:'Moyen fessier · deuxième passage de la séance', series:3, pres:'3 × 10-15', repos:'Repos 90 s'},
       {nom:'Leg extension unilatérale (buste penché en arrière)', target:'Quadriceps · entretien', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
@@ -317,7 +318,8 @@ const PROGRAMME = {
     exos:[
       {nom:'Hip thrust', target:'Grand fessier · la charge la plus lourde des trois séances', series:2, pres:'2 × 8-12', repos:'Repos 2 min'},
       {nom:'Hyperextension (bias fessier)', target:'Grand fessier · dos arrondi volontairement, menton rentré, tu montes uniquement par la hanche. Ce n\'est pas un exercice de lombaires.', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
-      {nom:'Soulevé de terre roumain unilatéral (par jambe)', target:'Ischios en entretien + moyen et petit fessier. Une seule jambe au sol : le bassin doit rester horizontal, et c\'est ça qui fait travailler le côté de la hanche.', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
+      {nom:'Soulevé de terre roumain', target:'Ischios et fessiers · genoux à peine fléchis et figés, tu pousses les fesses vers l\'arrière, la barre reste collée aux cuisses. Tu t\'arrêtes avant que le bas du dos s\'arrondisse. Si ta prise lâche avant tes jambes, prends des sangles. Remplace la version unilatérale depuis la semaine 8, à ta demande.', series:2, pres:'2 × 8-12', repos:'Repos 2 min',
+        depuis:8, avant:{nom:'Soulevé de terre roumain unilatéral (par jambe)', target:'Ischios en entretien + moyen et petit fessier. Une seule jambe au sol : le bassin doit rester horizontal, et c\'est ça qui fait travailler le côté de la hanche.', pres:'2 × 10-12', repos:'Repos 2 min'}},
       {nom:'Abducteurs (buste penché)', target:'Moyen fessier · troisième passage de la semaine', series:3, pres:'3 × 10-15', repos:'Repos 90 s'},
       {nom:'Fente inversée en déficit (par jambe)', target:'Fessiers en position longue · debout sur un step, tu recules la jambe vers le bas. L\'amplitude en plus va chercher le fessier étiré.', series:2, pres:'2 × 10-12', repos:'Repos 2 min'},
       {nom:'Face pull', target:'Arrière d\'épaule · coiffe des rotateurs · posture. Le seul exo du haut du corps de la séance.', series:2, pres:'2 × 12-15', repos:'Repos 90 s'},
@@ -394,11 +396,11 @@ function buildSessions(){
         <div class="exo-top">
           <div class="exo-num">${String(ei+1).padStart(2,'0')}</div>
           <div class="exo-info">
-            <div class="exo-name">${exo.nom}</div>
-            <div class="exo-target">${exo.target}</div>
+            <div class="exo-name" id="nom-${sid}-e${ei}">${exo.nom}</div>
+            <div class="exo-target" id="cib-${sid}-e${ei}">${exo.target}</div>
             <div class="pr-badge" id="pr-${sid}-e${ei}"></div>
           </div>
-          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><div class="exo-repos">${exo.repos||''}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
+          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}" id="pres-${sid}-e${ei}">${exo.pres}</div><div class="exo-repos" id="rep-${sid}-e${ei}">${exo.repos||''}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
         <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
@@ -484,6 +486,7 @@ function updateRef(session,exoIdx){
   if(currentWeek===1){ refEl.innerHTML=''; return; }
   const prevWeek=currentWeek-1;
   const exo=PROGRAMME[session].exos[exoIdx];
+  if(exo.depuis && prevWeek<exo.depuis){ refEl.innerHTML=''; return; }
   let parts=[];
   for(let s=1;s<=exo.series;s++){
     const kg=localStorage.getItem(getKey(session,exoIdx,s,'kg',prevWeek))||'';
@@ -572,6 +575,18 @@ function updateWeekFills(){
   });
 }
 
+/* Un exercice changé en cours de cycle garde son ancien nom sur les semaines d'avant :
+   les données de ces semaines restent lisibles sous le bon exercice. */
+function majNomsSemaine(){
+  SESSIONS.forEach(sid=>PROGRAMME[sid].exos.forEach((exo,ei)=>{
+    if(!exo.depuis) return;
+    const v = currentWeek<exo.depuis ? exo.avant : exo;
+    const set=(id,t)=>{ const el=document.getElementById(id); if(el) el.textContent=t||''; };
+    set(`nom-${sid}-e${ei}`,v.nom); set(`cib-${sid}-e${ei}`,v.target);
+    set(`pres-${sid}-e${ei}`,v.pres); set(`rep-${sid}-e${ei}`,v.repos);
+  }));
+}
+
 function switchWeek(week){
   currentWeek=week;
   document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
@@ -580,7 +595,7 @@ function switchWeek(week){
     const pill=document.getElementById(`pill-${sid}`); if(pill) pill.textContent=`Semaine ${week}`;
     const nl=document.getElementById(`notelabel-${sid}`); if(nl) nl.textContent=`Semaine ${week}`;
   });
-  loadAll(); loadCorpMens();
+  loadAll(); loadCorpMens(); majNomsSemaine();
 }
 
 function switchTab(id){
@@ -668,6 +683,7 @@ buildSessions();
 buildPoids();
 buildMens();
 loadAll();
+majNomsSemaine();
 loadCorpPoids();
 loadCorpMens();
 </script>
