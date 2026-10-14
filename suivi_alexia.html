@@ -225,9 +225,27 @@
   .bilan-rappel .t { font-family:'Bebas Neue',sans-serif; font-size:24px; line-height:1.15; letter-spacing:0.04em; color:var(--white,#fff); }
   .bilan-rappel .t b { color:var(--red); font-weight:400; }
   .bilan-rappel .s { margin-top:6px; font-size:11.5px; color:var(--muted); font-weight:400; }
+  body.locked > *:not(#lock-overlay):not(script) { filter:blur(9px); pointer-events:none; user-select:none; }
+  #lock-overlay { display:none; position:fixed; inset:0; z-index:1000; background:rgba(10,10,10,0.55); align-items:center; justify-content:center; padding:24px; }
+  #lock-overlay.visible { display:flex; }
+  .lock-card { max-width:340px; background:var(--card); border:1px solid var(--border); border-radius:4px; padding:28px 24px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+  .lock-eyebrow { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--red); margin-bottom:10px; font-weight:500; }
+  .lock-title { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.04em; line-height:1.05; margin-bottom:14px; }
+  .lock-text { font-size:13px; color:var(--muted); font-weight:300; line-height:1.65; }
+  .lock-text + .lock-text { margin-top:10px; }
+  .lock-text b { color:var(--white); font-weight:500; }
 </style>
 </head>
 <body>
+
+<div id="lock-overlay">
+  <div class="lock-card">
+    <div class="lock-eyebrow">Mois de suivi terminé</div>
+    <div class="lock-title">Merci pour ces quatre semaines</div>
+    <div class="lock-text">Ton mois de suivi est fini, et l'accès à l'appli s'arrête avec lui. <b>Tu as fait du super boulot.</b></div>
+    <div class="lock-text">Tes séances et tes bilans restent sauvegardés : si tu veux reprendre, écris-moi et je rouvre tout.</div>
+  </div>
+</div>
 
 <div class="header">
   <div>
@@ -513,6 +531,15 @@
 <script>
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
 const CLIENT_ID = "alexia";
+
+// Un mois réglé : l'appli se verrouille d'elle-même à cette date, le lendemain de son
+// dernier bilan (lundi 19/10). Pour rouvrir l'accès, repousser la date.
+const FIN_ACCES = new Date('2026-10-20T00:00:00+02:00');
+const CLIENT_LOCKED = Date.now() >= FIN_ACCES.getTime();
+if(CLIENT_LOCKED){
+  document.body.classList.add('locked');
+  document.getElementById('lock-overlay').classList.add('visible');
+}
 
 const NB_SEMAINES = 4;
 

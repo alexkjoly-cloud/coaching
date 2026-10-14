@@ -143,6 +143,11 @@ Plats préférés : pâtes carbo, lasagnes, **banana bread qu'elle aime prépare
 
 **Ce qui manque encore :** ses **photos de départ**.
 
+🔒 **Accès à l'appli : verrouillage automatique le mardi 20/10/2026 à 0 h**, le lendemain
+de son dernier bilan (mois réglé terminé). Pour rouvrir, repousser `FIN_ACCES` dans
+`suivi_alexia.html`. Verrou côté navigateur seulement : pour couper vraiment l'accès,
+retirer le fichier du site.
+
 🔴 **État au 27/09 : elle s'est arrêtée.** Deux séances seulement, Lower A le 20/09 et
 Upper A le 21/09, puis **plus rien pendant six jours**. Aucun bilan rempli. C'est le
 point à traiter avant toute question de diète ou de charges.
