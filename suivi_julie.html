@@ -183,7 +183,7 @@
     <div class="eyebrow">Suivi d'entraînement</div>
     <h1>JULIE<span>.</span></h1>
   </div>
-  <div class="cycle-badge">Cycle de 8 semaines<strong id="cycle-label">Lower · Focus fessiers</strong></div>
+  <div class="cycle-badge">Semaines 5 à 14<strong id="cycle-label">Lower · Focus fessiers</strong></div>
 </div>
 
 <div class="week-selector" id="week-selector"></div>
@@ -296,7 +296,11 @@
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
 const CLIENT_ID = "julie";
 
-const NB_SEMAINES = 8;
+const NB_SEMAINES = 14;
+/* Les semaines 1 à 4 ne s'affichent plus depuis le 15/10/2026 : leurs données restent
+   dans la Sheet et sur le téléphone, et la numérotation ne bouge pas (S5 reste S5),
+   sinon les nouvelles séries écraseraient les anciennes dans la Sheet. */
+const PREMIERE_SEMAINE = 5;
 
 const PROGRAMME = {
   'lower-a': {
@@ -339,7 +343,7 @@ const PROGRAMME = {
 const MENSURATIONS = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
 const BILAN_FIELDS = ['poids','calories','nutrition','sommeil','energie','fatigue','ressenti','difficultes','modifs','question'];
 const SESSIONS = Object.keys(PROGRAMME);
-let currentWeek = 1;
+let currentWeek = PREMIERE_SEMAINE;
 
 function getKey(s,exoIdx,serie,field,week){ return `${s}-e${exoIdx}-s${serie}-${field}-w${week}`; }
 
@@ -383,8 +387,8 @@ function toggleKbd(btn){
 function buildWeekSelector(){
   const sel=document.getElementById('week-selector');
   let html='';
-  for(let w=1;w<=NB_SEMAINES;w++){
-    html+=`<button class="week-btn${w===1?' active':''}" data-week="${w}" onclick="switchWeek(${w})">S${w}<span class="wk-fill"></span></button>`;
+  for(let w=PREMIERE_SEMAINE;w<=NB_SEMAINES;w++){
+    html+=`<button class="week-btn${w===PREMIERE_SEMAINE?' active':''}" data-week="${w}" onclick="switchWeek(${w})">S${w}<span class="wk-fill"></span></button>`;
   }
   sel.innerHTML=html;
 }
@@ -598,6 +602,7 @@ function majNomsSemaine(){
 
 function switchWeek(week){
   currentWeek=week;
+  try{ localStorage.setItem(CLIENT_ID+'-semaine', String(week)); }catch(e){}
   document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
   document.querySelector(`.week-btn[data-week="${week}"]`).classList.add('active');
   SESSIONS.forEach(sid=>{
@@ -620,7 +625,7 @@ function switchTab(id){
 /* ===== CORPOREL ===== */
 function buildPoids(){
   const c=document.getElementById('poids-rows'); let html='';
-  for(let w=1;w<=NB_SEMAINES;w++){
+  for(let w=PREMIERE_SEMAINE;w<=NB_SEMAINES;w++){
     html+=`<div class="poids-row">
       <div class="serie-num">S${w}</div>
       <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cpoids-w${w}" oninput="saveCorpField('poids',${w},this.value)">
@@ -648,7 +653,7 @@ function saveCorpField(field,w,value){
 }
 function loadCorpPoids(){
   let prev=null;
-  for(let w=1;w<=12;w++){
+  for(let w=1;w<=NB_SEMAINES;w++){
     const val=localStorage.getItem(`corp-poids-w${w}`)||'';
     const el=document.getElementById(`cpoids-w${w}`);
     const dEl=document.getElementById(`cdelta-w${w}`);
@@ -695,6 +700,12 @@ loadAll();
 majNomsSemaine();
 loadCorpPoids();
 loadCorpMens();
+/* On rouvre sur la dernière semaine consultée, sinon sur la dernière semaine remplie. */
+(function(){
+  let w=null; try{ w=parseInt(localStorage.getItem(CLIENT_ID+'-semaine'),10); }catch(e){}
+  if(!w || w<PREMIERE_SEMAINE || w>NB_SEMAINES){ w=PREMIERE_SEMAINE; for(let i=NB_SEMAINES;i>=PREMIERE_SEMAINE;i--){ if(weekHasData(i)){ w=i; break; } } }
+  switchWeek(w);
+})();
 </script>
 
 <!-- Chronomètre de repos -->
