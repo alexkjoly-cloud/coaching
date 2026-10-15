@@ -469,28 +469,32 @@ function loadAll(){
   updateWeekFills();
 }
 
+/* PR = la meilleure série en masse soulevée, charge × répétitions.
+   50 kg × 11 = 550 bat 55 kg × 8 = 440. Au poids du corps (0 kg), c'est le nombre de reps. */
+function prFmt(x){ return String(Math.round(x*100)/100).replace('.',','); }
+function prHtml(best,bestPC){
+  if(best) return `PR : <b>${prFmt(best.kg)} kg × ${prFmt(best.reps)}</b> <span style="opacity:.75">· ${prFmt(Math.round(best.v))} kg soulevés</span>`;
+  if(bestPC) return `PR : <b>${prFmt(bestPC)} reps</b> <span style="opacity:.75">· poids du corps</span>`;
+  return '';
+}
+function prSerie(kgRaw,repsRaw,acc){
+  const kg=parseFloat(String(kgRaw||'').replace(',','.'));
+  const reps=parseFloat(String(repsRaw||'').replace(',','.'));
+  if(isNaN(reps)||reps<=0) return;
+  if(!isNaN(kg)&&kg>0){ const v=kg*reps; if(!acc.best||v>acc.best.v) acc.best={kg,reps,v}; }
+  else if(!isNaN(kg)&&kg===0){ if(acc.pc===null||reps>acc.pc) acc.pc=reps; }
+}
 function updatePR(session,exoIdx){
   const exo=PROGRAMME[session].exos[exoIdx];
-  let best=null, bestReps=null;
-  for(let w=1;w<=NB_SEMAINES;w++){
+  const acc={best:null,pc:null};
+  // un exercice changé en cours de cycle ne reprend pas les séries de l'ancien
+  for(let w=(exo.depuis||1);w<=NB_SEMAINES;w++){
     for(let s=1;s<=exo.series;s++){
-      const kg=parseFloat((localStorage.getItem(getKey(session,exoIdx,s,'kg',w))||'').replace(',','.'));
-      const reps=localStorage.getItem(getKey(session,exoIdx,s,'reps',w))||'';
-      if(!isNaN(kg)&&kg>0){
-        if(best===null || kg>best){ best=kg; bestReps=reps; }
-        else if(kg===best){
-          const nr=parseFloat(String(reps).replace(',','.'));
-          const br=parseFloat(String(bestReps).replace(',','.'));
-          if(!isNaN(nr)&&(isNaN(br)||nr>br)) bestReps=reps;
-        }
-      }
+      prSerie(localStorage.getItem(getKey(session,exoIdx,s,'kg',w)), localStorage.getItem(getKey(session,exoIdx,s,'reps',w)), acc);
     }
   }
   const el=document.getElementById(`pr-${session}-e${exoIdx}`);
-  if(el){
-    if(best!==null){ el.innerHTML=`PR : <b>${best} kg${bestReps?(' × '+bestReps):''}</b>`; }
-    else { el.innerHTML=''; }
-  }
+  if(el) el.innerHTML=prHtml(acc.best,acc.pc);
 }
 
 function updateRef(session,exoIdx){

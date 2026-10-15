@@ -664,27 +664,42 @@ function buildChrome(){
 }
 
 const _prCache = {};
+/* PR = la meilleure série en masse soulevée, charge × répétitions.
+   50 kg × 11 = 550 bat 55 kg × 8 = 440. Au poids du corps (0 kg), c'est le nombre de reps. */
+function prFmt(x){ return String(Math.round(x*100)/100).replace('.',','); }
+function prHtml(best,bestPC){
+  if(best) return `PR : <b>${prFmt(best.kg)} kg × ${prFmt(best.reps)}</b> <span style="opacity:.75">· ${prFmt(Math.round(best.v))} kg soulevés</span>`;
+  if(bestPC) return `PR : <b>${prFmt(bestPC)} reps</b> <span style="opacity:.75">· poids du corps</span>`;
+  return '';
+}
+function prSerie(kgRaw,repsRaw,acc){
+  const kg=parseFloat(String(kgRaw||'').replace(',','.'));
+  const reps=parseFloat(String(repsRaw||'').replace(',','.'));
+  if(isNaN(reps)||reps<=0) return;
+  if(!isNaN(kg)&&kg>0){ const v=kg*reps; if(!acc.best||v>acc.best.v) acc.best={kg,reps,v}; }
+  else if(!isNaN(kg)&&kg===0){ if(acc.pc===null||reps>acc.pc) acc.pc=reps; }
+}
 function updatePR(session,exo){
-  const count=CONFIG[session][exo];
-  let best=null, bestReps=null;
+  // Même exercice = même nom : on cherche dans toutes les séances et tous les blocs,
+  // donc le PR de l'écarté compte le Push A et le Push B, et un créneau qui a changé
+  // d'exercice ne mélange pas les deux.
+  const def=(BLOC.sessions[session].exos||[]).find(e=>e.exo===exo); if(!def) return;
+  const acc={best:null,pc:null};
   for(let w=1;w<=NB_SEMAINES;w++){
-    for(let s=1;s<=count;s++){
-      const raw=localStorage.getItem(getKey(session,exo,s,'kg',w))||'';
-      const kg=parseFloat(String(raw).replace(',','.'));
-      const reps=localStorage.getItem(getKey(session,exo,s,'reps',w))||'';
-      if(!isNaN(kg)&&kg>0){
-        if(best===null||kg>best){ best=kg; bestReps=reps; }
-        else if(kg===best){
-          const repsN=parseInt(reps), bestRepsN=parseInt(bestReps);
-          if(!isNaN(repsN)&&(isNaN(bestRepsN)||repsN>bestRepsN)){ bestReps=reps; }
+    const b=blocPour(w);
+    for(const sid of Object.keys(b.sessions)){
+      b.sessions[sid].exos.forEach(e=>{
+        if(e.nom!==def.nom) return;
+        for(let s=1;s<=e.series;s++){
+          prSerie(localStorage.getItem(getKey(sid,e.exo,s,'kg',w)), localStorage.getItem(getKey(sid,e.exo,s,'reps',w)), acc);
         }
-      }
+      });
     }
   }
   const el=document.getElementById(`pr-${session}-${exo}`);
   if(el){
     const k=session+'-'+exo;
-    const html = best!==null ? `PR : <b>${best} kg${bestReps?' × '+bestReps:''}</b>` : '';
+    const html=prHtml(acc.best,acc.pc);
     if(html && _prCache[k]!==undefined && _prCache[k]!==html){
       el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
     }
