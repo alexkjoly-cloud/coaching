@@ -283,7 +283,7 @@
 
   <span class="diete-sec">Avant chaque exercice : la montée en charge</span>
   <div class="diete-intro">
-    <b>Gros exercice</b> (RDL, hip thrust, presse, développés, tirages, rowings) : <b>2 séries de montée</b>. Une facile à environ 50 % de ta charge pour 6 à 8 reps, puis une à environ 80 % pour 3 ou 4 reps, avec 1 min de repos entre les deux.<br>
+    <b>Gros exercice</b> (RDL, hip thrust, presses, développés, tirages, rowings) : <b>2 séries de montée</b>. Une facile à environ 50 % de ta charge pour 6 à 8 reps, puis une à environ 80 % pour 3 ou 4 reps, avec 1 min de repos entre les deux.<br>
     <b>Isolation</b> : 1 montée légère, ou rien si le muscle vient déjà de travailler.<br>
     <b>Les montées ne se notent pas</b> et ne comptent pas comme des séries.
   </div>
@@ -291,7 +291,7 @@
   <span class="diete-sec">Pendant tes séries</span>
   <div class="diete-intro">
     <b>Le RIR</b>, c'est ce qu'il te reste dans le réservoir à la fin de la série. <b>RIR 1-2</b> sur les gros exercices, <b>RIR 0-1</b> sur les machines et l'isolation. Pousse chaque rep avec l'intention d'aller vite : si la dernière ralentit, c'est normal, c'est le signe que tu es près de l'échec.<br>
-    <b>Les repos se prennent en entier.</b> 4 à 5 min sur les gros mouvements, 3 à 4 min sur les rowings, la fente et le step-up, 2 à 3 min sur leg curl, leg extension, hyperextension et extension lombaire, 2 min sur le reste. Reprendre trop tôt te coûte des répétitions à charge égale, et c'est sur elles que tu progresses.
+    <b>Les repos se prennent en entier.</b> 4 à 5 min sur les gros mouvements, 3 à 4 min sur les rowings et la fente, 2 à 3 min sur leg curl, leg extension, hyperextension et extension lombaire, 2 min sur le reste. Reprendre trop tôt te coûte des répétitions à charge égale, et c'est sur elles que tu progresses.
   </div>
 
   <span class="diete-sec">La double progression</span>
@@ -309,7 +309,7 @@
 
   <span class="diete-sec">Tes rendez-vous</span>
   <div class="diete-intro">
-    <b>Chaque matin</b> : pesée à jeun, après les toilettes et avant de boire, dans l'onglet <b>Pesées</b>.<br>
+    <b>Chaque matin</b> : pesée à jeun, après les toilettes et avant de boire, dans l'onglet <b>Pesées</b>. Jour 1 = le premier jour de ta semaine d'entraînement.<br>
     <b>Chaque dimanche</b> : ton bilan, avec ton tour de taille pris au nombril, le matin à jeun, sans serrer. Puis tu m'envoies un message : sans ça, je ne le fais pas.<br>
     <b>Toutes les 4 semaines</b> : photos de face, de profil et de dos, même heure, même lumière, regard droit. Et tes mensurations dans l'onglet <b>Corps</b>.<br>
     <b>Tous les jours</b> : tes 8 000 pas, ni beaucoup plus ni beaucoup moins.
@@ -564,6 +564,7 @@ const PROGRAMME = {
       {nom:'Fente à la Smith, pied arrière surélevé (par jambe)', series:3, target:"Fessiers et quadriceps · RIR 1-2 · 3 à 4 min · Pied avant loin du banc, buste penché en avant : c&rsquo;est ce qui met le fessier en étirement. Tu enchaînes les deux jambes, le repos se prend après", pres:'3 × 8-12', repos:'3,5 min'},
       {nom:'Leg extension, siège reculé', series:3, target:"Quadriceps · RIR 0-1 · 2 à 3 min · Siège reculé au maximum : la hanche moins fléchie, le droit fémoral travaille mieux", pres:'3 × 10-15', repos:'2,5 min'},
       {nom:'Abduction à la machine', series:2, target:"Moyen fessier · RIR 0-1 · 2 min · Tu ouvres sans élan et tu tiens une seconde en position ouverte", pres:'2 × 12-15', repos:'2 min'},
+      {nom:'Adducteurs à la machine', series:3, target:"Adducteurs · RIR 0-1 · 2 min · Ouverture maximale au départ, tu refermes sans élan. Souvent la même machine que l&rsquo;abduction, tu enchaînes", pres:'3 × 10-15', repos:'2 min'},
       {nom:'Mollets debout à la machine', series:3, target:"Mollets · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'3 × 10-15', repos:'2 min'},
       {nom:'Relevé de jambes à la chaise romaine', series:3, target:"Bas des abdominaux · RIR 0-1 · 2 min · Tu enroules le bassin en fin de mouvement, tu ne balances pas les jambes. Pour charger, un haltère coincé entre les pieds", pres:'3 × 10-15', repos:'2 min'},
     ]
@@ -575,7 +576,7 @@ const PROGRAMME = {
       {nom:'Développé couché machine', series:3, target:"Pectoraux · RIR 1-2 · 4 à 5 min · Omoplates serrées contre le dossier, tu descends jusqu&rsquo;à l&rsquo;étirement", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Rowing prise serrée neutre, vers les hanches', series:3, target:"Grand dorsal · RIR 1-2 · 3 à 4 min · Coudes collés au corps, tu tires vers les hanches, pas vers la poitrine", pres:'3 × 8-12', repos:'3,5 min'},
       {nom:'Tirage vertical prise neutre', series:2, target:"Grand dorsal · RIR 1-2 · 3 à 4 min · Tu tires les coudes vers les hanches", pres:'2 × 8-12', repos:'3,5 min'},
-      {nom:'Écarté à la poulie', series:2, target:"Pectoraux · RIR 0-1 · 2 min · Bras légèrement fléchis et figés, grand étirement à l&rsquo;ouverture", pres:'2 × 10-15', repos:'2 min'},
+      {nom:'Pec fly à la machine', series:2, target:"Pectoraux · RIR 0-1 · 2 min · Siège réglé pour que tes mains arrivent à hauteur de poitrine. Bras légèrement fléchis et figés, grand étirement à l&rsquo;ouverture", pres:'2 × 10-15', repos:'2 min'},
       {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
       {nom:'Extension triceps au-dessus de la tête à la poulie', series:2, target:"Triceps · RIR 0-1 · 2 min · Coudes fixes, tu descends loin derrière la tête", pres:'2 × 10-15', repos:'2 min'},
     ]
@@ -596,7 +597,7 @@ const PROGRAMME = {
     nom:'POSTÉRIEUR', couleur:'post', tag:'Fessiers · Ischios · Arrière d&rsquo;épaule · Haut du dos',
     exos:[
       {nom:'Rear delt fly à la machine', series:3, target:"Arrière d&rsquo;épaule · RIR 0-1 · 2 min · Prise neutre, bras presque tendus, tu ouvres en arc large et tu serres les omoplates en fin de mouvement", pres:'3 × 10-15', repos:'2 min'},
-      {nom:'Step-up à la Smith, marche haute (par jambe)', series:3, target:"Fessiers et quadriceps · RIR 1-2 · 3 à 4 min · Genou au niveau de la hanche, buste penché en avant. Tu pousses dans le talon de la jambe du haut, celle du bas ne t&rsquo;aide pas", pres:'3 × 8-12', repos:'3,5 min'},
+      {nom:'Presse à cuisses, pieds hauts et écartés', series:3, target:"Fessiers et adducteurs · RIR 1-2 · 4 à 5 min · Pieds en haut de la plateforme, un peu plus larges que le bassin. Tu descends les genoux vers les épaules aussi bas que possible sans que le bassin décolle du dossier. La charge sera différente de la presse du Lower B, c&rsquo;est normal", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Leg curl assis', series:3, target:"Ischios · RIR 0-1 · 2 à 3 min · Bassin calé contre le dossier, tu contrôles la remontée", pres:'3 × 8-12', repos:'2,5 min'},
       {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min'},
       {nom:'Hyperextension buste très penché', series:3, target:"Fessiers · RIR 0-1 · 2 à 3 min · Haut du dos arrondi, menton rentré, pieds tournés vers l&rsquo;extérieur : tu montes avec les fessiers, pas avec le bas du dos. Un disque contre la poitrine pour charger", pres:'3 × 10-15', repos:'2,5 min'},
@@ -946,7 +947,7 @@ function carteCible(w,poidsVise,kcal,msg,cls){
 const PLAN = { depart:73.3, parSem:0, kcal:3690, P:178, G:436, L:129, pas:150, seuil:0.25, tailleIdx:1 };
 
 /* ===== PESÉES DU MATIN ===== */
-const JOURS=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const JOURS=['Jour 1','Jour 2','Jour 3','Jour 4','Jour 5','Jour 6','Jour 7'];
 function clePesee(w,j){ return K(`pesee-w${w}-j${j}`); }
 function moyennePesees(w){
   let s=0, n=0;
@@ -961,7 +962,7 @@ function buildPesees(){
 function savePesee(j,value){
   const w=currentWeek;
   localStorage.setItem(clePesee(w,j),value);
-  syncFieldDebounced(clePesee(w,j), {client:CLIENT_ID,type:'corp',field:'pesee-'+JOURS[j-1].toLowerCase(),week:w,value:value,ts:new Date().toISOString()});
+  syncFieldDebounced(clePesee(w,j), {client:CLIENT_ID,type:'corp',field:'pesee-j'+j,week:w,value:value,ts:new Date().toISOString()});
   reporterMoyenne(w);
   majPesees(); majCible();
 }
