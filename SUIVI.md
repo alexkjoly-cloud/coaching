@@ -476,8 +476,9 @@ que le dépôt n'est pas privé. Ils iront dans la Sheet et dans son appli.
 | Durée | **1 h 30 maximum, intense** : il ne veut pas de séances interminables |
 | Récupération | Encaisse beaucoup de volume, et sa vie est axée sur le repos en ce moment : **on peut monter le volume** |
 | Méthode | La méthode d'Alexandre, **double progression stricte** |
-| Format envisagé | Upper/Lower, ou PPL + Upper/Lower (avis d'Alexandre). Ma proposition : Upper/Lower × 2 + un jour « priorités », voir la conversation du 18/10 |
+| Format | Proposé le 18/10, **en attente de son OK** : Upper A · Lower A · Upper B · Lower B · off · **Postérieur** (fessiers, ischios, arrière d'épaule, latérales, haut du dos) · off. Ses priorités ont **3 passages** (15 à 18 séries semaine, 6 max par séance) ; en PPLUL elles plafonneraient à 12. Le Postérieur garde un jour off de chaque côté. Un seul gros hinge (RDL) dans la semaine. Pecs, dorsaux, quadris à 2 passages (~10 séries) |
 | À venir | Son poids (balance sans piles), ses mensurations, ses photos à froid. **La diète se fait après le programme** |
+| À lui demander | Sa salle (Smith, leg curl assis, rear delt machine, hip thrust ?), les exos qu'il déteste, ses charges actuelles sur 4-5 gros exos. Ses douleurs éventuelles : **hors du dépôt** |
 
 ---
 
