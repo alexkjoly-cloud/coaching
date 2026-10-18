@@ -212,6 +212,12 @@
   .bilan-rappel .t { font-family:'Bebas Neue',sans-serif; font-size:24px; line-height:1.15; letter-spacing:0.04em; color:var(--white,#fff); }
   .bilan-rappel .t b { color:var(--red); font-weight:400; }
   .bilan-rappel .s { margin-top:6px; font-size:11.5px; color:var(--muted); font-weight:400; }
+
+  /* Semaine non réglée : le contenu est flouté, la barre des semaines reste cliquable */
+  body.semaine-verrouillee .session { filter:blur(8px); pointer-events:none; user-select:none; }
+  #paywall { display:none; position:fixed; left:0; right:0; top:42%; z-index:900; justify-content:center; padding:0 20px; pointer-events:none; }
+  body.semaine-verrouillee #paywall { display:flex; }
+  #paywall .lock-card { pointer-events:auto; }
 </style>
 <meta name="author" content="Alexandre Joly">
 <meta name="copyright" content="© 2026 Alexandre Joly. Tous droits réservés.">
@@ -248,6 +254,14 @@
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
 </div>
 
+<div id="paywall">
+  <div class="lock-card">
+    <div class="lock-eyebrow">Semaine 5 · verrouillée</div>
+    <div class="lock-title">La suite t'attend</div>
+    <div class="lock-text">Ton mois de suivi est terminé et ta semaine 5 est prête, mais <b>j'attends ton paiement pour la débloquer.</b></div>
+    <div class="lock-text">Dès que c'est réglé, écris-moi et je t'ouvre la suite. Tes semaines 1 à 4 restent accessibles juste au-dessus.</div>
+  </div>
+</div>
 <div id="sessions-container"></div>
 
 <!-- DIETE -->
@@ -498,7 +512,10 @@ if(CLIENT_LOCKED){
   document.getElementById('lock-overlay').classList.add('visible');
 }
 
-const NB_SEMAINES = 4;
+const NB_SEMAINES = 5;
+// Semaines réglées. Au-delà, la semaine s'affiche floutée avec un message de paiement.
+// Pour débloquer après paiement : passer ce chiffre au nombre de semaines payées.
+const SEMAINES_PAYEES = 4;
 
 const PROGRAMME = {
   'push': {
@@ -602,7 +619,7 @@ function buildWeekSelector(){
   const sel=document.getElementById('week-selector');
   let html='';
   for(let w=1;w<=NB_SEMAINES;w++){
-    html+=`<button class="week-btn${w===1?' active':''}" data-week="${w}" onclick="switchWeek(${w})">S${w}<span class="wk-fill"></span></button>`;
+    html+=`<button class="week-btn${w===1?' active':''}" data-week="${w}" onclick="switchWeek(${w})">S${w}${w>SEMAINES_PAYEES?' 🔒':''}<span class="wk-fill"></span></button>`;
   }
   sel.innerHTML=html;
 }
@@ -658,6 +675,7 @@ function buildSessions(){
 }
 
 function save(session,exoIdx,exoName,serie,field,value){
+  if(currentWeek>SEMAINES_PAYEES) return;
   localStorage.setItem(getKey(session,exoIdx,serie,field,currentWeek),value);
   if(String(value).trim()!==''){ try{ localStorage.setItem(`ts-${session}-e${exoIdx}-s${serie}-w${currentWeek}`, String(Date.now())); }catch(e){} }
   syncField(session,exoIdx,exoName,serie,field,value,currentWeek);
@@ -689,6 +707,7 @@ function loadAll(){
 
 /* ===== BILAN HEBDO ===== */
 function saveBilan(field,value){
+  if(currentWeek>SEMAINES_PAYEES) return;
   localStorage.setItem(`bilan-${field}-w${currentWeek}`,value);
   syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
 }
@@ -701,6 +720,7 @@ function loadBilan(){
   if(pill) pill.textContent=`Semaine ${currentWeek}`;
 }
 function saveBilanComplet(){
+  if(currentWeek>SEMAINES_PAYEES) return;
   BILAN_FIELDS.forEach(f=>{
     const el=document.getElementById(`bilan-${f}`);
     if(el && el.value!==''){
@@ -814,6 +834,7 @@ function updateWeekFills(){
 function switchWeek(week){
   currentWeek=week;
   try{ localStorage.setItem(CLIENT_ID+'-semaine', String(week)); }catch(e){}
+  document.body.classList.toggle('semaine-verrouillee', week>SEMAINES_PAYEES);
   document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
   document.querySelector(`.week-btn[data-week="${week}"]`).classList.add('active');
   SESSIONS.forEach(sid=>{
@@ -836,7 +857,7 @@ function switchTab(id){
 /* ===== CORPOREL ===== */
 function buildPoids(){
   const c=document.getElementById('poids-rows'); let html='';
-  for(let w=1;w<=NB_SEMAINES;w++){
+  for(let w=1;w<=SEMAINES_PAYEES;w++){
     html+=`<div class="poids-row">
       <div class="serie-num">S${w}</div>
       <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cpoids-w${w}" oninput="saveCorpField('poids',${w},this.value)">
@@ -857,6 +878,7 @@ function buildMens(){
 }
 function saveMensSemaine(i,value){ saveCorpField(`mens-${i}-${semKey(currentWeek)}`, 0, value); }
 function saveCorpField(field,w,value){
+  if(w>SEMAINES_PAYEES) return;
   const key = w>0 ? `corp-${field}-w${w}` : `corp-${field}`;
   localStorage.setItem(key,value);
   syncFieldDebounced(key, {client:CLIENT_ID,type:'corp',field:field,week:(w>0?w:'-'),value:value,ts:new Date().toISOString()});
@@ -913,7 +935,7 @@ function fr(x,d){ return x.toFixed(d).replace('.',','); }
 function carteCible(w,poidsVise,kcal,msg,cls){
   const el=document.getElementById('cible-sem'); if(!el) return;
   const p=lirePoids(w), dG=Math.round(PLAN.G+(kcal-PLAN.kcal)/4);
-  el.innerHTML = `<div class="cs-top"><span class="w">Semaine ${w} sur ${NB_SEMAINES}</span>`
+  el.innerHTML = `<div class="cs-top"><span class="w">Semaine ${w} sur ${SEMAINES_PAYEES}</span>`
     + `<span class="p">${p!==null?('pesée cette semaine : '+fr(p,1)+' kg'):'pas encore pesée'}</span></div>`
     + `<div class="cs-grid">`
     + `<div class="cs-c gold"><div class="k">Poids visé</div><div class="v">${poidsVise}</div></div>`

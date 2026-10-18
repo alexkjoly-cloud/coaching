@@ -252,6 +252,12 @@ trancheront.
   seul en recomposition. L'appli affiche « il manque ton tour de taille » et ne bouge pas.
 - **les protéines ne bougent jamais**
 
+🔒 **18/10 : mois réglé terminé. Semaine 5 ajoutée mais verrouillée** : floutée, avec un
+message « j'attends ton paiement pour la débloquer ». Les semaines 1 à 4 restent
+ouvertes. **Après paiement, passer `SEMAINES_PAYEES` au nombre de semaines payées**
+dans `suivi_jean.html`. Bilan : S1 et S2 remplis, rien en S3 et S4, dernière séance
+notée le 13/10.
+
 📌 **Lui redire que la balance ne bougera presque pas.** En recomposition c'est le
 tour de taille qui parle. Sans ça il croira qu'il ne se passe rien.
 
