@@ -52,6 +52,8 @@
   .tab.active-upperB { background:var(--blue-dim); border-color:rgba(74,159,232,0.3); color:var(--blue); }
   .tab.active-lowerB { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); }
   .tab.active-posterieur { background:var(--red-dim); border-color:rgba(230,50,50,0.3); color:var(--red); }
+  .tab.active-consignes { background:rgba(240,237,232,0.06); border-color:rgba(240,237,232,0.3); color:var(--white); }
+  .tab.active-pesees { background:rgba(62,184,122,0.10); border-color:rgba(62,184,122,0.35); color:var(--green); }
   .tab.active-corp { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); }
   .tab.active-bilan { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); }
   /* ---------- Diète ---------- */
@@ -246,14 +248,81 @@
 <div class="week-selector" id="week-selector"></div>
 
 <div class="tabs">
-  <button class="tab active-upperA" id="tab-upperA" onclick="switchTab('upperA')">Upper A<br><span style="font-size:8px;color:var(--muted)">Dos · Épaules · Pecs</span></button>
+  <button class="tab active-consignes" id="tab-consignes" onclick="switchTab('consignes')">Consignes<br><span style="font-size:8px;color:var(--muted)">À lire</span></button>
+  <button class="tab" id="tab-upperA" onclick="switchTab('upperA')">Upper A<br><span style="font-size:8px;color:var(--muted)">Dos · Épaules · Pecs</span></button>
   <button class="tab" id="tab-lowerA" onclick="switchTab('lowerA')">Lower A<br><span style="font-size:8px;color:var(--muted)">Ischios · Fessiers</span></button>
   <button class="tab" id="tab-upperB" onclick="switchTab('upperB')">Upper B<br><span style="font-size:8px;color:var(--muted)">Pecs · Dos · Épaules</span></button>
-  <button class="tab" id="tab-lowerB" onclick="switchTab('lowerB')">Lower B<br><span style="font-size:8px;color:var(--muted)">Fessiers · Quadris</span></button>
+  <button class="tab" id="tab-lowerB" onclick="switchTab('lowerB')">Lower B<br><span style="font-size:8px;color:var(--muted)">Fessiers · Quadris · Lombaires</span></button>
   <button class="tab" id="tab-posterieur" onclick="switchTab('posterieur')">Postérieur<br><span style="font-size:8px;color:var(--muted)">Fessiers · Ischios · Épaules</span></button>
   <button class="tab" id="tab-diete" onclick="switchTab('diete')">Diète<br><span style="font-size:8px;color:var(--muted)">Macros · Repas</span></button>
+  <button class="tab" id="tab-pesees" onclick="switchTab('pesees')">Pesées<br><span style="font-size:8px;color:var(--muted)">Chaque matin</span></button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
-  <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
+  <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Mensurations</span></button>
+</div>
+
+<!-- CONSIGNES -->
+<div class="session visible" id="session-consignes">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--white)">À lire avant ta première séance</div>
+    <div class="session-title">CONSIGNES</div>
+    <div class="session-sub">Tout ce qu'il faut pour que le programme marche. Reviens ici dès que tu as un doute.</div>
+  </div>
+
+  <span class="diete-sec">Ta semaine</span>
+  <div class="diete-intro">
+    <b>Lundi</b> Upper A · <b>mardi</b> Lower A · <b>mercredi</b> Upper B · <b>jeudi</b> Lower B · <b>vendredi</b> off · <b>samedi</b> Postérieur · <b>dimanche</b> off.<br>
+    Les jours peuvent glisser. La seule règle : un jour off avant et après le Postérieur, parce qu'il reprend des muscles de toutes les autres séances.<br>
+    Pas de chrono sur la séance : prends le temps qu'il faut pour faire chaque série proprement.
+  </div>
+
+  <span class="diete-sec">Tes priorités</span>
+  <div class="diete-intro">
+    Objectif : la scène l'an prochain, <b>en Classic ou en Bodybuilding</b>. Les jambes y sont jugées, au même titre que le haut.<br>
+    <b>Fessiers, ischios, arrière d'épaule, haut du dos et bas du dos</b> passent en priorité. Les quadriceps aussi : ton haut du corps est en avance, on fait remonter tout le bas. <b>Mollets et abdos</b> sont jugés sur scène, ils ont leurs séries.
+  </div>
+
+  <span class="diete-sec">Avant chaque exercice : la montée en charge</span>
+  <div class="diete-intro">
+    <b>Gros exercice</b> (RDL, hip thrust, presse, développés, tirages, rowings) : <b>2 séries de montée</b>. Une facile à environ 50 % de ta charge pour 6 à 8 reps, puis une à environ 80 % pour 3 ou 4 reps, avec 1 min de repos entre les deux.<br>
+    <b>Isolation</b> : 1 montée légère, ou rien si le muscle vient déjà de travailler.<br>
+    <b>Les montées ne se notent pas</b> et ne comptent pas comme des séries.
+  </div>
+
+  <span class="diete-sec">Pendant tes séries</span>
+  <div class="diete-intro">
+    <b>Le RIR</b>, c'est ce qu'il te reste dans le réservoir à la fin de la série. <b>RIR 1-2</b> sur les gros exercices, <b>RIR 0-1</b> sur les machines et l'isolation. Pousse chaque rep avec l'intention d'aller vite : si la dernière ralentit, c'est normal, c'est le signe que tu es près de l'échec.<br>
+    <b>Les repos se prennent en entier.</b> 4 à 5 min sur les gros mouvements, 3 à 4 min sur les rowings, la fente et le step-up, 2 à 3 min sur leg curl, leg extension, hyperextension et extension lombaire, 2 min sur le reste. Reprendre trop tôt te coûte des répétitions à charge égale, et c'est sur elles que tu progresses.
+  </div>
+
+  <span class="diete-sec">La double progression</span>
+  <div class="diete-intro">
+    Tu gardes la même charge tant que tu n'as pas atteint le <b>haut de la fourchette sur toutes tes séries</b>. En 8-12 : 12, 12, 10, tu restes à cette charge. 12, 12, 12, tu montes d'un cran au prochain passage et tu repars dans le bas de la fourchette. C'est le signe que ça a marché.<br>
+    <b>Semaine 1, on calibre</b> : tu cherches tes charges en gardant 2 reps en réserve partout. RDL et extension lombaire restent légers la première semaine, ils donnent de grosses courbatures.
+  </div>
+
+  <span class="diete-sec">Dans l'appli</span>
+  <div class="diete-intro">
+    <b>Note chaque série au moment où tu la fais</b>, pas toute la séance à la fin : l'appli calcule tes temps de repos à partir de l'heure de chaque saisie.<br>
+    Vérifie que tu es <b>sur la bonne semaine</b> en haut avant de noter.<br>
+    <b>Une machine est prise ou n'existe pas dans ta salle ?</b> Tu prends l'équivalent le plus proche, tu l'écris dans les notes de séance, et tu gardes le même la semaine d'après. Sinon tes charges ne se comparent plus.
+  </div>
+
+  <span class="diete-sec">Tes rendez-vous</span>
+  <div class="diete-intro">
+    <b>Chaque matin</b> : pesée à jeun, après les toilettes et avant de boire, dans l'onglet <b>Pesées</b>.<br>
+    <b>Chaque dimanche</b> : ton bilan, avec ton tour de taille pris au nombril, le matin à jeun, sans serrer. Puis tu m'envoies un message : sans ça, je ne le fais pas.<br>
+    <b>Toutes les 4 semaines</b> : photos de face, de profil et de dos, même heure, même lumière, regard droit. Et tes mensurations dans l'onglet <b>Corps</b>.<br>
+    <b>Tous les jours</b> : tes 8 000 pas, ni beaucoup plus ni beaucoup moins.
+  </div>
+
+  <span class="diete-sec">Si ça coince</span>
+  <div class="diete-intro">
+    <b>Une courbature</b> : tu t'entraînes normalement.<br>
+    <b>Une douleur</b> (dans une articulation, vive, ou qui t'empêche de faire le mouvement) : tu arrêtes l'exercice, tu le notes et tu m'écris. Si elle reste, kiné ou médecin.<br>
+    <b>Une douleur qui descend dans un bras ou une jambe, ou des fourmillements</b> : médecin directement.<br>
+    <b>Tu dors mal plusieurs nuits</b>, ou tu n'as plus envie d'y aller : dis-le dans ton bilan. On baisse le volume avant que ça casse.
+  </div>
+  <div class="spacer"></div>
 </div>
 
 <div id="sessions-container"></div>
@@ -276,7 +345,7 @@
   <div class="cible-sem" id="cible-sem"></div>
 
   <div class="cible">
-    <b>Semaines 1 et 2, on mesure.</b> Tu manges cette journée telle quelle, tous les jours, et tu te pèses chaque matin à jeun dès que ta balance a ses piles. Si ton poids reste stable là-dessus avec l'entraînement, c'est ta maintenance.<br>
+    <b>Semaines 1 et 2, on mesure.</b> Tu manges cette journée telle quelle, tous les jours, et tu notes ton poids chaque matin à jeun dans l'onglet <b>Pesées</b>, dès que ta balance a ses piles. Si ton poids reste stable là-dessus avec l'entraînement, c'est ta maintenance.<br>
     <b>Semaines 3 à 10, on reste à maintenance.</b> Tu reviens d'une période plus calme : la mémoire musculaire te permet de reprendre du muscle sans manger plus. Le poids bouge peu, et le tour de taille ne doit pas monter.
   </div>
 
@@ -314,14 +383,45 @@
 
   <span class="diete-sec">Comment on pilote</span>
   <div class="diete-intro">
-    Tu te pèses <b>tous les matins à jeun</b> et tu rentres la <b>moyenne de la semaine</b> dans ton bilan, avec ton <b>tour de taille</b>. On ne regarde jamais un chiffre isolé.<br><br>
+    Tu notes ton poids <b>chaque matin à jeun</b> dans l'onglet <b>Pesées</b> : l'appli fait la moyenne de la semaine et la reporte dans ton bilan. Ton <b>tour de taille</b>, tu le prends le dimanche. On ne regarde jamais un chiffre isolé.<br><br>
     À partir de la semaine 3, si ton poids baisse <b>deux semaines de suite</b>, on monte de <b>150 kcal en glucides</b>. S'il monte deux semaines de suite <b>avec</b> le tour de taille, on descend de 150. Une seule semaine ne suffit pas, l'eau fait bouger la balance. <b>On ne touche jamais aux protéines.</b><br><br>
     Le cadre en haut de cet onglet fait le calcul tout seul chaque semaine.
   </div>
 
   <span class="diete-sec">La suite</span>
   <div class="diete-intro">
-    <b>Objectif : la scène en 2027.</b> Ce bloc sert à reprendre ta masse en restant sec. Ensuite, un léger surplus pour construire jusqu'au début de la prépa, puis 16 à 20 semaines de sèche. C'est la date de la compétition qui fixera la durée de chaque phase.
+    <b>Objectif : la scène l'an prochain, en Classic ou en Bodybuilding.</b> Ce bloc sert à reprendre ta masse en restant sec. Ensuite, un léger surplus pour construire jusqu'au début de la prépa, puis 16 à 20 semaines de sèche. C'est la date de la compétition qui fixera la durée de chaque phase.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- PESEES -->
+<div class="session" id="session-pesees">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--green)">Poids du matin</div>
+    <div class="session-title">PESÉES<span class="session-week-pill" id="pill-pesees">Semaine 1</span></div>
+    <div class="session-sub">Chaque matin, à jeun, après les toilettes et avant de boire. Même balance, même endroit.</div>
+  </div>
+
+  <div class="exo-card">
+    <div class="col-header" style="grid-template-columns:1.3fr 1fr">
+      <div class="col-h" style="text-align:left;padding-left:8px">Jour</div><div class="col-h">Poids kg</div>
+    </div>
+    <div class="series-rows" id="pesees-rows"></div>
+  </div>
+
+  <div class="cible-sem" id="pesees-moy"></div>
+
+  <div class="corp-section-title">Moyenne de chaque semaine</div>
+  <div class="exo-card">
+    <div class="col-header" style="grid-template-columns:54px 1fr 1fr 1fr">
+      <div class="col-h">Sem.</div><div class="col-h">Moyenne</div><div class="col-h">Écart</div><div class="col-h">Pesées</div>
+    </div>
+    <div class="series-rows" id="moyennes-rows"></div>
+  </div>
+
+  <div class="diete-intro">
+    Une pesée seule ne veut rien dire : le poids du matin peut bouger de plus d'un kilo d'un jour à l'autre avec l'eau, le sel et ce que tu as mangé la veille. <b>C'est la moyenne de la semaine qui compte.</b> L'appli la reporte toute seule dans ton bilan, et c'est elle qui pilote ta diète.
   </div>
   <div class="spacer"></div>
 </div>
@@ -344,7 +444,7 @@
   <div class="repos-an" id="repos-analyse"></div>
 
   <div class="bilan-field">
-    <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">moyenne de tes pesées du matin, à jeun</span></div>
+    <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">se remplit tout seul avec la moyenne de l'onglet Pesées</span></div>
     <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-poids" oninput="saveBilan('poids',this.value)">
   </div>
 
@@ -410,16 +510,8 @@
 <div class="session" id="session-corp">
   <div class="session-header">
     <div class="session-tag" style="color:var(--gold)">Suivi corporel</div>
-    <div class="session-title">CORPS · SUIVI</div>
-    <div class="session-sub">Poids 1×/sem, matin à jeun, mêmes conditions. Mensurations 1×/mois, sur la semaine choisie en haut. On regarde la tendance.</div>
-  </div>
-
-  <div class="corp-section-title">Poids (chaque semaine)</div>
-  <div class="exo-card">
-    <div class="col-header" style="grid-template-columns:54px 1fr 1fr 1.4fr">
-      <div class="col-h">Sem.</div><div class="col-h">Poids kg</div><div class="col-h">Δ</div><div class="col-h">Remarque</div>
-    </div>
-    <div class="series-rows" id="poids-rows"></div>
+    <div class="session-title">CORPS · MENSURATIONS</div>
+    <div class="session-sub">Une fois par mois, le matin à jeun, sur la semaine choisie en haut. Ton poids se note chaque matin dans l'onglet Pesées.</div>
   </div>
 
   <div class="corp-section-title">Mensurations (cm)</div>
@@ -431,7 +523,7 @@
   </div>
 
   <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveSession('corp')">ENREGISTRER</button>
-  <button class="reset-btn" onclick="resetCorp()">Effacer le suivi corporel</button>
+  <button class="reset-btn" onclick="resetCorp()">Effacer les mensurations</button>
   <div class="spacer"></div>
 </div>
 
@@ -461,6 +553,7 @@ const PROGRAMME = {
       {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min'},
       {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
       {nom:'Curl pupitre', series:2, target:"Biceps · RIR 0-1 · 2 min · Bras calés sur le pupitre, tu redescends jusqu&rsquo;en bas à chaque répétition", pres:'2 × 8-12', repos:'2 min'},
+      {nom:'Crunch à la poulie haute', series:3, target:"Abdominaux · RIR 0-1 · 2 min · À genoux face à la poulie, tu enroules le buste vers les cuisses, le bassin ne bouge pas", pres:'3 × 10-15', repos:'2 min'},
     ]
   },
   'lowerA': {
@@ -471,7 +564,8 @@ const PROGRAMME = {
       {nom:'Fente à la Smith, pied arrière surélevé (par jambe)', series:3, target:"Fessiers et quadriceps · RIR 1-2 · 3 à 4 min · Pied avant loin du banc, buste penché en avant : c&rsquo;est ce qui met le fessier en étirement. Tu enchaînes les deux jambes, le repos se prend après", pres:'3 × 8-12', repos:'3,5 min'},
       {nom:'Leg extension, siège reculé', series:3, target:"Quadriceps · RIR 0-1 · 2 à 3 min · Siège reculé au maximum : la hanche moins fléchie, le droit fémoral travaille mieux", pres:'3 × 10-15', repos:'2,5 min'},
       {nom:'Abduction à la machine', series:2, target:"Moyen fessier · RIR 0-1 · 2 min · Tu ouvres sans élan et tu tiens une seconde en position ouverte", pres:'2 × 12-15', repos:'2 min'},
-      {nom:'Mollets debout à la machine', series:2, target:"Mollets · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'2 × 10-15', repos:'2 min'},
+      {nom:'Mollets debout à la machine', series:3, target:"Mollets · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'3 × 10-15', repos:'2 min'},
+      {nom:'Relevé de jambes à la chaise romaine', series:3, target:"Bas des abdominaux · RIR 0-1 · 2 min · Tu enroules le bassin en fin de mouvement, tu ne balances pas les jambes. Pour charger, un haltère coincé entre les pieds", pres:'3 × 10-15', repos:'2 min'},
     ]
   },
   'upperB': {
@@ -487,14 +581,15 @@ const PROGRAMME = {
     ]
   },
   'lowerB': {
-    nom:'LOWER B', couleur:'lb', tag:'Bas du corps · accent fessiers et quadriceps',
+    nom:'LOWER B', couleur:'lb', tag:'Fessiers · Quadriceps · Bas du dos',
     exos:[
       {nom:'Hip thrust (machine ou barre)', series:3, target:"Fessiers · RIR 1-2 · 4 à 5 min · Menton rentré, tibias verticaux en haut, tu bloques une seconde en serrant. Toujours le même matériel", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Presse à cuisses', series:3, target:"Quadriceps et fessiers · RIR 1-2 · 4 à 5 min · Pieds au milieu de la plateforme, largeur de bassin, le bas du dos ne décolle jamais", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Leg curl assis', series:3, target:"Ischios · RIR 0-1 · 2 à 3 min · Bassin calé contre le dossier, tu contrôles la remontée", pres:'3 × 8-12', repos:'2,5 min'},
       {nom:'Leg extension, siège reculé', series:3, target:"Quadriceps · RIR 0-1 · 2 à 3 min · Siège reculé au maximum : la hanche moins fléchie, le droit fémoral travaille mieux", pres:'3 × 10-15', repos:'2,5 min'},
+      {nom:'Extension lombaire (machine ou banc à 45°)', series:3, target:"Bas du dos · RIR 1-2 · 2 à 3 min · Tu descends en enroulant le dos et tu remontes en le déroulant, sans à-coup. Tu t&rsquo;arrêtes à l&rsquo;alignement, jamais au-delà. Toujours le même matériel, et léger la semaine 1", pres:'3 × 10-15', repos:'2,5 min'},
+      {nom:'Mollets assis', series:3, target:"Soléaire · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'3 × 12-15', repos:'2 min'},
       {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
-      {nom:'Mollets debout à la machine', series:2, target:"Mollets · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'2 × 10-15', repos:'2 min'},
     ]
   },
   'posterieur': {
@@ -506,6 +601,7 @@ const PROGRAMME = {
       {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min'},
       {nom:'Hyperextension buste très penché', series:3, target:"Fessiers · RIR 0-1 · 2 à 3 min · Haut du dos arrondi, menton rentré, pieds tournés vers l&rsquo;extérieur : tu montes avec les fessiers, pas avec le bas du dos. Un disque contre la poitrine pour charger", pres:'3 × 10-15', repos:'2,5 min'},
       {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
+      {nom:'Mollets debout à la machine', series:3, target:"Mollets · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'3 × 10-15', repos:'2 min'},
     ]
   },
 };
@@ -568,14 +664,13 @@ function buildSessions(){
   let html='';
   SESSIONS.forEach((sid,si)=>{
     const s=PROGRAMME[sid];
-    html+=`<div class="session${si===0?' visible':''}" id="session-${sid}">
+    html+=`<div class="session" id="session-${sid}">
       <div class="session-header">
         <div class="session-tag tag-${s.couleur}">${s.tag}</div>
         <div class="session-title">${s.nom}<span class="session-week-pill" id="pill-${sid}">Semaine 1</span></div>
         <div class="session-sub">${s.exos.map(e=>e.nom.split(' ')[0]).join(' · ')}</div>
       </div>
-      <div class="prog-rule"><b>Double progression.</b> Tu gardes la même charge tant que tu n'as pas atteint le haut de la fourchette sur <b>toutes</b> tes séries. Le jour où c'est fait, tu montes d'un cran au prochain passage et tu repars dans le bas de la fourchette : c'est le signe que ça a marché.<br><b>Le RIR</b>, c'est ce qu'il te reste dans le réservoir. RIR 1-2 sur les gros exercices, RIR 0-1 sur les machines et l'isolation.<br><b>Semaine 1, on calibre.</b> Tu cherches tes charges en gardant 2 reps en réserve partout.</div>
-      <div class="maj-bloc"><span class="mb-date">Bloc 1 · 10 semaines · objectif scène 2027</span>Ta semaine : <b>lundi Upper A, mardi Lower A, mercredi Upper B, jeudi Lower B, samedi Postérieur</b>. Vendredi et dimanche off. Les jours peuvent glisser, garde juste un jour off avant et après le Postérieur.<br>Tes priorités, <b>fessiers, ischios, arrière d'épaule et haut du dos</b>, passent trois fois par semaine. Les quadriceps aussi : ton haut du corps est en avance, on fait remonter tout le bas.<br><b>Les repos sont longs exprès, prends-les en entier.</b> Reprendre trop tôt te coûte des répétitions à charge égale, et c'est sur elles que tu progresses.</div>`;
+      <div class="prog-rule"><b>Rappel.</b> Montée en charge avant chaque exercice, puis RIR 1-2 sur les gros, RIR 0-1 sur l'isolation. Tu montes la charge quand <b>toutes</b> tes séries touchent le haut de la fourchette. Les repos se prennent en entier. Le détail est dans l'onglet <b>Consignes</b>.</div>`;
     s.exos.forEach((exo,ei)=>{
       html+=`<div class="exo-card">
         <div class="exo-top">
@@ -588,7 +683,7 @@ function buildSessions(){
           <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
-        <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
+        <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RIR</div><div class="col-h">✓</div></div>
         <div class="series-rows">`;
       for(let s2=1;s2<=exo.series;s2++){
         const en = exo.nom.replace(/'/g,"\\'");
@@ -646,6 +741,7 @@ function loadAll(){
 /* ===== BILAN HEBDO ===== */
 function saveBilan(field,value){
   localStorage.setItem(K(`bilan-${field}-w${currentWeek}`),value);
+  if(field==='poids'){ if(String(value).trim()!=='') localStorage.setItem(K(`bilan-poids-manuel-w${currentWeek}`),'1'); else localStorage.removeItem(K(`bilan-poids-manuel-w${currentWeek}`)); }
   syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
 }
 function loadBilan(){
@@ -776,7 +872,7 @@ function switchWeek(week){
     const pill=document.getElementById(`pill-${sid}`); if(pill) pill.textContent=`Semaine ${week}`;
     const nl=document.getElementById(`notelabel-${sid}`); if(nl) nl.textContent=`Semaine ${week}`;
   });
-  loadAll(); loadCorpMens(); majCible(); majReposAnalyse();
+  loadAll(); loadCorpMens(); majPesees(); majCible(); majReposAnalyse();
 }
 
 function switchTab(id){
@@ -790,18 +886,6 @@ function switchTab(id){
 }
 
 /* ===== CORPOREL ===== */
-function buildPoids(){
-  const c=document.getElementById('poids-rows'); let html='';
-  for(let w=1;w<=NB_SEMAINES;w++){
-    html+=`<div class="poids-row">
-      <div class="serie-num">S${w}</div>
-      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cpoids-w${w}" oninput="saveCorpField('poids',${w},this.value)">
-      <div class="serie-input" id="cdelta-w${w}" style="border-right:1px solid #131313;color:var(--muted)">—</div>
-      <input type="text" inputmode="text" autocapitalize="off" class="serie-input" placeholder="—" id="crem-w${w}" style="border-right:none;font-size:11px" oninput="saveCorpField('rem',${w},this.value)">
-    </div>`;
-  }
-  c.innerHTML=html;
-}
 function semKey(w){ return 's' + (w<10 ? '0'+w : w); }
 function buildMens(){
   const c=document.getElementById('mens-rows'); let html='';
@@ -816,26 +900,6 @@ function saveCorpField(field,w,value){
   const key = K(w>0 ? `corp-${field}-w${w}` : `corp-${field}`);
   localStorage.setItem(key,value);
   syncFieldDebounced(key, {client:CLIENT_ID,type:'corp',field:field,week:(w>0?w:'-'),value:value,ts:new Date().toISOString()});
-  if(field==='poids') loadCorpPoids();
-}
-function loadCorpPoids(){
-  let prev=null;
-  for(let w=1;w<=NB_SEMAINES;w++){
-    const val=localStorage.getItem(K(`corp-poids-w${w}`))||'';
-    const el=document.getElementById(`cpoids-w${w}`);
-    const dEl=document.getElementById(`cdelta-w${w}`);
-    if(el) el.value=val;
-    const rem=localStorage.getItem(K(`corp-rem-w${w}`))||'';
-    const remEl=document.getElementById(`crem-w${w}`); if(remEl) remEl.value=rem;
-    if(dEl){
-      const valN=parseFloat(String(val).replace(',','.')), prevN=parseFloat(String(prev).replace(',','.'));
-      if(!isNaN(valN)&&!isNaN(prevN)){
-        const d=valN-prevN; dEl.textContent=(d>0?'+':'')+d.toFixed(1);
-        dEl.style.color = d>0?'var(--red)':d<0?'var(--green)':'var(--muted)';
-      } else { dEl.textContent='—'; dEl.style.color='var(--muted)'; }
-    }
-    if(val!=='') prev=val;
-  }
 }
 function loadCorpMens(){
   MENSURATIONS.forEach((z,i)=>{
@@ -847,10 +911,9 @@ function loadCorpMens(){
 }
 function saveCorp(){ /* déjà sauvé au fil de l'eau */ }
 function resetCorp(){
-  if(!confirm('Effacer tout le suivi corporel ?')) return;
-  for(let w=1;w<=NB_SEMAINES;w++){ localStorage.removeItem(K(`corp-poids-w${w}`)); localStorage.removeItem(K(`corp-rem-w${w}`)); }
+  if(!confirm('Effacer toutes tes mensurations ?')) return;
   MENSURATIONS.forEach((z,i)=>{for(let w=1;w<=NB_SEMAINES;w++) localStorage.removeItem(K(`corp-mens-${i}-${semKey(w)}`));});
-  loadCorpPoids(); loadCorpMens();
+  loadCorpMens();
 }
 
 document.addEventListener('input',e=>{
@@ -862,7 +925,7 @@ document.addEventListener('input',e=>{
 
 /* ===== OBJECTIF DE LA SEMAINE ===== */
 function lireNum(cle){ try{ const v=localStorage.getItem(cle); if(!v) return null; const x=parseFloat(String(v).replace(',','.')); return isNaN(x)?null:x; }catch(e){ return null; } }
-function lirePoids(w){ const a=lireNum(K(`corp-poids-w${w}`)); return a!==null?a:lireNum(K(`bilan-poids-w${w}`)); }
+function lirePoids(w){ const m=moyennePesees(w); if(m.n>=3) return m.moy; return lireNum(K(`bilan-poids-w${w}`)); }
 function lireTaille(w){ const a=lireNum(K(`bilan-taille-w${w}`)); return a!==null?a:lireNum(K(`corp-mens-${PLAN.tailleIdx}-${semKey(w)}`)); }
 function serie(f){ const o=[]; for(let i=1;i<=NB_SEMAINES;i++){ const v=f(i); if(v!==null) o.push({w:i,v}); } return o; }
 function fr(x,d){ return x.toFixed(d).replace('.',','); }
@@ -881,6 +944,62 @@ function carteCible(w,poidsVise,kcal,msg,cls){
 }
 
 const PLAN = { depart:73.3, parSem:0, kcal:3690, P:178, G:436, L:129, pas:150, seuil:0.25, tailleIdx:1 };
+
+/* ===== PESÉES DU MATIN ===== */
+const JOURS=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+function clePesee(w,j){ return K(`pesee-w${w}-j${j}`); }
+function moyennePesees(w){
+  let s=0, n=0;
+  for(let j=1;j<=7;j++){ const v=lireNum(clePesee(w,j)); if(v!==null){ s+=v; n++; } }
+  return n ? {moy:Math.round(s/n*10)/10, n} : {moy:null, n:0};
+}
+function buildPesees(){
+  const c=document.getElementById('pesees-rows'); if(!c) return;
+  c.innerHTML=JOURS.map((d,i)=>`<div class="mens-row" style="grid-template-columns:1.3fr 1fr"><div class="mens-label">${d}</div>`
+    +`<input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="pesee-j${i+1}" style="border-right:none" oninput="savePesee(${i+1},this.value)"></div>`).join('');
+}
+function savePesee(j,value){
+  const w=currentWeek;
+  localStorage.setItem(clePesee(w,j),value);
+  syncFieldDebounced(clePesee(w,j), {client:CLIENT_ID,type:'corp',field:'pesee-'+JOURS[j-1].toLowerCase(),week:w,value:value,ts:new Date().toISOString()});
+  reporterMoyenne(w);
+  majPesees(); majCible();
+}
+/* La moyenne part toute seule dans le bilan, sauf s'il y a tapé son poids à la main. */
+function reporterMoyenne(w){
+  if(localStorage.getItem(K(`bilan-poids-manuel-w${w}`))==='1') return;
+  const m=moyennePesees(w), v=m.moy!==null?fr(m.moy,1):'';
+  if((localStorage.getItem(K(`bilan-poids-w${w}`))||'')===v) return;
+  localStorage.setItem(K(`bilan-poids-w${w}`),v);
+  syncFieldDebounced(`bilan-poids-w${w}`, {client:CLIENT_ID,type:'bilan',field:'poids',week:w,value:v,ts:new Date().toISOString()});
+  if(w===currentWeek){ const el=document.getElementById('bilan-poids'); if(el) el.value=v; }
+}
+function majPesees(){
+  const w=currentWeek;
+  for(let j=1;j<=7;j++){ const el=document.getElementById('pesee-j'+j); if(el) el.value=localStorage.getItem(clePesee(w,j))||''; }
+  const pill=document.getElementById('pill-pesees'); if(pill) pill.textContent='Semaine '+w;
+  const m=moyennePesees(w), prev=w>1?moyennePesees(w-1):{moy:null,n:0};
+  const box=document.getElementById('pesees-moy');
+  if(box){
+    const ecart=(m.moy!==null && prev.moy!==null) ? ` · <b>${m.moy-prev.moy>=0?'+':''}${fr(m.moy-prev.moy,1)} kg</b> par rapport à la semaine ${w-1}` : '';
+    box.innerHTML = m.n
+      ? `<div class="cs-top"><span class="w">Moyenne semaine ${w}</span><span class="p">${m.n} pesée${m.n>1?'s':''} sur 7</span></div><div class="cs-msg"><b>${fr(m.moy,1)} kg</b>${ecart}</div>`
+      : `<div class="cs-top"><span class="w">Moyenne semaine ${w}</span><span class="p">aucune pesée</span></div><div class="cs-msg">Note ton poids chaque matin, la moyenne se calcule toute seule.</div>`;
+  }
+  const rows=document.getElementById('moyennes-rows');
+  if(rows){
+    let html='', last=null;
+    for(let i=1;i<=NB_SEMAINES;i++){
+      const mi=moyennePesees(i);
+      const e=(mi.moy!==null && last!==null) ? (mi.moy-last>0?'+':'')+fr(mi.moy-last,1) : '—';
+      html+=`<div class="poids-row" style="grid-template-columns:54px 1fr 1fr 1fr"><div class="serie-num">S${i}</div>`
+        +`<div class="serie-input">${mi.moy!==null?fr(mi.moy,1):'—'}</div><div class="serie-input" style="color:var(--muted)">${e}</div>`
+        +`<div class="serie-input" style="border-right:none;color:var(--muted)">${mi.n?mi.n+'/7':'—'}</div></div>`;
+      if(mi.moy!==null) last=mi.moy;
+    }
+    rows.innerHTML=html;
+  }
+}
 
 /* ===== ANALYSE DES TEMPS DE REPOS ===== */
 function reposPrescrit(target){
@@ -941,7 +1060,7 @@ function majCible(){
   const w=currentWeek;
   let kcal=PLAN.kcal, msg='', cls='';
   if(w<=2){
-    msg=`Semaines 1 et 2 : <b>on ne change rien, on mesure.</b> Tu manges ta journée type telle quelle, tous les jours, et tu te pèses chaque matin à jeun. La moyenne de la semaine 2 nous donne ta maintenance.`;
+    msg=`Semaines 1 et 2 : <b>on ne change rien, on mesure.</b> Tu manges ta journée type telle quelle, tous les jours, et tu notes ton poids chaque matin dans l'onglet <b>Pesées</b>. La moyenne de la semaine 2 nous donne ta maintenance.`;
     carteCible(w,'à mesurer',kcal,msg,cls); return;
   }
   const ref=lirePoids(2)!==null?lirePoids(2):lirePoids(1);
@@ -949,8 +1068,8 @@ function majCible(){
   const ps=serie(lirePoids).filter(x=>x.w<w), ts=serie(lireTaille).filter(x=>x.w<w);
   if(ps.length<2){
     msg = ps.length
-      ? `Une seule pesée enregistrée. Il en faut deux pour décider quoi que ce soit, donc <b>on ne change rien</b>. Rentre la moyenne de ta semaine dans ton bilan.`
-      : `Pas encore de pesée. Rentre la moyenne de tes pesées dans ton bilan chaque semaine : c'est elle qui pilote ta diète.`;
+      ? `Une seule semaine de pesées. Il en faut deux pour décider quoi que ce soit, donc <b>on ne change rien</b>.`
+      : `Pas encore de pesée. Note ton poids chaque matin dans l'onglet <b>Pesées</b> : c'est la moyenne de la semaine qui pilote ta diète.`;
     carteCible(w,vise,kcal,msg,cls); return;
   }
   const rythme=(a,b)=>(b.v-a.v)/(b.w-a.w);
@@ -978,11 +1097,11 @@ function majCible(){
 
 buildWeekSelector();
 buildSessions();
-buildPoids();
 buildMens();
+buildPesees();
 loadAll();
-loadCorpPoids();
 loadCorpMens();
+majPesees();
 majCible();
 majReposAnalyse();
 /* On rouvre sur la dernière semaine consultée. Sans ça l'appli repartait toujours
