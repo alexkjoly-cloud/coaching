@@ -459,6 +459,26 @@ kickback 40 → 20, curl poulie 30 → 16,5) : autre salle ou fatigue, à confir
 Elles repartaient toujours en semaine 1 : c'est ce qui a fait noter Jean et Alexia
 dans la mauvaise semaine. Corrigé dans `suivi_jean.html` et `suivi_alexia.html`.
 
+
+---
+
+## FRANZ — programme en préparation (brief du 18/10/2026)
+
+⚠️ **Dépôt public** : ses mensurations, son poids et ses photos ne vont **pas** ici tant
+que le dépôt n'est pas privé. Ils iront dans la Sheet et dans son appli.
+
+| | |
+|---|---|
+| Niveau | **Très bon niveau en musculation.** A ralenti récemment : a perdu un peu de masse et de sèche. S'il reprend sérieusement, la mémoire musculaire fera revenir vite |
+| Objectif | Reprendre sérieusement, retrouver sa masse et sa sèche |
+| Priorités | **Fessiers, ischios, épaules (surtout arrière d'épaule)**, et un peu de **haut du dos** |
+| Fréquence | **5 séances par semaine** |
+| Durée | **1 h 30 maximum, intense** : il ne veut pas de séances interminables |
+| Récupération | Encaisse beaucoup de volume, et sa vie est axée sur le repos en ce moment : **on peut monter le volume** |
+| Méthode | La méthode d'Alexandre, **double progression stricte** |
+| Format envisagé | Upper/Lower, ou PPL + Upper/Lower (avis d'Alexandre). Ma proposition : Upper/Lower × 2 + un jour « priorités », voir la conversation du 18/10 |
+| À venir | Son poids (balance sans piles), ses mensurations, ses photos à froid. **La diète se fait après le programme** |
+
 ---
 
 ## CE QUE L'APPLI FAIT TOUTE SEULE
