@@ -530,6 +530,36 @@ renvoie le fichier.
 est écrit là doit être **recollé à la main par Alexandre** dans
 `references/entrainement.md`.
 
+### Prise de masse : la vitesse se règle sur le niveau, vérifié le 18/10/2026
+
+À recoller dans **`references/nutrition.md`** (pas `entrainement.md`).
+
+🔴 **Contradiction interne à corriger.** Section « Vitesses » : « Prise de masse :
+surplus léger, **200-300 g/semaine** ». Or la table d'Aragon du même fichier donne,
+pour un avancé, **0,25 à 0,5 % du poids par mois**, soit **200 à 400 g par mois** à
+80 kg. 200-300 g par semaine, c'est 1 à 1,5 % par mois : le rythme d'un débutant.
+
+✅ **Ligne de remplacement :** « Prise de masse : surplus léger, et la vitesse dépend
+du niveau. Débutant 1 à 1,5 % du poids par mois (≈ 200-300 g/semaine à 80 kg),
+intermédiaire 0,5 à 1 % (≈ 100-200 g/semaine), avancé 0,25 à 0,5 % (≈ 50-100
+g/semaine). Au-delà, le surplus part surtout en gras. Prise rapide = sèche plus longue
+derrière = temps perdu. »
+
+📐 **Ce qui l'appuie.** Garthe 2013 (déjà dans le fichier) et **Helms et coll. 2023**
+(*Sports Medicine – Open*) : pratiquants entraînés, 8 semaines, maintenance contre +5 %
+contre +15 % de surplus. **Pas de différence sur l'épaisseur musculaire ni sur le
+squat** ; le +15 % prend **plus de gras** (plis cutanés) et un peu plus au développé
+couché. ⚠️ 17 sujets au bout, statistiques bayésiennes : cohérent avec Garthe, pas une
+preuve à lui seul.
+
+🔴 **Le plafond de gras en prise de masse : ne plus dire « au-delà de 15 % tu
+construis moins bien ».** L'idée (le « P-ratio ») vient surtout de données sur des
+**sédentaires** (Forbes 2000, reprise par Hall 2007). **Aucun essai contrôlé** ne
+compare des pratiquants entraînés à des taux de gras différents, et le débat reste
+ouvert (Henselmans pour, Trexler et Nuckols contre). ✅ La formule qui tient : « on
+plafonne vers 15-16 % pour garder la sèche suivante courte ». La roadmap d'Alexandre du
+04/08 l'écrivait sous l'autre forme : corrigée le 18/10.
+
 ### Les étirements, vérifié le 24/09/2026
 
 Le dossier du skill date du 15/08. Il tient, sauf **une ligne à corriger**.
