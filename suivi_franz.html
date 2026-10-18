@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<!--
+  © 2026 Alexandre Joly. Tous droits réservés.
+  Ce code est une œuvre protégée par le droit d'auteur (Code de la propriété
+  intellectuelle, art. L112-2 et L122-6). Toute reproduction, adaptation ou
+  réutilisation, totale ou partielle, sans l'autorisation écrite de l'auteur
+  est interdite et constitue une contrefaçon (art. L335-3).
+-->
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Suivi · Franz</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a; --dark: #111111; --card: #161616; --border: #1e1e1e;
+    --red: #e63232; --red-dim: rgba(230,50,50,0.08);
+    --gold: #c9a84c; --gold-dim: rgba(201,168,76,0.08);
+    --blue: #4a9fe8; --blue-dim: rgba(74,159,232,0.08);
+    --purple: #9b7ede; --purple-dim: rgba(155,126,222,0.08);
+    --teal: #5db8a8; --teal-dim: rgba(93,184,168,0.08);
+    --green: #3eb87a; --white: #f0ede8; --muted: #555; --muted2: #333;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { background:var(--black); color:var(--white); font-family:'DM Sans',sans-serif; font-size:14px; min-height:100vh; padding-bottom:40px; }
+
+  .header { padding:24px 16px 16px; border-bottom:1px solid var(--border); display:flex; align-items:flex-end; justify-content:space-between; position:sticky; top:0; background:var(--black); z-index:100; }
+  .eyebrow { font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--red); margin-bottom:4px; }
+  h1 { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:0.04em; line-height:1; }
+  h1 span { color:var(--red); }
+  .cycle-badge { font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); text-align:right; line-height:1.4; }
+  .cycle-badge strong { color:var(--gold); font-weight:500; display:block; font-size:11px; }
+
+  .week-selector { display:flex; gap:5px; padding:12px 12px; background:var(--dark); border-bottom:1px solid var(--border); position:sticky; top:69px; z-index:99; overflow-x:auto; scrollbar-width:none; }
+  .week-selector::-webkit-scrollbar { display:none; }
+  .week-btn { flex:0 0 auto; min-width:46px; padding:9px 0; border-radius:2px; font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.06em; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--muted); transition:all 0.15s; text-align:center; }
+  .week-btn.active { background:var(--red-dim); border-color:rgba(230,50,50,0.4); color:var(--red); }
+  .week-btn .wk-fill { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:2px; vertical-align:middle; opacity:0; }
+  .week-btn.has-data .wk-fill { opacity:1; }
+
+  .tabs { display:flex; overflow-x:auto; padding:12px 12px 0; gap:5px; scrollbar-width:none; border-bottom:1px solid var(--border); }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab { flex-shrink:0; padding:7px 12px; border-radius:2px; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:inherit; text-align:center; line-height:1.3; }
+  .tab.active-push { background:var(--red-dim); border-color:rgba(230,50,50,0.3); color:var(--red); }
+  .tab.active-pull { background:var(--blue-dim); border-color:rgba(74,159,232,0.3); color:var(--blue); }
+  .tab.active-legs { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); }
+  .tab.active-upper { background:var(--purple-dim); border-color:rgba(155,126,222,0.3); color:var(--purple); }
+  .tab.active-lower { background:var(--teal-dim); border-color:rgba(93,184,168,0.3); color:var(--teal); }
+  .tab.active-upperA { background:var(--purple-dim); border-color:rgba(155,126,222,0.3); color:var(--purple); }
+  .tab.active-lowerA { background:var(--teal-dim); border-color:rgba(93,184,168,0.3); color:var(--teal); }
+  .tab.active-upperB { background:var(--blue-dim); border-color:rgba(74,159,232,0.3); color:var(--blue); }
+  .tab.active-lowerB { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); }
+  .tab.active-posterieur { background:var(--red-dim); border-color:rgba(230,50,50,0.3); color:var(--red); }
+  .tab.active-corp { background:var(--gold-dim); border-color:rgba(201,168,76,0.3); color:var(--gold); }
+  .tab.active-bilan { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); }
+  /* ---------- Diète ---------- */
+  .tab.active-diete { background:rgba(62,184,122,0.10); border-color:rgba(62,184,122,0.35); color:var(--green); }
+  /* ---------- Objectif de la semaine ---------- */
+  .cible-sem { margin-top:12px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--gold); border-radius:0 2px 2px 0; padding:13px 15px; }
+  .cs-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:9px; }
+  .cs-top .w { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.08em; color:var(--gold); }
+  .cs-top .p { font-size:11px; color:var(--muted2); }
+  .cs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(84px,1fr)); gap:7px; }
+  .cs-c { background:var(--dark); border:1px solid var(--border); border-radius:2px; padding:8px 6px; text-align:center; }
+  .cs-c .k { font-size:8px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); font-weight:500; }
+  .cs-c .v { font-family:'Bebas Neue',sans-serif; font-size:18px; line-height:1.15; margin-top:1px; letter-spacing:0.03em; }
+  .cs-c.gold .v { color:var(--gold); }
+  .cs-msg { font-size:12px; color:var(--muted); font-weight:300; line-height:1.6; margin-top:10px; }
+  .cs-msg b { color:var(--white); font-weight:500; }
+  .cs-msg.up b { color:var(--green); }
+  .cs-msg.down b { color:var(--red); }
+
+  .diete-intro { margin-top:10px; padding:13px 15px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--green); border-radius:0 2px 2px 0; font-size:12px; color:var(--muted); font-weight:300; line-height:1.65; }
+  .diete-intro b { color:var(--white); font-weight:500; }
+  .macro-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; }
+  .macro { background:var(--card); border:1px solid var(--border); border-radius:2px; padding:11px 6px; text-align:center; }
+  .macro .k { font-size:8.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--muted2); font-weight:500; }
+  .macro .v { font-family:'Bebas Neue',sans-serif; font-size:23px; line-height:1.1; margin-top:2px; letter-spacing:0.03em; }
+  .macro.kcal .v { color:var(--green); }
+  .cible { margin-top:10px; padding:13px 15px; background:var(--gold-dim); border:1px solid rgba(201,168,76,0.3); border-radius:2px; font-size:12px; color:#cbb87a; line-height:1.65; font-weight:300; }
+  .cible b { color:var(--gold); font-weight:500; }
+  .diete-jour { margin-top:8px; background:var(--card); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
+  .dj-head { padding:10px 14px; border-bottom:1px solid var(--border); display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .dj-head .n { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.08em; }
+  .dj-head .m { font-size:10px; color:var(--muted2); font-variant-numeric:tabular-nums; }
+  .dj-repas { padding:9px 14px; border-bottom:1px solid var(--border); }
+  .dj-repas:last-child { border-bottom:none; }
+  .dj-repas .r { font-size:8.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--muted2); font-weight:500; margin-bottom:3px; }
+  .dj-repas .a { font-size:12.5px; line-height:1.6; color:var(--muted); font-weight:300; }
+  .dj-repas .a b { color:var(--white); font-weight:500; }
+  .diete-sec { font-size:9.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted2); font-weight:500; margin:22px 0 0; display:block; }
+  ul.courses { columns:2; column-gap:20px; margin:8px 0 0; padding-left:16px; }
+  ul.courses li { padding:2px 0; font-size:12px; color:var(--muted); font-weight:300; break-inside:avoid; }
+  ul.courses li b { color:var(--white); font-weight:400; }
+  @media(max-width:480px){ ul.courses{columns:1;} .macro-grid{grid-template-columns:repeat(2,1fr);} }
+
+  .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:4px; vertical-align:middle; }
+
+  .session { display:none; padding:0 16px; }
+  .session.visible { display:block; }
+  .session-header { padding:16px 0 12px; border-bottom:1px solid var(--border); margin-bottom:4px; }
+  .session-tag { font-size:9px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:4px; }
+  .tag-push { color:var(--red); } .tag-pull { color:var(--blue); } .tag-legs { color:var(--gold); } .tag-upper { color:var(--purple); } .tag-lower { color:var(--teal); }
+  .tag-ua { color:var(--purple); } .tag-la { color:var(--teal); } .tag-ub { color:var(--blue); } .tag-lb { color:var(--gold); } .tag-post { color:var(--red); }
+  .session-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.05em; line-height:1; }
+  .session-week-pill { display:inline-block; font-family:'DM Sans',sans-serif; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); background:var(--gold-dim); padding:2px 8px; border-radius:2px; margin-left:8px; vertical-align:middle; }
+  .session-sub { font-size:11px; color:var(--muted); margin-top:4px; font-weight:300; }
+
+  .exo-card { margin-top:10px; background:var(--card); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
+  .exo-top { padding:10px 14px 8px; display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+  .exo-num { font-size:10px; color:var(--muted2); font-weight:500; flex-shrink:0; margin-top:2px; }
+  .exo-info { flex:1; }
+  .exo-name { font-size:13px; font-weight:500; line-height:1.3; }
+  .exo-target { font-size:10px; color:var(--muted); font-weight:300; margin-top:2px; }
+  .exo-prescription { font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.05em; white-space:nowrap; flex-shrink:0; }
+  .pres-push { color:var(--red); } .pres-pull { color:var(--blue); } .pres-legs { color:var(--gold); } .pres-upper { color:var(--purple); } .pres-lower { color:var(--teal); }
+  .pres-ua { color:var(--purple); } .pres-la { color:var(--teal); } .pres-ub { color:var(--blue); } .pres-lb { color:var(--gold); } .pres-post { color:var(--red); }
+
+  .pr-badge { font-size:9px; color:var(--gold); font-weight:500; margin-top:3px; letter-spacing:0.05em; }
+  .pr-badge b { color:var(--gold); }
+  .last-week-ref { font-size:9px; color:var(--muted2); padding:0 14px 6px; font-style:italic; letter-spacing:0.03em; }
+  .last-week-ref b { color:var(--muted); font-style:normal; font-weight:400; }
+
+  .col-header { display:grid; grid-template-columns:30px 1fr 1fr 1fr 38px; padding:6px 0 4px; border-top:1px solid var(--border); }
+  .col-h { font-size:8px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted2); text-align:center; }
+  .series-rows { display:flex; flex-direction:column; }
+  .serie-row { display:grid; grid-template-columns:30px 1fr 1fr 1fr 38px; align-items:center; border-bottom:1px solid #131313; }
+  .serie-row:last-child { border-bottom:none; }
+  .serie-num { font-size:10px; color:var(--muted2); text-align:center; padding:12px 0; border-right:1px solid #131313; font-weight:500; }
+  .serie-input { background:none; border:none; color:var(--white); font-family:'DM Sans',sans-serif; font-size:15px; padding:12px 4px; width:100%; text-align:center; outline:none; border-right:1px solid #131313; -webkit-appearance:none; }
+  .serie-input.rir { color:var(--muted); font-size:13px; }
+  .serie-input::placeholder { color:var(--muted2); font-size:13px; }
+  .serie-input:focus { background:rgba(255,255,255,0.03); }
+  .serie-check { display:flex; align-items:center; justify-content:center; padding:12px 4px; }
+  .check-btn { width:23px; height:23px; border-radius:50%; border:1px solid var(--muted2); background:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:11px; color:transparent; }
+  .check-btn.checked { background:var(--green); border-color:var(--green); color:#000; }
+
+  .note-area { margin-top:10px; background:var(--card); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
+  .note-label { font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); padding:8px 14px 6px; border-bottom:1px solid var(--border); }
+  .note-input { width:100%; background:none; border:none; color:var(--white); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:300; padding:10px 14px; resize:none; outline:none; line-height:1.6; min-height:56px; font-style:italic; }
+  .note-input::placeholder { color:var(--muted2); }
+
+  .save-btn { margin-top:16px; width:100%; padding:14px; background:var(--red); color:#fff; border:none; border-radius:2px; font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.15em; cursor:pointer; }
+  .save-btn.saved { background:var(--green); }
+  .reset-btn { margin-top:8px; width:100%; padding:10px; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:2px; font-family:'DM Sans',sans-serif; font-size:11px; cursor:pointer; }
+  .spacer { height:16px; }
+
+  .corp-section-title { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin:18px 0 4px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+  .poids-row { display:grid; grid-template-columns:54px 1fr 1fr 1.4fr; align-items:center; border-bottom:1px solid #131313; }
+  .poids-row:last-child { border-bottom:none; }
+  .mens-row { display:grid; align-items:center; border-bottom:1px solid #131313; }
+  .mens-row:last-child { border-bottom:none; }
+  .mens-label { font-size:11px; color:var(--white); padding:11px 8px; border-right:1px solid #131313; }
+
+.prog-rule { margin-top:12px; padding:12px 14px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--gold); border-radius:0 2px 2px 0; font-size:11.5px; line-height:1.6; color:var(--muted); font-weight:300; }
+  .prog-rule b { color:var(--white); font-weight:500; }
+  .maj-bloc { margin-top:12px; padding:12px 14px; background:var(--green-dim,rgba(52,199,89,0.07)); border:1px solid var(--border); border-left:2px solid var(--green); border-radius:0 2px 2px 0; font-size:11.5px; line-height:1.6; color:var(--muted); font-weight:300; }
+  .maj-bloc b { color:var(--white); font-weight:500; }
+  .maj-bloc .mb-date { display:block; font-size:8.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--green); font-weight:500; margin-bottom:6px; }
+
+  /* Bilan hebdo */
+  .bilan-intro { margin-top:14px; padding:14px 16px; background:var(--gold-dim); border:1px solid rgba(201,168,76,0.3); border-radius:2px; font-size:12px; color:#cbb87a; font-weight:300; line-height:1.6; }
+  .bilan-intro b { color:var(--gold); font-weight:500; }
+  .bilan-field { margin-top:10px; background:var(--card); border:1px solid var(--border); border-radius:2px; overflow:hidden; }
+  .bilan-label { font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); padding:9px 14px 7px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .bilan-scale-hint { font-size:9px; color:var(--muted2); text-transform:none; letter-spacing:0; }
+  .bilan-num { width:100%; background:none; border:none; color:var(--white); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.05em; padding:10px 14px; text-align:center; outline:none; }
+  .bilan-num::placeholder { color:var(--muted2); font-size:16px; font-family:'DM Sans',sans-serif; }
+  .bilan-txt { width:100%; background:none; border:none; color:var(--white); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:300; padding:10px 14px; resize:none; outline:none; line-height:1.6; min-height:64px; }
+  .bilan-txt::placeholder { color:var(--muted2); font-style:italic; }
+  .bilan-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+  .bilan-grid .bilan-field { margin-top:0; }
+
+  /* ---------- Chronomètre de repos ---------- */
+  .rest-chip { margin-top:6px; font-family:'DM Sans',sans-serif; font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:4px 9px; border-radius:2px; background:var(--red-dim); color:var(--red); border:1px solid rgba(230,50,50,0.25); line-height:1.4; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:background 0.15s, transform 0.1s; }
+  .rest-chip:active { transform:scale(0.94); }
+  .repos-an { margin-top:14px; padding:13px 15px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--red); border-radius:0 2px 2px 0; font-size:11.5px; line-height:1.6; color:var(--muted); font-weight:300; }
+  .repos-an b { color:var(--white); font-weight:500; }
+  .repos-an .ra-t { display:block; font-size:8.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--red); font-weight:500; margin-bottom:7px; }
+  .repos-an .ra-l { display:flex; justify-content:space-between; gap:10px; padding:4px 0; border-bottom:1px solid var(--border); }
+  .repos-an .ra-l:last-of-type { border-bottom:none; }
+  .repos-an .ra-l .n { flex:1; }
+  .repos-an .ra-l .v { font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:0.03em; white-space:nowrap; }
+  .repos-an .ra-l.court .v { color:var(--red); }
+  .repos-an .ra-l.long .v { color:var(--gold); }
+  .repos-an .ra-l.ok .v { color:var(--green); }
+  .repos-an .ra-msg { margin-top:9px; }
+  .rest-chip::before { content:'\23F1'; font-size:10px; }
+  #rest-chrono { position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(160%); z-index:300; width:min(320px, calc(100vw - 28px)); background:var(--card); border:1px solid var(--border); border-radius:3px; box-shadow:0 8px 40px rgba(0,0,0,0.6); padding:14px 16px; opacity:0; transition:transform 0.32s cubic-bezier(0.22,1,0.36,1), opacity 0.28s; }
+  #rest-chrono.visible { transform:translateX(-50%) translateY(0); opacity:1; }
+  .rc-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .rc-label { font-family:'DM Sans',sans-serif; font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+  .rc-close { background:none; border:none; color:var(--muted2); font-size:18px; line-height:1; cursor:pointer; padding:0 2px; font-family:inherit; }
+  .rc-time { font-family:'Bebas Neue',sans-serif; font-size:46px; letter-spacing:0.04em; text-align:center; font-variant-numeric:tabular-nums; color:var(--white); line-height:1; margin-bottom:12px; }
+  .rc-time.running { color:var(--red); }
+  .rc-controls { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  .rc-btn { padding:11px 0; border-radius:2px; border:1px solid var(--border); font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:0.08em; cursor:pointer; background:transparent; color:var(--muted); transition:background 0.15s, color 0.15s, transform 0.1s; }
+  .rc-btn:active { transform:scale(0.96); }
+  .rc-btn.primary { background:var(--red); border-color:var(--red); color:#fff; }
+
+  .kg-wrap { display:flex; align-items:center; border-right:1px solid #131313; }
+  .kg-wrap .serie-input { border-right:none; flex:1; }
+  .kbd-toggle { background:none; border:none; color:var(--muted2); font-size:13px; padding:0 6px 0 2px; cursor:pointer; flex-shrink:0; line-height:1; }
+  .kbd-toggle.text-mode { color:var(--gold); }
+
+  /* Verrou d'accès — programme non réglé */
+  body.locked > *:not(#lock-overlay):not(script) { filter:blur(9px); pointer-events:none; user-select:none; }
+  #lock-overlay { display:none; position:fixed; inset:0; z-index:1000; background:rgba(10,10,10,0.55); align-items:center; justify-content:center; padding:24px; }
+  #lock-overlay.visible { display:flex; }
+  .lock-card { max-width:340px; background:var(--card); border:1px solid var(--border); border-radius:4px; padding:28px 24px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+  .lock-eyebrow { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--red); margin-bottom:10px; font-weight:500; }
+  .lock-title { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.04em; line-height:1.05; margin-bottom:14px; }
+  .lock-text { font-size:13px; color:var(--muted); font-weight:300; line-height:1.65; }
+  .lock-text + .lock-text { margin-top:10px; }
+  .lock-text b { color:var(--white); font-weight:500; }
+
+  .bilan-rappel { margin-top:14px; padding:16px 16px 14px; background:var(--red-dim); border:2px solid var(--red); border-radius:3px; text-align:center; }
+  .bilan-rappel .t { font-family:'Bebas Neue',sans-serif; font-size:24px; line-height:1.15; letter-spacing:0.04em; color:var(--white,#fff); }
+  .bilan-rappel .t b { color:var(--red); font-weight:400; }
+  .bilan-rappel .s { margin-top:6px; font-size:11.5px; color:var(--muted); font-weight:400; }
+
+</style>
+<meta name="author" content="Alexandre Joly">
+<meta name="copyright" content="© 2026 Alexandre Joly. Tous droits réservés.">
+</head>
+<body>
+
+<div id="lock-overlay">
+  <div class="lock-card">
+    <div class="lock-eyebrow">Suivi en pause</div>
+    <div class="lock-title">On se retrouve bientôt</div>
+    <div class="lock-text">Ton programme est prêt, mais le suivi reste en pause tant que ce n'est pas réglé entre nous. <b>Le travail qu'on met des deux côtés mérite d'être respecté, dans les deux sens.</b></div>
+    <div class="lock-text">Écris-moi quand tu es prêt à reprendre, on remet tout en route direct.</div>
+  </div>
+</div>
+
+<div class="header">
+  <div>
+    <div class="eyebrow">Suivi d'entraînement</div>
+    <h1>FRANZ<span>.</span></h1>
+  </div>
+  <div class="cycle-badge">Bloc 1 · 10 semaines<strong id="cycle-label">Upper · Lower · Postérieur</strong></div>
+</div>
+
+<div class="week-selector" id="week-selector"></div>
+
+<div class="tabs">
+  <button class="tab active-upperA" id="tab-upperA" onclick="switchTab('upperA')">Upper A<br><span style="font-size:8px;color:var(--muted)">Dos · Épaules · Pecs</span></button>
+  <button class="tab" id="tab-lowerA" onclick="switchTab('lowerA')">Lower A<br><span style="font-size:8px;color:var(--muted)">Ischios · Fessiers</span></button>
+  <button class="tab" id="tab-upperB" onclick="switchTab('upperB')">Upper B<br><span style="font-size:8px;color:var(--muted)">Pecs · Dos · Épaules</span></button>
+  <button class="tab" id="tab-lowerB" onclick="switchTab('lowerB')">Lower B<br><span style="font-size:8px;color:var(--muted)">Fessiers · Quadris</span></button>
+  <button class="tab" id="tab-posterieur" onclick="switchTab('posterieur')">Postérieur<br><span style="font-size:8px;color:var(--muted)">Fessiers · Ischios · Épaules</span></button>
+  <button class="tab" id="tab-diete" onclick="switchTab('diete')">Diète<br><span style="font-size:8px;color:var(--muted)">Macros · Repas</span></button>
+  <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
+  <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Poids · Mensur.</span></button>
+</div>
+
+<div id="sessions-container"></div>
+
+<!-- DIETE -->
+<div class="session" id="session-diete">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--green)">Nutrition</div>
+    <div class="session-title">DIÈTE</div>
+    <div class="session-sub">Une seule journée, la tienne, pesée. On ne change pas ce que tu manges : on le rend mesurable.</div>
+  </div>
+
+  <div class="macro-grid">
+    <div class="macro kcal"><div class="k">Calories</div><div class="v">3690</div></div>
+    <div class="macro"><div class="k">Protéines</div><div class="v">178 g</div></div>
+    <div class="macro"><div class="k">Glucides</div><div class="v">436 g</div></div>
+    <div class="macro"><div class="k">Lipides</div><div class="v">129 g</div></div>
+  </div>
+
+  <div class="cible-sem" id="cible-sem"></div>
+
+  <div class="cible">
+    <b>Semaines 1 et 2, on mesure.</b> Tu manges cette journée telle quelle, tous les jours, et tu te pèses chaque matin à jeun dès que ta balance a ses piles. Si ton poids reste stable là-dessus avec l'entraînement, c'est ta maintenance.<br>
+    <b>Semaines 3 à 10, on reste à maintenance.</b> Tu reviens d'une période plus calme : la mémoire musculaire te permet de reprendre du muscle sans manger plus. Le poids bouge peu, et le tour de taille ne doit pas monter.
+  </div>
+
+  <div class="diete-intro">
+    <b>Tout se pèse cru.</b> Riz, pâtes, poulet, haché : avant cuisson. 100 g de riz cru font presque 300 g cuits, donc peser cuit fausserait tout.<br>
+    <b>L'huile se pèse, elle ne se verse pas.</b> C'est elle qui fait le plus varier ta journée : une cuillère versée à l'œil, c'est 10 à 15 g, donc jusqu'à 135 kcal à chaque fois.<br>
+    <b>Tes 8 000 pas restent fixes.</b> Si tu marches beaucoup plus ou beaucoup moins, la balance ne veut plus rien dire.<br>
+    <b>Un écart, tu le notes dans ton bilan</b>, week-end compris. Ce n'est pas grave, c'est ce qui me permet de lire ta balance.
+  </div>
+
+  <span class="diete-sec">Ta journée type</span>
+  <div class="diete-jour">
+    <div class="dj-head"><span class="n">TOUS LES JOURS</span><span class="m">3690 kcal · P178 · G436 · L129</span></div>
+    <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a">Pain <b>60 g</b>, en 2 tartines · Pâte à tartiner <b>30 g</b> · Whey <b>39 g</b>, 3 dosettes dans l'eau · Un fruit <b>150 g</b> (pomme, poire, kiwi…)</div></div>
+    <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Riz <b>220 g cru</b> · Blanc de poulet <b>200 g cru</b> · Crème légère 18 % <b>20 cl</b>, la brique · Oignon <b>1</b>, environ 120 g · Légumes <b>200 g crus</b> (haricots verts, courgettes, brocoli…) · Huile d'olive <b>20 g</b></div></div>
+    <div class="dj-repas"><div class="r">Dîner</div><div class="a">Pâtes <b>210 g crues</b> · Viande hachée 15 % <b>200 g crue</b> · Coulis de tomate <b>200 g</b> · Huile d'olive <b>20 g</b></div></div>
+  </div>
+
+  <span class="diete-sec">Tes courses pour la semaine</span>
+  <ul class="courses">
+    <li><b>Riz</b> 1,54 kg</li>
+    <li><b>Pâtes</b> 1,47 kg</li>
+    <li><b>Blanc de poulet</b> 1,4 kg</li>
+    <li><b>Viande hachée 15 %</b> 1,4 kg</li>
+    <li><b>Crème légère 18 %</b> 7 briques de 20 cl</li>
+    <li><b>Légumes</b> 1,4 kg</li>
+    <li><b>Coulis de tomate</b> 1,4 kg</li>
+    <li><b>Fruits</b> 1,05 kg</li>
+    <li><b>Oignons</b> 7</li>
+    <li><b>Pain</b> 420 g</li>
+    <li><b>Huile d'olive</b> 280 g</li>
+    <li><b>Whey</b> 273 g, soit 21 dosettes</li>
+    <li><b>Pâte à tartiner</b> 210 g</li>
+  </ul>
+
+  <span class="diete-sec">Comment on pilote</span>
+  <div class="diete-intro">
+    Tu te pèses <b>tous les matins à jeun</b> et tu rentres la <b>moyenne de la semaine</b> dans ton bilan, avec ton <b>tour de taille</b>. On ne regarde jamais un chiffre isolé.<br><br>
+    À partir de la semaine 3, si ton poids baisse <b>deux semaines de suite</b>, on monte de <b>150 kcal en glucides</b>. S'il monte deux semaines de suite <b>avec</b> le tour de taille, on descend de 150. Une seule semaine ne suffit pas, l'eau fait bouger la balance. <b>On ne touche jamais aux protéines.</b><br><br>
+    Le cadre en haut de cet onglet fait le calcul tout seul chaque semaine.
+  </div>
+
+  <span class="diete-sec">La suite</span>
+  <div class="diete-intro">
+    <b>Objectif : la scène en 2027.</b> Ce bloc sert à reprendre ta masse en restant sec. Ensuite, un léger surplus pour construire jusqu'au début de la prépa, puis 16 à 20 semaines de sèche. C'est la date de la compétition qui fixera la durée de chaque phase.
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- BILAN HEBDO -->
+<div class="session" id="session-bilan">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--gold)">Bilan hebdomadaire</div>
+    <div class="session-title">BILAN<span class="session-week-pill" id="pill-bilan">Semaine 1</span></div>
+    <div class="session-sub">À remplir chaque dimanche. Sois honnête, c'est comme ça que j'ajuste.</div>
+  </div>
+
+  <div class="bilan-rappel">
+    <div class="t">N'oublie pas de m'envoyer un message quand tu as fait ton bilan. <b>Sans ça, je ne le fais pas.</b></div>
+    <div class="s">Un simple « bilan fait » sur WhatsApp suffit.</div>
+  </div>
+  <div class="bilan-intro">
+    <b>C'est toi qui m'envoies ton bilan chaque dimanche.</b> Je ne viens pas le réclamer. Tu remplis tout ici, tu enregistres, et tu m'envoies un message pour me dire que c'est fait. Ta régularité fait partie du suivi. <b>Le poids et le tour de taille pilotent ta diète</b> : l'onglet Diète recalcule tes calories de la semaine à partir de ces deux chiffres, donc si tu ne les remplis pas, rien ne s'ajuste. Et si tu veux, envoie-moi des vidéos de tes exercices avec ton bilan : c'est un vrai plus pour que je corrige ta technique, mais pas une obligation.
+  </div>
+  <div class="repos-an" id="repos-analyse"></div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">moyenne de tes pesées du matin, à jeun</span></div>
+    <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-poids" oninput="saveBilan('poids',this.value)">
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Tour de taille (cm) <span class="bilan-scale-hint">au nombril, matin à jeun, sans serrer</span></div>
+    <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-taille" oninput="saveBilan('taille',this.value)">
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Pas par jour <span class="bilan-scale-hint">moyenne de la semaine</span></div>
+    <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-pas" oninput="saveBilan('pas',this.value)">
+  </div>
+
+  <div class="bilan-grid">
+    <div class="bilan-field">
+      <div class="bilan-label">Nutrition tenue <span class="bilan-scale-hint">1 à 10</span></div>
+      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-nutrition" oninput="saveBilan('nutrition',this.value)">
+    </div>
+    <div class="bilan-field">
+      <div class="bilan-label">Sommeil <span class="bilan-scale-hint">1 à 10</span></div>
+      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-sommeil" oninput="saveBilan('sommeil',this.value)">
+    </div>
+    <div class="bilan-field">
+      <div class="bilan-label">Énergie / forme <span class="bilan-scale-hint">1 à 10</span></div>
+      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-energie" oninput="saveBilan('energie',this.value)">
+    </div>
+    <div class="bilan-field">
+      <div class="bilan-label">Fatigue / courbatures <span class="bilan-scale-hint">1 à 10</span></div>
+      <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-fatigue" oninput="saveBilan('fatigue',this.value)">
+    </div>
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Écarts à ta journée type</div>
+    <textarea class="bilan-txt" id="bilan-ecarts" placeholder="Repas en plus, restaurant, alcool, jour sans pesée... Même petit, note-le." oninput="saveBilan('ecarts',this.value)"></textarea>
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Ressenti des séances</div>
+    <textarea class="bilan-txt" id="bilan-ressenti" placeholder="Ce qui s'est bien passé, tes sensations, les exos où tu t'es senti fort..." oninput="saveBilan('ressenti',this.value)"></textarea>
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Difficultés / douleurs</div>
+    <textarea class="bilan-txt" id="bilan-difficultes" placeholder="Exos qui coincent, douleurs (genou, épaule...), séances manquées et pourquoi..." oninput="saveBilan('difficultes',this.value)"></textarea>
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Modifications à apporter</div>
+    <textarea class="bilan-txt" id="bilan-modifs" placeholder="Ce que tu aimerais changer ou ajuster dans le programme..." oninput="saveBilan('modifs',this.value)"></textarea>
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Question pour le coach</div>
+    <textarea class="bilan-txt" id="bilan-question" placeholder="Une question, un doute, autre chose à me dire..." oninput="saveBilan('question',this.value)"></textarea>
+  </div>
+
+  <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveBilanComplet()">ENREGISTRER LE BILAN</button>
+  <div class="spacer"></div>
+</div>
+
+<!-- CORPOREL -->
+<div class="session" id="session-corp">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--gold)">Suivi corporel</div>
+    <div class="session-title">CORPS · SUIVI</div>
+    <div class="session-sub">Poids 1×/sem, matin à jeun, mêmes conditions. Mensurations 1×/mois, sur la semaine choisie en haut. On regarde la tendance.</div>
+  </div>
+
+  <div class="corp-section-title">Poids (chaque semaine)</div>
+  <div class="exo-card">
+    <div class="col-header" style="grid-template-columns:54px 1fr 1fr 1.4fr">
+      <div class="col-h">Sem.</div><div class="col-h">Poids kg</div><div class="col-h">Δ</div><div class="col-h">Remarque</div>
+    </div>
+    <div class="series-rows" id="poids-rows"></div>
+  </div>
+
+  <div class="corp-section-title">Mensurations (cm)</div>
+  <div class="exo-card">
+    <div class="col-header" style="grid-template-columns:1.3fr 1fr">
+      <div class="col-h" style="text-align:left;padding-left:8px">Zone</div><div class="col-h" id="mens-week-h">Semaine 1</div>
+    </div>
+    <div class="series-rows" id="mens-rows"></div>
+  </div>
+
+  <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveSession('corp')">ENREGISTRER</button>
+  <button class="reset-btn" onclick="resetCorp()">Effacer le suivi corporel</button>
+  <div class="spacer"></div>
+</div>
+
+<script>
+const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
+const CLIENT_ID = "franz";
+
+// Programme non réglé : suivi verrouillé. Passer à false pour rouvrir l'accès.
+const CLIENT_LOCKED = false;
+if(CLIENT_LOCKED){
+  document.body.classList.add('locked');
+  document.getElementById('lock-overlay').classList.add('visible');
+}
+
+const NB_SEMAINES = 10;
+/* Les clés du bilan et du suivi corporel portent le nom du client : toutes les applis
+   partagent le même localStorage, et sans préfixe le bilan d'un autre s'afficherait ici. */
+const K = cle => CLIENT_ID + '-' + cle;
+
+const PROGRAMME = {
+  'upperA': {
+    nom:'UPPER A', couleur:'ua', tag:'Haut du corps · accent dos',
+    exos:[
+      {nom:'Rear delt fly à la machine', series:3, target:"Arrière d&rsquo;épaule · RIR 0-1 · 2 min · Prise neutre, bras presque tendus, tu ouvres en arc large et tu serres les omoplates en fin de mouvement", pres:'3 × 10-15', repos:'2 min'},
+      {nom:'Tirage vertical prise large', series:3, target:"Grand dorsal · RIR 1-2 · 4 à 5 min · Tu tires les coudes vers les hanches, poitrine vers la barre", pres:'3 × 8-12', repos:'4,5 min'},
+      {nom:'Développé incliné (Smith ou machine)', series:3, target:"Haut des pectoraux · RIR 1-2 · 4 à 5 min · Banc vers 30°, coudes à 45° du buste, dos plat. Toujours le même matériel et le même cran, sinon tes charges ne se comparent plus", pres:'3 × 8-12', repos:'4,5 min'},
+      {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min'},
+      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
+      {nom:'Curl pupitre', series:2, target:"Biceps · RIR 0-1 · 2 min · Bras calés sur le pupitre, tu redescends jusqu&rsquo;en bas à chaque répétition", pres:'2 × 8-12', repos:'2 min'},
+    ]
+  },
+  'lowerA': {
+    nom:'LOWER A', couleur:'la', tag:'Bas du corps · accent ischios',
+    exos:[
+      {nom:'Soulevé de terre roumain', series:3, target:"Ischios et fessiers · RIR 1-2 · 4 à 5 min · Genoux à peine fléchis et figés, barre collée aux cuisses, tu t&rsquo;arrêtes avant que le bas du dos s&rsquo;arrondisse. Semaine 1 léger : il donne de grosses courbatures", pres:'3 × 8-12', repos:'4,5 min'},
+      {nom:'Leg curl assis', series:3, target:"Ischios · RIR 0-1 · 2 à 3 min · Bassin calé contre le dossier, tu contrôles la remontée", pres:'3 × 8-12', repos:'2,5 min'},
+      {nom:'Fente à la Smith, pied arrière surélevé (par jambe)', series:3, target:"Fessiers et quadriceps · RIR 1-2 · 3 à 4 min · Pied avant loin du banc, buste penché en avant : c&rsquo;est ce qui met le fessier en étirement. Tu enchaînes les deux jambes, le repos se prend après", pres:'3 × 8-12', repos:'3,5 min'},
+      {nom:'Leg extension, siège reculé', series:3, target:"Quadriceps · RIR 0-1 · 2 à 3 min · Siège reculé au maximum : la hanche moins fléchie, le droit fémoral travaille mieux", pres:'3 × 10-15', repos:'2,5 min'},
+      {nom:'Abduction à la machine', series:2, target:"Moyen fessier · RIR 0-1 · 2 min · Tu ouvres sans élan et tu tiens une seconde en position ouverte", pres:'2 × 12-15', repos:'2 min'},
+      {nom:'Mollets debout à la machine', series:2, target:"Mollets · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'2 × 10-15', repos:'2 min'},
+    ]
+  },
+  'upperB': {
+    nom:'UPPER B', couleur:'ub', tag:'Haut du corps · accent pecs',
+    exos:[
+      {nom:'Rear delt fly à la machine', series:3, target:"Arrière d&rsquo;épaule · RIR 0-1 · 2 min · Prise neutre, bras presque tendus, tu ouvres en arc large et tu serres les omoplates en fin de mouvement", pres:'3 × 10-15', repos:'2 min'},
+      {nom:'Développé couché machine', series:3, target:"Pectoraux · RIR 1-2 · 4 à 5 min · Omoplates serrées contre le dossier, tu descends jusqu&rsquo;à l&rsquo;étirement", pres:'3 × 8-12', repos:'4,5 min'},
+      {nom:'Rowing prise serrée neutre, vers les hanches', series:3, target:"Grand dorsal · RIR 1-2 · 3 à 4 min · Coudes collés au corps, tu tires vers les hanches, pas vers la poitrine", pres:'3 × 8-12', repos:'3,5 min'},
+      {nom:'Tirage vertical prise neutre', series:2, target:"Grand dorsal · RIR 1-2 · 3 à 4 min · Tu tires les coudes vers les hanches", pres:'2 × 8-12', repos:'3,5 min'},
+      {nom:'Écarté à la poulie', series:2, target:"Pectoraux · RIR 0-1 · 2 min · Bras légèrement fléchis et figés, grand étirement à l&rsquo;ouverture", pres:'2 × 10-15', repos:'2 min'},
+      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
+      {nom:'Extension triceps au-dessus de la tête à la poulie', series:2, target:"Triceps · RIR 0-1 · 2 min · Coudes fixes, tu descends loin derrière la tête", pres:'2 × 10-15', repos:'2 min'},
+    ]
+  },
+  'lowerB': {
+    nom:'LOWER B', couleur:'lb', tag:'Bas du corps · accent fessiers et quadriceps',
+    exos:[
+      {nom:'Hip thrust (machine ou barre)', series:3, target:"Fessiers · RIR 1-2 · 4 à 5 min · Menton rentré, tibias verticaux en haut, tu bloques une seconde en serrant. Toujours le même matériel", pres:'3 × 8-12', repos:'4,5 min'},
+      {nom:'Presse à cuisses', series:3, target:"Quadriceps et fessiers · RIR 1-2 · 4 à 5 min · Pieds au milieu de la plateforme, largeur de bassin, le bas du dos ne décolle jamais", pres:'3 × 8-12', repos:'4,5 min'},
+      {nom:'Leg curl assis', series:3, target:"Ischios · RIR 0-1 · 2 à 3 min · Bassin calé contre le dossier, tu contrôles la remontée", pres:'3 × 8-12', repos:'2,5 min'},
+      {nom:'Leg extension, siège reculé', series:3, target:"Quadriceps · RIR 0-1 · 2 à 3 min · Siège reculé au maximum : la hanche moins fléchie, le droit fémoral travaille mieux", pres:'3 × 10-15', repos:'2,5 min'},
+      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
+      {nom:'Mollets debout à la machine', series:2, target:"Mollets · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'2 × 10-15', repos:'2 min'},
+    ]
+  },
+  'posterieur': {
+    nom:'POSTÉRIEUR', couleur:'post', tag:'Fessiers · Ischios · Arrière d&rsquo;épaule · Haut du dos',
+    exos:[
+      {nom:'Rear delt fly à la machine', series:3, target:"Arrière d&rsquo;épaule · RIR 0-1 · 2 min · Prise neutre, bras presque tendus, tu ouvres en arc large et tu serres les omoplates en fin de mouvement", pres:'3 × 10-15', repos:'2 min'},
+      {nom:'Step-up à la Smith, marche haute (par jambe)', series:3, target:"Fessiers et quadriceps · RIR 1-2 · 3 à 4 min · Genou au niveau de la hanche, buste penché en avant. Tu pousses dans le talon de la jambe du haut, celle du bas ne t&rsquo;aide pas", pres:'3 × 8-12', repos:'3,5 min'},
+      {nom:'Leg curl assis', series:3, target:"Ischios · RIR 0-1 · 2 à 3 min · Bassin calé contre le dossier, tu contrôles la remontée", pres:'3 × 8-12', repos:'2,5 min'},
+      {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min'},
+      {nom:'Hyperextension buste très penché', series:3, target:"Fessiers · RIR 0-1 · 2 à 3 min · Haut du dos arrondi, menton rentré, pieds tournés vers l&rsquo;extérieur : tu montes avec les fessiers, pas avec le bas du dos. Un disque contre la poitrine pour charger", pres:'3 × 10-15', repos:'2,5 min'},
+      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
+    ]
+  },
+};
+
+const MENSURATIONS = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
+const BILAN_FIELDS = ['poids','taille','pas','nutrition','sommeil','energie','fatigue','ecarts','ressenti','difficultes','modifs','question'];
+const SESSIONS = Object.keys(PROGRAMME);
+let currentWeek = 1;
+
+function getKey(s,exoIdx,serie,field,week){ return `${s}-e${exoIdx}-s${serie}-${field}-w${week}`; }
+
+let syncStatusTimer=null;
+function showSyncStatus(ok){
+  let el=document.getElementById('sync-status');
+  if(!el){
+    el=document.createElement('div');
+    el.id='sync-status';
+    el.style.cssText='position:fixed;bottom:12px;right:12px;z-index:200;font-size:10px;letter-spacing:0.05em;padding:6px 12px;border-radius:20px;font-family:DM Sans,sans-serif;transition:opacity 0.3s;pointer-events:none;';
+    document.body.appendChild(el);
+  }
+  if(ok){ el.textContent='✓ Synchronisé'; el.style.background='rgba(62,184,122,0.15)'; el.style.color='#3eb87a'; }
+  else { el.textContent='⟳ Hors-ligne (sauvé local)'; el.style.background='rgba(201,168,76,0.15)'; el.style.color='#c9a84c'; }
+  el.style.opacity='1';
+  clearTimeout(syncStatusTimer);
+  syncStatusTimer=setTimeout(()=>{ el.style.opacity='0'; },1800);
+}
+function syncToCloud(payload){
+  if(!SYNC_URL) return;
+  fetch(SYNC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
+    .then(()=>{ showSyncStatus(true); }).catch(()=>{ showSyncStatus(false); });
+}
+const _syncTimers = {};
+function syncFieldDebounced(timerKey, payload){
+  clearTimeout(_syncTimers[timerKey]);
+  _syncTimers[timerKey] = setTimeout(()=>{ syncToCloud(payload); }, 600);
+}
+function syncField(session,exoIdx,exoName,serie,field,value,week){
+  const timerKey = `${session}-e${exoIdx}-s${serie}-${field}-w${week}`;
+  syncFieldDebounced(timerKey, {client:CLIENT_ID,type:'perf',week:week,session:session,exo:exoName,serie:serie,field:field,value:value,ts:new Date().toISOString()});
+}
+
+function toggleKbd(btn){
+  const input = btn.previousElementSibling;
+  if(input.inputMode === 'decimal'){ input.inputMode = 'text'; btn.classList.add('text-mode'); }
+  else { input.inputMode = 'decimal'; btn.classList.remove('text-mode'); }
+  input.focus();
+}
+
+function buildWeekSelector(){
+  const sel=document.getElementById('week-selector');
+  let html='';
+  for(let w=1;w<=NB_SEMAINES;w++){
+    html+=`<button class="week-btn${w===1?' active':''}" data-week="${w}" onclick="switchWeek(${w})">S${w}<span class="wk-fill"></span></button>`;
+  }
+  sel.innerHTML=html;
+}
+
+function buildSessions(){
+  const container=document.getElementById('sessions-container');
+  let html='';
+  SESSIONS.forEach((sid,si)=>{
+    const s=PROGRAMME[sid];
+    html+=`<div class="session${si===0?' visible':''}" id="session-${sid}">
+      <div class="session-header">
+        <div class="session-tag tag-${s.couleur}">${s.tag}</div>
+        <div class="session-title">${s.nom}<span class="session-week-pill" id="pill-${sid}">Semaine 1</span></div>
+        <div class="session-sub">${s.exos.map(e=>e.nom.split(' ')[0]).join(' · ')}</div>
+      </div>
+      <div class="prog-rule"><b>Double progression.</b> Tu gardes la même charge tant que tu n'as pas atteint le haut de la fourchette sur <b>toutes</b> tes séries. Le jour où c'est fait, tu montes d'un cran au prochain passage et tu repars dans le bas de la fourchette : c'est le signe que ça a marché.<br><b>Le RIR</b>, c'est ce qu'il te reste dans le réservoir. RIR 1-2 sur les gros exercices, RIR 0-1 sur les machines et l'isolation.<br><b>Semaine 1, on calibre.</b> Tu cherches tes charges en gardant 2 reps en réserve partout.</div>
+      <div class="maj-bloc"><span class="mb-date">Bloc 1 · 10 semaines · objectif scène 2027</span>Ta semaine : <b>lundi Upper A, mardi Lower A, mercredi Upper B, jeudi Lower B, samedi Postérieur</b>. Vendredi et dimanche off. Les jours peuvent glisser, garde juste un jour off avant et après le Postérieur.<br>Tes priorités, <b>fessiers, ischios, arrière d'épaule et haut du dos</b>, passent trois fois par semaine. Les quadriceps aussi : ton haut du corps est en avance, on fait remonter tout le bas.<br><b>Les repos sont longs exprès, prends-les en entier.</b> Reprendre trop tôt te coûte des répétitions à charge égale, et c'est sur elles que tu progresses.</div>`;
+    s.exos.forEach((exo,ei)=>{
+      html+=`<div class="exo-card">
+        <div class="exo-top">
+          <div class="exo-num">${String(ei+1).padStart(2,'0')}</div>
+          <div class="exo-info">
+            <div class="exo-name">${exo.nom}</div>
+            <div class="exo-target">${exo.target}</div>
+            <div class="pr-badge" id="pr-${sid}-e${ei}"></div>
+          </div>
+          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
+        </div>
+        <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
+        <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RPE</div><div class="col-h">✓</div></div>
+        <div class="series-rows">`;
+      for(let s2=1;s2<=exo.series;s2++){
+        const en = exo.nom.replace(/'/g,"\\'");
+        html+=`<div class="serie-row">
+          <div class="serie-num">S${s2}</div>
+          <div class="kg-wrap">
+            <input type="text" inputmode="decimal" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${sid}-e${ei}-s${s2}-kg" oninput="save('${sid}',${ei},'${en}',${s2},'kg',this.value)">
+            <button class="kbd-toggle" onclick="toggleKbd(this)" title="Basculer clavier texte">✎</button>
+          </div>
+          <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input" placeholder="—" id="${sid}-e${ei}-s${s2}-reps" oninput="save('${sid}',${ei},'${en}',${s2},'reps',this.value)">
+          <input type="text" inputmode="numeric" autocapitalize="off" autocomplete="off" class="serie-input rir" placeholder="—" id="${sid}-e${ei}-s${s2}-rir" oninput="save('${sid}',${ei},'${en}',${s2},'rir',this.value)">
+          <div class="serie-check"><button class="check-btn" id="chk-${sid}-e${ei}-s${s2}" onclick="toggleCheck('${sid}',${ei},${s2})"></button></div>
+        </div>`;
+      }
+      html+=`</div></div>`;
+    });
+    html+=`<div class="note-area"><div class="note-label">Notes de séance · <span id="notelabel-${sid}">Semaine 1</span></div><textarea class="note-input" id="note-${sid}" placeholder="Si tu changes un exercice, note-le ici. Ressenti, douleurs, ajustements..."></textarea></div>
+      <button class="save-btn" onclick="saveSession('${sid}')">ENREGISTRER LA SÉANCE</button>
+      <button class="reset-btn" onclick="resetSession('${sid}')">Effacer cette séance (semaine en cours)</button>
+      <div class="spacer"></div></div>`;
+  });
+  container.innerHTML=html;
+}
+
+function save(session,exoIdx,exoName,serie,field,value){
+  localStorage.setItem(getKey(session,exoIdx,serie,field,currentWeek),value);
+  if(String(value).trim()!==''){ try{ localStorage.setItem(`ts-${session}-e${exoIdx}-s${serie}-w${currentWeek}`, String(Date.now())); }catch(e){} }
+  syncField(session,exoIdx,exoName,serie,field,value,currentWeek);
+  if(field==='kg'||field==='reps') updatePR(session,exoIdx);
+  updateWeekFills();
+}
+
+function loadAll(){
+  SESSIONS.forEach(sid=>{
+    PROGRAMME[sid].exos.forEach((exo,ei)=>{
+      for(let s=1;s<=exo.series;s++){
+        ['kg','reps','rir'].forEach(f=>{
+          const el=document.getElementById(`${sid}-e${ei}-s${s}-${f}`);
+          if(el) el.value=localStorage.getItem(getKey(sid,ei,s,f,currentWeek))||'';
+        });
+        const chk=localStorage.getItem(getKey(sid,ei,s,'chk',currentWeek))==='1';
+        const chkEl=document.getElementById(`chk-${sid}-e${ei}-s${s}`);
+        if(chkEl){chkEl.className='check-btn'+(chk?' checked':'');chkEl.textContent=chk?'✓':'';}
+      }
+      updateRef(sid,ei);
+      updatePR(sid,ei);
+    });
+    const noteEl=document.getElementById(`note-${sid}`);
+    if(noteEl) noteEl.value=localStorage.getItem(`${sid}-note-w${currentWeek}`)||'';
+  });
+  loadBilan();
+  updateWeekFills();
+}
+
+/* ===== BILAN HEBDO ===== */
+function saveBilan(field,value){
+  localStorage.setItem(K(`bilan-${field}-w${currentWeek}`),value);
+  syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
+}
+function loadBilan(){
+  BILAN_FIELDS.forEach(f=>{
+    const el=document.getElementById(`bilan-${f}`);
+    if(el) el.value=localStorage.getItem(K(`bilan-${f}-w${currentWeek}`))||'';
+  });
+  const pill=document.getElementById('pill-bilan');
+  if(pill) pill.textContent=`Semaine ${currentWeek}`;
+}
+function saveBilanComplet(){
+  BILAN_FIELDS.forEach(f=>{
+    const el=document.getElementById(`bilan-${f}`);
+    if(el && el.value!==''){
+      syncToCloud({client:CLIENT_ID,type:'bilan',field:f,week:currentWeek,value:el.value,ts:new Date().toISOString()});
+    }
+  });
+  const btn=event.target; const orig=btn.textContent;
+  btn.textContent='BILAN ENREGISTRÉ ✓'; btn.classList.add('saved');
+  setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
+}
+
+// PR = meilleure charge sur toutes les semaines pour cet exo DANS CETTE SESSION uniquement
+/* PR = la meilleure série en masse soulevée, charge × répétitions.
+   50 kg × 11 = 550 bat 55 kg × 8 = 440. Au poids du corps (0 kg), c'est le nombre de reps. */
+function prFmt(x){ return String(Math.round(x*100)/100).replace('.',','); }
+function prHtml(best,bestPC){
+  if(best) return `PR : <b>${prFmt(best.kg)} kg × ${prFmt(best.reps)}</b> <span style="opacity:.75">· ${prFmt(Math.round(best.v))} kg soulevés</span>`;
+  if(bestPC) return `PR : <b>${prFmt(bestPC)} reps</b> <span style="opacity:.75">· poids du corps</span>`;
+  return '';
+}
+function prSerie(kgRaw,repsRaw,acc){
+  const kg=parseFloat(String(kgRaw||'').replace(',','.'));
+  const reps=parseFloat(String(repsRaw||'').replace(',','.'));
+  if(isNaN(reps)||reps<=0) return;
+  if(!isNaN(kg)&&kg>0){ const v=kg*reps; if(!acc.best||v>acc.best.v) acc.best={kg,reps,v}; }
+  else if(!isNaN(kg)&&kg===0){ if(acc.pc===null||reps>acc.pc) acc.pc=reps; }
+}
+function updatePR(session,exoIdx){
+  const exo=PROGRAMME[session].exos[exoIdx];
+  const acc={best:null,pc:null};
+  // un exercice changé en cours de cycle ne reprend pas les séries de l'ancien
+  for(let w=(exo.depuis||1);w<=NB_SEMAINES;w++){
+    for(let s=1;s<=exo.series;s++){
+      prSerie(localStorage.getItem(getKey(session,exoIdx,s,'kg',w)), localStorage.getItem(getKey(session,exoIdx,s,'reps',w)), acc);
+    }
+  }
+  const el=document.getElementById(`pr-${session}-e${exoIdx}`);
+  if(el) el.innerHTML=prHtml(acc.best,acc.pc);
+}
+
+function updateRef(session,exoIdx){
+  const refEl=document.getElementById(`ref-${session}-e${exoIdx}`);
+  if(!refEl) return;
+  if(currentWeek===1){ refEl.innerHTML=''; return; }
+  const prevWeek=currentWeek-1;
+  const exo=PROGRAMME[session].exos[exoIdx];
+  let parts=[];
+  for(let s=1;s<=exo.series;s++){
+    const kg=localStorage.getItem(getKey(session,exoIdx,s,'kg',prevWeek))||'';
+    const reps=localStorage.getItem(getKey(session,exoIdx,s,'reps',prevWeek))||'';
+    if(kg!=='' || reps!==''){ parts.push(`${kg||'?'}×${reps||'?'}`); }
+  }
+  refEl.innerHTML = parts.length>0 ? `Semaine ${prevWeek} : <b>${parts.join('  ·  ')}</b>` : '';
+}
+
+function toggleCheck(session,exoIdx,serie){
+  if(CLIENT_LOCKED) return;
+  const key=getKey(session,exoIdx,serie,'chk',currentWeek);
+  const cur=localStorage.getItem(key)==='1';
+  localStorage.setItem(key,cur?'0':'1');
+  const btn=document.getElementById(`chk-${session}-e${exoIdx}-s${serie}`);
+  if(!cur){btn.classList.add('checked');btn.textContent='✓';} else {btn.classList.remove('checked');btn.textContent='';}
+  const exoName=PROGRAMME[session].exos[exoIdx].nom;
+  syncField(session,exoIdx,exoName,serie,'chk',cur?'0':'1',currentWeek);
+  updateWeekFills();
+}
+
+function saveSession(session){
+  if(session==='corp'){ saveCorp(); }
+  else {
+    const noteEl=document.getElementById(`note-${session}`);
+    if(noteEl){ localStorage.setItem(`${session}-note-w${currentWeek}`,noteEl.value);
+      syncToCloud({client:CLIENT_ID,type:'note',session:session,week:currentWeek,value:noteEl.value,ts:new Date().toISOString()}); }
+  }
+  const btn=event.target; const orig=btn.textContent;
+  btn.textContent='ENREGISTRÉ ✓'; btn.classList.add('saved');
+  setTimeout(()=>{btn.textContent=orig;btn.classList.remove('saved');},1500);
+}
+
+function resetSession(session){
+  if(!confirm(`Effacer les données de cette séance pour la semaine ${currentWeek} ?`)) return;
+  PROGRAMME[session].exos.forEach((exo,ei)=>{
+    for(let s=1;s<=exo.series;s++){
+      ['kg','reps','rir','chk'].forEach(f=>localStorage.removeItem(getKey(session,ei,s,f,currentWeek)));
+    }
+  });
+  localStorage.removeItem(`${session}-note-w${currentWeek}`);
+  loadAll();
+}
+
+function weekHasData(week){
+  for(const sid of SESSIONS){
+    const exos=PROGRAMME[sid].exos;
+    for(let ei=0;ei<exos.length;ei++){
+      for(let s=1;s<=exos[ei].series;s++){
+        if((localStorage.getItem(getKey(sid,ei,s,'kg',week))||'')!=='') return true;
+        if((localStorage.getItem(getKey(sid,ei,s,'reps',week))||'')!=='') return true;
+        if(localStorage.getItem(getKey(sid,ei,s,'chk',week))==='1') return true;
+      }
+    }
+  }
+  return false;
+}
+function updateWeekFills(){
+  document.querySelectorAll('.week-btn').forEach(btn=>{
+    const w=parseInt(btn.dataset.week);
+    if(weekHasData(w)) btn.classList.add('has-data'); else btn.classList.remove('has-data');
+  });
+}
+
+function switchWeek(week){
+  currentWeek=week;
+  try{ localStorage.setItem(CLIENT_ID+'-semaine', String(week)); }catch(e){}
+  document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.week-btn[data-week="${week}"]`).classList.add('active');
+  SESSIONS.forEach(sid=>{
+    const pill=document.getElementById(`pill-${sid}`); if(pill) pill.textContent=`Semaine ${week}`;
+    const nl=document.getElementById(`notelabel-${sid}`); if(nl) nl.textContent=`Semaine ${week}`;
+  });
+  loadAll(); loadCorpMens(); majCible(); majReposAnalyse();
+}
+
+function switchTab(id){
+  try{ localStorage.setItem(CLIENT_ID+'-onglet', id); }catch(e){}
+  document.querySelectorAll('.session').forEach(s=>s.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(t=>t.className='tab');
+  document.getElementById(`session-${id}`).classList.add('visible');
+  document.getElementById(`tab-${id}`).className=`tab active-${id}`;
+  document.getElementById('week-selector').style.display='flex';
+  window.scrollTo(0,0);
+}
+
+/* ===== CORPOREL ===== */
+function buildPoids(){
+  const c=document.getElementById('poids-rows'); let html='';
+  for(let w=1;w<=NB_SEMAINES;w++){
+    html+=`<div class="poids-row">
+      <div class="serie-num">S${w}</div>
+      <input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cpoids-w${w}" oninput="saveCorpField('poids',${w},this.value)">
+      <div class="serie-input" id="cdelta-w${w}" style="border-right:1px solid #131313;color:var(--muted)">—</div>
+      <input type="text" inputmode="text" autocapitalize="off" class="serie-input" placeholder="—" id="crem-w${w}" style="border-right:none;font-size:11px" oninput="saveCorpField('rem',${w},this.value)">
+    </div>`;
+  }
+  c.innerHTML=html;
+}
+function semKey(w){ return 's' + (w<10 ? '0'+w : w); }
+function buildMens(){
+  const c=document.getElementById('mens-rows'); let html='';
+  MENSURATIONS.forEach((z,i)=>{
+    html+=`<div class="mens-row" style="grid-template-columns:1.3fr 1fr"><div class="mens-label">${z}</div>`
+       +  `<input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="cmens-${i}" style="border-right:none" oninput="saveMensSemaine(${i},this.value)"></div>`;
+  });
+  c.innerHTML=html;
+}
+function saveMensSemaine(i,value){ saveCorpField(`mens-${i}-${semKey(currentWeek)}`, 0, value); }
+function saveCorpField(field,w,value){
+  const key = K(w>0 ? `corp-${field}-w${w}` : `corp-${field}`);
+  localStorage.setItem(key,value);
+  syncFieldDebounced(key, {client:CLIENT_ID,type:'corp',field:field,week:(w>0?w:'-'),value:value,ts:new Date().toISOString()});
+  if(field==='poids') loadCorpPoids();
+}
+function loadCorpPoids(){
+  let prev=null;
+  for(let w=1;w<=NB_SEMAINES;w++){
+    const val=localStorage.getItem(K(`corp-poids-w${w}`))||'';
+    const el=document.getElementById(`cpoids-w${w}`);
+    const dEl=document.getElementById(`cdelta-w${w}`);
+    if(el) el.value=val;
+    const rem=localStorage.getItem(K(`corp-rem-w${w}`))||'';
+    const remEl=document.getElementById(`crem-w${w}`); if(remEl) remEl.value=rem;
+    if(dEl){
+      const valN=parseFloat(String(val).replace(',','.')), prevN=parseFloat(String(prev).replace(',','.'));
+      if(!isNaN(valN)&&!isNaN(prevN)){
+        const d=valN-prevN; dEl.textContent=(d>0?'+':'')+d.toFixed(1);
+        dEl.style.color = d>0?'var(--red)':d<0?'var(--green)':'var(--muted)';
+      } else { dEl.textContent='—'; dEl.style.color='var(--muted)'; }
+    }
+    if(val!=='') prev=val;
+  }
+}
+function loadCorpMens(){
+  MENSURATIONS.forEach((z,i)=>{
+    const el=document.getElementById(`cmens-${i}`);
+    if(el) el.value=localStorage.getItem(K(`corp-mens-${i}-${semKey(currentWeek)}`))||'';
+  });
+  const h=document.getElementById('mens-week-h');
+  if(h) h.textContent=`Semaine ${currentWeek}`;
+}
+function saveCorp(){ /* déjà sauvé au fil de l'eau */ }
+function resetCorp(){
+  if(!confirm('Effacer tout le suivi corporel ?')) return;
+  for(let w=1;w<=NB_SEMAINES;w++){ localStorage.removeItem(K(`corp-poids-w${w}`)); localStorage.removeItem(K(`corp-rem-w${w}`)); }
+  MENSURATIONS.forEach((z,i)=>{for(let w=1;w<=NB_SEMAINES;w++) localStorage.removeItem(K(`corp-mens-${i}-${semKey(w)}`));});
+  loadCorpPoids(); loadCorpMens();
+}
+
+document.addEventListener('input',e=>{
+  if(e.target.id && e.target.id.startsWith('note-')){
+    const session=e.target.id.replace('note-','');
+    if(PROGRAMME[session]) localStorage.setItem(`${session}-note-w${currentWeek}`,e.target.value);
+  }
+});
+
+/* ===== OBJECTIF DE LA SEMAINE ===== */
+function lireNum(cle){ try{ const v=localStorage.getItem(cle); if(!v) return null; const x=parseFloat(String(v).replace(',','.')); return isNaN(x)?null:x; }catch(e){ return null; } }
+function lirePoids(w){ const a=lireNum(K(`corp-poids-w${w}`)); return a!==null?a:lireNum(K(`bilan-poids-w${w}`)); }
+function lireTaille(w){ const a=lireNum(K(`bilan-taille-w${w}`)); return a!==null?a:lireNum(K(`corp-mens-${PLAN.tailleIdx}-${semKey(w)}`)); }
+function serie(f){ const o=[]; for(let i=1;i<=NB_SEMAINES;i++){ const v=f(i); if(v!==null) o.push({w:i,v}); } return o; }
+function fr(x,d){ return x.toFixed(d).replace('.',','); }
+function carteCible(w,poidsVise,kcal,msg,cls){
+  const el=document.getElementById('cible-sem'); if(!el) return;
+  const p=lirePoids(w), dG=Math.round(PLAN.G+(kcal-PLAN.kcal)/4);
+  el.innerHTML = `<div class="cs-top"><span class="w">Semaine ${w} sur ${NB_SEMAINES}</span>`
+    + `<span class="p">${p!==null?('pesée cette semaine : '+fr(p,1)+' kg'):'pas encore pesée'}</span></div>`
+    + `<div class="cs-grid">`
+    + `<div class="cs-c gold"><div class="k">Poids visé</div><div class="v">${poidsVise}</div></div>`
+    + `<div class="cs-c"><div class="k">Calories</div><div class="v">${kcal}</div></div>`
+    + `<div class="cs-c"><div class="k">Protéines</div><div class="v">${PLAN.P} g</div></div>`
+    + `<div class="cs-c"><div class="k">Glucides</div><div class="v">${dG} g</div></div>`
+    + `<div class="cs-c"><div class="k">Lipides</div><div class="v">${PLAN.L} g</div></div>`
+    + `</div><div class="cs-msg ${cls||''}">${msg}</div>`;
+}
+
+const PLAN = { depart:73.3, parSem:0, kcal:3690, P:178, G:436, L:129, pas:150, seuil:0.25, tailleIdx:1 };
+
+/* ===== ANALYSE DES TEMPS DE REPOS ===== */
+function reposPrescrit(target){
+  const m=String(target).match(/(\d+(?:[.,]\d+)?)\s*(min|s)\b/);
+  if(!m) return null;
+  const v=parseFloat(m[1].replace(',','.'));
+  return m[2]==='min' ? Math.round(v*60) : Math.round(v);
+}
+/* Le repos ne se chronometre pas : il se deduit de l'ecart entre deux series
+   saisies. L'ecart contient la serie elle-meme, donc le repos reel est plus court
+   de 30 a 60 s. On jette ce qui est sous 20 s (saisie groupee apres coup) et ce qui
+   depasse 15 min (telephone repose, seance finie). */
+function reposLus(sid,ei,w){
+  const n=PROGRAMME[sid].exos[ei].series, out=[];
+  let prev=null;
+  for(let s=1;s<=n;s++){
+    const v=localStorage.getItem(`ts-${sid}-e${ei}-s${s}-w${w}`);
+    const t=v?parseInt(v,10):null;
+    if(t && prev){ const d=Math.round((t-prev)/1000); if(d>20 && d<=900) out.push(d); }
+    if(t) prev=t;
+  }
+  return out;
+}
+function mediane(a){ if(!a.length) return null; const b=[...a].sort((x,y)=>x-y); const m=Math.floor(b.length/2); return b.length%2?b[m]:Math.round((b[m-1]+b[m])/2); }
+function fmtRepos(s){ return s>=60 ? Math.floor(s/60)+' min '+(s%60?String(s%60).padStart(2,'0'):'') : s+' s'; }
+
+function majReposAnalyse(){
+  const el=document.getElementById('repos-analyse'); if(!el) return;
+  const w=currentWeek; const lignes=[]; let nCourt=0, nLong=0, total=0, nCompare=0;
+  SESSIONS.forEach(sid=>{
+    PROGRAMME[sid].exos.forEach((exo,ei)=>{
+      const vals=reposLus(sid,ei,w); if(!vals.length) return;
+      const reel=mediane(vals), pres=reposPrescrit(exo.repos||'')||reposPrescrit(exo.target);
+      total++;
+      let cls='ok', ratio=null;
+      if(pres){ nCompare++; ratio=reel/pres; if(ratio<0.7){cls='court';nCourt++;} else if(ratio>1.5){cls='long';nLong++;} } else { cls=''; }
+      lignes.push(`<div class="ra-l ${cls}"><span class="n">${PROGRAMME[sid].nom} · ${exo.nom}</span>`
+        +`<span class="v">${fmtRepos(reel)}${pres?(' / '+fmtRepos(pres)):''}</span></div>`);
+    });
+  });
+  if(!total){
+    el.innerHTML='<span class="ra-t">Temps de repos</span>'
+      +"Rien à analyser pour l'instant. Le repos se calcule tout seul à partir du moment où tu notes chaque série, tu n'as aucun bouton à toucher. Il faut juste que tu remplisses <b>au moment où tu la fais</b>, pas toute la séance d'un coup à la fin.";
+    return;
+  }
+  let msg='';
+  if(nCourt) msg+=`Tu écourtes sur <b>${nCourt} exercice${nCourt>1?'s':''}</b>. Sur les gros mouvements, reprendre trop tôt te fait perdre des répétitions à charge égale, et la double progression s'arrête net. Le repos prescrit n'est pas du temps perdu, c'est lui qui rend la série suivante utile.<br>`;
+  if(nLong) msg+=`Tu dépasses largement sur <b>${nLong} exercice${nLong>1?'s':''}</b>. Ça ne casse rien, mais la séance s'allonge sans rien apporter de plus.<br>`;
+  if(!nCourt && !nLong) msg = nCompare ? 'Tes repos sont là où ils doivent être. Rien à changer.' : "Pas de repos prescrit à comparer sur ces exercices, je te donne juste ce que tu as pris.";
+  el.innerHTML='<span class="ra-t">Temps de repos · semaine '+w+'</span>'+lignes.join('')+'<div class="ra-msg">'+msg+'</div>';
+}
+
+/* Bloc 1 : semaines 1-2 on mesure à apport fixe, semaines 3-10 maintenance.
+   On ne touche aux calories que si la même tendance se répète deux semaines de suite :
+   le poids bouge avec l'eau, le sel et le glycogène. Une prise sans tour de taille qui
+   monte, c'est ce qu'on cherche en reprise : on la garde. */
+function majCible(){
+  const w=currentWeek;
+  let kcal=PLAN.kcal, msg='', cls='';
+  if(w<=2){
+    msg=`Semaines 1 et 2 : <b>on ne change rien, on mesure.</b> Tu manges ta journée type telle quelle, tous les jours, et tu te pèses chaque matin à jeun. La moyenne de la semaine 2 nous donne ta maintenance.`;
+    carteCible(w,'à mesurer',kcal,msg,cls); return;
+  }
+  const ref=lirePoids(2)!==null?lirePoids(2):lirePoids(1);
+  const vise=ref!==null?fr(ref,1)+' kg':'stable';
+  const ps=serie(lirePoids).filter(x=>x.w<w), ts=serie(lireTaille).filter(x=>x.w<w);
+  if(ps.length<2){
+    msg = ps.length
+      ? `Une seule pesée enregistrée. Il en faut deux pour décider quoi que ce soit, donc <b>on ne change rien</b>. Rentre la moyenne de ta semaine dans ton bilan.`
+      : `Pas encore de pesée. Rentre la moyenne de tes pesées dans ton bilan chaque semaine : c'est elle qui pilote ta diète.`;
+    carteCible(w,vise,kcal,msg,cls); return;
+  }
+  const rythme=(a,b)=>(b.v-a.v)/(b.w-a.w);
+  const r=rythme(ps[ps.length-2],ps[ps.length-1]);
+  const r0=ps.length>=3 ? rythme(ps[ps.length-3],ps[ps.length-2]) : null;
+  const dT=ts.length>=2 ? ts[ts.length-1].v-ts[ts.length-2].v : null;
+  const rTxt=(r>=0?'+':'')+fr(r,1)+' kg par semaine';
+  const S=PLAN.seuil;
+  if(r<=-S){
+    if(r0!==null && r0<=-S){ kcal=PLAN.kcal+PLAN.pas; cls='up';
+      msg=`Deux semaines de suite en baisse (<b>${rTxt}</b>). Tu es sous ta maintenance : on monte à <b>${kcal} kcal</b> en ajoutant des glucides. En reprise, on ne veut pas maigrir.`; }
+    else msg=`Ton poids baisse (<b>${rTxt}</b>). Une semaine ne suffit pas, ça peut être de l'eau : <b>on ne touche à rien</b>. Si ça se répète la semaine prochaine, on monte de ${PLAN.pas} kcal.`;
+  }
+  else if(r>=S){
+    if(dT===null) msg=`Ton poids monte (<b>${rTxt}</b>). <b>Il manque ton tour de taille</b> : sans lui je ne sais pas si c'est du muscle ou du gras, donc on ne touche à rien. Remplis-le dans ton bilan.`;
+    else if(dT>0.5 && r0!==null && r0>=S){ kcal=PLAN.kcal-PLAN.pas; cls='down';
+      msg=`Deux semaines de suite en hausse, et ton tour de taille a pris <b>${fr(dT,1)} cm</b>. On descend à <b>${kcal} kcal</b> en retirant des glucides. <b>On ne touche jamais aux protéines.</b>`; }
+    else if(dT>0.5) msg=`Ton poids monte (<b>${rTxt}</b>) et ton tour de taille aussi (<b>+${fr(dT,1)} cm</b>). Une semaine ne suffit pas : <b>on ne touche à rien</b>. Si ça se répète, on descend de ${PLAN.pas} kcal.`;
+    else msg=`Ton poids monte (<b>${rTxt}</b>) sans que ton tour de taille bouge. En reprise, c'est ce qu'on veut : <b>on ne touche à rien.</b>`;
+  }
+  else if(dT!==null && dT>0.5) msg=`Poids stable (<b>${rTxt}</b>), mais ton tour de taille a pris <b>${fr(dT,1)} cm</b>. Une semaine ne suffit pas : <b>on ne touche à rien</b> et on regarde la semaine prochaine.`;
+  else msg=`Poids stable (<b>${rTxt}</b>)${dT!==null?', tour de taille '+(dT>=0?'+':'')+fr(dT,1)+' cm':''}. Tu es à ta maintenance, c'est le but de ce bloc. <b>On ne touche à rien.</b>`;
+  carteCible(w,vise,kcal,msg,cls);
+}
+
+buildWeekSelector();
+buildSessions();
+buildPoids();
+buildMens();
+loadAll();
+loadCorpPoids();
+loadCorpMens();
+majCible();
+majReposAnalyse();
+/* On rouvre sur la dernière semaine consultée. Sans ça l'appli repartait toujours
+   en semaine 1, et les séries se notaient dans la mauvaise semaine. */
+(function(){
+  let w=null; try{ w=parseInt(localStorage.getItem(CLIENT_ID+'-semaine'),10); }catch(e){}
+  if(!w || w<1 || w>NB_SEMAINES){ w=1; for(let i=NB_SEMAINES;i>=1;i--){ if(weekHasData(i)){ w=i; break; } } }
+  if(w!==1) switchWeek(w);
+})();
+</script>
+
+<!-- Chronomètre de repos -->
+<div id="rest-chrono">
+  <div class="rc-top">
+    <span class="rc-label">Chrono repos</span>
+    <button class="rc-close" onclick="restChrono.hide()" aria-label="Fermer">×</button>
+  </div>
+  <div class="rc-time" id="rc-time">0:00</div>
+  <div class="rc-controls">
+    <button class="rc-btn primary" id="rc-toggle" onclick="restChrono.toggle()">Départ</button>
+    <button class="rc-btn" onclick="restChrono.reset()">Reset</button>
+  </div>
+</div>
+
+<script>
+/* ================= CHRONOMÈTRE DE REPOS ================= */
+/* Basé sur l'horloge + mémorisé : survit au passage en arrière-plan ET au
+   rechargement de l'onglet. Sur les iPhone avec peu de mémoire (12/13...),
+   iOS recharge la page Safari quand on la quitte — c'est ce qui remettait le
+   chrono à zéro. On stocke l'heure de départ pour reprendre pile où on en était. */
+const restChrono = (function(){
+  const LS_KEY = 'rest-chrono-state';
+  let elapsed=0, running=false, tick=null, startStamp=0, baseElapsed=0;
+
+  const box = () => document.getElementById('rest-chrono');
+  const timeEl = () => document.getElementById('rc-time');
+  const toggleBtn = () => document.getElementById('rc-toggle');
+  const isVisible = () => { const b=box(); return !!(b && b.classList.contains('visible')); };
+
+  function fmt(s){ const m=Math.floor(s/60); const r=s%60; return m+':'+String(r).padStart(2,'0'); }
+
+  function persist(){
+    try {
+      if(running || elapsed>0 || baseElapsed>0){
+        localStorage.setItem(LS_KEY, JSON.stringify({running, startStamp, baseElapsed, visible:isVisible()}));
+      } else {
+        localStorage.removeItem(LS_KEY);
+      }
+    } catch(e){}
+  }
+
+  function render(){
+    const t=timeEl(); if(!t) return;
+    t.textContent = fmt(elapsed);
+    t.classList.toggle('running', running);
+  }
+
+  function recompute(){ if(running) elapsed = baseElapsed + Math.round((Date.now()-startStamp)/1000); }
+  function loop(){ recompute(); render(); }
+  function startTick(){ clearInterval(tick); tick=setInterval(loop, 250); }
+
+  return {
+    open(){ box().classList.add('visible'); persist(); },
+    // lancé depuis le bouton "Repos" d'un exo : ouvre + repart de zéro + démarre
+    startFor(){
+      this.open();
+      elapsed=0; baseElapsed=0; startStamp=Date.now(); running=true;
+      toggleBtn().textContent='Stop';
+      render(); startTick(); persist();
+    },
+    toggle(){
+      if(running){
+        running=false; clearInterval(tick); tick=null;
+        recompute(); baseElapsed=elapsed;
+        toggleBtn().textContent='Reprendre';
+        render(); persist();
+      } else {
+        running=true; startStamp=Date.now();
+        toggleBtn().textContent='Stop';
+        startTick(); render(); persist();
+      }
+    },
+    reset(){
+      running=false; clearInterval(tick); tick=null;
+      elapsed=0; baseElapsed=0;
+      toggleBtn().textContent='Départ';
+      render(); persist();
+    },
+    hide(){ box().classList.remove('visible'); persist(); },
+    // rattrape l'affichage au retour d'arrière-plan (Safari gèle les timers)
+    sync(){ if(running){ recompute(); render(); if(!tick) startTick(); } },
+    // restaure l'état après un rechargement complet de l'onglet
+    restore(){
+      let s=null; try { s=JSON.parse(localStorage.getItem(LS_KEY)||'null'); } catch(e){}
+      if(!s) return;
+      running=!!s.running; baseElapsed=s.baseElapsed||0; startStamp=s.startStamp||Date.now();
+      if(running){
+        recompute();
+        toggleBtn().textContent='Stop';
+        if(s.visible) box().classList.add('visible');
+        render(); startTick();
+      } else if(baseElapsed>0){
+        elapsed=baseElapsed;
+        toggleBtn().textContent='Reprendre';
+        if(s.visible) box().classList.add('visible');
+        render();
+      }
+    }
+  };
+})();
+
+/* Reprend là où on en était : au retour dans l'onglet et au rechargement de la page. */
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) restChrono.sync(); });
+window.addEventListener('pageshow', ()=>restChrono.sync());
+restChrono.restore();
+
+/* Rouvrir le dernier onglet consulté. La clé porte le nom du client :
+   toutes les applis partagent la même origine, donc le même localStorage.
+   On passe par un setTimeout pour repasser APRÈS l'init de l'appli, qui
+   dans certains fichiers tourne dans un écouteur DOMContentLoaded et
+   remettrait l'onglet par défaut. */
+(function(){
+  const rouvrir = () => {
+    try{
+      const id = localStorage.getItem(CLIENT_ID+'-onglet');
+      if(id && document.getElementById('session-'+id) && document.getElementById('tab-'+id)) switchTab(id);
+    }catch(e){}
+  };
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ()=>setTimeout(rouvrir,0));
+  else setTimeout(rouvrir,0);
+})();
+</script>
+
+<div class="copyright-note" style="text-align:center;font-size:10px;letter-spacing:0.04em;color:#6b6b6b;padding:22px 16px 30px;font-family:inherit">© 2026 Alexandre Joly · Tous droits réservés · Reproduction interdite</div>
+</body>
+</html>
