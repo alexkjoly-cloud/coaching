@@ -470,7 +470,7 @@ que le dépôt n'est pas privé. Ils iront dans la Sheet et dans son appli.
 | | |
 |---|---|
 | Niveau | **Très bon niveau en musculation.** A ralenti récemment : a perdu un peu de masse et de sèche. S'il reprend sérieusement, la mémoire musculaire fera revenir vite |
-| Objectif | Reprendre sérieusement, retrouver sa masse et sa sèche |
+| Objectif | **Compétition naturelle (MPC ou WNBF) en 2027**, environ 1 an de prépa, voire un peu moins. Alexandre le voit podium. D'ici là : reprendre sérieusement, retrouver sa masse |
 | Priorités | **Fessiers, ischios, épaules (surtout arrière d'épaule)**, et un peu de **haut du dos** |
 | Fréquence | **5 séances par semaine** |
 | Durée | **1 h 30 maximum, intense** : il ne veut pas de séances interminables |
@@ -481,7 +481,10 @@ que le dépôt n'est pas privé. Ils iront dans la Sheet et dans son appli.
 | Programme proposé | **Upper A** : rear delt fly machine 3×10-15 · tirage vertical prise large 3×8-12 · développé incliné 3×8-12 · rowing appui poitrine coudes ouverts 3×8-12 · élévations latérales poulie 3×12-20 · curl pupitre 2×8-12<br>**Lower A** : RDL 3×8-12 · leg curl assis 3×8-12 · fente Smith pied arrière surélevé 3×8-12 · leg extension siège reculé 3×10-15 · abduction machine 2×12-15 · mollets debout 2×10-15<br>**Upper B** : rear delt fly machine 3×10-15 · développé couché machine 3×8-12 · rowing serré vers les hanches 3×8-12 · tirage vertical prise neutre 2×8-12 · écarté poulie 2×10-15 · élévations latérales poulie 3×12-20 · extension triceps au-dessus de la tête 2×10-15<br>**Lower B** : hip thrust 3×8-12 · presse à cuisses 3×8-12 · leg curl assis 3×8-12 · leg extension siège reculé 3×10-15 · élévations latérales poulie 3×12-20 · mollets debout 2×10-15<br>**Postérieur** : rear delt fly machine 3×10-15 · step-up Smith marche haute 3×8-12 · leg curl assis 3×8-12 · rowing appui poitrine coudes ouverts 3×8-12 · hyperextension buste très penché 3×10-15 · élévations latérales poulie 3×12-20 |
 | Volume semaine | 86 séries. Fessiers 18 · quadris 15 · ischios 13,5 · arrière d'épaule 12 · latérales 12 · biceps 9 · pecs 8 · dorsaux 8 · haut du dos 7,5 · triceps 5 (indirect compté 0,5). S1 = calibrage à RIR 2, RDL léger |
 | À venir | Ses mensurations (plus tard). **La diète se fait après le programme.** Son appli, sur le modèle de celle de Jean, une fois le programme validé |
-| À lui demander | Sa salle (Smith, leg curl assis, rear delt machine, hip thrust ?), les exos qu'il déteste, ses charges actuelles sur 4-5 gros exos. Ses douleurs éventuelles : **hors du dépôt** |
+| Activité | ~8 000 pas par jour (moyenne du mois). **À garder fixe** pendant la mesure de la maintenance |
+| Diète (18/10) | Journée type calculée avec CIQUAL : **≈ 3 550 kcal** (3 150 à 3 800 selon l'huile et le haché), P 175 · G 410 · L 128. Matin : 2 tartines + pâte à tartiner, whey 39 g. Midi : riz 220 g cru, poulet 200 g cru, crème légère 18 % 20 cl, oignon, huile. Soir : pâtes 200-220 g crues, haché 200 g cru, coulis, huile |
+| Plan diète | 1) **2 semaines à l'identique mais pesé**, programme démarré, pesée chaque matin à jeun → moyenne = maintenance. 2) ~8 semaines à maintenance (mémoire musculaire). 3) Léger surplus jusqu'à la prépa, ~+200 g/semaine. 4) Prépa 16 à 20 semaines à ~0,7 %/semaine. Durées à caler sur la date |
+| À lui demander | **Catégorie** (Men's Physique : jambes non jugées / Classic ou Bodybuilding : mollets et abdos à ajouter), **compétition et date**, l'huile (2 c. à soupe par repas ou par jour ?), le % du haché, ce qui sort de la journée type (week-end, extras), l'étiquette de sa whey. Sa salle (Smith, leg curl assis, rear delt machine, hip thrust ?), les exos qu'il déteste, ses charges actuelles. Ses douleurs éventuelles : **hors du dépôt** |
 
 ---
 
