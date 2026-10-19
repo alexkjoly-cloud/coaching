@@ -548,7 +548,8 @@ const PROGRAMME = {
     nom:'UPPER A', couleur:'ua', tag:'Haut du corps · accent dos',
     exos:[
       {nom:'Rear delt fly à la machine', series:3, target:"Arrière d&rsquo;épaule · RIR 0-1 · 2 min · Prise neutre, bras presque tendus, tu ouvres en arc large et tu serres les omoplates en fin de mouvement", pres:'3 × 10-15', repos:'2 min'},
-      {nom:'Tirage vertical prise large', series:3, target:"Grand dorsal · RIR 1-2 · 4 à 5 min · Tu tires les coudes vers les hanches, poitrine vers la barre", pres:'3 × 8-12', repos:'4,5 min'},
+      {nom:'Tractions', series:3, target:"Grand dorsal · RIR 1-2 · 4 à 5 min · Prise un peu plus large que les épaules, tu pars bras tendus et tu tires les coudes vers les hanches, poitrine vers la barre, sans élan. Si tu dépasses 12 au poids du corps, lest à la ceinture : note le lest dans la case kg, 0 = poids du corps", pres:'3 × 8-12', repos:'4,5 min',
+        depuis:2, avant:{nom:'Tirage vertical prise large', target:"Grand dorsal · RIR 1-2 · 4 à 5 min · Tu tires les coudes vers les hanches, poitrine vers la barre", pres:'3 × 8-12', repos:'4,5 min'}},
       {nom:'Développé incliné (Smith ou machine)', series:3, target:"Haut des pectoraux · RIR 1-2 · 4 à 5 min · Banc vers 30°, coudes à 45° du buste, dos plat. Toujours le même matériel et le même cran, sinon tes charges ne se comparent plus", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min'},
       {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
@@ -677,11 +678,11 @@ function buildSessions(){
         <div class="exo-top">
           <div class="exo-num">${String(ei+1).padStart(2,'0')}</div>
           <div class="exo-info">
-            <div class="exo-name">${exo.nom}</div>
-            <div class="exo-target">${exo.target}</div>
+            <div class="exo-name" id="nom-${sid}-e${ei}">${exo.nom}</div>
+            <div class="exo-target" id="cib-${sid}-e${ei}">${exo.target}</div>
             <div class="pr-badge" id="pr-${sid}-e${ei}"></div>
           </div>
-          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}">${exo.pres}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
+          <div style="text-align:right"><div class="exo-prescription pres-${s.couleur}" id="pres-${sid}-e${ei}">${exo.pres}</div><button class="rest-chip" onclick="restChrono.startFor()">Repos</button></div>
         </div>
         <div class="last-week-ref" id="ref-${sid}-e${ei}"></div>
         <div class="col-header"><div class="col-h"></div><div class="col-h">Kg</div><div class="col-h">Reps</div><div class="col-h">RIR</div><div class="col-h">✓</div></div>
@@ -712,7 +713,7 @@ function buildSessions(){
 function save(session,exoIdx,exoName,serie,field,value){
   localStorage.setItem(getKey(session,exoIdx,serie,field,currentWeek),value);
   if(String(value).trim()!==''){ try{ localStorage.setItem(`ts-${session}-e${exoIdx}-s${serie}-w${currentWeek}`, String(Date.now())); }catch(e){} }
-  syncField(session,exoIdx,exoName,serie,field,value,currentWeek);
+  syncField(session,exoIdx,exoVu(session,exoIdx,currentWeek).nom,serie,field,value,currentWeek);
   if(field==='kg'||field==='reps') updatePR(session,exoIdx);
   updateWeekFills();
 }
@@ -784,8 +785,10 @@ function prSerie(kgRaw,repsRaw,acc){
 function updatePR(session,exoIdx){
   const exo=PROGRAMME[session].exos[exoIdx];
   const acc={best:null,pc:null};
-  // un exercice changé en cours de cycle ne reprend pas les séries de l'ancien
-  for(let w=(exo.depuis||1);w<=NB_SEMAINES;w++){
+  // un exercice changé en cours de cycle ne mélange pas ses séries avec celles de l'ancien
+  const avant = exo.depuis && currentWeek<exo.depuis;
+  const debut = avant ? 1 : (exo.depuis||1), fin = avant ? exo.depuis-1 : NB_SEMAINES;
+  for(let w=debut;w<=fin;w++){
     for(let s=1;s<=exo.series;s++){
       prSerie(localStorage.getItem(getKey(session,exoIdx,s,'kg',w)), localStorage.getItem(getKey(session,exoIdx,s,'reps',w)), acc);
     }
@@ -800,6 +803,7 @@ function updateRef(session,exoIdx){
   if(currentWeek===1){ refEl.innerHTML=''; return; }
   const prevWeek=currentWeek-1;
   const exo=PROGRAMME[session].exos[exoIdx];
+  if(exo.depuis && prevWeek<exo.depuis && currentWeek>=exo.depuis){ refEl.innerHTML=''; return; }
   let parts=[];
   for(let s=1;s<=exo.series;s++){
     const kg=localStorage.getItem(getKey(session,exoIdx,s,'kg',prevWeek))||'';
@@ -816,7 +820,7 @@ function toggleCheck(session,exoIdx,serie){
   localStorage.setItem(key,cur?'0':'1');
   const btn=document.getElementById(`chk-${session}-e${exoIdx}-s${serie}`);
   if(!cur){btn.classList.add('checked');btn.textContent='✓';} else {btn.classList.remove('checked');btn.textContent='';}
-  const exoName=PROGRAMME[session].exos[exoIdx].nom;
+  const exoName=exoVu(session,exoIdx,currentWeek).nom;
   syncField(session,exoIdx,exoName,serie,'chk',cur?'0':'1',currentWeek);
   updateWeekFills();
 }
@@ -864,6 +868,21 @@ function updateWeekFills(){
   });
 }
 
+/* Un exercice changé en cours de cycle garde son ancien nom sur les semaines d'avant :
+   les données de ces semaines restent sous le bon exercice, dans l'appli et dans la Sheet. */
+function exoVu(sid,ei,w){
+  const e=PROGRAMME[sid].exos[ei];
+  return (e.depuis && w<e.depuis) ? Object.assign({},e,e.avant) : e;
+}
+function majNomsSemaine(){
+  SESSIONS.forEach(sid=>PROGRAMME[sid].exos.forEach((exo,ei)=>{
+    if(!exo.depuis) return;
+    const v=exoVu(sid,ei,currentWeek);
+    const set=(id,t)=>{ const el=document.getElementById(id); if(el) el.innerHTML=t||''; };
+    set(`nom-${sid}-e${ei}`,v.nom); set(`cib-${sid}-e${ei}`,v.target); set(`pres-${sid}-e${ei}`,v.pres);
+  }));
+}
+
 function switchWeek(week){
   currentWeek=week;
   try{ localStorage.setItem(CLIENT_ID+'-semaine', String(week)); }catch(e){}
@@ -873,7 +892,7 @@ function switchWeek(week){
     const pill=document.getElementById(`pill-${sid}`); if(pill) pill.textContent=`Semaine ${week}`;
     const nl=document.getElementById(`notelabel-${sid}`); if(nl) nl.textContent=`Semaine ${week}`;
   });
-  loadAll(); loadCorpMens(); majPesees(); majCible(); majReposAnalyse();
+  loadAll(); loadCorpMens(); majPesees(); majCible(); majReposAnalyse(); majNomsSemaine();
 }
 
 function switchTab(id){
@@ -1033,11 +1052,12 @@ function majReposAnalyse(){
   SESSIONS.forEach(sid=>{
     PROGRAMME[sid].exos.forEach((exo,ei)=>{
       const vals=reposLus(sid,ei,w); if(!vals.length) return;
-      const reel=mediane(vals), pres=reposPrescrit(exo.repos||'')||reposPrescrit(exo.target);
+      const v=exoVu(sid,ei,w);
+      const reel=mediane(vals), pres=reposPrescrit(v.repos||'')||reposPrescrit(v.target);
       total++;
       let cls='ok', ratio=null;
       if(pres){ nCompare++; ratio=reel/pres; if(ratio<0.7){cls='court';nCourt++;} else if(ratio>1.5){cls='long';nLong++;} } else { cls=''; }
-      lignes.push(`<div class="ra-l ${cls}"><span class="n">${PROGRAMME[sid].nom} · ${exo.nom}</span>`
+      lignes.push(`<div class="ra-l ${cls}"><span class="n">${PROGRAMME[sid].nom} · ${v.nom}</span>`
         +`<span class="v">${fmtRepos(reel)}${pres?(' / '+fmtRepos(pres)):''}</span></div>`);
     });
   });
@@ -1105,6 +1125,7 @@ loadCorpMens();
 majPesees();
 majCible();
 majReposAnalyse();
+majNomsSemaine();
 /* On rouvre sur la dernière semaine consultée. Sans ça l'appli repartait toujours
    en semaine 1, et les séries se notaient dans la mauvaise semaine. */
 (function(){
