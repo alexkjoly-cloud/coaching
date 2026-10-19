@@ -354,7 +354,7 @@
 
   <div class="cible">
     <b>Semaines 1 et 2, on mesure.</b> Tu manges cette journée telle quelle, tous les jours, et tu notes ton poids chaque matin à jeun dans l'onglet <b>Pesées</b>, dès que ta balance a ses piles. Si ton poids reste stable là-dessus avec l'entraînement, c'est ta maintenance.<br>
-    <b>Semaines 3 à 10, on reste à maintenance.</b> Tu reviens d'une période plus calme : la mémoire musculaire te permet de reprendre du muscle sans manger plus. Le poids bouge peu, et le tour de taille ne doit pas monter.
+    <b>Dès la semaine 3, on reprend : ta maintenance + 300 kcal.</b> Tu es sous ton meilleur poids, donc ce que tu reprends d'abord, c'est surtout du muscle que tu avais déjà, et il revient vite. On vise <b>+0,5 à 1 kg par mois</b>, avec un tour de taille qui bouge à peine. Les 300 kcal passent en glucides : environ 85 g de riz cru en plus par jour, ou l'équivalent. Le cadre au-dessus ajuste tout seul toutes les deux semaines.
   </div>
 
   <div class="diete-intro">
@@ -1035,7 +1035,7 @@ function carteCible(w,poidsVise,kcal,msg,cls){
     + `</div><div class="cs-msg ${cls||''}">${msg}</div>`;
 }
 
-const PLAN = { depart:73.3, parSem:0, kcal:3690, P:178, G:436, L:129, pas:150, seuil:0.25, tailleIdx:1 };
+const PLAN = { depart:73.3, parSem:0.17, kcal:3690, P:178, G:436, L:129, pas:150, surplus:300, gainMin:0.1, gainMax:0.3, tailleIdx:1 };
 
 /* ===== PESÉES DU MATIN ===== */
 const JOURS=['Jour 1','Jour 2','Jour 3','Jour 4','Jour 5','Jour 6','Jour 7'];
@@ -1145,10 +1145,12 @@ function majReposAnalyse(){
   el.innerHTML='<span class="ra-t">Temps de repos · semaine '+w+'</span>'+lignes.join('')+'<div class="ra-msg">'+msg+'</div>';
 }
 
-/* Bloc 1 : semaines 1-2 on mesure à apport fixe, semaines 3-10 maintenance.
-   On ne touche aux calories que si la même tendance se répète deux semaines de suite :
-   le poids bouge avec l'eau, le sel et le glycogène. Une prise sans tour de taille qui
-   monte, c'est ce qu'on cherche en reprise : on la garde. */
+/* Bloc 1 : semaines 1-2 on mesure à apport fixe, puis reprise dès la semaine 3 à
+   maintenance + PLAN.surplus (décidé le 19/10 : il est sous son poids max, ce qu'il reprend
+   d'abord est surtout du muscle qu'il avait déjà). On vise +0,5 à 1 kg par mois, et on ne
+   touche aux calories que si la même tendance se répète deux semaines de suite : le poids
+   bouge avec l'eau, le sel et le glycogène. La tendance ne se lit que sur les semaines de
+   reprise, la première prend de l'eau et du glycogène. */
 function majCible(){
   const w=currentWeek;
   let kcal=PLAN.kcal, msg='', cls='';
@@ -1156,35 +1158,35 @@ function majCible(){
     msg=`Semaines 1 et 2 : <b>on ne change rien, on mesure.</b> Tu manges ta journée type telle quelle, tous les jours, et tu notes ton poids chaque matin dans l'onglet <b>Pesées</b>. La moyenne de la semaine 2 nous donne ta maintenance.`;
     carteCible(w,'à mesurer',kcal,msg,cls); return;
   }
+  const base=PLAN.kcal+PLAN.surplus; kcal=base;
   const ref=lirePoids(2)!==null?lirePoids(2):lirePoids(1);
-  const vise=ref!==null?fr(ref,1)+' kg':'stable';
-  const ps=serie(lirePoids).filter(x=>x.w<w), ts=serie(lireTaille).filter(x=>x.w<w);
+  const vise=ref!==null?fr(ref+PLAN.parSem*(w-2),1)+' kg':'+0,5 à 1 kg / mois';
+  const ps=serie(lirePoids).filter(x=>x.w>=3 && x.w<w), ts=serie(lireTaille).filter(x=>x.w>=3 && x.w<w);
   if(ps.length<2){
-    msg = ps.length
-      ? `Une seule semaine de pesées. Il en faut deux pour décider quoi que ce soit, donc <b>on ne change rien</b>.`
-      : `Pas encore de pesée. Note ton poids chaque matin dans l'onglet <b>Pesées</b> : c'est la moyenne de la semaine qui pilote ta diète.`;
+    msg = w===3
+      ? `Semaine 3 : <b>la reprise commence</b>, ta maintenance + ${PLAN.surplus} kcal. Les ${PLAN.surplus} kcal passent en glucides : environ 85 g de riz cru en plus par jour, ou l'équivalent. La première semaine, la balance prend souvent un peu d'eau et de glycogène : on ne juge pas dessus.`
+      : `Il faut deux semaines de pesées en reprise pour lire la tendance, donc <b>on ne change rien</b>. On vise +0,5 à 1 kg par mois.`;
     carteCible(w,vise,kcal,msg,cls); return;
   }
   const rythme=(a,b)=>(b.v-a.v)/(b.w-a.w);
   const r=rythme(ps[ps.length-2],ps[ps.length-1]);
   const r0=ps.length>=3 ? rythme(ps[ps.length-3],ps[ps.length-2]) : null;
   const dT=ts.length>=2 ? ts[ts.length-1].v-ts[ts.length-2].v : null;
-  const rTxt=(r>=0?'+':'')+fr(r,1)+' kg par semaine';
-  const S=PLAN.seuil;
-  if(r<=-S){
-    if(r0!==null && r0<=-S){ kcal=PLAN.kcal+PLAN.pas; cls='up';
-      msg=`Deux semaines de suite en baisse (<b>${rTxt}</b>). Tu es sous ta maintenance : on monte à <b>${kcal} kcal</b> en ajoutant des glucides. En reprise, on ne veut pas maigrir.`; }
-    else msg=`Ton poids baisse (<b>${rTxt}</b>). Une semaine ne suffit pas, ça peut être de l'eau : <b>on ne touche à rien</b>. Si ça se répète la semaine prochaine, on monte de ${PLAN.pas} kcal.`;
+  const rTxt=(r>=0?'+':'')+fr(r,2)+' kg par semaine';
+  if(r<PLAN.gainMin){
+    if(r0!==null && r0<PLAN.gainMin){ kcal=base+PLAN.pas; cls='up';
+      msg=`Deux semaines sous la cible (<b>${rTxt}</b>, on vise +0,5 à 1 kg par mois). On monte à <b>${kcal} kcal</b> en ajoutant des glucides.`; }
+    else msg=`Tu prends moins que la cible (<b>${rTxt}</b>). Une semaine ne suffit pas, ça peut être de l'eau : <b>on ne touche à rien</b>. Si ça se répète la semaine prochaine, on monte de ${PLAN.pas} kcal.`;
   }
-  else if(r>=S){
-    if(dT===null) msg=`Ton poids monte (<b>${rTxt}</b>). <b>Il manque ton tour de taille</b> : sans lui je ne sais pas si c'est du muscle ou du gras, donc on ne touche à rien. Remplis-le dans ton bilan.`;
-    else if(dT>0.5 && r0!==null && r0>=S){ kcal=PLAN.kcal-PLAN.pas; cls='down';
-      msg=`Deux semaines de suite en hausse, et ton tour de taille a pris <b>${fr(dT,1)} cm</b>. On descend à <b>${kcal} kcal</b> en retirant des glucides. <b>On ne touche jamais aux protéines.</b>`; }
-    else if(dT>0.5) msg=`Ton poids monte (<b>${rTxt}</b>) et ton tour de taille aussi (<b>+${fr(dT,1)} cm</b>). Une semaine ne suffit pas : <b>on ne touche à rien</b>. Si ça se répète, on descend de ${PLAN.pas} kcal.`;
-    else msg=`Ton poids monte (<b>${rTxt}</b>) sans que ton tour de taille bouge. En reprise, c'est ce qu'on veut : <b>on ne touche à rien.</b>`;
+  else if(r>PLAN.gainMax){
+    if(dT===null) msg=`Tu prends vite (<b>${rTxt}</b>). <b>Il manque ton tour de taille</b> : sans lui je ne sais pas si c'est du muscle ou du gras, donc on ne touche à rien. Remplis-le dans ton bilan.`;
+    else if(dT>0.5 && r0!==null && r0>PLAN.gainMax){ kcal=base-PLAN.pas; cls='down';
+      msg=`Deux semaines au-dessus de la cible, et ton tour de taille a pris <b>${fr(dT,1)} cm</b>. On descend à <b>${kcal} kcal</b> en retirant des glucides. <b>On ne touche jamais aux protéines.</b>`; }
+    else if(dT>0.5) msg=`Tu prends vite (<b>${rTxt}</b>) et ton tour de taille aussi (<b>+${fr(dT,1)} cm</b>). Une semaine ne suffit pas : <b>on ne touche à rien</b>. Si ça se répète, on descend de ${PLAN.pas} kcal.`;
+    else msg=`Tu prends vite (<b>${rTxt}</b>) sans que ton tour de taille bouge. En reprise, c'est ce qu'on cherche : <b>on ne touche à rien.</b>`;
   }
-  else if(dT!==null && dT>0.5) msg=`Poids stable (<b>${rTxt}</b>), mais ton tour de taille a pris <b>${fr(dT,1)} cm</b>. Une semaine ne suffit pas : <b>on ne touche à rien</b> et on regarde la semaine prochaine.`;
-  else msg=`Poids stable (<b>${rTxt}</b>)${dT!==null?', tour de taille '+(dT>=0?'+':'')+fr(dT,1)+' cm':''}. Tu es à ta maintenance, c'est le but de ce bloc. <b>On ne touche à rien.</b>`;
+  else if(dT!==null && dT>0.5) msg=`Prise dans la cible (<b>${rTxt}</b>), mais ton tour de taille a pris <b>${fr(dT,1)} cm</b>. Une semaine ne suffit pas : <b>on ne touche à rien</b> et on regarde la semaine prochaine.`;
+  else msg=`Prise dans la cible (<b>${rTxt}</b>)${dT!==null?', tour de taille '+(dT>=0?'+':'')+fr(dT,1)+' cm':''}. <b>On ne touche à rien.</b>`;
   carteCible(w,vise,kcal,msg,cls);
 }
 
@@ -1211,12 +1213,10 @@ function phasesPrepa(){
   return [
     {nom:'Mesure', c:'Mesure', du:jourIso('2026-10-19'), au:jourIso('2026-11-01'), kcal:`${nbFr(PLAN.kcal)} kcal fixes`,
      txt:"Ta journée pesée, tous les jours. La moyenne de tes pesées de la semaine 2 donne ta maintenance : toute la roadmap part de ce chiffre."},
-    {nom:'Maintenance', c:'Maintien', du:jourIso('2026-11-02'), au:jourIso('2027-01-03'), kcal:`≈ ${nbFr(M)} kcal`+(PREPA.maintenance?'':', recalées après la semaine 2'),
-     txt:"Mémoire musculaire : tu reprends ce que tu as perdu sans manger plus. Le poids peut monter un peu, le tour de taille reste stable. Les fêtes sont dedans : on regarde la moyenne de la semaine, pas la journée."},
-    {nom:'Prise de masse', c:'Prise', du:jourIso('2027-01-04'), au:decale(seche,-1), kcal:`${nbFr(M+150)} à ${nbFr(M+250)} kcal`,
-     txt:"Léger surplus. Vise +0,4 à +0,7 kg par mois, pas plus : à ton niveau, au-delà c'est surtout du gras, et chaque kilo de gras en trop rallonge la sèche. Tour de taille +1 cm dans le mois : −150 kcal. Deux semaines avant la sèche, on recale ta maintenance sur tes pesées."},
+    {nom:'Prise de masse', c:'Prise', du:jourIso('2026-11-02'), au:decale(seche,-1), kcal:`≈ ${nbFr(M+PLAN.surplus)} kcal, ta maintenance + ${PLAN.surplus}`+(PREPA.maintenance?'':', recalées après la semaine 2'),
+     txt:"Tu pars sous ton meilleur poids : ce que tu reprends d'abord, c'est surtout du muscle que tu avais déjà. Vise +0,5 à 1 kg par mois. Si tu ne prends pas deux semaines de suite : +150 kcal. Si tu prends trop vite et que ton tour de taille monte, deux semaines de suite : −150. Une fois revenu à ton meilleur poids, on décide sur photos si on ralentit. Les fêtes sont dedans : on regarde la moyenne de la semaine, pas la journée. Deux semaines avant la sèche, on recale ta maintenance sur tes pesées."},
     {nom:'Sèche', c:'Sèche', du:seche, au:finSeche, kcal:'maintenance du moment − 500 au départ',
-     txt:`${Math.round((finSeche-seche)/SEMAINE_MS)} semaines, pauses comprises. On ajuste toutes les deux semaines avec les règles plus bas. Objectif : être prêt à J-14.`},
+     txt:`${Math.round((finSeche-seche)/SEMAINE_MS)} semaines, pauses comprises. On ajuste toutes les deux semaines avec les règles plus bas. Objectif : être prêt à J-14. Si tu arrives plus gras que prévu, on avance le départ.`},
     {nom:'Répétition de la peak week', c:'Répétition', du:decale(S,-41), au:decale(S,-35), kcal:'charge en glucides à tester', sous:true,
      txt:"La peak week en vrai, à 5 semaines de la scène, avec photos le samedi matin. C'est elle qui règle la vraie. Le lendemain, tu reprends la sèche."},
     {nom:'Marge', c:'Marge', du:decale(S,-13), au:decale(S,-7), kcal:'calories de fin de sèche',
