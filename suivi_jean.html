@@ -226,10 +226,10 @@
 
 <div id="lock-overlay">
   <div class="lock-card">
-    <div class="lock-eyebrow">Suivi en pause</div>
-    <div class="lock-title">On se retrouve bientôt</div>
-    <div class="lock-text">Ton programme est prêt, mais le suivi reste en pause tant que ce n'est pas réglé entre nous. <b>Le travail qu'on met des deux côtés mérite d'être respecté, dans les deux sens.</b></div>
-    <div class="lock-text">Écris-moi quand tu es prêt à reprendre, on remet tout en route direct.</div>
+    <div class="lock-eyebrow">Mois de suivi terminé</div>
+    <div class="lock-title">La suite t'attend</div>
+    <div class="lock-text">Ton mois de suivi est fini, et l'accès à l'appli s'arrête avec lui. <b>Ta semaine 5 est prête</b>, j'attends ton paiement pour la débloquer.</div>
+    <div class="lock-text">Tes séances et tes bilans restent sauvegardés : dès que c'est réglé, écris-moi et je rouvre tout.</div>
   </div>
 </div>
 
@@ -505,8 +505,11 @@
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
 const CLIENT_ID = "jean";
 
-// Programme non réglé : suivi verrouillé. Passer à false pour rouvrir l'accès.
-const CLIENT_LOCKED = false;
+// Mois réglé terminé (4 semaines, jusqu'au lundi 19/10) : l'appli se verrouille d'elle-même
+// à cette date. Pour rouvrir après paiement, repousser la date et passer SEMAINES_PAYEES
+// au nombre de semaines payées.
+const FIN_ACCES = new Date('2026-10-20T00:00:00+02:00');
+const CLIENT_LOCKED = Date.now() >= FIN_ACCES.getTime();
 if(CLIENT_LOCKED){
   document.body.classList.add('locked');
   document.getElementById('lock-overlay').classList.add('visible');

@@ -8,7 +8,7 @@ n'ont rien à faire ici non plus : voir la section « Confidentialité » plus b
 **Ce fichier est la mémoire du suivi.** Une conversation qui démarre sans contexte
 lit ce fichier et sait quoi faire. Il se met à jour à chaque décision.
 
-Dernière mise à jour : **21/09/2026**
+Dernière mise à jour : **19/10/2026**
 Méthode appliquée : skill `methode-alex`.
 
 🔴🔴 **LE SKILL SE REMET À ZÉRO, PAS CE FICHIER.** Le 20/09 j'ai écrit trois règles
@@ -147,6 +147,10 @@ Plats préférés : pâtes carbo, lasagnes, **banana bread qu'elle aime prépare
 de son dernier bilan (mois réglé terminé). Pour rouvrir, repousser `FIN_ACCES` dans
 `suivi_alexia.html`. Verrou côté navigateur seulement : pour couper vraiment l'accès,
 retirer le fichier du site.
+📌 **19/10 au matin : bilan S4 pas encore rempli.** Bilans reçus : S1 (rempli le 05/10)
+et S3 (le 12/10), jamais de S2. Elle remplit le lundi vers 11 h, dernière séance notée
+le 18/10. **Verrou laissé à ce soir minuit** pour qu'elle puisse envoyer ce dernier
+bilan : le couper le matin l'aurait empêchée de le faire.
 
 🔴 **État au 27/09 : elle s'est arrêtée.** Deux séances seulement, Lower A le 20/09 et
 Upper A le 21/09, puis **plus rien pendant six jours**. Aucun bilan rempli. C'est le
@@ -257,6 +261,14 @@ message « j'attends ton paiement pour la débloquer ». Les semaines 1 à 4 res
 ouvertes. **Après paiement, passer `SEMAINES_PAYEES` au nombre de semaines payées**
 dans `suivi_jean.html`. Bilan : S1 et S2 remplis, rien en S3 et S4, dernière séance
 notée le 13/10.
+🔒 **19/10 : l'appli entière se verrouille d'elle-même le mardi 20/10 à 0 h**, à la fin
+des 4 semaines payées, avec le même mécanisme qu'Alexia (`FIN_ACCES`). Toujours rien en
+S3 ni en S4 ce matin-là : la journée du 19 lui reste pour envoyer son dernier bilan.
+Message affiché : « Mois de suivi terminé · La suite t'attend », semaine 5 prête,
+débloquée au paiement. L'ancien texte « Suivi en pause », écrit pour un programme
+jamais réglé, ne collait plus : il a payé son premier mois. **Pour rouvrir après
+paiement : repousser `FIN_ACCES` et passer `SEMAINES_PAYEES`.** Verrou côté navigateur
+seulement : pour couper vraiment l'accès, retirer le fichier du site.
 
 📌 **Lui redire que la balance ne bougera presque pas.** En recomposition c'est le
 tour de taille qui parle. Sans ça il croira qu'il ne se passe rien.
