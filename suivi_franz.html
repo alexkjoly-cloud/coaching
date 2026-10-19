@@ -58,6 +58,7 @@
   .tab.active-bilan { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); }
   /* ---------- Diète ---------- */
   .tab.active-diete { background:rgba(62,184,122,0.10); border-color:rgba(62,184,122,0.35); color:var(--green); }
+  .tab.active-prepa { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); }
   /* ---------- Objectif de la semaine ---------- */
   .cible-sem { margin-top:12px; background:var(--card); border:1px solid var(--border); border-left:2px solid var(--gold); border-radius:0 2px 2px 0; padding:13px 15px; }
   .cs-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:9px; }
@@ -92,6 +93,12 @@
   .dj-repas .a { font-size:12.5px; line-height:1.6; color:var(--muted); font-weight:300; }
   .dj-repas .a b { color:var(--white); font-weight:500; }
   .diete-sec { font-size:9.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted2); font-weight:500; margin:22px 0 0; display:block; }
+  .dj-head .d { font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .ph .dj-repas .r { color:var(--gold); }
+  .ph.cur { border-color:rgba(201,168,76,0.5); }
+  .ph.cur .dj-head .n { color:var(--gold); }
+  .ph.passe { opacity:0.45; }
+  .ph.sous { margin-left:14px; }
   ul.courses { columns:2; column-gap:20px; margin:8px 0 0; padding-left:16px; }
   ul.courses li { padding:2px 0; font-size:12px; color:var(--muted); font-weight:300; break-inside:avoid; }
   ul.courses li b { color:var(--white); font-weight:400; }
@@ -258,6 +265,7 @@
   <button class="tab" id="tab-pesees" onclick="switchTab('pesees')">Pesées<br><span style="font-size:8px;color:var(--muted)">Chaque matin</span></button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Mensurations</span></button>
+  <button class="tab" id="tab-prepa" onclick="switchTab('prepa')">Prépa<br><span style="font-size:8px;color:var(--muted)">Scène 2027</span></button>
 </div>
 
 <!-- CONSIGNES -->
@@ -277,7 +285,7 @@
 
   <span class="diete-sec">Tes priorités</span>
   <div class="diete-intro">
-    Objectif : la scène l'an prochain, <b>en Classic ou en Bodybuilding</b>. Les jambes y sont jugées, au même titre que le haut.<br>
+    Objectif : la scène fin septembre 2027, <b>en Classic Physique</b>. Les jambes y sont jugées, au même titre que le haut. Le plan complet jusqu'à la scène est dans l'onglet <b>Prépa</b>.<br>
     <b>Fessiers, ischios, arrière d'épaule, haut du dos et bas du dos</b> passent en priorité. Les quadriceps aussi : ton haut du corps est en avance, on fait remonter tout le bas. <b>Mollets et abdos</b> sont jugés sur scène, ils ont leurs séries.
   </div>
 
@@ -524,6 +532,69 @@
 
   <button class="save-btn" style="background:var(--gold);color:#000" onclick="saveSession('corp')">ENREGISTRER</button>
   <button class="reset-btn" onclick="resetCorp()">Effacer les mensurations</button>
+  <div class="spacer"></div>
+</div>
+
+<!-- PRÉPA -->
+<div class="session" id="session-prepa">
+  <div class="session-header">
+    <div class="session-tag" style="color:var(--gold)">Objectif scène</div>
+    <div class="session-title">PRÉPA BODYBUILDING</div>
+    <div class="session-sub">Tout ce qu'il faut garder en tête jusqu'à la scène. Les dates partent du jour du show et bougeront avec lui quand il sera officiel.</div>
+  </div>
+
+  <div class="cible-sem" id="prepa-compte"></div>
+
+  <span class="diete-sec">Le cap</span>
+  <div class="diete-intro">
+    <b>Fédération : WNBF France</b>, du naturel testé deux fois : polygraphe à l'inscription, contrôle urinaire si tu gagnes ta classe. Show visé : <b>la Heroes Cup</b>, un Pro Qualifier, le 26 septembre en 2026 à Montargis. La date 2027 n'est pas encore sortie : on part du <b>samedi 25 septembre 2027</b>.<br>
+    <b>Catégorie : Classic Physique.</b> On y juge les proportions, les lignes et la taille fine plus que la masse brute. Ton haut est en avance et le programme fait remonter tout le bas : c'est ce que la Classic récompense.<br>
+    En WNBF, pas de grille poids-taille comme en NPC : selon le pays, la Classic se coupe en classes de taille ou de poids. On vérifie le règlement WNBF France dès qu'il sort.
+  </div>
+
+  <span class="diete-sec">La roadmap</span>
+  <div id="prepa-roadmap"></div>
+
+  <span class="diete-sec">Les règles de la sèche</span>
+  <div class="diete-intro">
+    <b>Vitesse</b> : 0,5 à 1 % de ton poids par semaine, autour de 0,7. Plus vite, tu perds du muscle avec le gras. Moins de 0,5 % deux semaines de suite : −150 kcal. Plus de 1 % deux semaines de suite : +150.<br>
+    <b>Protéines</b> : autour de 180 g par jour, toute la prépa. Elles ne bougent pas.<br>
+    <b>Lipides</b> : ils baissent, mais pas sous 0,8 g par kilo de poids de corps.<br>
+    <b>Glucides</b> : ce sont eux qui bougent en premier. Garde-les surtout autour de tes séances.<br>
+    <b>Pas</b> : 8 000 par jour, fixes. Si la perte cale, on ajoute des pas avant d'ajouter du cardio.<br>
+    <b>Entraînement</b> : tu gardes tes charges, c'est ce qui dit au muscle de rester. Si la force baisse, que tu dors mal ou que l'envie part, on baisse le volume, pas l'intensité.<br>
+    <b>Pauses</b> : jusqu'à deux semaines à maintenance pendant la sèche si la faim ou le moral lâchent. Elles ne font pas garder plus de muscle, mais la faim baisse. Elles sont déjà comptées dans les dates.<br>
+    <b>Photos</b> : chaque semaine, même heure, même lumière, mêmes poses. En sèche le miroir trompe, les photos côte à côte beaucoup moins.<br>
+    <b>La tête</b> : la fin de sèche joue sur la faim et l'humeur. Si la nourriture prend toute la place dans ta tête, tu m'en parles tout de suite.
+  </div>
+
+  <span class="diete-sec">Les poses Classic (WNBF)</span>
+  <div class="diete-intro">
+    Quarts de tour, puis : <b>double biceps de face</b>, une jambe en avant · <b>pec de profil</b> · <b>triceps de profil</b> · <b>double biceps de dos</b> · <b>abdos et cuisses</b> · <b>une ou deux poses classiques</b> au choix. <b>Pas de most muscular</b> en Classic.<br>
+    Le posing se travaille comme un exercice : 3 fois par semaine dès le début de la sèche, tous les jours sur les 8 dernières semaines, 20 à 30 min, filmé. Le vacuum aussi. Envoie-moi les vidéos.
+  </div>
+
+  <span class="diete-sec">La dernière semaine : ce qu'on sait</span>
+  <div class="cible">
+    <b>Ce qui fait la scène, c'est d'arriver sec.</b> La peak week peut ajouter un peu de plein, elle ne rattrape pas une sèche en retard. Mal faite, elle t'aplatit ou te brouille.<br>
+    <b>La charge en glucides</b> est la seule technique qui a un début de preuve : chez des bodybuilders, 1 à 2 jours de charge ont fait gagner un peu d'épaisseur musculaire et de note sur photo.<br>
+    <b>L'eau et le sel</b> : les charger puis les couper repose sur des mécanismes supposés, pas sur des résultats, avec des risques réels (crampes, malaise, sodium qui chute dans le sang). Et le sel sert à absorber les glucides : le couper pendant la charge freine la charge. <b>On les garde stables.</b><br>
+    <b>Tout se teste avant.</b> La répétition à 5 semaines de la scène sert à ça : ce qui n'a pas été testé ne rentre pas dans la vraie.
+  </div>
+  <div id="prepa-peak"></div>
+
+  <span class="diete-sec">Ce qu'on ne fait pas</span>
+  <div class="diete-intro">
+    Couper l'eau, ou la charger pour la couper ensuite · couper le sel · <b>les diurétiques</b> : ils sont sur la liste antidopage, donc interdits en WNBF, et dangereux en fin de sèche · un aliment ou un complément pas testé avant, la dernière semaine · chercher à perdre du gras pendant la peak week.
+  </div>
+
+  <span class="diete-sec">Admin</span>
+  <div class="diete-intro">
+    <b>Éligibilité WNBF</b> : 10 ans sans stéroïdes, peptides ni hormone de croissance, 2 ans sans prohormones ni produit interdit en vente libre.<br>
+    <b>Chaque complément</b> se vérifie sur la liste des produits interdits WNBF avant d'être pris, pré-workouts compris : certains stimulants y sont. <b>La créatine, tu la gardes jusqu'à la scène</b> : l'arrêter viderait un peu tes muscles de leur eau, l'inverse de ce qu'on cherche.<br>
+    <b>Adhésion WNBF et inscription</b> dès l'ouverture. <b>Tenue</b> : à vérifier dans le règlement (en NPC, short noir uni, sans brillant). <b>Bronzage</b> : celui que le show impose.
+  </div>
+
   <div class="spacer"></div>
 </div>
 
@@ -902,6 +973,7 @@ function switchTab(id){
   document.getElementById(`session-${id}`).classList.add('visible');
   document.getElementById(`tab-${id}`).className=`tab active-${id}`;
   document.getElementById('week-selector').style.display='flex';
+  if(id==='prepa') majPrepa();
   window.scrollTo(0,0);
 }
 
@@ -1116,6 +1188,90 @@ function majCible(){
   carteCible(w,vise,kcal,msg,cls);
 }
 
+/* ===== PRÉPA ===== */
+/* La date de scène pilote tout l'onglet : quand la WNBF publie son calendrier 2027,
+   on change cette date et toutes les phases suivent. */
+const PREPA = {
+  scene: '2027-09-25',   // samedi, même week-end que la Heroes Cup 2026 (26/09) : à confirmer
+  maintenance: null,     // kcal mesurées après la semaine 2 ; vide = on part de PLAN.kcal
+};
+const MOIS_FR=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+const JOURS_FR=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
+const SEMAINE_MS=7*864e5;
+function jourIso(iso){ return new Date(iso+'T12:00:00'); }
+function decale(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
+function lundiSuivant(d){ const x=new Date(d); while(x.getDay()!==1) x.setDate(x.getDate()+1); return x; }
+function dateFr(d,an){ return d.getDate()+' '+MOIS_FR[d.getMonth()]+(an?' '+d.getFullYear():''); }
+function nbFr(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' '); }
+function dernierPoids(){ for(let w=NB_SEMAINES;w>=1;w--){ const p=lirePoids(w); if(p) return p; } return null; }
+
+function phasesPrepa(){
+  const S=jourIso(PREPA.scene), M=PREPA.maintenance||PLAN.kcal;
+  const seche=lundiSuivant(decale(S,-24*7)), finSeche=decale(S,-14);
+  return [
+    {nom:'Mesure', c:'Mesure', du:jourIso('2026-10-19'), au:jourIso('2026-11-01'), kcal:`${nbFr(PLAN.kcal)} kcal fixes`,
+     txt:"Ta journée pesée, tous les jours. La moyenne de tes pesées de la semaine 2 donne ta maintenance : toute la roadmap part de ce chiffre."},
+    {nom:'Maintenance', c:'Maintien', du:jourIso('2026-11-02'), au:jourIso('2027-01-03'), kcal:`≈ ${nbFr(M)} kcal`+(PREPA.maintenance?'':', recalées après la semaine 2'),
+     txt:"Mémoire musculaire : tu reprends ce que tu as perdu sans manger plus. Le poids peut monter un peu, le tour de taille reste stable. Les fêtes sont dedans : on regarde la moyenne de la semaine, pas la journée."},
+    {nom:'Prise de masse', c:'Prise', du:jourIso('2027-01-04'), au:decale(seche,-1), kcal:`${nbFr(M+150)} à ${nbFr(M+250)} kcal`,
+     txt:"Léger surplus. Vise +0,4 à +0,7 kg par mois, pas plus : à ton niveau, au-delà c'est surtout du gras, et chaque kilo de gras en trop rallonge la sèche. Tour de taille +1 cm dans le mois : −150 kcal. Deux semaines avant la sèche, on recale ta maintenance sur tes pesées."},
+    {nom:'Sèche', c:'Sèche', du:seche, au:finSeche, kcal:'maintenance du moment − 500 au départ',
+     txt:`${Math.round((finSeche-seche)/SEMAINE_MS)} semaines, pauses comprises. On ajuste toutes les deux semaines avec les règles plus bas. Objectif : être prêt à J-14.`},
+    {nom:'Répétition de la peak week', c:'Répétition', du:decale(S,-41), au:decale(S,-35), kcal:'charge en glucides à tester', sous:true,
+     txt:"La peak week en vrai, à 5 semaines de la scène, avec photos le samedi matin. C'est elle qui règle la vraie. Le lendemain, tu reprends la sèche."},
+    {nom:'Marge', c:'Marge', du:decale(S,-13), au:decale(S,-7), kcal:'calories de fin de sèche',
+     txt:"Tu es prêt, tu tiens. Ces jours servent de marge, pas de rattrapage."},
+    {nom:'Peak week', c:'Peak week', du:decale(S,-6), au:decale(S,-1), kcal:'charge en glucides, le détail est plus bas',
+     txt:"Eau et sel stables, posing tous les jours."},
+    {nom:'Scène', c:'Scène', du:S, au:S, kcal:'',
+     txt:"Tout ce que tu fais ce jour-là a été testé avant."},
+    {nom:'Après la scène', c:'Après', du:decale(S,1), au:decale(S,28), kcal:'retour par paliers à la maintenance',
+     txt:"On remonte sur 3 à 4 semaines. La balance monte vite les premiers jours : c'est surtout l'eau et le glycogène qui reviennent."},
+  ];
+}
+
+function majPrepa(){
+  const box=document.getElementById('prepa-roadmap'); if(!box) return;
+  const S=jourIso(PREPA.scene), auj=new Date(); auj.setHours(12,0,0,0);
+  const ph=phasesPrepa(), dans=p=>auj>=p.du && auj<=p.au;
+  box.innerHTML=ph.map(p=>{
+    const quand = +p.du===+p.au ? JOURS_FR[p.du.getDay()]+' '+dateFr(p.du,true)
+      : dateFr(p.du, p.du.getFullYear()!==p.au.getFullYear())+' → '+dateFr(p.au,true);
+    return `<div class="diete-jour ph${dans(p)?' cur':''}${auj>p.au?' passe':''}${p.sous?' sous':''}">`
+      +`<div class="dj-head"><span class="n">${p.nom}</span><span class="d">${quand}</span></div>`
+      +`<div class="dj-repas">${p.kcal?`<div class="r">${p.kcal}</div>`:''}<div class="a">${p.txt}</div></div></div>`;
+  }).join('');
+
+  const jours=Math.round((S-auj)/864e5), principales=ph.filter(p=>!p.sous);
+  const now=principales.find(dans), suite=principales.find(p=>p.du>auj);
+  let cellule='—', msg='';
+  if(now){
+    const tot=Math.max(1,Math.round((now.au-now.du)/SEMAINE_MS)), n=Math.min(tot,Math.floor((auj-now.du)/SEMAINE_MS)+1);
+    cellule=`${n}/${tot}`;
+    if(now.kcal) msg=`Calories : <b>${now.kcal}</b>.`;
+  }
+  if(suite) msg+=` Prochaine étape : <b>${suite.nom}</b>, le ${dateFr(suite.du,true)}.`;
+  document.getElementById('prepa-compte').innerHTML=
+    `<div class="cs-top"><span class="w">${jours>0?'J-'+jours:(jours===0?'Jour J':'Scène passée')}</span><span class="p">${JOURS_FR[S.getDay()]} ${dateFr(S,true)}, à confirmer</span></div>`
+    +`<div class="cs-grid"><div class="cs-c gold"><div class="k">Phase</div><div class="v">${now?now.c:'—'}</div></div>`
+    +`<div class="cs-c"><div class="k">Semaine</div><div class="v">${cellule}</div></div>`
+    +`<div class="cs-c"><div class="k">Avant la scène</div><div class="v">${Math.max(0,Math.floor(jours/7))} sem.</div></div></div>`
+    +(msg?`<div class="cs-msg">${msg.trim()}</div>`:'');
+
+  const p=dernierPoids(), g=p?Math.round(p*8/10)*10:null;
+  const peak=[
+    {q:'J-6 à J-4', a:-6, b:-4, t:"Diète de fin de sèche, tu ne changes rien. Pas de vidage de glucides : rien ne montre qu'il aide, et il fatigue. Dernière séance de jambes lourde à J-6 au plus tard, ensuite des séances courtes et légères, sans chercher les courbatures. Posing tous les jours."},
+    {q:'J-3 et J-2', a:-3, b:-2, t:`La charge : environ <b>8 g de glucides par kilo de poids de corps</b> par jour${g?` (≈ ${nbFr(g)} g à ton poids actuel)`:''}, en 5 ou 6 repas : riz blanc, crème de riz, pommes de terre sans peau, galettes de riz, banane. Protéines comme d'habitude, lipides bas, <b>eau et sel comme pendant la sèche</b>, peu de fibres. Photos matin et soir.`},
+    {q:'J-1', a:-1, b:-1, t:"On règle sur les photos du matin. <b>Plat</b> (muscles vides, lignes molles) : tu continues de charger, un peu moins. <b>Flou</b> (peau épaisse, détails brouillés) : tu reviens aux glucides de fin de sèche. Eau et sel normaux, que des repas déjà testés, peu de fibres."},
+    {q:'Jour J', a:0, b:0, t:"Petits repas toutes les 2 à 3 h : galettes de riz, confiture ou miel, une pincée de sel, un peu de beurre de cacahuète si ça passe bien. L'eau par petites gorgées, à la soif. Pump-up 10 à 15 min avant de monter, élastiques ou haltères légers, sans te fatiguer."},
+  ];
+  document.getElementById('prepa-peak').innerHTML=peak.map(j=>{
+    const d1=decale(S,j.a), d2=decale(S,j.b);
+    const quand=JOURS_FR[d1.getDay()]+' '+dateFr(d1)+(j.a===j.b?'':' → '+JOURS_FR[d2.getDay()]+' '+dateFr(d2));
+    return `<div class="diete-jour"><div class="dj-head"><span class="n">${j.q}</span><span class="d">${quand}</span></div><div class="dj-repas"><div class="a">${j.t}</div></div></div>`;
+  }).join('');
+}
+
 buildWeekSelector();
 buildSessions();
 buildMens();
@@ -1126,6 +1282,7 @@ majPesees();
 majCible();
 majReposAnalyse();
 majNomsSemaine();
+majPrepa();
 /* On rouvre sur la dernière semaine consultée. Sans ça l'appli repartait toujours
    en semaine 1, et les séries se notaient dans la mauvaise semaine. */
 (function(){

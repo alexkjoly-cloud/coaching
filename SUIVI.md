@@ -517,10 +517,11 @@ que le dépôt n'est pas privé. Ils iront dans la Sheet et dans son appli.
 | Appli | **`suivi_franz.html`**, 10 semaines, sans verrou de paiement. Onglets : **Consignes** (ouvert par défaut), 5 séances, Diète, **Pesées** (Jour 1 à 7 dans chaque semaine ; la moyenne part toute seule dans le bilan sauf s'il tape son poids à la main, et pilote la diète dès 3 pesées), Bilan, Corps (mensurations seules). Repos : 4 à 5 min sur les gros, 3 à 4 min rowings et fente, 2 à 3 min isolation jambes et lombaires, 2 min le reste. Clés du stockage préfixées `franz-`. Colonne RIR (plus « RPE ») |
 | Volume semaine | 103 séries. Fessiers 18 · ischios 13,5 · quadris 13,5 · arrière d'épaule 12 · latérales 12 · mollets 9 · biceps 9 · pecs 8 · dorsaux 8 · haut du dos 7,5 · abdos 6 · lombaires 6 · triceps 5 · adducteurs 3 en direct, plus la presse pieds écartés (indirect compté 0,5). Lower A à 8 exercices : abduction et adduction s'enchaînent sur la même machine. Corrections d'Alexandre du 18/10 : **pec fly** au lieu de l'écarté poulie (Upper B), **presse pieds hauts et écartés** au lieu du step-up (Postérieur, « je le vois mal faire du step-up »), **adducteurs** ajoutés. S1 = calibrage à RIR 2, RDL et lombaires légers |
 | Changements | **19/10 : tractions à la place du tirage vertical prise large (Upper A)**, à la demande d'Alexandre, **à partir de la semaine 2**. La semaine 1 garde le tirage : il a fait son premier Upper A le 19/10 et y a noté ses 3 séries. Même fourchette 3 × 8-12, lest à la ceinture au-dessus de 12, noté dans la case kg (0 = poids du corps). L'Upper B garde le tirage vertical prise neutre. Volume inchangé |
+| Prépa (19/10) | **Onglet « Prépa » dans l'appli.** Show visé : **WNBF France, Heroes Cup** (Pro Qualifier, Montargis ; le 26/09 en 2026). Date 2027 pas encore sortie : **base samedi 25/09/2027**, une seule ligne à changer (`PREPA.scene`) et toutes les dates suivent. **Catégorie : Classic Physique** (choix d'Alexandre). En WNBF, pas de grille poids-taille : la Classic se coupe par taille ou par poids selon le pays. Roadmap : mesure (19/10 → 01/11) · maintenance (→ 03/01/2027) · **prise +150 à +250 kcal, +0,4 à +0,7 kg par mois** (→ 11/04) · **sèche de 22 semaines, pauses comprises** (12/04 → 11/09, 0,5 à 1 %/sem, prêt à J-14) · **répétition de la peak week à J-5 semaines** (15 → 21/08) · marge · peak week (charge en glucides vers 8 g/kg à J-3 et J-2, eau et sel stables, pas de diurétiques) · après la scène. **`PREPA.maintenance` à remplir après la S2.** Sources : voir la veille du 19/10 |
 | À venir | Ses mensurations (plus tard), dans l'onglet Corps. **Après la S2** : remplacer `PLAN.depart` par la moyenne de la S2, et choisir la suite selon la catégorie et la date |
 | Activité | ~8 000 pas par jour (moyenne du mois). **À garder fixe** pendant la mesure de la maintenance |
 | Diète (18/10) | Journée type calculée avec CIQUAL : **≈ 3 550 kcal** (3 150 à 3 800 selon l'huile et le haché), P 175 · G 410 · L 128. Matin : 2 tartines + pâte à tartiner, whey 39 g. Midi : riz 220 g cru, poulet 200 g cru, crème légère 18 % 20 cl, oignon, huile. Soir : pâtes 200-220 g crues, haché 200 g cru, coulis, huile |
-| Plan diète | 1) **2 semaines à l'identique mais pesé**, programme démarré, pesée chaque matin à jeun → moyenne = maintenance. 2) ~8 semaines à maintenance (mémoire musculaire). 3) Léger surplus jusqu'à la prépa, ~+200 g/semaine. 4) Prépa 16 à 20 semaines à ~0,7 %/semaine. Durées à caler sur la date. **Dans l'appli** : sa journée pesée + 1 fruit + 200 g de légumes = **3 690 kcal, P178 · G436 · L129**. Huile 20 g par repas, haché 15 %, whey dans l'eau. Ajustement auto à partir de S3 : ±150 kcal en glucides si la tendance se répète 2 semaines (baisse → +150 ; hausse avec tour de taille → −150). `PLAN.depart` = 73,3 non à jeun, à remplacer par la moyenne S2 |
+| Plan diète | 1) **2 semaines à l'identique mais pesé**, programme démarré, pesée chaque matin à jeun → moyenne = maintenance. 2) ~8 semaines à maintenance (mémoire musculaire). 3) Léger surplus jusqu'à la prépa, ~+200 g/semaine. 🔁 **19/10 : ramené à +0,4 à +0,7 kg par mois** (veille du 18/10 : la vitesse se règle sur le niveau ; +200 g/semaine, c'est un rythme de débutant ou d'intermédiaire). 4) Prépa 16 à 20 semaines à ~0,7 %/semaine. Durées à caler sur la date. **Dans l'appli** : sa journée pesée + 1 fruit + 200 g de légumes = **3 690 kcal, P178 · G436 · L129**. Huile 20 g par repas, haché 15 %, whey dans l'eau. Ajustement auto à partir de S3 : ±150 kcal en glucides si la tendance se répète 2 semaines (baisse → +150 ; hausse avec tour de taille → −150). `PLAN.depart` = 73,3 non à jeun, à remplacer par la moyenne S2 |
 | À lui demander | **La date** dès qu'elle sort. L'huile (2 c. à soupe par repas ou par jour ?), le % du haché, whey dans l'eau ou le lait, ce qui sort de la journée type (week-end, extras). Sa salle (Smith, leg curl assis, rear delt machine, hip thrust, extension lombaire ?), les exos qu'il déteste. Ses douleurs éventuelles : **hors du dépôt** |
 
 ---
@@ -663,6 +664,28 @@ aucun diagnostic, aucun régime thérapeutique, filtre santé à l'inscription, 
 « ne remplace pas un avis médical ou diététique ». Pour une certitude : un avocat, ou un
 diététicien diplômé en partenaire pour signer les plans.
 
+
+### Peak week et prépa de compétition naturelle, vérifié le 19/10/2026
+
+**À reporter dans `references/nutrition.md`.** C'est la base de l'onglet Prépa de Franz.
+
+| | Ce qui tient | Source |
+|---|---|---|
+| Vitesse de sèche | 0,5 à 1 % du poids par semaine. Les préps de pros naturels suivis durent environ 6 mois | Helms, Aragon & Fitschen 2014 (JISSN) ; cas Rossow 2013, Kistler 2014 |
+| Macros en sèche | protéines 2,3 à 3,1 g/kg de masse maigre, lipides 15 à 30 % des kcal, glucides le reste | Helms 2014 |
+| Pauses à maintenance | 1 semaine toutes les 3 : même perte de gras, même masse maigre, moins de faim et plus de satisfaction | Peos 2021, essai ICECAP (MSSE) |
+| Prise hors saison | surplus de 10 à 20 % et +0,25 à 0,5 %/semaine pour débutant et intermédiaire, plus prudent pour l'avancé | Iraki 2019 (Sports) |
+| Charge en glucides | seule technique de peak week avec un début de preuve : épaisseur musculaire et note photo en hausse chez 15 bodybuilders qui chargeaient, pas chez les 9 qui ne chargeaient pas ; +2,9 % d'épaisseur contre placebo à 9 g/kg | de Moraes 2019 (JSSM) ; essai contrôlé AUT/Abertay |
+| Eau et sodium | les charger puis les couper : mécanismes supposés, aucun résultat mesuré, risques réels (hyponatrémie, intoxication à l'eau, rhabdomyolyse). Le sodium sert à absorber les glucides : le couper pendant la charge la freine | Escalante 2021 (BMC SSMR) ; Homer, Cross & Helms 2024 (Sports Med Open) |
+| Tester avant | toute manipulation se répète avant la vraie compét ; sinon, on garde tout stable | Helms 2014 ; Escalante 2021 |
+| Ce que font les athlètes | 93,8 % de 81 naturels britanniques manipulent glucides, eau ou sel la dernière semaine ; 6,2 % gardent leur diète | Chappell & Simper 2018 (Sports) |
+
+⚠️ **Les chiffres de charge (8 à 12 g/kg) viennent de résumés** : les articles complets
+n'ont pas pu être ouverts d'ici (sites bloqués par le réseau). À relire en entier avant
+d'en faire une vidéo.
+⛔ **Diurétiques** : liste de l'AMA, donc interdits en WNBF, dont le contrôle urinaire
+suit le code AMA. Éligibilité WNBF : 10 ans sans stéroïdes, peptides ni GH, 2 ans sans
+prohormones ni produit interdit en vente libre, polygraphe à l'inscription.
 
 ---
 
