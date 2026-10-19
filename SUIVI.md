@@ -150,7 +150,8 @@ retirer le fichier du site.
 📌 **19/10 au matin : bilan S4 pas encore rempli.** Bilans reçus : S1 (rempli le 05/10)
 et S3 (le 12/10), jamais de S2. Elle remplit le lundi vers 11 h, dernière séance notée
 le 18/10. **Verrou laissé à ce soir minuit** pour qu'elle puisse envoyer ce dernier
-bilan : le couper le matin l'aurait empêchée de le faire.
+bilan : le couper le matin l'aurait empêchée de le faire. **Rempli à 10 h 03**, voir
+le journal des bilans.
 
 🔴 **État au 27/09 : elle s'est arrêtée.** Deux séances seulement, Lower A le 20/09 et
 Upper A le 21/09, puis **plus rien pendant six jours**. Aucun bilan rempli. C'est le
@@ -465,6 +466,29 @@ d'espacer les séances plutôt que de les enchaîner.
 kickback 40 → 20, curl poulie 30 → 16,5) : autre salle ou fatigue, à confirmer.
 ⬆️ **Abducteurs (Lower B) 110 × 15-15** : monte. **Tirage horizontal** 35 × 12-12 puis
 32 × 12 : tout à 35, monte si 12 partout.
+
+### Alexia · semaine 4 · bilan rempli le 19/10 à 10 h 03 (dernière semaine du mois réglé)
+
+3 séances et demie : Lower A (12-13/10), Upper (16/10), puis le 18/10 le Lower C avec
+le leg curl allongé et le RDL du Lower B, qu'elle avait raté (*« je fais les exos qui
+ne sont pas doublons »*). Sommeil 9 · énergie 7 · **fatigue 4** (7 la semaine d'avant) :
+les séances mieux espacées ont payé. Nutrition 8.
+Poids et mensurations : dans la Sheet. Rythme de perte du mois dans la fourchette de la
+règle → **diète inchangée**.
+Ses mots : *« la fatigue au travail a un peu joué sur ma discipline, je suis un peu
+déçue mais je vais rectifier ça »* · *« Merciii pour ton accompagnement ! »*
+
+Si elle continue, au prochain passage :
+- ⬆️ **abducteurs (Lower A)** 110 × 15-15-15
+- ⬆️ **leg curl allongé** 35 × 15-15-15
+- ⬇️ **rowing appui poitrine** 30 × 8-8-8, sous la fourchette 10-15 → **25**
+- leg curl assis à 42,5 puis 35 sur une nouvelle machine : encore deux charges sur un
+  même exercice, à recadrer
+- ⚠️ presse fessiers, série 1 notée « 8 » : sans doute 85
+- RDL refait à 50 au lieu des 45 conseillés, sans plainte de dos cette fois
+
+🔒 L'appli se ferme ce soir à minuit. **Si elle renouvelle** : repousser `FIN_ACCES`,
+passer `NB_SEMAINES` à 8 et appliquer la liste ci-dessus.
 
 ### Les deux applis rouvrent sur la dernière semaine consultée (05/10)
 
