@@ -50,8 +50,9 @@ la méthode en entier.
 - La masse maigre s'estime à partir du **meilleur poids passé** et de ses photos.
   🔴 **Sur des photos choisies** (lumière du dessus, pump, meilleur angle), **compter 1 à
   2 points de gras de plus** que ce qu'on voit.
-- Le muscle **neuf** suit le modèle d'Aragon : un avancé fait 0,25 à 0,5 % de son poids par
-  mois, soit **1 à 2 kg en 5 mois** de prise. Le muscle **déjà eu** revient bien plus vite.
+- Le muscle **neuf** suit le modèle d'Aragon : un avancé construit 0,25 à 0,5 % de son poids
+  **en muscle** par mois, soit **1 à 2 kg en 5 mois** de prise. Le muscle **déjà eu** revient
+  bien plus vite.
 - 📐 Exemple : meilleur poids 80 kg vers 12 % → masse maigre ≈ 70 kg → sur scène à 5,5 %,
   **73 à 74 kg**. Viser sur scène son ancien poids habituel (78 kg) demanderait 3 à 4 kg de
   muscle de plus qu'à son meilleur : pas tenable en un an, en naturel.
@@ -69,11 +70,14 @@ la méthode en entier.
   musculaire). Donc surplus dès la fin de la mesure : **+300 kcal**, cible **+0,5 à 1 kg par
   mois**. Et commencer tôt donne plus de semaines de données (vitesse de prise, tour de
   taille) avant de fixer la sèche.
-- **Au-delà de son meilleur poids**, la vitesse se règle sur le niveau (veille du 18/10) :
-  avancé 0,25 à 0,5 % du poids par mois.
-- **Réglage toutes les deux semaines, pas sur une seule pesée** : pas de prise deux semaines
-  de suite → +150 kcal ; prise de plus de 0,3 kg par semaine deux semaines de suite **et**
-  tour de taille +0,5 cm → −150 ; prise sans que la taille bouge → on garde.
+- **Au-delà de son meilleur poids**, on revient aux vitesses de `nutrition.md` (ajout du
+  20/10) : 0,25 à 0,5 % du poids par semaine en général, vers 0,5 % par mois chez un très
+  avancé. ⚠️ Ne pas les confondre avec le tableau d'Aragon, qui donne le **muscle** gagné
+  par mois, pas le poids.
+- **Réglage sur la tendance, pas sur une seule pesée** : au moins deux semaines, et le mois
+  chez un avancé (à 0,1 % par semaine, la balance ne voit que du bruit). Pas de prise sur la
+  période → +150 kcal ; prise de plus de 0,3 kg par semaine **et** tour de taille +0,5 cm →
+  −150 ; prise sans que la taille bouge → on garde.
 - 🟡 **Pas de très grosse prise** : chez des entraînés, +15 % de surplus ne fait pas plus de
   muscle mesurable que +5 % ou que la maintenance, mais plus de gras (Helms 2023, 17 sujets).
   Garthe 2013 va dans le même sens. Iraki 2019 : 10 à 20 % de surplus et +0,25 à 0,5 % par

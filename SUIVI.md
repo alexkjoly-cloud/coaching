@@ -522,7 +522,7 @@ que le dépôt n'est pas privé. Ils iront dans la Sheet et dans son appli.
 | À venir | Ses mensurations (plus tard), dans l'onglet Corps. **Après la S2** : remplacer `PLAN.depart` par la moyenne de la S2, et choisir la suite selon la catégorie et la date |
 | Activité | ~8 000 pas par jour (moyenne du mois). **À garder fixe** pendant la mesure de la maintenance |
 | Diète (18/10) | Journée type calculée avec CIQUAL : **≈ 3 550 kcal** (3 150 à 3 800 selon l'huile et le haché), P 175 · G 410 · L 128. Matin : 2 tartines + pâte à tartiner, whey 39 g. Midi : riz 220 g cru, poulet 200 g cru, crème légère 18 % 20 cl, oignon, huile. Soir : pâtes 200-220 g crues, haché 200 g cru, coulis, huile |
-| Plan diète | 1) **2 semaines à l'identique mais pesé**, programme démarré, pesée chaque matin à jeun → moyenne = maintenance. 2) ~8 semaines à maintenance (mémoire musculaire). 3) Léger surplus jusqu'à la prépa, ~+200 g/semaine. 🔁 **19/10 : ramené à +0,4 à +0,7 kg par mois** (veille du 18/10 : la vitesse se règle sur le niveau ; +200 g/semaine, c'est un rythme de débutant ou d'intermédiaire). 🔁 **19/10 au soir, avec Alexandre : plus de maintien jusqu'en janvier. Prise dès la S3 (02/11) à maintenance + 300 kcal** (en glucides), visée +0,5 à 1 kg par mois ; +150 si pas de prise deux semaines de suite, −150 si prise > 0,3 kg/sem deux semaines de suite avec tour de taille +0,5 cm. Pourquoi : il est sous son poids max, ce qu'il reprend d'abord est surtout du muscle qu'il avait déjà, et commencer tôt donne plus de semaines de données avant la sèche. Ce qui reste prudent : pas de « très grosse prise », au-delà de la reprise un surplus plus gros ajoute surtout du gras (Helms 2023, Garthe 2013). Logique dans `majCible` (`PLAN.surplus`, `gainMin`, `gainMax`). 4) Prépa 16 à 20 semaines à ~0,7 %/semaine. Durées à caler sur la date. **Dans l'appli** : sa journée pesée + 1 fruit + 200 g de légumes = **3 690 kcal, P178 · G436 · L129**. Huile 20 g par repas, haché 15 %, whey dans l'eau. Ajustement auto à partir de S3 : ±150 kcal en glucides si la tendance se répète 2 semaines (baisse → +150 ; hausse avec tour de taille → −150). `PLAN.depart` = 73,3 non à jeun, à remplacer par la moyenne S2 |
+| Plan diète | 1) **2 semaines à l'identique mais pesé**, programme démarré, pesée chaque matin à jeun → moyenne = maintenance. 2) ~8 semaines à maintenance (mémoire musculaire). 3) Léger surplus jusqu'à la prépa, ~+200 g/semaine. 🔁 **19/10 : ramené à +0,4 à +0,7 kg par mois** (veille du 18/10 : la vitesse se règle sur le niveau ; +200 g/semaine, c'est un rythme de débutant ou d'intermédiaire). ⚠️ 20/10 : cette justification venait d'une confusion entre vitesse de poids et gain de muscle (corrigée dans la veille du 18/10). 🔁 **19/10 au soir, avec Alexandre : plus de maintien jusqu'en janvier. Prise dès la S3 (02/11) à maintenance + 300 kcal** (en glucides), visée +0,5 à 1 kg par mois ; +150 si pas de prise deux semaines de suite, −150 si prise > 0,3 kg/sem deux semaines de suite avec tour de taille +0,5 cm. Pourquoi : il est sous son poids max, ce qu'il reprend d'abord est surtout du muscle qu'il avait déjà, et commencer tôt donne plus de semaines de données avant la sèche. Ce qui reste prudent : pas de « très grosse prise », au-delà de la reprise un surplus plus gros ajoute surtout du gras (Helms 2023, Garthe 2013). Logique dans `majCible` (`PLAN.surplus`, `gainMin`, `gainMax`). 4) Prépa 16 à 20 semaines à ~0,7 %/semaine. Durées à caler sur la date. **Dans l'appli** : sa journée pesée + 1 fruit + 200 g de légumes = **3 690 kcal, P178 · G436 · L129**. Huile 20 g par repas, haché 15 %, whey dans l'eau. Ajustement auto à partir de S3 : ±150 kcal en glucides si la tendance se répète 2 semaines (baisse → +150 ; hausse avec tour de taille → −150). `PLAN.depart` = 73,3 non à jeun, à remplacer par la moyenne S2 |
 | À lui demander | **La date** dès qu'elle sort. L'huile (2 c. à soupe par repas ou par jour ?), le % du haché, whey dans l'eau ou le lait, ce qui sort de la journée type (week-end, extras). Sa salle (Smith, leg curl assis, rear delt machine, hip thrust, extension lombaire ?), les exos qu'il déteste. Ses douleurs éventuelles : **hors du dépôt** |
 
 ---
@@ -571,6 +571,13 @@ est écrit là doit être **recollé à la main par Alexandre** dans
 
 ### Prise de masse : la vitesse se règle sur le niveau, vérifié le 18/10/2026
 
+🔴🔴 **20/10 : LA LIGNE DE REMPLACEMENT CI-DESSOUS EST ANNULÉE.** Le skill a été mis à
+jour le 20/10 dans une autre conversation (mot-témoin `profil-20`, « LES VITESSES EN %
+DU POIDS » en fin de `nutrition.md`), et **c'est lui qui a raison** : ma ligne prenait
+le tableau d'Aragon (le **muscle** gagné par mois) pour une vitesse de **poids** de
+corps. Les deux ne se confondent pas. Ce qui reste valable plus bas (Helms 2023, le
+P-ratio reformulé) est intégré dans le zip `prepa-20` du 20/10.
+
 À recoller dans **`references/nutrition.md`** (pas `entrainement.md`).
 
 🔴 **Contradiction interne à corriger.** Section « Vitesses » : « Prise de masse :
@@ -600,6 +607,8 @@ plafonne vers 15-16 % pour garder la sèche suivante courte ». La roadmap d'Ale
 04/08 l'écrivait sous l'autre forme : corrigée le 18/10.
 
 ### Les étirements, vérifié le 24/09/2026
+
+✅ **Intégré dans le zip `prepa-20` du 20/10** (`entrainement.md`), à téléverser.
 
 Le dossier du skill date du 15/08. Il tient, sauf **une ligne à corriger**.
 
@@ -638,6 +647,8 @@ t'étires pour grossir ou pour ne pas te blesser, tu t'es trompé de raison. »*
 
 ### Nutrition sans diplôme : ce que dit vraiment la loi, vérifié le 12/10/2026
 
+✅ **Intégré dans le zip `prepa-20` du 20/10** (`legal.md`), à téléverser.
+
 🔴 **`legal.md` du skill est incomplet.** Il dit : « le seul titre protégé de ce côté
 est diététicien ». C'est vrai pour le **titre**, mais la loi protège aussi l'**activité** :
 - **L4371-1 CSP** définit le diététicien comme toute personne qui « habituellement,
@@ -667,6 +678,8 @@ diététicien diplômé en partenaire pour signer les plans.
 
 
 ### Peak week et prépa de compétition naturelle, vérifié le 19/10/2026
+
+✅ **Intégré dans le zip `prepa-20` du 20/10** (`prepa-competition.md`), à téléverser.
 
 **À reporter dans `references/nutrition.md`.** C'est la base de l'onglet Prépa de Franz.
 
@@ -702,13 +715,18 @@ depuis pour Franz, écrit sans aucune donnée de client :
 - Le cadre WNBF, les poses Classic, le posing, le protocole de peak week jour par jour, le
   rétro-planning.
 
-**Pour l'intégrer au skill** (c'est Alexandre qui le fait, sur claude.ai) :
+✅ **20/10 : tout est intégré dans un skill complet prêt à téléverser, `methode-alex.zip`,
+mot-témoin `prepa-20`**, construit sur la version `profil-20` du jour (envoyé à Alexandre,
+gardé hors du dépôt public parce qu'il contient toute la méthode). Il suffit de supprimer
+l'ancien skill sur claude.ai (Personnaliser → Skills) et de téléverser ce zip. Les étapes
+manuelles ci-dessous ne servent que si le zip n'est pas utilisé.
+
+**Pour l'intégrer à la main** (c'est Alexandre qui le fait, sur claude.ai) :
 1. créer `references/prepa-competition.md` avec ce fichier ;
 2. ajouter dans la liste des fichiers de `SKILL.md` : « **references/prepa-competition.md**
    — la prépa de compétition naturelle (WNBF, NPC Natural, Classic Physique) : poids de
    scène, hors-saison, sèche, peak week, posing, rétro-planning » ;
-3. appliquer la ligne de remplacement du 18/10 dans `nutrition.md` (vitesse de prise selon
-   le niveau) ;
+3. ~~appliquer la ligne de remplacement du 18/10~~ : annulée le 20/10, voir plus haut ;
 4. changer le mot-témoin : proposition `prepa-20`, version du 20 octobre 2026.
 
 ---
