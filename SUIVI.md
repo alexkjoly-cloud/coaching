@@ -688,6 +688,29 @@ d'en faire une vidéo.
 suit le code AMA. Éligibilité WNBF : 10 ans sans stéroïdes, peptides ni GH, 2 ans sans
 prohormones ni produit interdit en vente libre, polygraphe à l'inscription.
 
+### Prépa de compétition : le fichier complet, 20/10/2026
+
+**Fichier prêt à coller : `methode/prepa-competition.md`** (dans ce dépôt, envoyé à
+Alexandre le 20/10). Il reprend le bloc peak week du 19/10 et ajoute ce qui a été décidé
+depuis pour Franz, écrit sans aucune donnée de client :
+- ✅ **Retour après une baisse : on prend tout de suite** (correction d'Alexandre du 19/10,
+  contre mon plan de 9 semaines à maintenance) : surplus dès la fin de la mesure.
+- ✅ **Le poids de scène se calcule** : masse maigre ÷ (1 − % de gras sur scène), avec 1 à
+  2 points de gras en plus sur des photos flatteuses.
+- ✅ **La durée de sèche se calcule depuis le gras à perdre** ; prêt à J-14 ; répétition de
+  la peak week à J-5 semaines.
+- Le cadre WNBF, les poses Classic, le posing, le protocole de peak week jour par jour, le
+  rétro-planning.
+
+**Pour l'intégrer au skill** (c'est Alexandre qui le fait, sur claude.ai) :
+1. créer `references/prepa-competition.md` avec ce fichier ;
+2. ajouter dans la liste des fichiers de `SKILL.md` : « **references/prepa-competition.md**
+   — la prépa de compétition naturelle (WNBF, NPC Natural, Classic Physique) : poids de
+   scène, hors-saison, sèche, peak week, posing, rétro-planning » ;
+3. appliquer la ligne de remplacement du 18/10 dans `nutrition.md` (vitesse de prise selon
+   le niveau) ;
+4. changer le mot-témoin : proposition `prepa-20`, version du 20 octobre 2026.
+
 ---
 
 ## CONFIDENTIALITÉ — À RÉGLER (12/10/2026)
