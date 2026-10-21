@@ -262,7 +262,7 @@
   <button class="tab" id="tab-lowerB" onclick="switchTab('lowerB')">Lower B<br><span style="font-size:8px;color:var(--muted)">Fessiers · Quadris · Lombaires</span></button>
   <button class="tab" id="tab-posterieur" onclick="switchTab('posterieur')">Postérieur<br><span style="font-size:8px;color:var(--muted)">Fessiers · Ischios · Épaules</span></button>
   <button class="tab" id="tab-diete" onclick="switchTab('diete')">Diète<br><span style="font-size:8px;color:var(--muted)">Macros · Repas</span></button>
-  <button class="tab" id="tab-pesees" onclick="switchTab('pesees')">Pesées<br><span style="font-size:8px;color:var(--muted)">Chaque matin</span></button>
+  <button class="tab" id="tab-pesees" onclick="switchTab('pesees')">Pesées<br><span style="font-size:8px;color:var(--muted)">Poids · Kcal</span></button>
   <button class="tab" id="tab-bilan" onclick="switchTab('bilan')">Bilan<br><span style="font-size:8px;color:var(--muted)">Hebdo</span></button>
   <button class="tab" id="tab-corp" onclick="switchTab('corp')">Corps<br><span style="font-size:8px;color:var(--muted)">Mensurations</span></button>
   <button class="tab" id="tab-prepa" onclick="switchTab('prepa')">Prépa<br><span style="font-size:8px;color:var(--muted)">Scène 2027</span></button>
@@ -318,6 +318,7 @@
   <span class="diete-sec">Tes rendez-vous</span>
   <div class="diete-intro">
     <b>Chaque matin</b> : pesée à jeun, après les toilettes et avant de boire, dans l'onglet <b>Pesées</b>. Jour 1 = le premier jour de ta semaine d'entraînement.<br>
+    <b>Chaque soir</b> : tes calories du jour, dans le même onglet. Tu as suivi ta journée type : tu tapes ta cible du jour, affichée en haut de l'onglet <b>Diète</b>.<br>
     <b>Chaque dimanche</b> : ton bilan, avec ton tour de taille pris au nombril, le matin à jeun, sans serrer. Puis tu m'envoies un message : sans ça, je ne le fais pas.<br>
     <b>Toutes les 4 semaines</b> : photos de face, de profil et de dos, même heure, même lumière, regard droit. Et tes mensurations dans l'onglet <b>Corps</b>.<br>
     <b>Tous les jours</b> : tes 8 000 pas, ni beaucoup plus ni beaucoup moins.
@@ -343,11 +344,16 @@
     <div class="session-sub">Une seule journée, la tienne, pesée. On ne change pas ce que tu manges : on le rend mesurable.</div>
   </div>
 
-  <div class="macro-grid">
+  <span class="diete-sec" id="macros-titre">Ta cible du jour</span>
+  <div class="macro-grid" id="macros-jour">
     <div class="macro kcal"><div class="k">Calories</div><div class="v">3690</div></div>
     <div class="macro"><div class="k">Protéines</div><div class="v">178 g</div></div>
     <div class="macro"><div class="k">Glucides</div><div class="v">436 g</div></div>
     <div class="macro"><div class="k">Lipides</div><div class="v">129 g</div></div>
+  </div>
+
+  <div class="diete-intro">
+    <b>C'est le chiffre à viser chaque jour</b>, il suit ta semaine tout seul. Tu manges ta journée type : tu y es. Tu manges autre chose (resto, repas de famille, un aliment remplacé) : vise ces calories et <b>au moins tes protéines</b>, avec ton appli de suivi ou les étiquettes. Le soir, tu notes le total du jour dans l'onglet <b>Pesées</b> : on fait la moyenne de la semaine.
   </div>
 
   <div class="cible-sem" id="cible-sem"></div>
@@ -370,6 +376,7 @@
     <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a">Pain <b>60 g</b>, en 2 tartines · Pâte à tartiner <b>30 g</b> · Whey <b>39 g</b>, 3 dosettes dans l'eau · Un fruit <b>150 g</b> (pomme, poire, kiwi…)</div></div>
     <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Riz <b>220 g cru</b> · Blanc de poulet <b>200 g cru</b> · Crème légère 18 % <b>20 cl</b>, la brique · Oignon <b>1</b>, environ 120 g · Légumes <b>200 g crus</b> (haricots verts, courgettes, brocoli…) · Huile d'olive <b>20 g</b></div></div>
     <div class="dj-repas"><div class="r">Dîner</div><div class="a">Pâtes <b>210 g crues</b> · Viande hachée 15 % <b>200 g crue</b> · Coulis de tomate <b>200 g</b> · Huile d'olive <b>20 g</b></div></div>
+    <div class="dj-repas"><div class="r">Dès la semaine 3</div><div class="a">Riz <b>+85 g cru</b>, au déjeuner ou au dîner, soit environ 300 kcal de plus. Ta cible du jour, en haut, en tient compte.</div></div>
   </div>
 
   <span class="diete-sec">Tes courses pour la semaine</span>
@@ -391,14 +398,14 @@
 
   <span class="diete-sec">Comment on pilote</span>
   <div class="diete-intro">
-    Tu notes ton poids <b>chaque matin à jeun</b> dans l'onglet <b>Pesées</b> : l'appli fait la moyenne de la semaine et la reporte dans ton bilan. Ton <b>tour de taille</b>, tu le prends le dimanche. On ne regarde jamais un chiffre isolé.<br><br>
-    À partir de la semaine 3, si ton poids baisse <b>deux semaines de suite</b>, on monte de <b>150 kcal en glucides</b>. S'il monte deux semaines de suite <b>avec</b> le tour de taille, on descend de 150. Une seule semaine ne suffit pas, l'eau fait bouger la balance. <b>On ne touche jamais aux protéines.</b><br><br>
+    Tu notes ton poids <b>chaque matin à jeun</b> et tes <b>calories chaque soir</b> dans l'onglet <b>Pesées</b> : l'appli fait la moyenne de la semaine et la reporte dans ton bilan. Ton <b>tour de taille</b>, tu le prends le dimanche. On ne regarde jamais un chiffre isolé.<br><br>
+    À partir de la semaine 3, on vise <b>+0,5 à 1 kg par mois</b>. Si tu ne prends pas <b>deux semaines de suite</b>, on monte de <b>150 kcal en glucides</b>. Si tu prends trop vite deux semaines de suite <b>avec</b> le tour de taille qui monte, on descend de 150. Une seule semaine ne suffit pas, l'eau fait bouger la balance. <b>On ne touche jamais aux protéines.</b><br><br>
     Le cadre en haut de cet onglet fait le calcul tout seul chaque semaine.
   </div>
 
   <span class="diete-sec">La suite</span>
   <div class="diete-intro">
-    <b>Objectif : la scène l'an prochain, en Classic ou en Bodybuilding.</b> Ce bloc sert à reprendre ta masse en restant sec. Ensuite, un léger surplus pour construire jusqu'au début de la prépa, puis 16 à 20 semaines de sèche. C'est la date de la compétition qui fixera la durée de chaque phase.
+    <b>Objectif : la scène fin septembre 2027, en Classic Physique.</b> Tu reprends ta masse dès la semaine 3, puis la sèche démarre au printemps. Les dates et les calories de chaque phase sont dans l'onglet <b>Prépa</b>.
   </div>
   <div class="spacer"></div>
 </div>
@@ -406,14 +413,14 @@
 <!-- PESEES -->
 <div class="session" id="session-pesees">
   <div class="session-header">
-    <div class="session-tag" style="color:var(--green)">Poids du matin</div>
+    <div class="session-tag" style="color:var(--green)">Poids et calories</div>
     <div class="session-title">PESÉES<span class="session-week-pill" id="pill-pesees">Semaine 1</span></div>
-    <div class="session-sub">Chaque matin, à jeun, après les toilettes et avant de boire. Même balance, même endroit.</div>
+    <div class="session-sub">Le matin, ton poids à jeun, après les toilettes et avant de boire. Le soir, tes calories du jour. Même balance, même endroit.</div>
   </div>
 
   <div class="exo-card">
-    <div class="col-header" style="grid-template-columns:1.3fr 1fr">
-      <div class="col-h" style="text-align:left;padding-left:8px">Jour</div><div class="col-h">Poids kg</div>
+    <div class="col-header" style="grid-template-columns:1.1fr 1fr 1fr">
+      <div class="col-h" style="text-align:left;padding-left:8px">Jour</div><div class="col-h">Poids kg</div><div class="col-h">Kcal</div>
     </div>
     <div class="series-rows" id="pesees-rows"></div>
   </div>
@@ -422,14 +429,15 @@
 
   <div class="corp-section-title">Moyenne de chaque semaine</div>
   <div class="exo-card">
-    <div class="col-header" style="grid-template-columns:54px 1fr 1fr 1fr">
-      <div class="col-h">Sem.</div><div class="col-h">Moyenne</div><div class="col-h">Écart</div><div class="col-h">Pesées</div>
+    <div class="col-header" style="grid-template-columns:44px 1fr 0.9fr 0.8fr 1fr">
+      <div class="col-h">Sem.</div><div class="col-h">Poids</div><div class="col-h">Écart</div><div class="col-h">Pesées</div><div class="col-h">Kcal</div>
     </div>
     <div class="series-rows" id="moyennes-rows"></div>
   </div>
 
   <div class="diete-intro">
-    Une pesée seule ne veut rien dire : le poids du matin peut bouger de plus d'un kilo d'un jour à l'autre avec l'eau, le sel et ce que tu as mangé la veille. <b>C'est la moyenne de la semaine qui compte.</b> L'appli la reporte toute seule dans ton bilan, et c'est elle qui pilote ta diète.
+    Une pesée seule ne veut rien dire : le poids du matin peut bouger de plus d'un kilo d'un jour à l'autre avec l'eau, le sel et ce que tu as mangé la veille. <b>C'est la moyenne de la semaine qui compte.</b> L'appli la reporte toute seule dans ton bilan, et c'est elle qui pilote ta diète.<br><br>
+    <b>Tes calories du jour</b>, c'est le total de la journée. Journée type suivie : tu tapes ta cible du jour, en haut de l'onglet Diète. Écart, resto, repas en plus : ton appli de suivi ou les étiquettes te donnent le total. Un jour sans chiffre ne compte pas dans la moyenne, qui part toute seule dans ton bilan.
   </div>
   <div class="spacer"></div>
 </div>
@@ -454,6 +462,11 @@
   <div class="bilan-field">
     <div class="bilan-label">Poids de la semaine (kg) <span class="bilan-scale-hint">se remplit tout seul avec la moyenne de l'onglet Pesées</span></div>
     <input type="text" inputmode="decimal" class="bilan-num" placeholder="—" id="bilan-poids" oninput="saveBilan('poids',this.value)">
+  </div>
+
+  <div class="bilan-field">
+    <div class="bilan-label">Calories moyennes (kcal/jour) <span class="bilan-scale-hint">se remplit tout seul avec la moyenne de l'onglet Pesées</span></div>
+    <input type="text" inputmode="numeric" class="bilan-num" placeholder="—" id="bilan-calories" oninput="saveBilan('calories',this.value)">
   </div>
 
   <div class="bilan-field">
@@ -680,7 +693,7 @@ const PROGRAMME = {
 };
 
 const MENSURATIONS = ['Poitrine','Taille','Hanches','Bras G','Bras D','Cuisse G','Cuisse D','Mollet G'];
-const BILAN_FIELDS = ['poids','taille','pas','nutrition','sommeil','energie','fatigue','ecarts','ressenti','difficultes','modifs','question'];
+const BILAN_FIELDS = ['poids','calories','taille','pas','nutrition','sommeil','energie','fatigue','ecarts','ressenti','difficultes','modifs','question'];
 const SESSIONS = Object.keys(PROGRAMME);
 let currentWeek = 1;
 
@@ -814,7 +827,7 @@ function loadAll(){
 /* ===== BILAN HEBDO ===== */
 function saveBilan(field,value){
   localStorage.setItem(K(`bilan-${field}-w${currentWeek}`),value);
-  if(field==='poids'){ if(String(value).trim()!=='') localStorage.setItem(K(`bilan-poids-manuel-w${currentWeek}`),'1'); else localStorage.removeItem(K(`bilan-poids-manuel-w${currentWeek}`)); }
+  if(field==='poids'||field==='calories'){ if(String(value).trim()!=='') localStorage.setItem(K(`bilan-${field}-manuel-w${currentWeek}`),'1'); else localStorage.removeItem(K(`bilan-${field}-manuel-w${currentWeek}`)); }
   syncFieldDebounced(`bilan-${field}-w${currentWeek}`, {client:CLIENT_ID,type:'bilan',field:field,week:currentWeek,value:value,ts:new Date().toISOString()});
 }
 function loadBilan(){
@@ -1033,6 +1046,12 @@ function carteCible(w,poidsVise,kcal,msg,cls){
     + `<div class="cs-c"><div class="k">Glucides</div><div class="v">${dG} g</div></div>`
     + `<div class="cs-c"><div class="k">Lipides</div><div class="v">${PLAN.L} g</div></div>`
     + `</div><div class="cs-msg ${cls||''}">${msg}</div>`;
+  const mg=document.getElementById('macros-jour');
+  if(mg) mg.innerHTML=`<div class="macro kcal"><div class="k">Calories</div><div class="v">${kcal}</div></div>`
+    + `<div class="macro"><div class="k">Protéines</div><div class="v">${PLAN.P} g</div></div>`
+    + `<div class="macro"><div class="k">Glucides</div><div class="v">${dG} g</div></div>`
+    + `<div class="macro"><div class="k">Lipides</div><div class="v">${PLAN.L} g</div></div>`;
+  const mt=document.getElementById('macros-titre'); if(mt) mt.textContent=`Ta cible du jour · semaine ${w}`;
 }
 
 const PLAN = { depart:73.3, parSem:0.17, kcal:3690, P:178, G:436, L:129, pas:150, surplus:300, gainMin:0.1, gainMax:0.3, tailleIdx:1 };
@@ -1045,10 +1064,35 @@ function moyennePesees(w){
   for(let j=1;j<=7;j++){ const v=lireNum(clePesee(w,j)); if(v!==null){ s+=v; n++; } }
   return n ? {moy:Math.round(s/n*10)/10, n} : {moy:null, n:0};
 }
+/* Calories du jour : même principe que les pesées. Un jour vide ne compte pas dans la
+   moyenne, et la moyenne part dans le bilan sauf s'il l'a tapée à la main. */
+function cleKcal(w,j){ return K(`kcal-w${w}-j${j}`); }
+function lireKcal(cle){ try{ const v=localStorage.getItem(cle); if(!v) return null; const x=parseFloat(String(v).replace(/\s/g,'').replace(',','.')); return isNaN(x)?null:x; }catch(e){ return null; } }
+function moyenneKcal(w){
+  let s=0, n=0;
+  for(let j=1;j<=7;j++){ const v=lireKcal(cleKcal(w,j)); if(v!==null){ s+=v; n++; } }
+  return n ? {moy:Math.round(s/n/10)*10, n} : {moy:null, n:0};
+}
 function buildPesees(){
   const c=document.getElementById('pesees-rows'); if(!c) return;
-  c.innerHTML=JOURS.map((d,i)=>`<div class="mens-row" style="grid-template-columns:1.3fr 1fr"><div class="mens-label">${d}</div>`
-    +`<input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="pesee-j${i+1}" style="border-right:none" oninput="savePesee(${i+1},this.value)"></div>`).join('');
+  c.innerHTML=JOURS.map((d,i)=>`<div class="mens-row" style="grid-template-columns:1.1fr 1fr 1fr"><div class="mens-label">${d}</div>`
+    +`<input type="text" inputmode="decimal" class="serie-input" placeholder="—" id="pesee-j${i+1}" oninput="savePesee(${i+1},this.value)">`
+    +`<input type="text" inputmode="numeric" class="serie-input" placeholder="—" id="kcal-j${i+1}" style="border-right:none" oninput="saveKcal(${i+1},this.value)"></div>`).join('');
+}
+function saveKcal(j,value){
+  const w=currentWeek;
+  localStorage.setItem(cleKcal(w,j),value);
+  syncFieldDebounced(cleKcal(w,j), {client:CLIENT_ID,type:'corp',field:'kcal-j'+j,week:w,value:value,ts:new Date().toISOString()});
+  reporterKcal(w);
+  majPesees();
+}
+function reporterKcal(w){
+  if(localStorage.getItem(K(`bilan-calories-manuel-w${w}`))==='1') return;
+  const m=moyenneKcal(w), v=m.moy!==null?String(m.moy):'';
+  if((localStorage.getItem(K(`bilan-calories-w${w}`))||'')===v) return;
+  localStorage.setItem(K(`bilan-calories-w${w}`),v);
+  syncFieldDebounced(`bilan-calories-w${w}`, {client:CLIENT_ID,type:'bilan',field:'calories',week:w,value:v,ts:new Date().toISOString()});
+  if(w===currentWeek){ const el=document.getElementById('bilan-calories'); if(el) el.value=v; }
 }
 function savePesee(j,value){
   const w=currentWeek;
@@ -1068,15 +1112,21 @@ function reporterMoyenne(w){
 }
 function majPesees(){
   const w=currentWeek;
-  for(let j=1;j<=7;j++){ const el=document.getElementById('pesee-j'+j); if(el) el.value=localStorage.getItem(clePesee(w,j))||''; }
+  for(let j=1;j<=7;j++){ const el=document.getElementById('pesee-j'+j); if(el) el.value=localStorage.getItem(clePesee(w,j))||'';
+    const ek=document.getElementById('kcal-j'+j); if(ek) ek.value=localStorage.getItem(cleKcal(w,j))||''; }
   const pill=document.getElementById('pill-pesees'); if(pill) pill.textContent='Semaine '+w;
   const m=moyennePesees(w), prev=w>1?moyennePesees(w-1):{moy:null,n:0};
   const box=document.getElementById('pesees-moy');
   if(box){
     const ecart=(m.moy!==null && prev.moy!==null) ? ` · <b>${m.moy-prev.moy>=0?'+':''}${fr(m.moy-prev.moy,1)} kg</b> par rapport à la semaine ${w-1}` : '';
+    const k=moyenneKcal(w), cible=calculCible(w).kcal;
+    const dk=k.moy!==null ? k.moy-cible : null;
+    const ligneKcal = k.n
+      ? `<br>Calories : <b>${nbFr(k.moy)} kcal par jour</b> sur ${k.n} jour${k.n>1?'s':''}, pour une cible de ${nbFr(cible)} (<b>${dk>=0?'+':'−'}${nbFr(Math.abs(dk))}</b>).`
+      : `<br>Calories : rien de noté. Le soir, tape le total de ta journée, la moyenne se calcule toute seule.`;
     box.innerHTML = m.n
-      ? `<div class="cs-top"><span class="w">Moyenne semaine ${w}</span><span class="p">${m.n} pesée${m.n>1?'s':''} sur 7</span></div><div class="cs-msg"><b>${fr(m.moy,1)} kg</b>${ecart}</div>`
-      : `<div class="cs-top"><span class="w">Moyenne semaine ${w}</span><span class="p">aucune pesée</span></div><div class="cs-msg">Note ton poids chaque matin, la moyenne se calcule toute seule.</div>`;
+      ? `<div class="cs-top"><span class="w">Moyenne semaine ${w}</span><span class="p">${m.n} pesée${m.n>1?'s':''} sur 7</span></div><div class="cs-msg"><b>${fr(m.moy,1)} kg</b>${ecart}${ligneKcal}</div>`
+      : `<div class="cs-top"><span class="w">Moyenne semaine ${w}</span><span class="p">aucune pesée</span></div><div class="cs-msg">Note ton poids chaque matin, la moyenne se calcule toute seule.${ligneKcal}</div>`;
   }
   const rows=document.getElementById('moyennes-rows');
   if(rows){
@@ -1084,9 +1134,11 @@ function majPesees(){
     for(let i=1;i<=NB_SEMAINES;i++){
       const mi=moyennePesees(i);
       const e=(mi.moy!==null && last!==null) ? (mi.moy-last>0?'+':'')+fr(mi.moy-last,1) : '—';
-      html+=`<div class="poids-row" style="grid-template-columns:54px 1fr 1fr 1fr"><div class="serie-num">S${i}</div>`
+      const ki=moyenneKcal(i);
+      html+=`<div class="poids-row" style="grid-template-columns:44px 1fr 0.9fr 0.8fr 1fr"><div class="serie-num">S${i}</div>`
         +`<div class="serie-input">${mi.moy!==null?fr(mi.moy,1):'—'}</div><div class="serie-input" style="color:var(--muted)">${e}</div>`
-        +`<div class="serie-input" style="border-right:none;color:var(--muted)">${mi.n?mi.n+'/7':'—'}</div></div>`;
+        +`<div class="serie-input" style="color:var(--muted)">${mi.n?mi.n+'/7':'—'}</div>`
+        +`<div class="serie-input" style="border-right:none">${ki.moy!==null?nbFr(ki.moy):'—'}</div></div>`;
       if(mi.moy!==null) last=mi.moy;
     }
     rows.innerHTML=html;
@@ -1151,12 +1203,12 @@ function majReposAnalyse(){
    touche aux calories que si la même tendance se répète deux semaines de suite : le poids
    bouge avec l'eau, le sel et le glycogène. La tendance ne se lit que sur les semaines de
    reprise, la première prend de l'eau et du glycogène. */
-function majCible(){
-  const w=currentWeek;
+function majCible(){ const c=calculCible(currentWeek); carteCible(currentWeek,c.vise,c.kcal,c.msg,c.cls); }
+function calculCible(w){
   let kcal=PLAN.kcal, msg='', cls='';
   if(w<=2){
     msg=`Semaines 1 et 2 : <b>on ne change rien, on mesure.</b> Tu manges ta journée type telle quelle, tous les jours, et tu notes ton poids chaque matin dans l'onglet <b>Pesées</b>. La moyenne de la semaine 2 nous donne ta maintenance.`;
-    carteCible(w,'à mesurer',kcal,msg,cls); return;
+    return {vise:'à mesurer',kcal,msg,cls};
   }
   const base=PLAN.kcal+PLAN.surplus; kcal=base;
   const ref=lirePoids(2)!==null?lirePoids(2):lirePoids(1);
@@ -1166,7 +1218,7 @@ function majCible(){
     msg = w===3
       ? `Semaine 3 : <b>la reprise commence</b>, ta maintenance + ${PLAN.surplus} kcal. Les ${PLAN.surplus} kcal passent en glucides : environ 85 g de riz cru en plus par jour, ou l'équivalent. La première semaine, la balance prend souvent un peu d'eau et de glycogène : on ne juge pas dessus.`
       : `Il faut deux semaines de pesées en reprise pour lire la tendance, donc <b>on ne change rien</b>. On vise +0,5 à 1 kg par mois.`;
-    carteCible(w,vise,kcal,msg,cls); return;
+    return {vise,kcal,msg,cls};
   }
   const rythme=(a,b)=>(b.v-a.v)/(b.w-a.w);
   const r=rythme(ps[ps.length-2],ps[ps.length-1]);
@@ -1187,7 +1239,7 @@ function majCible(){
   }
   else if(dT!==null && dT>0.5) msg=`Prise dans la cible (<b>${rTxt}</b>), mais ton tour de taille a pris <b>${fr(dT,1)} cm</b>. Une semaine ne suffit pas : <b>on ne touche à rien</b> et on regarde la semaine prochaine.`;
   else msg=`Prise dans la cible (<b>${rTxt}</b>)${dT!==null?', tour de taille '+(dT>=0?'+':'')+fr(dT,1)+' cm':''}. <b>On ne touche à rien.</b>`;
-  carteCible(w,vise,kcal,msg,cls);
+  return {vise,kcal,msg,cls};
 }
 
 /* ===== PRÉPA ===== */
