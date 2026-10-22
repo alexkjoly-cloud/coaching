@@ -730,6 +730,27 @@ manuelles ci-dessous ne servent que si le zip n'est pas utilisé.
 3. ~~appliquer la ligne de remplacement du 18/10~~ : annulée le 20/10, voir plus haut ;
 4. changer le mot-témoin : proposition `prepa-20`, version du 20 octobre 2026.
 
+### Collagène, articulations et tendons, vérifié le 22/10/2026
+
+À reporter dans `complements.md` (proposition : **tier B, situationnel**, c'est à
+Alexandre de trancher) et la glucosamine dans `mythes.md`. Rien n'existait dans le skill
+sur ces sujets.
+
+| Pour quoi | Ce que disent les études | Niveau |
+|---|---|---|
+| Douleur d'arthrose (genou) | méta 2024, 11 essais, 870 patients : moins de douleur et de raideur, la fonction bouge moins nettement. Essais hétérogènes, souvent sur des produits de marque, pas de preuve qu'il reconstruise le cartilage | 🟡 effet modeste |
+| Douleur articulaire à l'effort | Clark 2008 (10 g/j, 24 semaines, 97 sportifs analysés) et Zdzieblik 2017 (5 g/j, 12 semaines, 139 sportifs) : moins de douleur | 🟡 deux essais, anciens |
+| Tendon | Jerger 2022 (Achille) et 2023 (rotulien), 5 g/j + muscu 14 semaines : le tendon grossit plus (+11 % contre +4,7 % sur l'Achille). Balshaw 2023 (15 g/j, 15 semaines) : rien de plus que le placebo. Revue 2026 (8 essais, 257 personnes) : section plus grande dans 3 études sur 4, rigidité améliorée seulement à 15-30 g/j, aucun effet ajouté sur la force | 🟡 prometteur, contradictoire |
+| Synthèse de collagène | Shaw 2017 : 15 g de gélatine + vitamine C, 1 h avant 6 min de corde à sauter, doublent un marqueur sanguin (PINP). 8 hommes | 🧪 un marqueur, pas un résultat |
+| Muscle et force | protéine incomplète (pas de tryptophane, peu de leucine) : moins de synthèse musculaire que la whey (Oikawa 2020). Méta 2024 : pas d'effet utile sur la force. La méta en réseau de 2025 qui le classe premier est contestée (Phillips 2026 : un classement n'est pas une supériorité, et à leucine égale la whey fait plus de muscle) | ✅ pas un complément pour le muscle |
+| Glucosamine (± chondroïtine) | ajoutée à l'exercice : aucun effet sur la douleur du genou (6 essais, 297 personnes, 2023). Chondroïtine seule : résultats partagés, les plus gros essais ne battent pas le placebo | 🔴 rien de solide |
+
+🔑 **Ce qui adapte le tendon, c'est la charge** : la méthode le dit déjà (décalage
+muscle/tendon, double progression). Le lien « tendon plus gros = moins de blessures »
+n'est pas mesuré, comme pour la rotation d'exercices.
+⚠️ Lu par résumés seulement (articles bloqués par le réseau) : à relire en entier
+avant d'en faire une vidéo (règle du 29/08).
+
 ---
 
 ## CONFIDENTIALITÉ — À RÉGLER (12/10/2026)
