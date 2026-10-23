@@ -751,6 +751,24 @@ n'est pas mesuré, comme pour la rotation d'exercices.
 ⚠️ Lu par résumés seulement (articles bloqués par le réseau) : à relire en entier
 avant d'en faire une vidéo (règle du 29/08).
 
+### « Déchirer les fibres » pour grossir, vérifié le 23/10/2026
+
+À reporter dans `mythes.md`, en renfort de la ligne « Les courbatures mesurent le
+travail », qui cite déjà Damas 2016.
+- ✅ **Flann 2011** (*J Exp Biol*), le test direct : un groupe préparé pour ne pas avoir
+  de dégâts, un autre qui en a (CK multipliée par plus de 5, courbatures), même travail
+  pendant 8 semaines. **Même hypertrophie, même force (+25 % contre +26 %).** Les auteurs :
+  la croissance peut démarrer sans aucun dégât détectable.
+- ✅ **Damas 2016** (*J Physiol*, 10 hommes, 10 semaines) : les dégâts et la synthèse
+  protéique sont au maximum la 1re semaine, et **ni l'un ni l'autre ne prédit la
+  croissance**. La synthèse ne colle à l'hypertrophie qu'à partir de la 3e semaine, quand
+  les dégâts ont baissé : au début, elle sert surtout à réparer.
+- 🟡 Le débat n'est pas clos à 100 % (Schoenfeld 2012 : les dégâts pourraient aider, sans
+  être nécessaires ; échange de lettres en 2018). ✅ Ce qui tient : **la tension mécanique
+  est le moteur, les dégâts ne sont pas nécessaires, et trop de dégâts retardent.**
+- 📌 « Déchirer » est une image : ce qu'on voit au microscope, c'est la structure des
+  sarcomères désorganisée (lignes Z), pas des fibres coupées.
+
 ---
 
 ## CONFIDENTIALITÉ — À RÉGLER (12/10/2026)
