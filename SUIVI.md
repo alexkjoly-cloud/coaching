@@ -782,9 +782,14 @@ une étude** : à dire comme un constat de coach, jamais comme un résultat.
   tête de séance ou avec ses propres jours, dans un ordre fixe** (pas deux Upper
   d'affilée). Appliqué à son bloc 11 (Upper / Lower, 4 séances).
 - 🔁 **Isolation avant le polyarticulaire aux jambes** (leg extension puis pendulum ou
-  presse), à sa demande : même croissance (l'ordre ne change pas l'hypertrophie, déjà
-  dans `entrainement.md`), charge plus basse sur le poly donc moins de stress genou et
-  dos. Le prix : le poly progresse moins vite en charge. Même ordre chaque semaine.
+  presse, leg curl assis puis roumain), à sa demande : même croissance (l'ordre ne
+  change pas l'hypertrophie, déjà dans `entrainement.md`), charge plus basse sur le
+  poly donc moins de stress genou et dos. Le prix : le poly progresse moins vite en
+  charge. Même ordre chaque semaine.
+- 🔑 **Sa consigne du 23/10 : la liste d'interdits n'est pas une règle de conception.**
+  On choisit ce qui sert le mieux et il corrige. Le roumain revient, pré-fatigué ;
+  squat barre libre, soulevé de terre et good morning restent dehors par choix (même
+  travail avec moins de fatigue), le haut garde ses adaptations liées aux blessures.
 
 ---
 
