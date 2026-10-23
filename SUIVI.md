@@ -778,11 +778,16 @@ une étude** : à dire comme un constat de coach, jamais comme un résultat.
   qui a sauté. Sur 4 prévues (depuis la semaine 4), il en fait 4.
 - 📌 **Ce qui est en fin de séance saute en premier.** Jambes placées après le haut du
   corps : environ une série sur trois notée en 6 semaines, et jamais au deuxième Push.
+  Le leg curl placé en milieu de Pull, lui, était fait.
 - ✅ **La réponse : le muscle qu'on remonte va dans les séances réellement faites, en
-  tête de séance ou avec ses propres jours, dans un ordre fixe** (pas deux Upper
-  d'affilée). Appliqué à son bloc 11 (Upper / Lower, 4 séances).
-- 🔁 **Isolation avant le polyarticulaire aux jambes** (leg extension puis pendulum ou
-  presse, leg curl assis puis roumain), à sa demande : même croissance (l'ordre ne
+  séance 1 de la rotation ou en milieu de séance, pas en dernier.** Appliqué à son
+  bloc 11, après sa correction du 23/10 (**1 leg day, pas 2**) : Legs en séance 1, puis
+  Push, Pull, Upper, avec une leg extension au Push et un leg curl au Pull en milieu
+  de séance.
+- 📌 **Chez lui, « l'épaule » d'une séance du haut, ce sont les latérales.** Une séance
+  Upper avec le militaire mais sans latérales, pour lui, c'est « pas d'épaule ».
+- 🔁 **Isolation avant le polyarticulaire aux jambes** (leg curl assis puis roumain, leg
+  extension puis pendulum), à sa demande : même croissance (l'ordre ne
   change pas l'hypertrophie, déjà dans `entrainement.md`), charge plus basse sur le
   poly donc moins de stress genou et dos. Le prix : le poly progresse moins vite en
   charge. Même ordre chaque semaine.
