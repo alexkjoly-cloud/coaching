@@ -797,6 +797,12 @@ une étude** : à dire comme un constat de coach, jamais comme un résultat.
   point fort, latérales de 3 à 2 séries, militaire au Push seulement (l'avant
   d'épaule travaille déjà dans tous les développés, déjà écrit dans
   `entrainement.md`).
+- 🔴 **Ma lecture « jambes nettement en retard » était fausse (23/10 au soir).** Elle
+  venait de photos relâchées, en lumière douce, cuisses coupées à mi-hauteur. Sa
+  vidéo contractée du 18/10 montre des quadriceps développés et séparés. **Règle :
+  on ne juge un muscle que vu en entier, contracté et relâché, et on compare dans la
+  même image et la même lumière.** Ischios, fessiers et mollets : toujours pas vus
+  correctement, le « point faible ischios » d'août n'est pas vérifié en photo.
 - 📌 **Chez lui, « l'épaule » d'une séance du haut, ce sont les latérales.** Une séance
   Upper avec le militaire mais sans latérales, pour lui, c'est « pas d'épaule ».
 - 🔁 **Isolation avant le polyarticulaire aux jambes** (leg curl assis puis roumain, leg
