@@ -775,7 +775,7 @@ travail », qui cite déjà Damas 2016.
 une étude** : à dire comme un constat de coach, jamais comme un résultat.
 - 📌 **On construit le programme sur le nombre de séances faites, pas prévues.** À 5
   séances prévues, il en a fait 4, 4 puis 3, et c'est chaque fois la séance de jambes
-  qui a sauté. Sur 4 prévues, il en fait 4 depuis 8 semaines.
+  qui a sauté. Sur 4 prévues (depuis la semaine 4), il en fait 4.
 - 📌 **Ce qui est en fin de séance saute en premier.** Jambes placées après le haut du
   corps : environ une série sur trois notée en 6 semaines, et jamais au deuxième Push.
 - ✅ **La réponse : le muscle qu'on remonte va dans les séances réellement faites, en
