@@ -789,6 +789,14 @@ une étude** : à dire comme un constat de coach, jamais comme un résultat.
   l'Upper (épaule et pec blessés) ne se suivent pas ; le seul enchaînement direct est
   Upper puis Pull, avec le jour off entre les deux. Les jambes réparties vont dans la
   séance la plus loin du leg day (le Pull), en 2e passage à 2 séries.
+- ⚖️ **Même volume à chaque séance (14 séries), sa demande du 23/10** : la récup ne
+  dépend plus du jour. Pour équilibrer, on déplace des exos peu coûteux (mollets du
+  leg day vers le Push) plutôt que d'en ajouter.
+- 📸 **Le volume suit la photo.** Un muscle point fort passe à 2 séries par passage et
+  les séries libérées vont au point faible. Chez lui (photos du 23/10) : épaules en
+  point fort, latérales de 3 à 2 séries, militaire au Push seulement (l'avant
+  d'épaule travaille déjà dans tous les développés, déjà écrit dans
+  `entrainement.md`).
 - 📌 **Chez lui, « l'épaule » d'une séance du haut, ce sont les latérales.** Une séance
   Upper avec le militaire mais sans latérales, pour lui, c'est « pas d'épaule ».
 - 🔁 **Isolation avant le polyarticulaire aux jambes** (leg curl assis puis roumain, leg
