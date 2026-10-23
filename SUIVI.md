@@ -8,7 +8,7 @@ n'ont rien à faire ici non plus : voir la section « Confidentialité » plus b
 **Ce fichier est la mémoire du suivi.** Une conversation qui démarre sans contexte
 lit ce fichier et sait quoi faire. Il se met à jour à chaque décision.
 
-Dernière mise à jour : **19/10/2026**
+Dernière mise à jour : **23/10/2026**
 Méthode appliquée : skill `methode-alex`.
 
 🔴🔴 **LE SKILL SE REMET À ZÉRO, PAS CE FICHIER.** Le 20/09 j'ai écrit trois règles
@@ -768,6 +768,23 @@ travail », qui cite déjà Damas 2016.
   est le moteur, les dégâts ne sont pas nécessaires, et trop de dégâts retardent.**
 - 📌 « Déchirer » est une image : ce qu'on voit au microscope, c'est la structure des
   sarcomères désorganisée (lignes Z), pas des fibres coupées.
+
+### Le nombre de séances se lit dans le carnet, 23/10/2026
+
+À reporter dans `adherence.md`. **Observé sur un carnet de 10 semaines (le sien), pas
+une étude** : à dire comme un constat de coach, jamais comme un résultat.
+- 📌 **On construit le programme sur le nombre de séances faites, pas prévues.** À 5
+  séances prévues, il en a fait 4, 4 puis 3, et c'est chaque fois la séance de jambes
+  qui a sauté. Sur 4 prévues, il en fait 4 depuis 8 semaines.
+- 📌 **Ce qui est en fin de séance saute en premier.** Jambes placées après le haut du
+  corps : environ une série sur trois notée en 6 semaines, et jamais au deuxième Push.
+- ✅ **La réponse : le muscle qu'on remonte va dans les séances réellement faites, en
+  tête de séance ou avec ses propres jours, dans un ordre fixe** (pas deux Upper
+  d'affilée). Appliqué à son bloc 11 (Upper / Lower, 4 séances).
+- 🔁 **Isolation avant le polyarticulaire aux jambes** (leg extension puis pendulum ou
+  presse), à sa demande : même croissance (l'ordre ne change pas l'hypertrophie, déjà
+  dans `entrainement.md`), charge plus basse sur le poly donc moins de stress genou et
+  dos. Le prix : le poly progresse moins vite en charge. Même ordre chaque semaine.
 
 ---
 
