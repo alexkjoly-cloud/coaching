@@ -781,9 +781,14 @@ une étude** : à dire comme un constat de coach, jamais comme un résultat.
   Le leg curl placé en milieu de Pull, lui, était fait.
 - ✅ **La réponse : le muscle qu'on remonte va dans les séances réellement faites, en
   séance 1 de la rotation ou en milieu de séance, pas en dernier.** Appliqué à son
-  bloc 11, après sa correction du 23/10 (**1 leg day, pas 2**) : Legs en séance 1, puis
-  Push, Pull, Upper, avec une leg extension au Push et un leg curl au Pull en milieu
-  de séance.
+  bloc 11, après sa correction du 23/10 (**1 leg day, pas 2**) : Pull, Push, Legs,
+  Upper, avec une leg extension et un leg curl en milieu de Pull.
+- 🔁 **Récup, son idée du 23/10 : le leg day sépare les séances du haut.** Sur 4
+  séances dont 3 du haut, deux séances du haut se touchent forcément quelque part du
+  cycle : on choisit lesquelles. Chez lui, le Pull passe en tête pour que le Push et
+  l'Upper (épaule et pec blessés) ne se suivent pas ; le seul enchaînement direct est
+  Upper puis Pull, avec le jour off entre les deux. Les jambes réparties vont dans la
+  séance la plus loin du leg day (le Pull), en 2e passage à 2 séries.
 - 📌 **Chez lui, « l'épaule » d'une séance du haut, ce sont les latérales.** Une séance
   Upper avec le militaire mais sans latérales, pour lui, c'est « pas d'épaule ».
 - 🔁 **Isolation avant le polyarticulaire aux jambes** (leg curl assis puis roumain, leg
