@@ -813,7 +813,10 @@ une étude** : à dire comme un constat de coach, jamais comme un résultat.
 - 🔁 **Rowing qui plafonne (24/10).** Poulie sans appui : le bas du dos lâche avant le
   dos. Hammer et haltères : trop légers pour lui. Réponse : **rowing à disques un
   bras (Meadows row, rang S dans `entrainement.md`)**, ou une machine à bras
-  indépendants faite un bras à la fois.
+  indépendants faite un bras à la fois. Sa proposition retenue au Pull : **pullover à
+  la machine** (rang A), avant le vertical, isolation avant le poly comme aux pecs.
+  Le Meadows row reste à l'Upper : sans aucun tirage horizontal, le milieu du dos ne
+  garderait que le rear delt fly.
 - 📌 **Chez lui, « l'épaule » d'une séance du haut, ce sont les latérales.** Une séance
   Upper avec le militaire mais sans latérales, pour lui, c'est « pas d'épaule ».
 - 🔁 **Isolation avant le polyarticulaire aux jambes** (leg curl assis puis roumain, leg
