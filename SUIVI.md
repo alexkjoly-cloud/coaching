@@ -803,6 +803,17 @@ une étude** : à dire comme un constat de coach, jamais comme un résultat.
   on ne juge un muscle que vu en entier, contracté et relâché, et on compare dans la
   même image et la même lumière.** Ischios, fessiers et mollets : toujours pas vus
   correctement, le « point faible ischios » d'août n'est pas vérifié en photo.
+- 🔎 **Tirage vertical, omoplates qui montent en haut : vérifié le 24/10.** Aucune étude
+  ne compare « omoplates libres en haut » et « épaules basses » sur la croissance du
+  grand dorsal (seulement de l'EMG, et un essai enregistré sans résultat). Ce qu'on
+  garde, comme **raisonnement** : en haut, le grand dorsal est à sa longueur maximale,
+  et travailler long fait mieux que court (déjà dans `entrainement.md`). Laisser
+  monter en contrôlant, sans rebond ; stop juste avant si l'épaule pince. ⛔ Jamais
+  « c'est prouvé ».
+- 🔁 **Rowing qui plafonne (24/10).** Poulie sans appui : le bas du dos lâche avant le
+  dos. Hammer et haltères : trop légers pour lui. Réponse : **rowing à disques un
+  bras (Meadows row, rang S dans `entrainement.md`)**, ou une machine à bras
+  indépendants faite un bras à la fois.
 - 📌 **Chez lui, « l'épaule » d'une séance du haut, ce sont les latérales.** Une séance
   Upper avec le militaire mais sans latérales, pour lui, c'est « pas d'épaule ».
 - 🔁 **Isolation avant le polyarticulaire aux jambes** (leg curl assis puis roumain, leg
