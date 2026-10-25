@@ -87,6 +87,8 @@
   .dj-head { padding:10px 14px; border-bottom:1px solid var(--border); display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; }
   .dj-head .n { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.08em; }
   .dj-head .m { font-size:10px; color:var(--muted2); font-variant-numeric:tabular-nums; }
+  .dj-head .m.tot { font-size:11.5px; color:var(--gold); font-weight:500; }
+  .dj-repas .r .mm { color:var(--gold); letter-spacing:0.06em; margin-left:6px; }
   .dj-repas { padding:9px 14px; border-bottom:1px solid var(--border); }
   .dj-repas:last-child { border-bottom:none; }
   .dj-repas .r { font-size:8.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--muted2); font-weight:500; margin-bottom:3px; }
@@ -318,7 +320,7 @@
   <span class="diete-sec">Tes rendez-vous</span>
   <div class="diete-intro">
     <b>Chaque matin</b> : pesée à jeun, après les toilettes et avant de boire, dans l'onglet <b>Pesées</b>. Jour 1 = le premier jour de ta semaine d'entraînement.<br>
-    <b>Chaque soir</b> : tes calories du jour, dans le même onglet. Tu as suivi ta journée type : tu tapes ta cible du jour, affichée en haut de l'onglet <b>Diète</b>.<br>
+    <b>Chaque soir</b> : tes calories du jour, dans le même onglet. Tu as suivi la journée prévue : tu tapes son total, écrit en haut de chaque journée dans l'onglet <b>Diète</b>.<br>
     <b>Chaque dimanche</b> : ton bilan, avec ton tour de taille pris au nombril, le matin à jeun, sans serrer. Puis tu m'envoies un message : sans ça, je ne le fais pas.<br>
     <b>Toutes les 4 semaines</b> : photos de face, de profil et de dos, même heure, même lumière, regard droit. Et tes mensurations dans l'onglet <b>Corps</b>.<br>
     <b>Tous les jours</b> : tes 8 000 pas, ni beaucoup plus ni beaucoup moins.
@@ -341,25 +343,25 @@
   <div class="session-header">
     <div class="session-tag" style="color:var(--green)">Nutrition</div>
     <div class="session-title">DIÈTE</div>
-    <div class="session-sub">Une seule journée, la tienne, pesée. On ne change pas ce que tu manges : on le rend mesurable.</div>
+    <div class="session-sub">Tes plats, tes aliments, pesés. On ne change pas ce que tu manges : on règle les quantités.</div>
   </div>
 
   <span class="diete-sec" id="macros-titre">Ta cible du jour</span>
   <div class="macro-grid" id="macros-jour">
-    <div class="macro kcal"><div class="k">Calories</div><div class="v">3690</div></div>
-    <div class="macro"><div class="k">Protéines</div><div class="v">178 g</div></div>
-    <div class="macro"><div class="k">Glucides</div><div class="v">436 g</div></div>
-    <div class="macro"><div class="k">Lipides</div><div class="v">129 g</div></div>
+    <div class="macro kcal"><div class="k">Calories</div><div class="v">3440</div></div>
+    <div class="macro"><div class="k">Protéines</div><div class="v">190 g</div></div>
+    <div class="macro"><div class="k">Glucides</div><div class="v">438 g</div></div>
+    <div class="macro"><div class="k">Lipides</div><div class="v">98 g</div></div>
   </div>
 
   <div class="diete-intro">
-    <b>C'est le chiffre à viser chaque jour</b>, il suit ta semaine tout seul. Tu manges ta journée type : tu y es. Tu manges autre chose (resto, repas de famille, un aliment remplacé) : vise ces calories et <b>au moins tes protéines</b>, avec ton appli de suivi ou les étiquettes. Le soir, tu notes le total du jour dans l'onglet <b>Pesées</b> : on fait la moyenne de la semaine.
+    <b>C'est le chiffre à viser chaque jour</b>, il suit ta semaine tout seul. Tu manges la journée prévue plus bas : tu y es. Tu manges autre chose (resto, repas de famille, un aliment remplacé) : vise ces calories et <b>au moins tes protéines</b>, avec ton appli de suivi ou les étiquettes. Le soir, tu notes le total du jour dans l'onglet <b>Pesées</b> : on fait la moyenne de la semaine.
   </div>
 
   <div class="cible-sem" id="cible-sem"></div>
 
   <div class="cible">
-    <b>Semaines 1 et 2, on mesure.</b> Tu manges cette journée telle quelle, tous les jours, et tu notes ton poids chaque matin à jeun dans l'onglet <b>Pesées</b>, dès que ta balance a ses piles. Si ton poids reste stable là-dessus avec l'entraînement, c'est ta maintenance.<br>
+    <b>Semaines 1 et 2, on mesure.</b> En semaine 1, tu as tourné à <b>3 440 kcal</b> de moyenne. En semaine 2, on garde ce niveau, avec tes aliments et tes plats, pour que les deux semaines se comparent. <b>Pas de jours on et off cette semaine</b> : le même apport chaque jour, sinon la balance ne dit plus rien. Tu notes ton poids chaque matin à jeun dans l'onglet <b>Pesées</b>. Si ton poids reste stable là-dessus avec l'entraînement, c'est ta maintenance.<br>
     <b>Dès la semaine 3, on reprend : ta maintenance + 300 kcal.</b> Tu es sous ton meilleur poids, donc ce que tu reprends d'abord, c'est surtout du muscle que tu avais déjà, et il revient vite. On vise <b>+0,5 à 1 kg par mois</b>, avec un tour de taille qui bouge à peine. Les 300 kcal passent en glucides : environ 85 g de riz cru en plus par jour, ou l'équivalent. Le cadre au-dessus ajuste tout seul toutes les deux semaines.
   </div>
 
@@ -370,30 +372,114 @@
     <b>Un écart, tu le notes dans ton bilan</b>, week-end compris. Ce n'est pas grave, c'est ce qui me permet de lire ta balance.
   </div>
 
-  <span class="diete-sec">Ta journée type</span>
+  <span class="diete-sec">Ta semaine, jour par jour</span>
+  <div class="diete-intro">Chaque journée affiche son total : c'est ce chiffre que tu tapes le soir dans <b>Pesées</b>. Les macros de chaque repas sont écrites, si tu trackes de ton côté. Tout se pèse <b>cru</b>.</div>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">TOUS LES JOURS</span><span class="m">3690 kcal · P178 · G436 · L129</span></div>
-    <div class="dj-repas"><div class="r">Petit-déjeuner</div><div class="a">Pain <b>60 g</b>, en 2 tartines · Pâte à tartiner <b>30 g</b> · Whey <b>39 g</b>, 3 dosettes dans l'eau · Un fruit <b>150 g</b> (pomme, poire, kiwi…)</div></div>
-    <div class="dj-repas"><div class="r">Déjeuner</div><div class="a">Riz <b>220 g cru</b> · Blanc de poulet <b>200 g cru</b> · Crème légère 18 % <b>20 cl</b>, la brique · Oignon <b>1</b>, environ 120 g · Légumes <b>200 g crus</b> (haricots verts, courgettes, brocoli…) · Huile d'olive <b>20 g</b></div></div>
-    <div class="dj-repas"><div class="r">Dîner</div><div class="a">Pâtes <b>210 g crues</b> · Viande hachée 15 % <b>200 g crue</b> · Coulis de tomate <b>200 g</b> · Huile d'olive <b>20 g</b></div></div>
-    <div class="dj-repas"><div class="r">Dès la semaine 3</div><div class="a">Riz <b>+85 g cru</b>, au déjeuner ou au dîner, soit environ 300 kcal de plus. Ta cible du jour, en haut, en tient compte.</div></div>
+    <div class="dj-head"><span class="n">LUNDI · UPPER A</span><span class="m tot">3462 kcal · P185 · G446 · L100</span></div>
+    <div class="dj-repas"><div class="r">Petit-déjeuner <span class="mm">627 kcal · P41 · G82 · L14</span></div><div class="a">Pain de mie <b>90 g</b>, environ 3 tranches · Nocciolata <b>25 g</b> · Whey <b>39 g</b>, 3 dosettes dans l'eau · Kiwis jaunes <b>2</b>, environ 160 g</div></div>
+    <div class="dj-repas"><div class="r">Déjeuner <span class="mm">1273 kcal · P65 · G176 · L33</span></div><div class="a">Riz <b>220 g cru</b> · Filet de poulet <b>200 g cru</b> · Crème légère 18 % <b>10 cl</b> · Huile d'olive <b>10 g</b> · Curry, curcuma, ½ Kub Or</div></div>
+    <div class="dj-repas"><div class="r">Collation <span class="mm">266 kcal · P14 · G19 · L15</span></div><div class="a">Fromage blanc 7,6 % <b>200 g</b> · Kiwi jaune <b>1</b>, environ 80 g · À 16 h ou après ta séance</div></div>
+    <div class="dj-repas"><div class="r">Dîner <span class="mm">1295 kcal · P65 · G170 · L38</span></div><div class="a">Pâtes <b>220 g crues</b> · Steak haché 15 % <b>200 g cru</b>, cuit dans son gras, sans huile · Sauce tomate cuisinée <b>150 g</b></div></div>
+  </div>
+  <div class="diete-jour">
+    <div class="dj-head"><span class="n">MARDI · LOWER A</span><span class="m tot">3429 kcal · P194 · G430 · L98</span></div>
+    <div class="dj-repas"><div class="r">Petit-déjeuner <span class="mm">623 kcal · P42 · G65 · L19</span></div><div class="a">Flocons d'avoine <b>80 g</b> · Fromage blanc 7,6 % <b>150 g</b> · Fruits rouges surgelés <b>150 g</b> · Whey <b>26 g</b>, 2 dosettes mélangées au fromage blanc</div></div>
+    <div class="dj-repas"><div class="r">Déjeuner <span class="mm">1266 kcal · P73 · G170 · L31</span></div><div class="a">Pâtes <b>220 g crues</b> · Rumsteck <b>200 g cru</b> · Sauce tomate cuisinée <b>150 g</b> · Huile d'olive <b>15 g</b></div></div>
+    <div class="dj-repas"><div class="r">Collation <span class="mm">266 kcal · P14 · G19 · L15</span></div><div class="a">Fromage blanc 7,6 % <b>200 g</b> · Kiwi jaune <b>1</b>, environ 80 g · À 16 h ou après ta séance</div></div>
+    <div class="dj-repas"><div class="r">Dîner <span class="mm">1273 kcal · P65 · G176 · L33</span></div><div class="a">Riz <b>220 g cru</b> · Filet de poulet <b>200 g cru</b> · Crème légère 18 % <b>10 cl</b> · Huile d'olive <b>10 g</b> · Curry, curcuma, ½ Kub Or</div></div>
+  </div>
+  <div class="diete-jour">
+    <div class="dj-head"><span class="n">MERCREDI · UPPER B</span><span class="m tot">3448 kcal · P193 · G441 · L97</span></div>
+    <div class="dj-repas"><div class="r">Petit-déjeuner <span class="mm">627 kcal · P41 · G82 · L14</span></div><div class="a">Pain de mie <b>90 g</b>, environ 3 tranches · Nocciolata <b>25 g</b> · Whey <b>39 g</b>, 3 dosettes dans l'eau · Kiwis jaunes <b>2</b>, environ 160 g</div></div>
+    <div class="dj-repas"><div class="r">Déjeuner <span class="mm">1273 kcal · P65 · G176 · L33</span></div><div class="a">Riz <b>220 g cru</b> · Filet de poulet <b>200 g cru</b> · Crème légère 18 % <b>10 cl</b> · Huile d'olive <b>10 g</b> · Curry, curcuma, ½ Kub Or</div></div>
+    <div class="dj-repas"><div class="r">Collation <span class="mm">266 kcal · P14 · G19 · L15</span></div><div class="a">Fromage blanc 7,6 % <b>200 g</b> · Kiwi jaune <b>1</b>, environ 80 g · À 16 h ou après ta séance</div></div>
+    <div class="dj-repas"><div class="r">Dîner <span class="mm">1281 kcal · P73 · G164 · L34</span></div><div class="a">Pâtes <b>220 g crues</b> · Bavette <b>200 g crue</b> · Crème légère 18 % <b>10 cl</b> et double concentré <b>20 g</b>, sans huile</div></div>
+  </div>
+  <div class="diete-jour">
+    <div class="dj-head"><span class="n">JEUDI · LOWER B</span><span class="m tot">3458 kcal · P186 · G430 · L105</span></div>
+    <div class="dj-repas"><div class="r">Petit-déjeuner <span class="mm">623 kcal · P42 · G65 · L19</span></div><div class="a">Flocons d'avoine <b>80 g</b> · Fromage blanc 7,6 % <b>150 g</b> · Fruits rouges surgelés <b>150 g</b> · Whey <b>26 g</b>, 2 dosettes mélangées au fromage blanc</div></div>
+    <div class="dj-repas"><div class="r">Déjeuner <span class="mm">1295 kcal · P65 · G170 · L38</span></div><div class="a">Pâtes <b>220 g crues</b> · Steak haché 15 % <b>200 g cru</b>, cuit dans son gras, sans huile · Sauce tomate cuisinée <b>150 g</b></div></div>
+    <div class="dj-repas"><div class="r">Collation <span class="mm">266 kcal · P14 · G19 · L15</span></div><div class="a">Fromage blanc 7,6 % <b>200 g</b> · Kiwi jaune <b>1</b>, environ 80 g · À 16 h ou après ta séance</div></div>
+    <div class="dj-repas"><div class="r">Dîner <span class="mm">1273 kcal · P65 · G176 · L33</span></div><div class="a">Riz <b>220 g cru</b> · Filet de poulet <b>200 g cru</b> · Crème légère 18 % <b>10 cl</b> · Huile d'olive <b>10 g</b> · Curry, curcuma, ½ Kub Or</div></div>
+  </div>
+  <div class="diete-jour">
+    <div class="dj-head"><span class="n">VENDREDI · REPOS</span><span class="m tot">3433 kcal · P193 · G446 · L93</span></div>
+    <div class="dj-repas"><div class="r">Petit-déjeuner <span class="mm">627 kcal · P41 · G82 · L14</span></div><div class="a">Pain de mie <b>90 g</b>, environ 3 tranches · Nocciolata <b>25 g</b> · Whey <b>39 g</b>, 3 dosettes dans l'eau · Kiwis jaunes <b>2</b>, environ 160 g</div></div>
+    <div class="dj-repas"><div class="r">Déjeuner <span class="mm">1273 kcal · P65 · G176 · L33</span></div><div class="a">Riz <b>220 g cru</b> · Filet de poulet <b>200 g cru</b> · Crème légère 18 % <b>10 cl</b> · Huile d'olive <b>10 g</b> · Curry, curcuma, ½ Kub Or</div></div>
+    <div class="dj-repas"><div class="r">Collation <span class="mm">266 kcal · P14 · G19 · L15</span></div><div class="a">Fromage blanc 7,6 % <b>200 g</b> · Kiwi jaune <b>1</b>, environ 80 g · À 16 h ou après ta séance</div></div>
+    <div class="dj-repas"><div class="r">Dîner <span class="mm">1266 kcal · P73 · G170 · L31</span></div><div class="a">Pâtes <b>220 g crues</b> · Steak <b>200 g cru</b> · Sauce tomate cuisinée <b>150 g</b> · Huile d'olive <b>15 g</b></div></div>
+  </div>
+  <div class="diete-jour">
+    <div class="dj-head"><span class="n">SAMEDI · POSTÉRIEUR</span><span class="m tot">3413 kcal · P195 · G424 · L97</span></div>
+    <div class="dj-repas"><div class="r">Petit-déjeuner <span class="mm">623 kcal · P42 · G65 · L19</span></div><div class="a">Flocons d'avoine <b>80 g</b> · Fromage blanc 7,6 % <b>150 g</b> · Fruits rouges surgelés <b>150 g</b> · Whey <b>26 g</b>, 2 dosettes mélangées au fromage blanc</div></div>
+    <div class="dj-repas"><div class="r">Déjeuner <span class="mm">1251 kcal · P75 · G164 · L30</span></div><div class="a">Pâtes <b>220 g crues</b> · Rumsteck <b>200 g cru</b> · Crème légère 18 % <b>10 cl</b> et double concentré <b>20 g</b>, sans huile</div></div>
+    <div class="dj-repas"><div class="r">Collation <span class="mm">266 kcal · P14 · G19 · L15</span></div><div class="a">Fromage blanc 7,6 % <b>200 g</b> · Kiwi jaune <b>1</b>, environ 80 g · À 16 h ou après ta séance</div></div>
+    <div class="dj-repas"><div class="r">Dîner <span class="mm">1273 kcal · P65 · G176 · L33</span></div><div class="a">Riz <b>220 g cru</b> · Filet de poulet <b>200 g cru</b> · Crème légère 18 % <b>10 cl</b> · Huile d'olive <b>10 g</b> · Curry, curcuma, ½ Kub Or</div></div>
+  </div>
+  <div class="diete-jour">
+    <div class="dj-head"><span class="n">DIMANCHE · REPOS</span><span class="m tot">3463 kcal · P191 · G446 · L97</span></div>
+    <div class="dj-repas"><div class="r">Petit-déjeuner <span class="mm">627 kcal · P41 · G82 · L14</span></div><div class="a">Pain de mie <b>90 g</b>, environ 3 tranches · Nocciolata <b>25 g</b> · Whey <b>39 g</b>, 3 dosettes dans l'eau · Kiwis jaunes <b>2</b>, environ 160 g</div></div>
+    <div class="dj-repas"><div class="r">Déjeuner <span class="mm">1273 kcal · P65 · G176 · L33</span></div><div class="a">Riz <b>220 g cru</b> · Filet de poulet <b>200 g cru</b> · Crème légère 18 % <b>10 cl</b> · Huile d'olive <b>10 g</b> · Curry, curcuma, ½ Kub Or</div></div>
+    <div class="dj-repas"><div class="r">Collation <span class="mm">266 kcal · P14 · G19 · L15</span></div><div class="a">Fromage blanc 7,6 % <b>200 g</b> · Kiwi jaune <b>1</b>, environ 80 g · À 16 h ou après ta séance</div></div>
+    <div class="dj-repas"><div class="r">Dîner <span class="mm">1296 kcal · P71 · G170 · L35</span></div><div class="a">Pâtes <b>220 g crues</b> · Bavette <b>200 g crue</b> · Sauce tomate cuisinée <b>150 g</b> · Huile d'olive <b>15 g</b></div></div>
+  </div>
+  <div class="diete-jour">
+    <div class="dj-head"><span class="n">DÈS LA SEMAINE 3</span><span class="m">+300 kcal · +66 g de glucides</span></div>
+    <div class="dj-repas"><div class="a">Riz <b>+85 g cru</b> par jour, au repas riz et poulet, soit environ 300 kcal de plus. Ta cible du jour, en haut, en tient compte.</div></div>
+  </div>
+
+  <span class="diete-sec">Si tu changes un aliment</span>
+  <div class="diete-intro">
+    <b>Petit-déjeuner tartines ou bol d'avoine</b> : interchangeables, même total à 5 kcal près.<br>
+    <b>Riz et pâtes</b> : gramme pour gramme. <b>Rumsteck, steak, bavette et poulet</b> : gramme pour gramme aussi.<br>
+    <b>Steak haché 5 % au lieu de 15 %</b> : ajoute 15 g d'huile.<br>
+    <b>Sauce crème au lieu de tomate</b> : 10 cl de crème légère et 20 g de concentré, sans huile.<br>
+    <b>Tomacouli au lieu de la sauce cuisinée</b> : 200 g de Tomacouli et 20 g de concentré.<br>
+    <b>Red Bull</b> : la canette classique fait 110 kcal et 27 g de glucides, tu retires 30 g de riz ou de pâtes crus. Sans sucre : rien à retirer.<br>
+    <b>Légumes</b> : 150 à 200 g par repas si tu en as, je ne les compte pas.
+  </div>
+
+  <span class="diete-sec">Mes valeurs, pour 100 g</span>
+  <div class="diete-intro">
+    Étiquettes de tes produits quand je les ai, valeurs courantes sinon. <b>Si tu trackes seul, scanne tes produits : c'est ton étiquette qui fait foi.</b><br>
+    Riz cru 350 kcal · P7 · G78 · L0,7<br>
+    Pâtes Barilla crues 359 kcal · P12,5 · G71 · L2<br>
+    Flocons d'avoine 365 kcal · P13,5 · G58 · L7<br>
+    Pain de mie 265 kcal · P8,5 · G48 · L4<br>
+    Nocciolata 544 kcal · P8 · G54 · L32<br>
+    Whey 390 kcal · P76 · G7 · L6, à vérifier sur ton pot<br>
+    Fromage blanc 7,6 % 108 kcal · P6,5 · G4 · L7,6, à vérifier, ça change selon la marque<br>
+    Fruits rouges surgelés 45 kcal · P1 · G7,5 · L0,3<br>
+    Kiwi jaune 63 kcal · P1 · G14 · L0,3<br>
+    Filet de poulet cru 110 kcal · P23,5 · L1,5<br>
+    Steak haché 15 % cru 207 kcal · P18 · L15<br>
+    Rumsteck ou steak cru 125 kcal · P22 · L4<br>
+    Bavette crue 140 kcal · P21 · L6<br>
+    Crème légère 18 % 193 kcal · P2,5 · G4,6 · L18<br>
+    Sauce tomate cuisinée 61 kcal · P1,3 · G8,6 · L2,1<br>
+    Tomacouli 27 kcal · P1,2 · G4,5 · L0,1<br>
+    Double concentré 90 kcal · P4,5 · G15 · L0,5<br>
+    Huile d'olive 900 kcal · L100
   </div>
 
   <span class="diete-sec">Tes courses pour la semaine</span>
   <ul class="courses">
     <li><b>Riz</b> 1,54 kg</li>
-    <li><b>Pâtes</b> 1,47 kg</li>
-    <li><b>Blanc de poulet</b> 1,4 kg</li>
-    <li><b>Viande hachée 15 %</b> 1,4 kg</li>
-    <li><b>Crème légère 18 %</b> 7 briques de 20 cl</li>
-    <li><b>Légumes</b> 1,4 kg</li>
-    <li><b>Coulis de tomate</b> 1,4 kg</li>
-    <li><b>Fruits</b> 1,05 kg</li>
-    <li><b>Oignons</b> 7</li>
-    <li><b>Pain</b> 420 g</li>
-    <li><b>Huile d'olive</b> 280 g</li>
-    <li><b>Whey</b> 273 g, soit 21 dosettes</li>
-    <li><b>Pâte à tartiner</b> 210 g</li>
+    <li><b>Pâtes</b> 1,54 kg</li>
+    <li><b>Filets de poulet</b> 1,4 kg</li>
+    <li><b>Bœuf</b> 1,4 kg : haché 400 g, rumsteck 400 g, bavette 400 g, steak 200 g</li>
+    <li><b>Crème légère 18 %</b> 90 cl, soit 5 briques de 20 cl</li>
+    <li><b>Sauce tomate cuisinée</b> 750 g</li>
+    <li><b>Double concentré</b> 40 g</li>
+    <li><b>Huile d'olive</b> 115 g</li>
+    <li><b>Fromage blanc 7,6 %</b> 1,85 kg</li>
+    <li><b>Kiwis jaunes</b> 15</li>
+    <li><b>Fruits rouges surgelés</b> 450 g</li>
+    <li><b>Flocons d'avoine</b> 240 g</li>
+    <li><b>Pain de mie</b> 360 g</li>
+    <li><b>Nocciolata</b> 100 g</li>
+    <li><b>Whey</b> 234 g, soit 18 dosettes</li>
+    <li><b>Curry, curcuma, Kub Or</b></li>
   </ul>
 
   <span class="diete-sec">Comment on pilote</span>
@@ -437,7 +523,7 @@
 
   <div class="diete-intro">
     Une pesée seule ne veut rien dire : le poids du matin peut bouger de plus d'un kilo d'un jour à l'autre avec l'eau, le sel et ce que tu as mangé la veille. <b>C'est la moyenne de la semaine qui compte.</b> L'appli la reporte toute seule dans ton bilan, et c'est elle qui pilote ta diète.<br><br>
-    <b>Tes calories du jour</b>, c'est le total de la journée. Journée type suivie : tu tapes ta cible du jour, en haut de l'onglet Diète. Écart, resto, repas en plus : ton appli de suivi ou les étiquettes te donnent le total. Un jour sans chiffre ne compte pas dans la moyenne, qui part toute seule dans ton bilan.
+    <b>Tes calories du jour</b>, c'est le total de la journée. Journée prévue suivie : tu tapes son total, écrit en haut de chaque journée dans l'onglet Diète. Écart, resto, repas en plus : ton appli de suivi ou les étiquettes te donnent le total. Un jour sans chiffre ne compte pas dans la moyenne, qui part toute seule dans ton bilan.
   </div>
   <div class="spacer"></div>
 </div>
@@ -499,7 +585,7 @@
   </div>
 
   <div class="bilan-field">
-    <div class="bilan-label">Écarts à ta journée type</div>
+    <div class="bilan-label">Écarts aux journées prévues</div>
     <textarea class="bilan-txt" id="bilan-ecarts" placeholder="Repas en plus, restaurant, alcool, jour sans pesée... Même petit, note-le." oninput="saveBilan('ecarts',this.value)"></textarea>
   </div>
 
@@ -1054,7 +1140,7 @@ function carteCible(w,poidsVise,kcal,msg,cls){
   const mt=document.getElementById('macros-titre'); if(mt) mt.textContent=`Ta cible du jour · semaine ${w}`;
 }
 
-const PLAN = { depart:73.3, parSem:0.17, kcal:3690, P:178, G:436, L:129, pas:150, surplus:300, gainMin:0.1, gainMax:0.3, tailleIdx:1 };
+const PLAN = { depart:73.3, parSem:0.17, kcal:3440, P:190, G:438, L:98, pas:150, surplus:300, gainMin:0.1, gainMax:0.3, tailleIdx:1 };
 
 /* ===== PESÉES DU MATIN ===== */
 const JOURS=['Jour 1','Jour 2','Jour 3','Jour 4','Jour 5','Jour 6','Jour 7'];
@@ -1207,7 +1293,7 @@ function majCible(){ const c=calculCible(currentWeek); carteCible(currentWeek,c.
 function calculCible(w){
   let kcal=PLAN.kcal, msg='', cls='';
   if(w<=2){
-    msg=`Semaines 1 et 2 : <b>on ne change rien, on mesure.</b> Tu manges ta journée type telle quelle, tous les jours, et tu notes ton poids chaque matin dans l'onglet <b>Pesées</b>. La moyenne de la semaine 2 nous donne ta maintenance.`;
+    msg=`Semaines 1 et 2 : <b>on mesure.</b> Tu manges les journées prévues plus bas, au même niveau de calories chaque jour, et tu notes ton poids chaque matin dans l'onglet <b>Pesées</b>. La moyenne de la semaine 2 nous donne ta maintenance.`;
     return {vise:'à mesurer',kcal,msg,cls};
   }
   const base=PLAN.kcal+PLAN.surplus; kcal=base;
