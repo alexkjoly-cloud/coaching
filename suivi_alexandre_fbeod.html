@@ -110,6 +110,9 @@
   .exo-info { flex:1; }
   .exo-name { font-size:15px; font-weight:600; line-height:1.3; letter-spacing:-0.01em; }
   .exo-target { font-size:12px; color:var(--text2); margin-top:2px; }
+  /* Textes longs repliés sur deux lignes, « Lire plus » les ouvre. */
+  .repli { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .lire-plus { display:block; background:none; border:none; padding:3px 0 0; color:var(--accent); font-family:inherit; font-size:11.5px; font-weight:600; cursor:pointer; }
   .exo-prescription { font-size:15px; font-weight:700; color:var(--accent); white-space:nowrap; flex-shrink:0; letter-spacing:-0.01em; }
   .pres-push, .pres-pull, .pres-push2, .pres-pull2 { color:var(--accent); }
 
@@ -779,6 +782,20 @@ function buildChrome(){
        <b>${BLOC.nom}</b> · semaines ${nomSemaine(Math.max(BLOC.desDe,DEBUT_CYCLE))} à ${nomSemaine(fin)}${BLOC.desDe>DEBUT_CYCLE?' · le programme a changé à la semaine '+nomSemaine(BLOC.desDe):''}
        <div class="bandeau-note">${derniere ? 'Dernière semaine du cycle de '+(NB_SEMAINES-DEBUT_CYCLE+1)+' semaines.' : BLOC.note}</div>
      </div>`;
+  replier(document);
+}
+
+const SEUIL_REPLI = 140;   // caractères
+function replier(racine){
+  racine.querySelectorAll('.exo-target, .bandeau-note, .principles .p-item > div:last-child').forEach(el=>{
+    if(el.dataset.repli || el.textContent.length < SEUIL_REPLI) return;
+    el.dataset.repli='1';
+    el.classList.add('repli');
+    const b=document.createElement('button');
+    b.type='button'; b.className='lire-plus'; b.textContent='Lire plus';
+    b.onclick=e=>{ e.stopPropagation(); b.textContent = el.classList.toggle('repli') ? 'Lire plus' : 'Réduire'; };
+    el.after(b);
+  });
 }
 
 const _prCache = {};
