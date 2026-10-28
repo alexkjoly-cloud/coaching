@@ -270,6 +270,15 @@ débloquée au paiement. L'ancien texte « Suivi en pause », écrit pour un pro
 jamais réglé, ne collait plus : il a payé son premier mois. **Pour rouvrir après
 paiement : repousser `FIN_ACCES` et passer `SEMAINES_PAYEES`.** Verrou côté navigateur
 seulement : pour couper vraiment l'accès, retirer le fichier du site.
+🔓 **28/10 : appli rouverte pour le mois 2, à la demande d'Alexandre.** Semaines 5 à 8,
+**du lundi 26/10 au dimanche 22/11** (la semaine du 19/10, verrouillée, ne compte pas).
+`NB_SEMAINES` et `SEMAINES_PAYEES` à 8, `FIN_ACCES` au **mardi 24/11 à 0 h** : le lundi 23
+lui reste pour son dernier bilan, comme au mois 1. À sa première ouverture, l'appli
+l'envoie **une seule fois** sur la semaine 5 (sinon il rouvrait sur la 4 et notait
+par-dessus sa séance du 13/10). Les textes du verrou ne citent plus de numéro de
+semaine, l'en-tête dit « Mois 2 · semaines 5 à 8 ». **Supposé : un mois payé.** S'il a
+payé plus, monter les deux chiffres et repousser la date. Testé hors réseau : ouvert
+le 23/11 à 23 h 59, verrouillé le 24/11 à 0 h 01.
 
 📌 **Lui redire que la balance ne bougera presque pas.** En recomposition c'est le
 tour de taille qui parle. Sans ça il croira qu'il ne se passe rien.

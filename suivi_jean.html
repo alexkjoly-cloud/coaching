@@ -228,7 +228,7 @@
   <div class="lock-card">
     <div class="lock-eyebrow">Mois de suivi terminé</div>
     <div class="lock-title">La suite t'attend</div>
-    <div class="lock-text">Ton mois de suivi est fini, et l'accès à l'appli s'arrête avec lui. <b>Ta semaine 5 est prête</b>, j'attends ton paiement pour la débloquer.</div>
+    <div class="lock-text">Ton mois de suivi est fini, et l'accès à l'appli s'arrête avec lui. <b>La suite est prête</b>, j'attends ton paiement pour la débloquer.</div>
     <div class="lock-text">Tes séances et tes bilans restent sauvegardés : dès que c'est réglé, écris-moi et je rouvre tout.</div>
   </div>
 </div>
@@ -238,7 +238,7 @@
     <div class="eyebrow">Suivi d'entraînement</div>
     <h1>JEAN<span>.</span></h1>
   </div>
-  <div class="cycle-badge">Cycle de 4 semaines<strong id="cycle-label">PPL · Upper · Lower</strong></div>
+  <div class="cycle-badge">Mois 2 · semaines 5 à 8<strong id="cycle-label">PPL · Upper · Lower</strong></div>
 </div>
 
 <div class="week-selector" id="week-selector"></div>
@@ -256,10 +256,10 @@
 
 <div id="paywall">
   <div class="lock-card">
-    <div class="lock-eyebrow">Semaine 5 · verrouillée</div>
+    <div class="lock-eyebrow">Semaine verrouillée</div>
     <div class="lock-title">La suite t'attend</div>
-    <div class="lock-text">Ton mois de suivi est terminé et ta semaine 5 est prête, mais <b>j'attends ton paiement pour la débloquer.</b></div>
-    <div class="lock-text">Dès que c'est réglé, écris-moi et je t'ouvre la suite. Tes semaines 1 à 4 restent accessibles juste au-dessus.</div>
+    <div class="lock-text">Ton mois de suivi est terminé et la suite est prête, mais <b>j'attends ton paiement pour la débloquer.</b></div>
+    <div class="lock-text">Dès que c'est réglé, écris-moi et je t'ouvre la suite. Tes semaines déjà réglées restent accessibles juste au-dessus.</div>
   </div>
 </div>
 <div id="sessions-container"></div>
@@ -505,20 +505,21 @@
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwk80wp47P-Yz0EpFcBj7vsWHWjCWssV7zNV4Og4TrqQtcSTv5u7kHVVsnXe0Opluj_/exec";
 const CLIENT_ID = "jean";
 
-// Mois réglé terminé (4 semaines, jusqu'au lundi 19/10) : l'appli se verrouille d'elle-même
-// à cette date. Pour rouvrir après paiement, repousser la date et passer SEMAINES_PAYEES
-// au nombre de semaines payées.
-const FIN_ACCES = new Date('2026-10-20T00:00:00+02:00');
+// Mois 2 réglé, rouvert le 28/10 : semaines 5 à 8, du lundi 26/10 au dimanche 22/11.
+// L'appli se verrouille d'elle-même le mardi 24/11 à 0 h, le lundi 23 lui reste pour
+// son dernier bilan. Pour rouvrir après paiement, repousser la date et passer
+// SEMAINES_PAYEES au nombre de semaines payées.
+const FIN_ACCES = new Date('2026-11-24T00:00:00+01:00');
 const CLIENT_LOCKED = Date.now() >= FIN_ACCES.getTime();
 if(CLIENT_LOCKED){
   document.body.classList.add('locked');
   document.getElementById('lock-overlay').classList.add('visible');
 }
 
-const NB_SEMAINES = 5;
+const NB_SEMAINES = 8;
 // Semaines réglées. Au-delà, la semaine s'affiche floutée avec un message de paiement.
 // Pour débloquer après paiement : passer ce chiffre au nombre de semaines payées.
-const SEMAINES_PAYEES = 4;
+const SEMAINES_PAYEES = 8;
 
 const PROGRAMME = {
   'push': {
@@ -1035,6 +1036,15 @@ loadCorpMens();
 majCible();
 /* On rouvre sur la dernière semaine consultée. Sans ça l'appli repartait toujours
    en semaine 1, et les séries se notaient dans la mauvaise semaine. */
+/* Reprise du 28/10 : une seule fois, on l'envoie sur la semaine 5. Sans ça il rouvrait
+   sur la semaine 4 et notait ses nouvelles séances par-dessus celles du 13/10. */
+try{
+  if(!localStorage.getItem(CLIENT_ID+'-reprise-s5')){
+    localStorage.setItem(CLIENT_ID+'-reprise-s5','1');
+    const s=parseInt(localStorage.getItem(CLIENT_ID+'-semaine'),10);
+    if(!s || s<5) localStorage.setItem(CLIENT_ID+'-semaine','5');
+  }
+}catch(e){}
 (function(){
   let w=null; try{ w=parseInt(localStorage.getItem(CLIENT_ID+'-semaine'),10); }catch(e){}
   if(!w || w<1 || w>NB_SEMAINES){ w=1; for(let i=NB_SEMAINES;i>=1;i--){ if(weekHasData(i)){ w=i; break; } } }
