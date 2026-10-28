@@ -85,9 +85,9 @@
   .tab { flex-shrink:0; padding:8px 15px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; border:none; background:var(--card); color:var(--text2); font-family:inherit; text-align:center; line-height:1.25; box-shadow:var(--shadow); transition:background 0.15s, color 0.15s; }
   .tab br { display:none; }
   .tab span { display:none !important; }
-  .tab.active-push, .tab.active-pull, .tab.active-push2, .tab.active-pull2, .tab.active-legs, .tab.active-upper, .tab.active-lower, .tab.active-upper2, .tab.active-lower2, .tab.active-bilan, .tab.active-corp { background:var(--accent); color:#fff; }
+  .tab.active-push, .tab.active-pull, .tab.active-push2, .tab.active-pull2, .tab.active-legs, .tab.active-upper, .tab.active-lower, .tab.active-upper2, .tab.active-lower2, .tab.active-bonus, .tab.active-bilan, .tab.active-corp { background:var(--accent); color:#fff; }
   .done-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-left:6px; vertical-align:middle; }
-  .tab.active-push .done-dot, .tab.active-pull .done-dot, .tab.active-push2 .done-dot, .tab.active-pull2 .done-dot, .tab.active-legs .done-dot, .tab.active-upper .done-dot, .tab.active-lower .done-dot, .tab.active-upper2 .done-dot, .tab.active-lower2 .done-dot { background:#fff; }
+  .tab.active-push .done-dot, .tab.active-pull .done-dot, .tab.active-push2 .done-dot, .tab.active-pull2 .done-dot, .tab.active-legs .done-dot, .tab.active-upper .done-dot, .tab.active-lower .done-dot, .tab.active-upper2 .done-dot, .tab.active-lower2 .done-dot, .tab.active-bonus .done-dot { background:#fff; }
 
   .session { display:none; padding:0 20px; }
   .session.visible { display:block; animation:fadeUp 0.25s ease; }
@@ -213,7 +213,7 @@
 
 <details class="principles">
   <summary>Règles et interdits</summary>
-  <div class="p-item"><div class="p-num">1</div><div>Les séances s'enchaînent dans l'ordre des onglets, puis tu recommences. Quand tu peux, pas à date fixe : 3 séances d'affilée au plus, un jour off après l'Upper. <b>Une semaine de l'appli = un tour complet</b> : une 5e séance dans la semaine se note dans la semaine suivante, sinon elle efface la première. <b>Cycle de 13 semaines</b>, soit trois mois : quand le sélecteur affiche S13, c'est la dernière. Le cycle 2 a commencé le 24/10 (S1) : tes charges d'avant restent affichées sous chaque exercice (« dernière fois ») et dans tes records.</div></div>
+  <div class="p-item"><div class="p-num">1</div><div>Les séances s'enchaînent dans l'ordre des onglets, puis tu recommences. <b>Bonus</b> : séance facultative, hors rotation, quand tu as du temps en plus (pas la veille du Legs). Quand tu peux, pas à date fixe : 3 séances d'affilée au plus, un jour off après l'Upper. <b>Une semaine de l'appli = un tour complet</b> : une 5e séance dans la semaine se note dans la semaine suivante, sinon elle efface la première. <b>Cycle de 13 semaines</b>, soit trois mois : quand le sélecteur affiche S13, c'est la dernière. Le cycle 2 a commencé le 24/10 (S1) : tes charges d'avant restent affichées sous chaque exercice (« dernière fois ») et dans tes records.</div></div>
   <div class="p-item"><div class="p-num">2</div><div>2 séries par exercice. <b>3 sur les ischios du leg day</b> (leg curl assis, SLDL) : c'est ta priorité. Quadris à 2 séries depuis le 26/10, c'est ton point fort. 3 aussi au pec fly du Push depuis le 24/10. Les jambes du Pull sont un deuxième passage, 2 séries. 6 séries sur un muscle dans une séance, c'est le plafond.</div></div>
   <div class="p-item"><div class="p-num">3</div><div>Double progression : tu montes en reps jusqu'en haut de la fourchette sur toutes les séries, puis tu ajoutes la plus petite charge et tu redescends en bas. Les montées en charge ne comptent jamais comme des séries. Depuis le 24/10 : <b>6-10 par défaut, 8-10 là où une articulation ou une blessure est en jeu</b>.</div></div>
   <div class="p-item"><div class="p-num">4</div><div>RIR 0-1 sur la dernière série de chaque exercice. <b>Sauf le rear delt fly</b> : arrière d'épaule, léger, jamais à l'échec, stop à la moindre gêne.</div></div>
@@ -572,6 +572,12 @@ const BLOCS = [
       {exo:"exo5", nom:"Élévations latérales à la poulie", cible:"Deltoïde latéral · 2 séries suffisent : tes épaules sont un de tes points forts, les séries gagnées vont aux jambes. Cuff au poignet plutôt qu'une poignée serrée : c'est l'épaule qui tire, pas la main", pres:"2 × 6–10", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:2},
       {exo:"exo6", nom:"Extension triceps unilatérale à la poulie", cible:"Triceps · coude fixe le long du corps, tu ne le laisses pas partir en avant", pres:"2 × 6–10", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:2},
       {exo:"exo7", nom:"Curl marteau", cible:"Biceps · brachial. Prise neutre, ça épargne le coude et le nerf ulnaire, et ce n'est pas le même geste que le pupitre du Pull : là tu es en supination, ici en neutre, donc le brachial prend le relais. Assis dossier relevé plutôt que debout", pres:"2 × 6–10", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:2, adapte:1}
+    ]},
+    "bonus": {horsRotation:true, tag:"Bonus · facultative · ~40 min", tagclass:"tag-legs", titre:"+ Bonus", sub:"Leg curl assis · Leg curl allongé · Mollets · Crunch lesté", exos:[
+      {exo:"exo1", nom:"Leg curl assis", cible:"Ischio-jambiers · séance facultative, hors rotation, pour les jours où tu as du temps en plus : elle ne décale pas l'ordre Pull, Push, Legs, Upper. Pas la veille du Legs. Elle compte comme un jour d'entraînement pour la règle des 3 jours d'affilée. Tu la notes dans la semaine du tour en cours. Ischios d'abord : c'est ta priorité, ils passent de 9 à 14 séries les semaines où tu la fais", pres:"3 × 6–10", presclass:"pres-legs", rpe:"RIR 0–1", repos:"2 min", series:3, adapte:1},
+      {exo:"exo2", nom:"Leg curl allongé", cible:"Ischio-jambiers · hanche tendue, bassin plaqué sur le banc : si les fesses montent, c'est trop lourd", pres:"2 × 6–10", presclass:"pres-legs", rpe:"RIR 0–1", repos:"2 min", series:2},
+      {exo:"exo3", nom:"Mollets", cible:"Mollets · amplitude complète, une seconde de pause en bas, en étirement, puis tu montes le plus haut possible. Pas de rebond", pres:"3 × 6–10", presclass:"pres-legs", rpe:"RIR 0–1", repos:"90 s", series:3, adapte:1},
+      {exo:"exo4", nom:"Crunch lesté", cible:"Grand droit · tu enroules le buste, tu ne plies pas à la hanche", pres:"2 × 6–10", presclass:"pres-legs", rpe:"RIR 0–1", repos:"90 s", series:2}
     ]}
   }},
   { desDe:12, nom:"Pull, Push, Legs, Upper : priorité ischios", note:"Le 25/10, après les photos : tes quadris sont un point fort, tes ischios sont en retard. Au Pull, le leg extension laisse sa place à une 3e série de leg curl allongé : ischios 9 séries par semaine, quadris 6 (leg extension et presse au Legs, ça suffit pour entretenir un point fort). Le Pull perd une série. Le reste ne change pas. Demandé le 23 octobre. Le leg day sépare les séances du haut, pour la récup, et le Pull passe en tête : le Push et l'Upper, qui chargent ta zone blessée, ne se suivent pas, même d'une semaine à l'autre. Seul enchaînement direct : l'Upper puis le Pull suivant, garde ton jour off entre les deux. Exemple : Pull, Push, off, Legs, off, Upper, off. Trois séances d'affilée, c'est possible (Pull, Push, Legs), puis toujours un jour off après l'Upper. Une semaine de l'appli = un tour complet : si tu fais une 5e séance dans la semaine, tu la notes dans la semaine suivante, sinon elle efface la première. Depuis le 24/10, plus de tirage horizontal à la poulie en bilatéral : il chargeait ton bas du dos, la Hammer et les haltères plafonnaient avant ton dos. La poulie revient seulement en unilatéral, à l'Upper. Au Pull, un pullover à la machine avant le vertical, comme le pec fly avant le développé. À l'Upper, un rowing poulie un bras en 10-15 (à la place du Meadows depuis le 24/10 ; en unilatéral, la main libre cale le buste et le bas du dos ne porte rien), pour garder un tirage horizontal dans la semaine. Chaque séance fait 12 à 15 séries (12 au Legs depuis le 26/10). Depuis le 24/10, fourchette 6-10 partout, et 8-10 là où une articulation ou une blessure est en jeu (incliné, couché Smith, OHP, rear delt fly, SLDL) : au-delà de 10 reps, tu décroches, et entre 6 et 12 reps la croissance est la même tant que tu es proche de l'échec. Pec fly du Push à 3 séries depuis le 24/10 : récup des pecs bonne et fly qui stagne. Tes épaules sont un point fort : latérales à 2 séries, militaire au Push seulement (à la barre depuis le 24/10, sur le conseil de ton prof), et les séries gagnées vont aux jambes. Isolation avant le polyarticulaire comme aux pecs : leg curl assis avant le roumain, leg extension avant la presse, pour charger moins lourd. Un peu de jambes au Pull, la séance la plus loin du leg day, et les mollets au Push, en milieu de séance. Si une semaine n'a que trois séances, c'est l'Upper qui saute, pas les jambes. Avant le Push et l'Upper : 5 min d'échauffement épaule, wall slides et isométrie de la coiffe (3 × 30 s), sans les noter.", sessions:{
@@ -607,6 +613,12 @@ const BLOCS = [
       {exo:"exo5", nom:"Élévations latérales à la poulie", cible:"Deltoïde latéral · 2 séries suffisent : tes épaules sont un de tes points forts, les séries gagnées vont aux jambes. Cuff au poignet plutôt qu'une poignée serrée : c'est l'épaule qui tire, pas la main", pres:"2 × 6–10", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:2},
       {exo:"exo6", nom:"Extension triceps unilatérale à la poulie", cible:"Triceps · coude fixe le long du corps, tu ne le laisses pas partir en avant", pres:"2 × 6–10", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:2},
       {exo:"exo7", nom:"Curl marteau", cible:"Biceps · brachial. Prise neutre, ça épargne le coude et le nerf ulnaire, et ce n'est pas le même geste que le pupitre du Pull : là tu es en supination, ici en neutre, donc le brachial prend le relais. Assis dossier relevé plutôt que debout", pres:"2 × 6–10", presclass:"pres-upper", rpe:"RIR 0–1", repos:"2 min", series:2, adapte:1}
+    ]},
+    "bonus": {horsRotation:true, tag:"Bonus · facultative · ~40 min", tagclass:"tag-legs", titre:"+ Bonus", sub:"Leg curl assis · Leg curl allongé · Mollets · Crunch lesté", exos:[
+      {exo:"exo1", nom:"Leg curl assis", cible:"Ischio-jambiers · séance facultative, hors rotation, pour les jours où tu as du temps en plus : elle ne décale pas l'ordre Pull, Push, Legs, Upper. Pas la veille du Legs. Elle compte comme un jour d'entraînement pour la règle des 3 jours d'affilée. Tu la notes dans la semaine du tour en cours. Ischios d'abord : c'est ta priorité, ils passent de 9 à 14 séries les semaines où tu la fais", pres:"3 × 6–10", presclass:"pres-legs", rpe:"RIR 0–1", repos:"2 min", series:3, adapte:1},
+      {exo:"exo2", nom:"Leg curl allongé", cible:"Ischio-jambiers · hanche tendue, bassin plaqué sur le banc : si les fesses montent, c'est trop lourd", pres:"2 × 6–10", presclass:"pres-legs", rpe:"RIR 0–1", repos:"2 min", series:2},
+      {exo:"exo3", nom:"Mollets", cible:"Mollets · amplitude complète, une seconde de pause en bas, en étirement, puis tu montes le plus haut possible. Pas de rebond", pres:"3 × 6–10", presclass:"pres-legs", rpe:"RIR 0–1", repos:"90 s", series:3, adapte:1},
+      {exo:"exo4", nom:"Crunch lesté", cible:"Grand droit · tu enroules le buste, tu ne plies pas à la hanche", pres:"2 × 6–10", presclass:"pres-legs", rpe:"RIR 0–1", repos:"90 s", series:2}
     ]}
   }}
 ];
@@ -686,7 +698,7 @@ function toggleKbd(btn){
 function updateNextBadge(){
   const el=document.getElementById('cycle-label');
   if(!el) return;
-  const ordre=SESSIONS;
+  const ordre=SESSIONS.filter(s=>!BLOC.sessions[s].horsRotation);
   const defaut=`${ordre.length} séances en rotation`;
   const raw=localStorage.getItem('fbeod-last');
   if(!raw){ el.textContent=defaut; return; }
@@ -983,7 +995,7 @@ function toggleCheck(session,exo,serie){
 function saveSession(session){
   const noteEl=document.getElementById(`note-${session}`);
   if(noteEl){ localStorage.setItem(`${session}-note-w${currentWeek}`,noteEl.value); syncToCloud({client:CLIENT_ID,type:'note',session:session,week:currentWeek,value:noteEl.value,ts:new Date().toISOString()}); }
-  localStorage.setItem('fbeod-last', JSON.stringify({session:session, ts:Date.now()}));
+  if(!BLOC.sessions[session].horsRotation) localStorage.setItem('fbeod-last', JSON.stringify({session:session, ts:Date.now()}));
   updateNextBadge();
   const btn=event.target; const orig=btn.textContent;
   btn.textContent='Enregistré ✓'; btn.classList.add('saved');
