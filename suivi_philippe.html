@@ -201,13 +201,12 @@ const PROGRAMME = {
   B: {
     resume: 'Arrière des cuisses · dos · pectoraux · fessiers · bras',
     exos: [
-      { nom:'Leg curl assis', muscles:'Arrière des cuisses',
-        comment:"Assis, le rouleau derrière les chevilles : tu plies les jambes pour ramener le rouleau sous le siège, puis tu remontes doucement.",
-        ou:"Ou leg curl allongé, si la machine assise est prise.",
+      { nom:'Leg curl, assis ou couché', muscles:'Arrière des cuisses',
+        comment:"Assis ou couché sur le ventre, selon la machine : le rouleau contre l'arrière des chevilles, tu plies les jambes, puis tu reviens doucement.",
         series:3, min:3, reps:[10,15], pas:2.5 },
-      { nom:'Rowing à la machine, poitrine en appui', muscles:'Milieu du dos',
-        comment:"La poitrine contre le coussin : tu tires les poignées vers ton ventre, les coudes le long du corps.",
-        ou:"Ou tirage horizontal à la poulie, prise serrée.",
+      { nom:'Tirage horizontal à la poulie, prise serrée', muscles:'Milieu du dos',
+        comment:"Assis face à la poulie : tu tires la poignée vers ton ventre, les coudes le long du corps, puis tu tends les bras doucement.",
+        ou:"Ou rowing à la machine, avec un appui pour la poitrine.",
         series:3, min:3, reps:[10,15], pas:2.5 },
       { nom:'Écarté à la machine', muscles:'Pectoraux',
         comment:"Assis, les bras ouverts : tu ramènes les poignées devant toi comme pour serrer quelqu'un dans tes bras, puis tu rouvres doucement.",
@@ -226,7 +225,7 @@ const PROGRAMME = {
     ]
   },
   C: {
-    resume: 'Cuisses · dos · épaules · mollets · abdos',
+    resume: 'Cuisses · dos · pectoraux · mollets · abdos',
     exos: [
       { nom:'Presse à cuisses', muscles:'Cuisses · fessiers',
         comment:"Assis, le dos bien calé, les pieds hauts sur la plateforme : tu pousses jusqu'à avoir les jambes presque tendues, sans bloquer les genoux.",
@@ -235,12 +234,14 @@ const PROGRAMME = {
       { nom:'Tirage vertical, prise serrée', muscles:'Dos',
         comment:"Assis, avec la poignée en V, paumes face à face : tu tires vers le haut de ta poitrine, puis tu remontes jusqu'à avoir les bras tendus.",
         series:3, min:3, reps:[10,15], pas:2.5 },
-      { nom:'Développé épaules à la machine', muscles:'Épaules',
-        comment:"Assis, le dos contre le dossier : tu pousses les poignées au-dessus de ta tête, puis tu redescends jusqu'à hauteur du menton.",
+      { nom:'Développé à la machine', muscles:'Pectoraux',
+        comment:"Comme dans la séance A : tu pousses les poignées devant toi jusqu'à avoir les bras presque tendus, puis tu reviens doucement. Ici un peu plus léger, pour faire 10 à 15 répétitions.",
+        ou:"Ou, si tu veux essayer : développé épaules à la machine, tu pousses les poignées au-dessus de ta tête.",
         series:2, min:2, reps:[10,15], pas:2.5 },
-      { nom:'Oiseau à la machine', muscles:'Arrière des épaules · haut du dos',
-        comment:"Assis face au dossier de la machine à écarté, les bras tendus devant toi : tu ouvres les bras vers l'arrière, puis tu reviens doucement.",
-        series:2, min:2, reps:[12,15], pas:2.5 },
+      { nom:'Tirage horizontal, coudes écartés', muscles:'Haut du dos · arrière des épaules',
+        comment:"Assis face à la poulie, tu tires les poignées vers ta poitrine en écartant les coudes.",
+        ou:"Ou face pull : debout, tu tires la corde vers ton visage.",
+        series:2, min:2, reps:[10,15], pas:2.5 },
       { nom:'Mollets à la machine', muscles:'Mollets',
         comment:"Tu montes sur la pointe des pieds le plus haut possible, puis tu redescends les talons bien bas.",
         ou:"Machine debout ou assise, ou sur la presse à cuisses.",
@@ -282,7 +283,8 @@ const PRINCIPES = `<section class="principes session" id="session-P">
   <div class="p-card"><h3>Jusqu'où aller dans une série</h3>
     <p>Les dernières répétitions doivent être dures. Tu t'arrêtes quand la suivante serait mal faite.</p></div>
   <div class="p-card"><h3>Note tout</h3>
-    <p>Ta charge et ton nombre de répétitions, à chaque série, à chaque séance. Pas d'inquiétude si tu fais moins que la dernière fois, ça arrive.</p></div>
+    <p>Ta charge et ton nombre de répétitions, à chaque série, à chaque séance. Pas d'inquiétude si tu fais moins que la dernière fois, ça arrive.</p>
+    <p>Quand un exercice te laisse le choix entre deux machines, prends-en une et garde la même d'une fois sur l'autre : sinon tes chiffres ne se comparent plus.</p></div>
   <div class="p-card attention"><h3>Attention</h3>
     <p>Même si tu te sens plus fort que les fois précédentes, tu n'augmentes la charge <b>que si</b> tu as atteint le haut de la fourchette à <b>chaque</b> série. Et quand tu montes, toutes tes séries passent à la nouvelle charge.</p></div>
   <div class="p-card"><h3>Le repos</h3>
