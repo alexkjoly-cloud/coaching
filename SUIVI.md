@@ -540,6 +540,21 @@ que le dépôt n'est pas privé. Ils iront dans la Sheet et dans son appli.
 
 ---
 
+## PHILIPPE — appli en route depuis le 01/11/2026 (`suivi_philippe.html`)
+
+| | |
+|---|---|
+| Qui | **Le père d'Alexandre.** Débutant complet en musculation, senior, **genoux à ménager**. Son appli n'a pas d'onglet bilan : on lit ses séances dans la Sheet quand Alexandre le demande |
+| Format | **3 séances full body A, B, C faites à la suite, sans jour fixe** : après A vient B, puis C, puis A. **12 semaines**, semaine 1 = celle du lundi 02/11/2026 (`DEBUT`), la semaine se calcule toute seule avec la date. Repère donné : 2 à 3 séances par semaine, un jour de repos entre deux. Environ 1 h 15, **2 h au maximum** (sa consigne) |
+| Séance A | **Écrite par Alexandre, reprise telle quelle** : tirage horizontal coudes ouverts ou face pull 3 × 10-15 · développé machine ou Smith 3 × 8-12 · leg extension léger 2-3 × 10-15 · adducteurs 1-2 × 10-15 · tirage vertical prise large 3 × 10-15 · élévations latérales 2 × 12-15 |
+| Séances B et C | Construites en complément, **des machines simples uniquement**. **B** : leg curl assis 3 · rowing machine poitrine en appui 3 · écarté machine 2 · abducteurs 2 · curl 2 · extension triceps poulie 2. **C** : presse pieds hauts 2-3 (descente limitée à ce que les genoux acceptent) · tirage vertical prise serrée 3 · développé épaules machine 2 · oiseau machine 2 · mollets 2 · crunch machine 2. Sur la rotation : les trois plans du dos, une poussée et un écarté pour les pecs |
+| Principes | **Le texte d'Alexandre**, remis en forme dans l'onglet « Principes » : montée en charge à chaque exercice, fourchette de répétitions, tout noter, **on ne monte la charge que si le haut de la fourchette est atteint à chaque série**. Pourcentages alignés sur ses propres chiffres (25 / 35 / 42,5 kg pour 50 = 50 / 70 / 85 %). Ajouts : jusqu'où aller dans une série, repos 2 min, une douleur articulaire = on arrête et on en parle (médecin ou kiné si ça revient), la durée |
+| Ce que l'appli fait | Ouvre directement **la prochaine séance** (bouton « J'ai fini ma séance », ou 3 h après sa dernière saisie). Sous chaque exercice : **la dernière fois**, **la montée en charge calculée** sur sa charge, et **l'objectif du jour** (même charge et une répétition de plus, ou monter d'un cran sur toutes les séries). Chrono de repos qui passe au vert à 2 min. Données envoyées dans la Sheet, onglet `philippe` : **vérifier qu'il apparaît après sa première séance** |
+| ⚠️ À trancher | **Sa montée en 3 paliers à 12 / 8 / 6 n'est pas celle de la méthode** (2 paliers, ~50 % × 6-8 puis ~80 % × 3-4, validée le 26/07). Gardée pour Philippe : en débutant, les répétitions légères servent aussi à apprendre le geste, et le temps n'est pas un problème. À changer s'il le décide |
+| Limite | Une même séance faite deux fois dans la même semaine s'écrase (les données sont rangées par semaine). Avec 2 à 3 séances par semaine, ça n'arrive pas |
+
+---
+
 ## CE QUE L'APPLI FAIT TOUTE SEULE
 
 Depuis le 20/09, l'onglet **Diète** des deux applis porte un bloc **objectif de la
