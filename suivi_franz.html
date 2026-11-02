@@ -361,8 +361,8 @@
   <div class="cible-sem" id="cible-sem"></div>
 
   <div class="cible">
-    <b>Semaines 1 et 2, on mesure.</b> En semaine 1, tu as tourné à <b>3 440 kcal</b> de moyenne. En semaine 2, on garde ce niveau, avec tes aliments et tes plats, pour que les deux semaines se comparent. <b>Pas de jours on et off cette semaine</b> : le même apport chaque jour, sinon la balance ne dit plus rien. Tu notes ton poids chaque matin à jeun dans l'onglet <b>Pesées</b>. Si ton poids reste stable là-dessus avec l'entraînement, c'est ta maintenance.<br>
-    <b>Dès la semaine 3, on reprend : ta maintenance + 300 kcal.</b> Tu es sous ton meilleur poids, donc ce que tu reprends d'abord, c'est surtout du muscle que tu avais déjà, et il revient vite. On vise <b>+0,5 à 1 kg par mois</b>, avec un tour de taille qui bouge à peine. Les 300 kcal passent en glucides : environ 85 g de riz cru en plus par jour, ou l'équivalent. Le cadre au-dessus ajuste tout seul toutes les deux semaines.
+    <b>Semaines 1 et 2, on a mesuré.</b> Tu as tourné à <b>3 440 kcal</b> de moyenne, et à ce niveau tu as déjà pris du poids en semaine 2, plus vite que ce qu'on vise. C'est surtout de l'eau et du glycogène avec la reprise, et du muscle que tu avais déjà.<br>
+    <b>Semaine 3 : on reste à 3 440 kcal.</b> Les 300 kcal prévues attendent : on n'ajoute rien tant que ça monte tout seul. On vise <b>+0,5 à 1 kg par mois</b>, avec un tour de taille qui bouge à peine. <b>Pas de jours on et off</b> : le même apport chaque jour, sinon la balance ne dit plus rien. Le cadre au-dessus ajuste tout seul chaque semaine.
   </div>
 
   <div class="diete-intro">
@@ -424,8 +424,8 @@
     <div class="dj-repas"><div class="r">Dîner <span class="mm">1296 kcal · P71 · G170 · L35</span></div><div class="a">Pâtes <b>220 g crues</b> · Bavette <b>200 g crue</b> · Sauce tomate cuisinée <b>150 g</b> · Huile d'olive <b>15 g</b></div></div>
   </div>
   <div class="diete-jour">
-    <div class="dj-head"><span class="n">DÈS LA SEMAINE 3</span><span class="m">+300 kcal · +66 g de glucides</span></div>
-    <div class="dj-repas"><div class="a">Riz <b>+85 g cru</b> par jour, au repas riz et poulet, soit environ 300 kcal de plus. Ta cible du jour, en haut, en tient compte.</div></div>
+    <div class="dj-head"><span class="n">QUAND ON MONTE DE 150 KCAL</span><span class="m">+150 kcal · +33 g de glucides</span></div>
+    <div class="dj-repas"><div class="a">Riz <b>+42 g cru</b> par jour, au repas riz et poulet. Seulement quand le cadre en haut te le dit : ta cible du jour en tient compte.</div></div>
   </div>
 
   <span class="diete-sec">Si tu changes un aliment</span>
@@ -718,8 +718,9 @@ const PROGRAMME = {
     nom:'UPPER A', couleur:'ua', tag:'Haut du corps · accent dos',
     exos:[
       {nom:'Rear delt fly à la machine', series:3, target:"Arrière d&rsquo;épaule · RIR 0-1 · 2 min · Prise neutre, bras presque tendus, tu ouvres en arc large et tu serres les omoplates en fin de mouvement", pres:'3 × 10-15', repos:'2 min'},
-      {nom:'Tractions', series:3, target:"Grand dorsal · RIR 1-2 · 4 à 5 min · Prise un peu plus large que les épaules, tu pars bras tendus et tu tires les coudes vers les hanches, poitrine vers la barre, sans élan. Si tu dépasses 12 au poids du corps, lest à la ceinture : note le lest dans la case kg, 0 = poids du corps", pres:'3 × 8-12', repos:'4,5 min',
-        depuis:2, avant:{nom:'Tirage vertical prise large', target:"Grand dorsal · RIR 1-2 · 4 à 5 min · Tu tires les coudes vers les hanches, poitrine vers la barre", pres:'3 × 8-12', repos:'4,5 min'}},
+      // 19/10 : tractions prévues dès la S2. 02/11 : pas de ceinture de lest dans sa salle, il a fait
+      // le tirage vertical en S2. On garde le tirage : les chiffres de la S2 sont bien les siens.
+      {nom:'Tirage vertical prise large', series:3, target:"Grand dorsal · RIR 1-2 · 4 à 5 min · Tu pars bras tendus, puis tu tires les coudes vers les hanches, poitrine vers la barre", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Développé incliné (Smith ou machine)', series:3, target:"Haut des pectoraux · RIR 1-2 · 4 à 5 min · Banc vers 30°, coudes à 45° du buste, dos plat. Toujours le même matériel et le même cran, sinon tes charges ne se comparent plus", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min'},
       {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
@@ -1140,7 +1141,10 @@ function carteCible(w,poidsVise,kcal,msg,cls){
   const mt=document.getElementById('macros-titre'); if(mt) mt.textContent=`Ta cible du jour · semaine ${w}`;
 }
 
-const PLAN = { depart:73.3, parSem:0.17, kcal:3440, P:190, G:438, L:98, pas:150, surplus:300, gainMin:0.1, gainMax:0.3, tailleIdx:1 };
+// 02/11 : les +300 prévus en S3 attendent. À 3 440 il prend déjà plus vite que la cible (eau, glycogène
+// et muscle déjà construit avec la reprise) : surplus à 0 tant que ça monte tout seul.
+// depart n'est lu nulle part : la référence, c'est sa moyenne S2 lue sur son téléphone (lirePoids(2)).
+const PLAN = { depart:73.3, parSem:0.17, kcal:3440, P:190, G:438, L:98, pas:150, surplus:0, gainMin:0.1, gainMax:0.3, tailleIdx:1 };
 
 /* ===== PESÉES DU MATIN ===== */
 const JOURS=['Jour 1','Jour 2','Jour 3','Jour 4','Jour 5','Jour 6','Jour 7'];
@@ -1287,8 +1291,8 @@ function majReposAnalyse(){
    maintenance + PLAN.surplus (décidé le 19/10 : il est sous son poids max, ce qu'il reprend
    d'abord est surtout du muscle qu'il avait déjà). On vise +0,5 à 1 kg par mois, et on ne
    touche aux calories que si la même tendance se répète deux semaines de suite : le poids
-   bouge avec l'eau, le sel et le glycogène. La tendance ne se lit que sur les semaines de
-   reprise, la première prend de l'eau et du glycogène. */
+   bouge avec l'eau, le sel et le glycogène. 02/11 : à 3 440 il a déjà pris en S2, donc pas de
+   surplus ajouté en S3, et la tendance se lit à partir de la moyenne de la S2. */
 function majCible(){ const c=calculCible(currentWeek); carteCible(currentWeek,c.vise,c.kcal,c.msg,c.cls); }
 function calculCible(w){
   let kcal=PLAN.kcal, msg='', cls='';
@@ -1299,14 +1303,16 @@ function calculCible(w){
   const base=PLAN.kcal+PLAN.surplus; kcal=base;
   const ref=lirePoids(2)!==null?lirePoids(2):lirePoids(1);
   const vise=ref!==null?fr(ref+PLAN.parSem*(w-2),1)+' kg':'+0,5 à 1 kg / mois';
-  const ps=serie(lirePoids).filter(x=>x.w>=3 && x.w<w), ts=serie(lireTaille).filter(x=>x.w>=3 && x.w<w);
+  const ps=serie(lirePoids).filter(x=>x.w>=2 && x.w<w), ts=serie(lireTaille).filter(x=>x.w>=2 && x.w<w);
   if(ps.length<2){
-    msg = w===3
-      ? `Semaine 3 : <b>la reprise commence</b>, ta maintenance + ${PLAN.surplus} kcal. Les ${PLAN.surplus} kcal passent en glucides : environ 85 g de riz cru en plus par jour, ou l'équivalent. La première semaine, la balance prend souvent un peu d'eau et de glycogène : on ne juge pas dessus.`
-      : `Il faut deux semaines de pesées en reprise pour lire la tendance, donc <b>on ne change rien</b>. On vise +0,5 à 1 kg par mois.`;
+    if(w===3){
+      const p1=lirePoids(1), p2=lirePoids(2);
+      const pris=(p1!==null && p2!==null) ? `ta moyenne a pris <b>${fr(p2-p1,1)} kg</b> entre la semaine 1 et la semaine 2` : `tu as déjà pris du poids en semaine 2`;
+      msg=`Semaine 3 : <b>on reste à ${nbFr(kcal)} kcal</b>. À ce niveau, ${pris}, plus vite que ce qu'on vise. C'est surtout de l'eau et du glycogène avec la reprise, et du muscle que tu avais déjà. Les 300 kcal prévues attendent : <b>on ne rajoute rien tant que ça monte tout seul.</b> On relit ta moyenne et ton tour de taille lundi prochain.`;
+    } else msg=`Il faut deux semaines de pesées pour lire la tendance, donc <b>on ne change rien</b>. On vise +0,5 à 1 kg par mois.`;
     return {vise,kcal,msg,cls};
   }
-  const rythme=(a,b)=>(b.v-a.v)/(b.w-a.w);
+  const rythme=(a,b)=>Math.round((b.v-a.v)/(b.w-a.w)*100)/100; // arrondi : 74,6 − 74,5 doit valoir 0,10 tout rond
   const r=rythme(ps[ps.length-2],ps[ps.length-1]);
   const r0=ps.length>=3 ? rythme(ps[ps.length-3],ps[ps.length-2]) : null;
   const dT=ts.length>=2 ? ts[ts.length-1].v-ts[ts.length-2].v : null;
@@ -1333,7 +1339,7 @@ function calculCible(w){
    on change cette date et toutes les phases suivent. */
 const PREPA = {
   scene: '2027-09-25',   // samedi, même week-end que la Heroes Cup 2026 (26/09) : à confirmer
-  maintenance: null,     // kcal mesurées après la semaine 2 ; vide = on part de PLAN.kcal
+  maintenance: null,     // pas mesurable proprement : la reprise l'a fait prendre dès la S2 à PLAN.kcal. On part de PLAN.kcal
 };
 const MOIS_FR=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
 const JOURS_FR=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
@@ -1346,12 +1352,12 @@ function nbFr(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'
 function dernierPoids(){ for(let w=NB_SEMAINES;w>=1;w--){ const p=lirePoids(w); if(p) return p; } return null; }
 
 function phasesPrepa(){
-  const S=jourIso(PREPA.scene), M=PREPA.maintenance||PLAN.kcal;
+  const S=jourIso(PREPA.scene);
   const seche=lundiSuivant(decale(S,-24*7)), finSeche=decale(S,-14);
   return [
     {nom:'Mesure', c:'Mesure', du:jourIso('2026-10-19'), au:jourIso('2026-11-01'), kcal:`${nbFr(PLAN.kcal)} kcal fixes`,
-     txt:"Ta journée pesée, tous les jours. La moyenne de tes pesées de la semaine 2 donne ta maintenance : toute la roadmap part de ce chiffre."},
-    {nom:'Prise de masse', c:'Prise', du:jourIso('2026-11-02'), au:decale(seche,-1), kcal:`≈ ${nbFr(M+PLAN.surplus)} kcal, ta maintenance + ${PLAN.surplus}`+(PREPA.maintenance?'':', recalées après la semaine 2'),
+     txt:"Ta journée pesée, tous les jours. À ce niveau tu as déjà pris du poids en semaine 2 : ta maintenance est un peu en dessous, et la prise part de là."},
+    {nom:'Prise de masse', c:'Prise', du:jourIso('2026-11-02'), au:decale(seche,-1), kcal:`≈ ${nbFr(PLAN.kcal+PLAN.surplus)} kcal au départ, réglées chaque semaine sur ta prise`,
      txt:"Tu pars sous ton meilleur poids : ce que tu reprends d'abord, c'est surtout du muscle que tu avais déjà. Vise +0,5 à 1 kg par mois. Si tu ne prends pas deux semaines de suite : +150 kcal. Si tu prends trop vite et que ton tour de taille monte, deux semaines de suite : −150. Une fois revenu à ton meilleur poids, on décide sur photos si on ralentit. Les fêtes sont dedans : on regarde la moyenne de la semaine, pas la journée. Deux semaines avant la sèche, on recale ta maintenance sur tes pesées."},
     {nom:'Sèche', c:'Sèche', du:seche, au:finSeche, kcal:'maintenance du moment − 500 au départ',
      txt:`${Math.round((finSeche-seche)/SEMAINE_MS)} semaines, pauses comprises. On ajuste toutes les deux semaines avec les règles plus bas. Objectif : être prêt à J-14. Si tu arrives plus gras que prévu, on avance le départ.`},
