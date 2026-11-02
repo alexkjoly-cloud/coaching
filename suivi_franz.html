@@ -713,6 +713,8 @@ const NB_SEMAINES = 10;
    partagent le même localStorage, et sans préfixe le bilan d'un autre s'afficherait ici. */
 const K = cle => CLIENT_ID + '-' + cle;
 
+// 02/11 : depuis:2 sur le leg extension, les latérales et le rowing appui poitrine. Il a changé de
+// machine en S2 (sa réponse du 02/11) : records et références partent de la S2, la S1 reste visible à part.
 const PROGRAMME = {
   'upperA': {
     nom:'UPPER A', couleur:'ua', tag:'Haut du corps · accent dos',
@@ -722,8 +724,8 @@ const PROGRAMME = {
       // le tirage vertical en S2. On garde le tirage : les chiffres de la S2 sont bien les siens.
       {nom:'Tirage vertical prise large', series:3, target:"Grand dorsal · RIR 1-2 · 4 à 5 min · Tu pars bras tendus, puis tu tires les coudes vers les hanches, poitrine vers la barre", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Développé incliné (Smith ou machine)', series:3, target:"Haut des pectoraux · RIR 1-2 · 4 à 5 min · Banc vers 30°, coudes à 45° du buste, dos plat. Toujours le même matériel et le même cran, sinon tes charges ne se comparent plus", pres:'3 × 8-12', repos:'4,5 min'},
-      {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min'},
-      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
+      {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min', depuis:2},
+      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min', depuis:2},
       {nom:'Curl pupitre', series:2, target:"Biceps · RIR 0-1 · 2 min · Bras calés sur le pupitre, tu redescends jusqu&rsquo;en bas à chaque répétition", pres:'2 × 8-12', repos:'2 min'},
       {nom:'Crunch à la poulie haute', series:3, target:"Abdominaux · RIR 0-1 · 2 min · À genoux face à la poulie, tu enroules le buste vers les cuisses, le bassin ne bouge pas", pres:'3 × 10-15', repos:'2 min'},
     ]
@@ -734,7 +736,7 @@ const PROGRAMME = {
       {nom:'Soulevé de terre roumain', series:3, target:"Ischios et fessiers · RIR 1-2 · 4 à 5 min · Genoux à peine fléchis et figés, barre collée aux cuisses, tu t&rsquo;arrêtes avant que le bas du dos s&rsquo;arrondisse. Semaine 1 léger : il donne de grosses courbatures", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Leg curl assis', series:3, target:"Ischios · RIR 0-1 · 2 à 3 min · Bassin calé contre le dossier, tu contrôles la remontée", pres:'3 × 8-12', repos:'2,5 min'},
       {nom:'Fente à la Smith, pied arrière surélevé (par jambe)', series:3, target:"Fessiers et quadriceps · RIR 1-2 · 3 à 4 min · Pied avant loin du banc, buste penché en avant : c&rsquo;est ce qui met le fessier en étirement. Tu enchaînes les deux jambes, le repos se prend après", pres:'3 × 8-12', repos:'3,5 min'},
-      {nom:'Leg extension, siège reculé', series:3, target:"Quadriceps · RIR 0-1 · 2 à 3 min · Siège reculé au maximum : la hanche moins fléchie, le droit fémoral travaille mieux", pres:'3 × 10-15', repos:'2,5 min'},
+      {nom:'Leg extension, siège reculé', series:3, target:"Quadriceps · RIR 0-1 · 2 à 3 min · Siège reculé au maximum : la hanche moins fléchie, le droit fémoral travaille mieux", pres:'3 × 10-15', repos:'2,5 min', depuis:2},
       {nom:'Abduction à la machine', series:2, target:"Moyen fessier · RIR 0-1 · 2 min · Tu ouvres sans élan et tu tiens une seconde en position ouverte", pres:'2 × 12-15', repos:'2 min'},
       {nom:'Adducteurs à la machine', series:3, target:"Adducteurs · RIR 0-1 · 2 min · Ouverture maximale au départ, tu refermes sans élan. Souvent la même machine que l&rsquo;abduction, tu enchaînes", pres:'3 × 10-15', repos:'2 min'},
       {nom:'Mollets debout à la machine', series:3, target:"Mollets · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'3 × 10-15', repos:'2 min'},
@@ -749,7 +751,7 @@ const PROGRAMME = {
       {nom:'Rowing prise serrée neutre, vers les hanches', series:3, target:"Grand dorsal · RIR 1-2 · 3 à 4 min · Coudes collés au corps, tu tires vers les hanches, pas vers la poitrine", pres:'3 × 8-12', repos:'3,5 min'},
       {nom:'Tirage vertical prise neutre', series:2, target:"Grand dorsal · RIR 1-2 · 3 à 4 min · Tu tires les coudes vers les hanches", pres:'2 × 8-12', repos:'3,5 min'},
       {nom:'Pec fly à la machine', series:2, target:"Pectoraux · RIR 0-1 · 2 min · Siège réglé pour que tes mains arrivent à hauteur de poitrine. Bras légèrement fléchis et figés, grand étirement à l&rsquo;ouverture", pres:'2 × 10-15', repos:'2 min'},
-      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
+      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min', depuis:2},
       {nom:'Extension triceps au-dessus de la tête à la poulie', series:2, target:"Triceps · RIR 0-1 · 2 min · Coudes fixes, tu descends loin derrière la tête", pres:'2 × 10-15', repos:'2 min'},
     ]
   },
@@ -759,10 +761,10 @@ const PROGRAMME = {
       {nom:'Hip thrust (machine ou barre)', series:3, target:"Fessiers · RIR 1-2 · 4 à 5 min · Menton rentré, tibias verticaux en haut, tu bloques une seconde en serrant. Toujours le même matériel", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Presse à cuisses', series:3, target:"Quadriceps et fessiers · RIR 1-2 · 4 à 5 min · Pieds au milieu de la plateforme, largeur de bassin, le bas du dos ne décolle jamais", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Leg curl assis', series:3, target:"Ischios · RIR 0-1 · 2 à 3 min · Bassin calé contre le dossier, tu contrôles la remontée", pres:'3 × 8-12', repos:'2,5 min'},
-      {nom:'Leg extension, siège reculé', series:3, target:"Quadriceps · RIR 0-1 · 2 à 3 min · Siège reculé au maximum : la hanche moins fléchie, le droit fémoral travaille mieux", pres:'3 × 10-15', repos:'2,5 min'},
+      {nom:'Leg extension, siège reculé', series:3, target:"Quadriceps · RIR 0-1 · 2 à 3 min · Siège reculé au maximum : la hanche moins fléchie, le droit fémoral travaille mieux", pres:'3 × 10-15', repos:'2,5 min', depuis:2},
       {nom:'Extension lombaire (machine ou banc à 45°)', series:3, target:"Bas du dos · RIR 1-2 · 2 à 3 min · Tu descends en enroulant le dos et tu remontes en le déroulant, sans à-coup. Tu t&rsquo;arrêtes à l&rsquo;alignement, jamais au-delà. Toujours le même matériel, et léger la semaine 1", pres:'3 × 10-15', repos:'2,5 min'},
       {nom:'Mollets assis', series:3, target:"Soléaire · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'3 × 12-15', repos:'2 min'},
-      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
+      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min', depuis:2},
     ]
   },
   'posterieur': {
@@ -771,9 +773,9 @@ const PROGRAMME = {
       {nom:'Rear delt fly à la machine', series:3, target:"Arrière d&rsquo;épaule · RIR 0-1 · 2 min · Prise neutre, bras presque tendus, tu ouvres en arc large et tu serres les omoplates en fin de mouvement", pres:'3 × 10-15', repos:'2 min'},
       {nom:'Presse à cuisses, pieds hauts et écartés', series:3, target:"Fessiers et adducteurs · RIR 1-2 · 4 à 5 min · Pieds en haut de la plateforme, un peu plus larges que le bassin. Tu descends les genoux vers les épaules aussi bas que possible sans que le bassin décolle du dossier. La charge sera différente de la presse du Lower B, c&rsquo;est normal", pres:'3 × 8-12', repos:'4,5 min'},
       {nom:'Leg curl assis', series:3, target:"Ischios · RIR 0-1 · 2 à 3 min · Bassin calé contre le dossier, tu contrôles la remontée", pres:'3 × 8-12', repos:'2,5 min'},
-      {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min'},
+      {nom:'Rowing appui poitrine coudes ouverts', series:3, target:"Haut du dos et arrière d&rsquo;épaule · RIR 1-2 · 3 à 4 min · Coudes écartés du corps, tu tires vers le sternum et tu serres les omoplates", pres:'3 × 8-12', repos:'3,5 min', depuis:2},
       {nom:'Hyperextension buste très penché', series:3, target:"Fessiers · RIR 0-1 · 2 à 3 min · Haut du dos arrondi, menton rentré, pieds tournés vers l&rsquo;extérieur : tu montes avec les fessiers, pas avec le bas du dos. Un disque contre la poitrine pour charger", pres:'3 × 10-15', repos:'2,5 min'},
-      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min'},
+      {nom:'Élévations latérales à la poulie', series:3, target:"Deltoïde latéral · RIR 0-1 · 2 min · Charge légère, tu montes jusqu&rsquo;à l&rsquo;horizontale sans élan", pres:'3 × 12-20', repos:'2 min', depuis:2},
       {nom:'Mollets debout à la machine', series:3, target:"Mollets · RIR 0-1 · 2 min · Une seconde de pause en bas, talons au plus bas", pres:'3 × 10-15', repos:'2 min'},
     ]
   },

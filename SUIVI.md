@@ -529,6 +529,12 @@ Au prochain passage :
   machine ?) · latérales 6 → 35-42,5 et triceps 30,5 → 55 (autres machines ?) · rowing appui
   poitrine 90 en Upper A, 120 en Postérieur · crunch 37,5 × 1 et mollets assis 60 × 1 (fautes
   de frappe ?) · charge de la 1re série de fente jamais notée
+- ✅ **Sa réponse (02/11 après-midi)** : nouvelles machines en S2 pour le leg extension, les
+  latérales et le rowing appui poitrine, et il les garde. Leurs charges S2 deviennent la
+  référence. Dans l'appli, `depuis:2` sur ces trois exercices : records et références partent
+  de la S2 (sinon le leg extension affichait le record de l'ancienne machine). Pas de réponse
+  sur le triceps (30,5 → 55) ; au rowing, 90 et 120 viennent sans doute de deux machines,
+  chaque séance garde la sienne
 - Postérieur S2 : pec fly fait à la place du rear delt fly (sa note) ; la ligne rear delt de
   ce jour-là est du pec fly
 - Tour de taille pris un samedi puis un vendredi : le redemander le dimanche matin, à jeun
