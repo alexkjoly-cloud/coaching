@@ -280,6 +280,10 @@ semaine, l'en-tête dit « Mois 2 · semaines 5 à 8 ». **Supposé : un mois pa
 payé plus, monter les deux chiffres et repousser la date. Testé hors réseau : ouvert
 le 23/11 à 23 h 59, verrouillé le 24/11 à 0 h 01.
 
+⚠️ **12/11 : plus rien dans la Sheet depuis le 03/11 à 14 h 45.** Depuis la réouverture : S5 = push,
+pull et legs (saisis les 29/10, 30/10 et 02/11), S6 = un push le 03/11 (13 séries en une minute,
+donc noté après coup) et une série de tirage mal saisie (« 12 × 100 »). Rien en S7. **Aucun bilan
+depuis la réouverture**, notes vides. Relance proposée à Alexandre le 12/11.
 📌 **Lui redire que la balance ne bougera presque pas.** En recomposition c'est le
 tour de taille qui parle. Sans ça il croira qu'il ne se passe rien.
 
