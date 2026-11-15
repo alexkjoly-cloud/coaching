@@ -8,7 +8,7 @@ n'ont rien à faire ici non plus : voir la section « Confidentialité » plus b
 **Ce fichier est la mémoire du suivi.** Une conversation qui démarre sans contexte
 lit ce fichier et sait quoi faire. Il se met à jour à chaque décision.
 
-Dernière mise à jour : **08/11/2026**
+Dernière mise à jour : **15/11/2026**
 Méthode appliquée : skill `methode-alex`.
 
 🔴🔴 **LE SKILL SE REMET À ZÉRO, PAS CE FICHIER.** Le 20/09 j'ai écrit trois règles
@@ -588,6 +588,45 @@ step-up, hyperextension, abducteurs, kickback avec step (haut atteint), traction
 - abducteurs séance 3 sur la nouvelle machine (glute builder) : 25 / 30 / 35 → une seule charge
 - 💬 sa note du 23/10 : elle préfère les abducteurs assise droite. Proposé à Alexandre : la
   séance 2 en assise droite, penchée gardée en 1 et 3 (on alterne les profils)
+
+### Franz · semaine 4 · bilan pas encore rempli au 15/11 (poids et calories remontés seuls)
+
+5 séances sur 5. Le questionnaire de la S3 n'a jamais été rempli, celui de la S4 pas encore,
+et pas de tour de taille cette semaine.
+Poids et calories : dans la Sheet. **Le poids a légèrement baissé, mais il a mangé bien sous
+la cible de 3 290** (environ 350 kcal de moins par jour). → **S5 reste à 3 290** (l'appli
+dit pareil), avec la consigne de la manger en entier.
+**Charges en forte baisse à partir du mercredi 11/11 (férié)** sur la plupart des machines :
+latérales 42,5 → 27,5 · rear delt 95 → 65 · leg curl 87,5-95 → 65 · pec fly 87,5 → 65 ·
+hip thrust 130 → 100 · lombaires 60 → 40 · rowing serré 180 → 140 · mollets 80-135 → 40-60.
+Et à charge égale, moins de reps : presse 12 → 8, adducteurs 15 → 10, hyperextension 15 → 9-10,
+leg extension 12-13 → 10-11. Le lundi (Upper A) était normal. Hypothèses : autre salle à
+partir du jour férié, ou fatigue et sous-alimentation. **Question posée dans le message.**
+Ce qui a été appliqué : couché revenu à 120 (9-9-9), RDL à 160 × 12 partout (une seule
+charge). Fente montée à 80, trop lourd (sa note : −10 kg la prochaine fois, et un cran de
+moins aux adducteurs).
+
+### Julie · semaine 12 · vacances
+
+Pas de séance ni de bilan cette semaine. Le bilan S11 a été fait le 08/11 (message redonné le
+15/11 avec la reprise : mêmes charges qu'avant les vacances). Sa demande d'abducteurs assise
+droite attend toujours la réponse d'Alexandre.
+
+### Philippe · semaines 1 et 2 · premier bilan, le 15/11
+
+**6 séances en deux semaines, dans l'ordre A, B, C**, avec un jour de repos entre deux
+(04, 05, 07/11 puis 09, 12, 14/11). Marche ou vélo 30 min en plus, de lui-même.
+Il a compris la règle : en S1 il changeait de charge à chaque série, en S2 une seule charge
+par exercice presque partout. Développé machine 50 × 10-8-6 → 50 × 12-10-10.
+Haut de la fourchette partout en S2, donc on monte : adducteurs 40 · abducteurs 40 · tirage
+vertical large 30 · tirage horizontal serré 40 · leg curl 40 · écarté 30 · curl 7,5 ·
+latérales 5 · presse 80 · mollets 15.
+- Crunch 50 × 10-10, sous la fourchette 12-15 → 40
+- **Pas de machine à mollets** : haltères et équilibre difficile à la descente → sur la presse,
+  ou debout en se tenant d'une main
+- Leg extension redescendu de lui-même à 30 (genoux) : bien, on garde
+- Ajouts de lui : low row après le face pull, une série de crunch en plus, des élévations
+  « vers le ciel » avec les haltères de 5 kg alternées avec les latérales. Aucune douleur notée
 
 ### Les deux applis rouvrent sur la dernière semaine consultée (05/10)
 
