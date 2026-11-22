@@ -642,6 +642,24 @@ leg extension 30 × 15 ×3 · leg curl 40 → 45 · curl 7,5 → 10.
   mollets avant les pecs
 - Tirage vertical serré en C : 40 puis 45 en cours d'exercice. L'appli lui dira de garder 40 sur les 3
 
+### Franz · semaine 5 · bilan partiel le 22/11 (poids et calories seulement)
+
+5 séances sur 5. **Questionnaire vide pour la 3e semaine de suite**, pas de tour de taille depuis la S3.
+Poids et calories : dans la Sheet. Cible mangée cette fois ; poids stable depuis la S3 (la S4 était
+sous-mangée), toujours au-dessus de la courbe visée → l'appli garde 3 290 en S6, d'accord.
+Charges : le décrochage du 11/11 tient (salle ou machines changées ? pas confirmé), mais d'une
+semaine à l'autre ça monte sur la plupart des exercices : presse, adducteurs, leg extension
+Lower A, latérales, rowing appui poitrine, hyperextension, mollets, triceps.
+⚠️ **Les gros exercices baissent** : couché 120 × 9-9-9 → 8-8-7 · RDL 160 × 12 → 10-9-8 ·
+tractions +20 kg 12-11-12 → 8-9 · incliné 100 × 9-9-8 → 8-8-6.
+→ **Programme : on ne touche à rien en S6** (l'arbre : ça monte). Point à 6 semaines, le 29/11 :
+- gros exercices remontés → on garde tout
+- encore en baisse, avec sommeil ou envie en baisse → on retire la 3e série sur couché, incliné,
+  tractions, RDL et les deux presses
+- stagnation avec une bonne récup → +1 série sur les pecs, à 8 séries par semaine (sous le
+  plancher de 12) : pec fly 2 → 3 en Upper B, une semaine à la fois
+- Message prêt : salle ou machines changées ? questionnaire complet, tour de taille dimanche à jeun
+
 ### Les deux applis rouvrent sur la dernière semaine consultée (05/10)
 
 Elles repartaient toujours en semaine 1 : c'est ce qui a fait noter Jean et Alexia
