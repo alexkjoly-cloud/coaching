@@ -715,6 +715,10 @@ const K = cle => CLIENT_ID + '-' + cle;
 
 // 02/11 : depuis:2 sur le leg extension, les latérales et le rowing appui poitrine. Il a changé de
 // machine en S2 (sa réponse du 02/11) : records et références partent de la S2, la S1 reste visible à part.
+// 22/11 : technique revue après les correctifs d'Alexandre, d'où les charges en baisse à partir du
+// 10-11/11 (toutes les séances refaites comme ça en S5). Les PR repartent de la S5 : ceux d'avant
+// ont été faits avec l'ancienne technique, il n'a pas à les battre. Les semaines 1 à 4 gardent les leurs.
+const PR_DEPUIS = 5;
 const PROGRAMME = {
   'upperA': {
     nom:'UPPER A', couleur:'ua', tag:'Haut du corps · accent dos',
@@ -961,7 +965,9 @@ function updatePR(session,exoIdx){
   const acc={best:null,pc:null};
   // un exercice changé en cours de cycle ne mélange pas ses séries avec celles de l'ancien
   const avant = exo.depuis && currentWeek<exo.depuis;
-  const debut = avant ? 1 : (exo.depuis||1), fin = avant ? exo.depuis-1 : NB_SEMAINES;
+  let debut = avant ? 1 : (exo.depuis||1), fin = avant ? exo.depuis-1 : NB_SEMAINES;
+  // et la technique revue ne se compare pas à l'ancienne (PR_DEPUIS)
+  if(!avant){ if(currentWeek>=PR_DEPUIS) debut=Math.max(debut,PR_DEPUIS); else fin=Math.min(fin,PR_DEPUIS-1); }
   for(let w=debut;w<=fin;w++){
     for(let s=1;s<=exo.series;s++){
       prSerie(localStorage.getItem(getKey(session,exoIdx,s,'kg',w)), localStorage.getItem(getKey(session,exoIdx,s,'reps',w)), acc);
