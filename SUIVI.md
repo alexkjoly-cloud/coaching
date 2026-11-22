@@ -628,6 +628,20 @@ latérales 5 · presse 80 · mollets 15.
 - Ajouts de lui : low row après le face pull, une série de crunch en plus, des élévations
   « vers le ciel » avec les haltères de 5 kg alternées avec les latérales. Aucune douleur notée
 
+### Philippe · semaine 3 · ses notes lues le 22/11, réponse écrite pour Alexandre
+
+**3 séances (16, 18, 21/11).** Presse 80 → 90 × 15 ×3 · tirage vertical large 30 → 40 × 15 ×3 ·
+leg extension 30 × 15 ×3 · leg curl 40 → 45 · curl 7,5 → 10.
+- **Latérales** : corrigé par le coach de la salle, 5 kg → 2,5 × 10. Sa question (« la partie
+  centrale, pour la rondeur ? ») : oui, le milieu de l'épaule ; on reste à 2,5 jusqu'à 15 sur les 2 séries
+- **B** : le tirage serré se fait sur la **LOW ROW guidée** (50 × 15 ×3) : gardée, c'est le rowing machine
+- ⚠️ **C** : il a fait la LOW ROW (50 × 15 ×2) à la place du tirage coudes écartés et l'a notée à
+  cet endroit. En S4, l'appli lui dira donc de monter au-dessus de 50 : message de reprendre à
+  15 kg. Ça se corrige tout seul dès qu'il note la bonne charge
+- **Mollets** passés sur la presse (40) : à garder. Avant-bras cuits après le dos, il a fait les
+  mollets avant les pecs
+- Tirage vertical serré en C : 40 puis 45 en cours d'exercice. L'appli lui dira de garder 40 sur les 3
+
 ### Les deux applis rouvrent sur la dernière semaine consultée (05/10)
 
 Elles repartaient toujours en semaine 1 : c'est ce qui a fait noter Jean et Alexia
