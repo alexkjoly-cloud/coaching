@@ -644,9 +644,11 @@ leg extension 30 × 15 ×3 · leg curl 40 → 45 · curl 7,5 → 10.
   mollets avant les pecs
 - Tirage vertical serré en C : 40 puis 45 en cours d'exercice. L'appli lui dira de garder 40 sur les 3
 
-### Franz · semaine 5 · bilan partiel le 22/11 (poids et calories seulement)
+### Franz · semaine 5 · bilan complété le 23/11 à 12 h 30
 
-5 séances sur 5. **Questionnaire vide pour la 3e semaine de suite**, pas de tour de taille depuis la S3.
+5 séances sur 5. Questionnaire rempli le 23/11 : **sommeil 8 · énergie 8 · fatigue 3 · nutrition 10**.
+Ses mots : *« très bon ressenti… j'ai beaucoup mis l'accent sur l'exécution… en limitant les charges…
+je ressentais vraiment une brûlure »*. Toujours pas de tour de taille depuis la S3.
 Poids et calories : dans la Sheet. Cible mangée cette fois ; poids stable depuis la S3 (la S4 était
 sous-mangée), toujours au-dessus de la courbe visée → l'appli garde 3 290 en S6, d'accord.
 Charges : le décrochage du 11/11 vient de **sa technique revue après les correctifs d'Alexandre**
@@ -662,7 +664,12 @@ sur eux, c'est la même raison, et la piste de la fatigue s'éloigne.
   tractions, RDL et les deux presses
 - stagnation avec une bonne récup → +1 série sur les pecs, à 8 séries par semaine (sous le
   plancher de 12) : pec fly 2 → 3 en Upper B, une semaine à la fois
-- Message prêt : questionnaire complet, tour de taille dimanche à jeun
+- ✅ **23/11 : récup bonne, programme gardé.** S6 : un cran de plus sur le rowing appui poitrine
+  (Upper A, Postérieur), le leg curl (Lower A, Lower B), l'extension lombaire, le relevé (haltère entre
+  les pieds). Couché, incliné, pec fly : dernière série sous la fourchette, **charge gardée** (la règle :
+  même charge tant que le haut n'est pas atteint ; à Alexandre de dire s'il préfère baisser). Séries
+  sans reps : tractions, hip thrust, crunch, rear delt ×2 ; leg curl Lower B, 3e série notée 6 (65)
+- Message du bilan prêt le 23/11
 - 🏁 PR de l'appli repartis de la S5 (`PR_DEPUIS`) : il ne cherche plus à battre ceux de l'ancienne technique
 
 ### Les deux applis rouvrent sur la dernière semaine consultée (05/10)
