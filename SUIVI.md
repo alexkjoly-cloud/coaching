@@ -670,6 +670,10 @@ sur eux, c'est la même raison, et la piste de la fatigue s'éloigne.
   même charge tant que le haut n'est pas atteint ; à Alexandre de dire s'il préfère baisser). Séries
   sans reps : tractions, hip thrust, crunch, rear delt ×2 ; leg curl Lower B, 3e série notée 6 (65)
 - Message du bilan prêt le 23/11
+- 💬 **Calories (question d'Alexandre, 23/11)** : gardées à 3 290 en S6. Plat depuis la S3, mais la S4
+  était sous-mangée et la S5, seule semaine mangée en entier, donne +0,1 (bas de la cible). **Dimanche 29/11,
+  moyenne S6 :** moins de +0,1 sur la S5 → palier +150 dès la S7 (3 440 ; l'appli seule attendrait la S8,
+  elle compte la S5 dans la cible) · +0,1 à +0,3 → on garde · au-dessus → tour de taille d'abord
 - 🏁 PR de l'appli repartis de la S5 (`PR_DEPUIS`) : il ne cherche plus à battre ceux de l'ancienne technique
 
 ### Les deux applis rouvrent sur la dernière semaine consultée (05/10)
