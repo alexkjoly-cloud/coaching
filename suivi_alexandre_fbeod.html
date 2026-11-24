@@ -1016,21 +1016,20 @@ function prSerie(kgRaw,repsRaw,acc){
   else if(!isNaN(kg)&&kg===0){ if(acc.pc===null||reps>acc.pc) acc.pc=reps; }
 }
 function updatePR(session,exo){
-  // Même exercice = même nom : on cherche dans toutes les séances et tous les blocs,
-  // donc le PR de l'écarté compte le Push A et le Push B, et un créneau qui a changé
-  // d'exercice ne mélange pas les deux.
+  // Même exercice = même nom DANS LA MÊME SÉANCE (depuis le 25/11) : le PR du pec fly
+  // du Push ne compte pas celui de l'Upper, et un créneau qui a changé d'exercice
+  // ne mélange pas les deux.
   const def=(BLOC.sessions[session].exos||[]).find(e=>e.exo===exo); if(!def) return;
   const acc={best:null,pc:null};
   for(let w=1;w<=NB_SEMAINES;w++){
     const b=blocPour(w);
-    for(const sid of Object.keys(b.sessions)){
-      b.sessions[sid].exos.forEach(e=>{
-        if(e.nom!==def.nom) return;
-        for(let s=1;s<=e.series;s++){
-          prSerie(localStorage.getItem(getKey(sid,e.exo,s,'kg',w)), localStorage.getItem(getKey(sid,e.exo,s,'reps',w)), acc);
-        }
-      });
-    }
+    if(!b.sessions[session]) continue;
+    b.sessions[session].exos.forEach(e=>{
+      if(e.nom!==def.nom) return;
+      for(let s=1;s<=e.series;s++){
+        prSerie(localStorage.getItem(getKey(session,e.exo,s,'kg',w)), localStorage.getItem(getKey(session,e.exo,s,'reps',w)), acc);
+      }
+    });
   }
   const el=document.getElementById(`pr-${session}-${exo}`);
   if(el){
@@ -1218,24 +1217,18 @@ function updateRef(session,exo){
   const def=BLOC.sessions[session].exos.find(e=>e.exo===exo);
   if(!def){ refEl.innerHTML=''; return; }
 
-  /* On cherche la dernière fois que CE mouvement a été fait, peu importe
-     dans quelle séance. Push A et Push B partagent presque tous leurs
-     exercices : sans ça il faudrait aller voir l'autre onglet à chaque fois.
-     On remonte semaine par semaine, et pour chaque semaine on ne regarde que
-     les créneaux du bloc qui s'appliquait CETTE semaine-là : un même
-     emplacement a pu porter un autre exercice avant un changement de prog. */
+  /* On cherche la dernière fois que CE mouvement a été fait DANS CETTE SÉANCE :
+     depuis le 25/11, le leg curl du Pull et celui du Legs, ou le pec fly du Push
+     et celui de l'Upper, ont chacun leurs chiffres (machine, ordre, fatigue
+     différents). On remonte semaine par semaine, et pour chaque semaine on ne
+     regarde que les créneaux du bloc qui s'appliquait CETTE semaine-là : un
+     même emplacement a pu porter un autre exercice avant un changement de prog. */
   for(let w=currentWeek; w>=1; w--){
     const b=blocPour(w);
     const cands=[];
-    for(const sid of Object.keys(b.sessions))
-      b.sessions[sid].exos.forEach(e=>{
-        if(e.nom===def.nom) cands.push({sid, exo:e.exo, series:e.series, titre:b.sessions[sid].titre});
-      });
-    /* Dans l'ordre réel de la semaine, la plus récente d'abord. Push B tombe
-       après Push A dans la rotation, donc sur Push A c'est bien le Push B de
-       la semaine précédente qu'on veut voir, pas son propre Push A. */
-    const ordre=Object.keys(b.sessions);
-    cands.sort((x,y)=>ordre.indexOf(y.sid)-ordre.indexOf(x.sid));
+    if(b.sessions[session]) b.sessions[session].exos.forEach(e=>{
+      if(e.nom===def.nom) cands.push({sid:session, exo:e.exo, series:e.series});
+    });
     for(const pl of cands){
       if(w===currentWeek && pl.sid===session) continue;   // ce qu'il est en train de saisir
       const parts=[];
@@ -1245,9 +1238,7 @@ function updateRef(session,exo){
         if(kg!==''||reps!==''){ parts.push(`${kg||'?'}×${reps||'?'}`); }
       }
       if(parts.length){
-        const nom=pl.titre.replace(/^\d+\s*·\s*/,'');
-        const ou = (pl.sid===session) ? `Semaine ${nomSemaine(w)}` : `${nom}, semaine ${nomSemaine(w)}`;
-        refEl.innerHTML=`${ou} : <b>${parts.join('  ·  ')}</b>`;
+        refEl.innerHTML=`Semaine ${nomSemaine(w)} : <b>${parts.join('  ·  ')}</b>`;
         return;
       }
     }
