@@ -630,6 +630,20 @@ latérales 5 · presse 80 · mollets 15.
 - Ajouts de lui : low row après le face pull, une série de crunch en plus, des élévations
   « vers le ciel » avec les haltères de 5 kg alternées avec les latérales. Aucune douleur notée
 
+### Philippe · semaine 4 · passage en 4 séances Haut / Bas, le 27/11
+
+Sa demande : *« trois fois par semaine… je reste à la salle facilement deux heures, parfois plus…
+j'ai du mal à récupérer »*, il propose 4 ou 5 séances plus courtes. Confirmé par la Sheet :
+A du 23/11 de 13 h 46 à 15 h 30, B du 25/11 de 14 h 07 à 16 h 04, sans compter le cardio.
+- **Où passait le temps** : ~16 séries effectives + 3 paliers de montée sur 6 exercices
+  (~18 séries légères) + 2 min de repos, + 30 min de cardio
+- **Choix** : 4 séances Haut / Bas, mêmes exercices, même volume hebdo. Ce qui change :
+  la montée passe à 2 paliers, et chaque séance porte ~12 séries au lieu de ~15
+- **Ses séries en plus** : on lui demande de s'en tenir au programme tant qu'il récupère mal
+- **Latérales** à 5 kg en S4 : rappel du geste du coach dans l'appli, sans imposer de charge
+- **Tirage vertical large** : 50 × 8 et 45 × 10 en S4 → l'appli propose 45
+- Séance C de la S4 pas faite : il passe directement à Haut 1
+
 ### Philippe · semaine 3 · ses notes lues le 22/11, réponse écrite pour Alexandre
 
 **3 séances (16, 18, 21/11).** Presse 80 → 90 × 15 ×3 · tirage vertical large 30 → 40 × 15 ×3 ·
@@ -723,13 +737,15 @@ que le dépôt n'est pas privé. Ils iront dans la Sheet et dans son appli.
 | | |
 |---|---|
 | Qui | **Le père d'Alexandre.** Débutant complet en musculation, senior, **genoux à ménager**. Son appli n'a pas d'onglet bilan : on lit ses séances dans la Sheet quand Alexandre le demande |
-| Format | **3 séances full body A, B, C faites à la suite, sans jour fixe** : après A vient B, puis C, puis A. **12 semaines**, semaine 1 = celle du lundi 02/11/2026 (`DEBUT`), la semaine se calcule toute seule avec la date. Repère donné : 2 à 3 séances par semaine, un jour de repos entre deux. Environ 1 h 15, **2 h au maximum** (sa consigne) |
+| Format | 🔁 **Depuis le 27/11/2026 (fin S4) : 4 séances courtes Haut / Bas, faites à la suite sans jour fixe** : Haut 1, Bas 1, Haut 2, Bas 2. Sa demande : 3 full body = 2 h et plus avec le cardio, il récupère mal. Repère : 4 par semaine au plus, deux jours de suite possibles, un jour de repos après. Haut ~1 h, Bas 1 ~50 min, Bas 2 ~30 min + son cardio. **12 semaines**, semaine 1 = celle du lundi 02/11/2026 (`DEBUT`) |
+| Programme Haut / Bas | **Haut 1** : tirage vertical large 3 × 10-15 · développé machine 3 × 8-12 · tirage serré à la LOW ROW 3 × 10-15 · latérales 2 × 12-15 · curl 2 × 10-15. **Haut 2** : tirage vertical serré 3 · développé machine plus léger 2 × 10-15 · tirage coudes écartés ou face pull 3 · écarté machine 2 · extension triceps 2. **Bas 1** : presse pieds hauts 2-3 · leg curl 3 · adducteurs 1-2 · mollets à la presse 2 · crunch 2. **Bas 2** : leg extension léger 2-3 · leg curl 2 · abducteurs 2, puis cardio. **Mêmes exercices qu'avant**, seulement répartis : 44 séries par semaine (43 avant), dos 12 (14), pecs 7, quadriceps 6, ischios 5 (3). L'appli retrouve « la dernière fois » dans l'ancien A/B/C (champ `suit`). Charges différentes d'une série à l'autre : l'appli propose la plus lourde qui a touché le bas de la fourchette |
+| Ancien format (S1-S4) | 3 full body A, B, C à la suite, 2 à 3 par semaine, ~1 h 15 annoncé, 2 h en réalité |
 | Séance A | **Écrite par Alexandre, reprise telle quelle** : tirage horizontal coudes ouverts ou face pull 3 × 10-15 · développé machine ou Smith 3 × 8-12 · leg extension léger 2-3 × 10-15 · adducteurs 1-2 × 10-15 · tirage vertical prise large 3 × 10-15 · élévations latérales 2 × 12-15 |
 | Séances B et C | Construites en complément, **des machines simples uniquement**. **B** : leg curl assis ou couché 3 · tirage horizontal poulie prise serrée, ou rowing machine avec appui poitrine 3 · écarté machine 2 · abducteurs 2 · curl 2 · extension triceps poulie 2. **C** : presse pieds hauts 2-3 (descente limitée à ce que les genoux acceptent) · tirage vertical prise serrée 3 · développé machine 2 × 10-15, plus léger qu'en A (développé épaules laissé en option) · tirage horizontal coudes ouverts ou face pull 2 · mollets 2 · crunch machine 2. Sur la rotation : les trois plans du dos, une poussée et un écarté pour les pecs. 🔁 **01/11, ses retouches** : leg curl assis ou couché ; « rowing poitrine en appui » trop obscur pour lui, le tirage poulie prise serrée passe devant ; **oiseau retiré** (trop compliqué, inutile pour lui) au profit du tirage coudes ouverts ou face pull ; **développé épaules remplacé, il ne l'aime pas trop**, gardé en option s'il veut essayer. Ajouté dans les principes : quand il y a deux machines au choix, il en garde une, sinon les chiffres ne se comparent plus |
 | Principes | **Le texte d'Alexandre**, remis en forme dans l'onglet « Principes » : montée en charge à chaque exercice, fourchette de répétitions, tout noter, **on ne monte la charge que si le haut de la fourchette est atteint à chaque série**. Pourcentages alignés sur ses propres chiffres (25 / 35 / 42,5 kg pour 50 = 50 / 70 / 85 %). Ajouts : jusqu'où aller dans une série, repos 2 min, une douleur articulaire = on arrête et on en parle (médecin ou kiné si ça revient), la durée |
 | Ce que l'appli fait | Ouvre directement **la prochaine séance** (bouton « J'ai fini ma séance », ou 3 h après sa dernière saisie). Sous chaque exercice : **la dernière fois**, **la montée en charge calculée** sur sa charge, et **l'objectif du jour** (même charge et une répétition de plus, ou monter d'un cran sur toutes les séries). Chrono de repos qui passe au vert à 2 min. Données envoyées dans la Sheet, onglet `philippe` : **il existe** (une ligne vide le 01/11 à 22 h 17, sans doute un essai d'Alexandre) |
-| ⚠️ À trancher | **Sa montée en 3 paliers à 12 / 8 / 6 n'est pas celle de la méthode** (2 paliers, ~50 % × 6-8 puis ~80 % × 3-4, validée le 26/07). Gardée pour Philippe : en débutant, les répétitions légères servent aussi à apprendre le geste, et le temps n'est pas un problème. À changer s'il le décide |
-| Limite | Une même séance faite deux fois dans la même semaine s'écrase (les données sont rangées par semaine). Avec 2 à 3 séances par semaine, ça n'arrive pas |
+| Montée en charge | ✅ **Tranché le 27/11 : 2 paliers, ceux de la méthode (50 % × 8, 80 % × 4)**. Les 3 paliers à 12 / 8 / 6 coûtaient ~18 séries d'échauffement par séance, une bonne partie de ses 2 h. Alexandre peut revenir dessus |
+| Limite | Une même séance faite deux fois dans la même semaine s'écrase (les données sont rangées par semaine). Avec 4 séances différentes, ça n'arrive qu'à partir d'une 5e dans la semaine : d'où « 4 au plus » |
 
 ---
 

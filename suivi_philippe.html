@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Philippe · Full body</title>
+<title>Philippe · Haut et bas</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -45,9 +45,9 @@
   .next-card .nc-ok { font-size:14px; color:var(--green); margin-top:6px; }
   .next-card button { margin-top:12px; width:100%; padding:13px 0; border-radius:2px; border:none; background:var(--red); color:#fff; font-family:'Bebas Neue',sans-serif; font-size:19px; letter-spacing:0.08em; cursor:pointer; }
 
-  .tabs { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)) minmax(0,1.4fr); gap:6px; padding:14px 16px 0; }
+  .tabs { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)) minmax(0,1.3fr); gap:6px; padding:14px 16px 0; }
   .tab { padding:10px 4px; border-radius:2px; border:1px solid var(--border); background:var(--card); color:var(--muted); cursor:pointer; text-align:center; position:relative; }
-  .tab .t-k { display:block; font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.06em; line-height:1.1; overflow-wrap:anywhere; }
+  .tab .t-k { display:block; font-family:'Bebas Neue',sans-serif; font-size:19px; letter-spacing:0.04em; line-height:1.1; white-space:nowrap; }
   #tab-P .t-k { font-size:19px; }
   .tab .t-s { display:block; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; }
   .tab.active { border-color:var(--red-line); background:var(--red-dim); color:var(--red); }
@@ -135,7 +135,7 @@
     <div class="eyebrow">Programme · 12 semaines</div>
     <h1>PHILIPPE<span>.</span></h1>
   </div>
-  <div class="cycle-badge">Full body<strong>A · B · C</strong></div>
+  <div class="cycle-badge">4 séances<strong>Haut · Bas</strong></div>
 </header>
 
 <nav class="week-selector" id="week-selector" aria-label="Semaines"></nav>
@@ -166,89 +166,102 @@ const K = cle => CLIENT_ID + '-' + cle;
 const DEBUT = new Date('2026-11-02T00:00:00+01:00');
 const NB_SEMAINES = 12;
 
-// Trois séances full body faites à la suite, sans jour fixe : A, puis B, puis C, puis A.
+// À partir du 27/11/2026 (fin de la S4) : 4 séances courtes, haut du corps et bas du corps
+// en alternance, faites à la suite sans jour fixe : Haut 1, Bas 1, Haut 2, Bas 2, puis Haut 1.
 // series = lignes affichées, min = séries à faire (au-delà, la série est en option).
 // pas = cran de la charge pour arrondir la montée en charge.
-const ORDRE = ['A','B','C'];
+// suit = où retrouver « la dernière fois » : l'ancien programme A/B/C (semaines 1 à 4)
+// ou le même exercice dans une autre séance. [séance, numéro de l'exercice à partir de 0].
+const ORDRE = ['H1','B1','H2','B2'];
+const ANCIEN = ['A','B','C'];
 const PROGRAMME = {
-  A: {
-    resume: 'Dos · pectoraux · cuisses · épaules',
+  H1: {
+    titre:'Haut 1', tag:'Haut du corps', duree:'environ 1 h',
+    resume: 'Dos · pectoraux · épaules · biceps',
     exos: [
-      { nom:'Tirage horizontal, coudes écartés', muscles:'Haut du dos · arrière des épaules',
-        comment:"Assis face à la poulie, tu tires les poignées vers ta poitrine en écartant les coudes.",
-        ou:"Ou face pull : debout, tu tires la corde vers ton visage.",
-        series:3, min:3, reps:[10,15], pas:2.5 },
+      { nom:'Tirage vertical, prise large', muscles:'Dos',
+        comment:"Assis, mains écartées, paumes vers l'avant : tu tires la barre jusqu'en haut de ta poitrine, puis tu la laisses remonter jusqu'à avoir les bras tendus.",
+        note:"Tiens la barre sans l'écraser et tire avec les coudes : tes avant-bras fatigueront moins.",
+        series:3, min:3, reps:[10,15], pas:2.5, suit:[['A',4]] },
       { nom:'Développé à la machine', muscles:'Pectoraux',
         comment:"Assis ou allongé, tu pousses les poignées devant toi jusqu'à avoir les bras presque tendus, puis tu reviens doucement.",
         ou:"Ou à la Smith, la barre guidée.",
-        series:3, min:3, reps:[8,12], pas:2.5 },
-      { nom:'Leg extension', muscles:'Avant des cuisses',
-        comment:"Assis, le rouleau sur le bas des tibias : tu tends les jambes, puis tu redescends doucement.",
-        note:"Charge légère, pour ménager tes genoux. La 3e série seulement s'ils vont bien.",
-        series:3, min:2, reps:[10,15], pas:2.5 },
-      { nom:'Adducteurs à la machine', muscles:'Intérieur des cuisses',
-        comment:"Assis, les coussins contre l'intérieur des genoux : tu serres les jambes, puis tu les rouvres doucement.",
-        note:"La 2e série si tu te sens bien.",
-        series:2, min:1, reps:[10,15], pas:2.5 },
-      { nom:'Tirage vertical, prise large', muscles:'Dos',
-        comment:"Assis, mains écartées, paumes vers l'avant : tu tires la barre jusqu'en haut de ta poitrine, puis tu la laisses remonter jusqu'à avoir les bras tendus.",
-        series:3, min:3, reps:[10,15], pas:2.5 },
+        series:3, min:3, reps:[8,12], pas:2.5, suit:[['A',1]] },
+      { nom:'Tirage horizontal, prise serrée', muscles:'Milieu du dos',
+        comment:"Sur la machine LOW ROW, la poitrine contre l'appui : tu tires les poignées vers ton ventre, les coudes le long du corps, puis tu tends les bras doucement.",
+        ou:"Si elle est prise : la poulie basse, assis, avec la poignée serrée.",
+        series:3, min:3, reps:[10,15], pas:2.5, suit:[['B',1]] },
       { nom:'Élévations latérales', muscles:'Épaules',
         comment:"Debout, un haltère dans chaque main : tu lèves les bras sur les côtés jusqu'à hauteur des épaules, puis tu redescends doucement.",
-        series:2, min:2, reps:[12,15], pas:1 },
-    ]
-  },
-  B: {
-    resume: 'Arrière des cuisses · dos · pectoraux · fessiers · bras',
-    exos: [
-      { nom:'Leg curl, assis ou couché', muscles:'Arrière des cuisses',
-        comment:"Assis ou couché sur le ventre, selon la machine : le rouleau contre l'arrière des chevilles, tu plies les jambes, puis tu reviens doucement.",
-        series:3, min:3, reps:[10,15], pas:2.5 },
-      { nom:'Tirage horizontal à la poulie, prise serrée', muscles:'Milieu du dos',
-        comment:"Assis face à la poulie : tu tires la poignée vers ton ventre, les coudes le long du corps, puis tu tends les bras doucement.",
-        ou:"Ou rowing à la machine, avec un appui pour la poitrine.",
-        series:3, min:3, reps:[10,15], pas:2.5 },
-      { nom:'Écarté à la machine', muscles:'Pectoraux',
-        comment:"Assis, les bras ouverts : tu ramènes les poignées devant toi comme pour serrer quelqu'un dans tes bras, puis tu rouvres doucement.",
-        series:2, min:2, reps:[10,15], pas:2.5 },
-      { nom:'Abducteurs à la machine', muscles:'Fessiers (côté des hanches)',
-        comment:"Assis, les coussins contre l'extérieur des genoux : tu écartes les jambes, puis tu les refermes doucement.",
-        series:2, min:2, reps:[12,15], pas:2.5 },
+        note:"Le geste que le coach de la salle t'a montré passe avant le poids. Si tu dois balancer le buste pour monter, reprends des haltères plus légers.",
+        series:2, min:2, reps:[12,15], pas:1, suit:[['A',5]] },
       { nom:'Curl biceps', muscles:'Biceps',
         comment:"Un haltère dans chaque main : tu plies les bras en gardant les coudes collés au corps, puis tu redescends doucement.",
         ou:"Ou à la machine à biceps.",
-        series:2, min:2, reps:[10,15], pas:1 },
-      { nom:'Extension triceps à la poulie', muscles:'Triceps (arrière des bras)',
-        comment:"Debout face à la poulie haute, coudes collés au corps : tu tends les bras vers le bas, puis tu remontes doucement.",
-        ou:"Avec la corde ou la barre, comme tu préfères.",
-        series:2, min:2, reps:[10,15], pas:2.5 },
+        series:2, min:2, reps:[10,15], pas:1, suit:[['B',4]] },
     ]
   },
-  C: {
-    resume: 'Cuisses · dos · pectoraux · mollets · abdos',
+  B1: {
+    titre:'Bas 1', tag:'Bas du corps', duree:'environ 50 min',
+    resume: 'Cuisses · arrière des cuisses · mollets · abdos',
     exos: [
       { nom:'Presse à cuisses', muscles:'Cuisses · fessiers',
         comment:"Assis, le dos bien calé, les pieds hauts sur la plateforme : tu pousses jusqu'à avoir les jambes presque tendues, sans bloquer les genoux.",
         note:"Tu ne descends que tant que tes genoux sont à l'aise. La 3e série seulement s'ils vont bien.",
-        series:3, min:2, reps:[10,15], pas:5 },
+        series:3, min:2, reps:[10,15], pas:5, suit:[['C',0]] },
+      { nom:'Leg curl, assis ou couché', muscles:'Arrière des cuisses',
+        comment:"Assis ou couché sur le ventre, selon la machine : le rouleau contre l'arrière des chevilles, tu plies les jambes, puis tu reviens doucement.",
+        series:3, min:3, reps:[10,15], pas:2.5, suit:[['B2',1],['B',0]] },
+      { nom:'Adducteurs à la machine', muscles:'Intérieur des cuisses',
+        comment:"Assis, les coussins contre l'intérieur des genoux : tu serres les jambes, puis tu les rouvres doucement.",
+        note:"La 2e série si tu te sens bien.",
+        series:2, min:1, reps:[10,15], pas:2.5, suit:[['A',3]] },
+      { nom:'Mollets à la presse', muscles:'Mollets',
+        comment:"Sur la presse, l'avant du pied calé en bas de la plateforme, les jambes tendues sans bloquer les genoux : tu pousses sur la pointe des pieds le plus loin possible, puis tu laisses revenir les talons.",
+        series:2, min:2, reps:[12,15], pas:2.5, suit:[['C',4]] },
+      { nom:'Crunch à la machine', muscles:'Abdominaux',
+        comment:"Assis, tu enroules le buste vers l'avant en serrant le ventre, puis tu reviens doucement.",
+        series:2, min:2, reps:[12,15], pas:2.5, suit:[['C',5]] },
+    ]
+  },
+  H2: {
+    titre:'Haut 2', tag:'Haut du corps', duree:'environ 1 h',
+    resume: 'Dos · pectoraux · arrière des épaules · triceps',
+    exos: [
       { nom:'Tirage vertical, prise serrée', muscles:'Dos',
         comment:"Assis, avec la poignée en V, paumes face à face : tu tires vers le haut de ta poitrine, puis tu remontes jusqu'à avoir les bras tendus.",
-        series:3, min:3, reps:[10,15], pas:2.5 },
-      { nom:'Développé à la machine', muscles:'Pectoraux',
-        comment:"Comme dans la séance A : tu pousses les poignées devant toi jusqu'à avoir les bras presque tendus, puis tu reviens doucement. Ici un peu plus léger, pour faire 10 à 15 répétitions.",
-        ou:"Ou, si tu veux essayer : développé épaules à la machine, tu pousses les poignées au-dessus de ta tête.",
-        series:2, min:2, reps:[10,15], pas:2.5 },
+        series:3, min:3, reps:[10,15], pas:2.5, suit:[['C',1]] },
+      { nom:'Développé à la machine, plus léger', muscles:'Pectoraux',
+        comment:"La même machine que dans Haut 1, un peu plus légère pour faire 10 à 15 répétitions : tu pousses les poignées devant toi, puis tu reviens doucement.",
+        series:2, min:2, reps:[10,15], pas:2.5, suit:[['C',2]] },
       { nom:'Tirage horizontal, coudes écartés', muscles:'Haut du dos · arrière des épaules',
         comment:"Assis face à la poulie, tu tires les poignées vers ta poitrine en écartant les coudes.",
         ou:"Ou face pull : debout, tu tires la corde vers ton visage.",
-        series:2, min:2, reps:[10,15], pas:2.5 },
-      { nom:'Mollets à la machine', muscles:'Mollets',
-        comment:"Tu montes sur la pointe des pieds le plus haut possible, puis tu redescends les talons bien bas.",
-        ou:"Machine debout ou assise, ou sur la presse à cuisses.",
-        series:2, min:2, reps:[12,15], pas:2.5 },
-      { nom:'Crunch à la machine', muscles:'Abdominaux',
-        comment:"Assis, tu enroules le buste vers l'avant en serrant le ventre, puis tu reviens doucement.",
-        series:2, min:2, reps:[12,15], pas:2.5 },
+        note:"Ce n'est pas la LOW ROW : ici les charges sont plus légères, autour de 12,5 à 15 kg.",
+        series:3, min:3, reps:[10,15], pas:2.5, suit:[['A',0],['C',3]] },
+      { nom:'Écarté à la machine', muscles:'Pectoraux',
+        comment:"Assis, les bras ouverts : tu ramènes les poignées devant toi comme pour serrer quelqu'un dans tes bras, puis tu rouvres doucement.",
+        series:2, min:2, reps:[10,15], pas:2.5, suit:[['B',2]] },
+      { nom:'Extension triceps à la poulie', muscles:'Triceps (arrière des bras)',
+        comment:"Debout face à la poulie haute, coudes collés au corps : tu tends les bras vers le bas, puis tu remontes doucement.",
+        ou:"Avec la corde ou la barre, comme tu préfères.",
+        series:2, min:2, reps:[10,15], pas:2.5, suit:[['B',5]] },
+    ]
+  },
+  B2: {
+    titre:'Bas 2', tag:'Bas du corps', duree:'environ 30 min, puis ton cardio',
+    resume: 'Avant des cuisses · arrière des cuisses · fessiers',
+    exos: [
+      { nom:'Leg extension', muscles:'Avant des cuisses',
+        comment:"Assis, le rouleau sur le bas des tibias : tu tends les jambes, puis tu redescends doucement.",
+        note:"Charge légère, pour ménager tes genoux. La 3e série seulement s'ils vont bien.",
+        series:3, min:2, reps:[10,15], pas:2.5, suit:[['A',2]] },
+      { nom:'Leg curl, assis ou couché', muscles:'Arrière des cuisses',
+        comment:"La même machine et la même charge que dans Bas 1, sur 2 séries.",
+        series:2, min:2, reps:[10,15], pas:2.5, suit:[['B1',1],['B',0]] },
+      { nom:'Abducteurs à la machine', muscles:'Fessiers (côté des hanches)',
+        comment:"Assis, les coussins contre l'extérieur des genoux : tu écartes les jambes, puis tu les refermes doucement.",
+        series:2, min:2, reps:[12,15], pas:2.5, suit:[['B',3]] },
     ]
   },
 };
@@ -261,21 +274,23 @@ const ECHAUFFEMENT = `<div class="warmup">
     <li>10 rotations du buste, debout</li>
     <li>10 balanciers de jambe d'avant en arrière, de chaque côté, en te tenant</li>
   </ul>
-  <div class="wu-s">Puis, avant chaque exercice, ta montée en charge (calculée sous l'exercice).</div>
+  <div class="wu-s">Puis, avant chaque exercice, ta montée en charge en 2 séries légères (calculée sous l'exercice).</div>
 </div>`;
 
 const PRINCIPES = `<section class="principes session" id="session-P">
   <h2>Les principes</h2>
   <p class="p-intro">Lis-les une fois en entier avant ta première séance. Ils sont simples, et c'est eux qui te feront progresser.</p>
   <div class="p-card"><h3>La séance suivante, c'est la suivante</h3>
-    <p>Tu fais les séances dans l'ordre : A, puis B, puis C, puis de nouveau A. Pas de jour fixe : tu y vas quand tu peux, et l'appli t'ouvre directement la bonne séance.</p>
-    <p>Vise 2 à 3 séances par semaine, avec au moins un jour de repos entre deux.</p></div>
+    <p>Tu fais les séances dans l'ordre : Haut 1, Bas 1, Haut 2, Bas 2, puis de nouveau Haut 1. Pas de jour fixe : tu y vas quand tu peux, et l'appli t'ouvre directement la bonne séance.</p>
+    <p>Vise 4 séances par semaine, pas plus. Deux jours de suite, ça va, parce que le haut et le bas se reposent chacun leur tour. Après deux jours de suite, prends un jour de repos.</p>
+    <p>Exemple : lundi Haut 1, mardi Bas 1, jeudi Haut 2, vendredi Bas 2. Une semaine avec 3 séances seulement, ce n'est pas grave : tu reprends simplement à la suivante.</p></div>
   <div class="p-card"><h3>L'échauffement</h3>
     <p>5 à 10 minutes de mobilité avant de commencer. Le détail est en haut de chaque séance.</p></div>
   <div class="p-card"><h3>La montée en charge, avant chaque exercice</h3>
-    <p>À chaque exercice, tu montes la charge progressivement. Ce sont des séries d'échauffement : tu ne dois pas te fatiguer.</p>
-    <p>Exemple : ta série effective (celle qui compte : la 1re, la 2e et la 3e) est à 50 kg. Ta montée sera par exemple :</p>
-    <ul><li>25 kg × 12 (la moitié de ta charge)</li><li>35 kg × 8 (environ 70 %)</li><li>42,5 kg × 6 (environ 85 %)</li></ul>
+    <p>À chaque exercice, tu montes la charge en 2 séries légères. Ce sont des séries d'échauffement : tu ne dois pas te fatiguer.</p>
+    <p>Exemple : ta série effective (celle qui compte : la 1re, la 2e et la 3e) est à 50 kg. Ta montée sera :</p>
+    <ul><li>25 kg × 8 (la moitié de ta charge)</li><li>40 kg × 4 (environ 80 %)</li></ul>
+    <p>Pas besoin de repos long entre ces deux séries : 30 secondes à 1 minute suffisent.</p>
     <p>Ça te permet de commencer ta première série effective sans être fatigué et en étant chaud. Ces séries ne comptent pas dans tes séries effectives. L'appli te calcule ta montée à partir de ta charge de la dernière fois.</p></div>
   <div class="p-card"><h3>L'objectif de répétitions</h3>
     <p>Chaque exercice a une fourchette, par exemple 8 à 12 répétitions. Les premières fois ce sera facile, le temps d'apprendre à connaître ton corps : par exemple 3 × 12.</p>
@@ -292,7 +307,11 @@ const PRINCIPES = `<section class="principes session" id="session-P">
   <div class="p-card"><h3>Une douleur n'est pas une fatigue</h3>
     <p>Les muscles qui brûlent, c'est normal. Une articulation qui fait mal (genou, épaule, dos), non : tu arrêtes l'exercice et tu le notes. Si ça revient, on en parle et tu vas voir un médecin ou un kiné.</p></div>
   <div class="p-card"><h3>La durée</h3>
-    <p>Compte environ 1 h 15 par séance. Pas besoin de dépasser 2 heures.</p></div>
+    <p>Compte environ 1 h pour le haut du corps, 30 à 50 minutes pour le bas. Si une séance dépasse 1 h 15, dis-le-moi.</p></div>
+  <div class="p-card"><h3>Le cardio</h3>
+    <p>Ta marche inclinée ou ton vélo, 20 à 30 minutes : le mieux est après la séance Bas 2, qui est la plus courte. Les autres jours, seulement si tu te sens frais.</p></div>
+  <div class="p-card"><h3>Les séries en plus</h3>
+    <p>Pour l'instant, on s'en tient aux séries prévues : c'est ce qui va t'aider à mieux récupérer. On en rajoutera quand ton corps sera prêt.</p></div>
 </section>`;
 
 let currentWeek = 1;
@@ -353,7 +372,7 @@ function buildWeekSelector(){
 
 function buildTabs(){
   let html='';
-  ORDRE.forEach(id=>{ html+=`<button class="tab" id="tab-${id}" onclick="switchTab('${id}')"><span class="t-s">Séance</span><span class="t-k">${id}</span></button>`; });
+  ORDRE.forEach(id=>{ html+=`<button class="tab" id="tab-${id}" onclick="switchTab('${id}')"><span class="t-s">Séance</span><span class="t-k">${PROGRAMME[id].titre}</span></button>`; });
   html+=`<button class="tab" id="tab-P" onclick="switchTab('P')"><span class="t-s">À lire</span><span class="t-k">Principes</span></button>`;
   document.getElementById('tabs').innerHTML=html;
 }
@@ -364,9 +383,9 @@ function buildSessions(){
     const s=PROGRAMME[sid];
     html+=`<section class="session" id="session-${sid}">
       <div class="session-header">
-        <div class="session-tag">Full body</div>
-        <div class="session-title">Séance ${sid}<span class="week-pill" id="pill-${sid}">Semaine 1</span></div>
-        <div class="session-sub">${s.resume} · environ 1 h 15</div>
+        <div class="session-tag">${s.tag}</div>
+        <div class="session-title">${s.titre}<span class="week-pill" id="pill-${sid}">Semaine 1</span></div>
+        <div class="session-sub">${s.resume} · ${s.duree}</div>
       </div>
       ${ECHAUFFEMENT}`;
     s.exos.forEach((exo,ei)=>{
@@ -435,21 +454,31 @@ function loadAll(){
 }
 
 /* ===== La dernière fois, la montée en charge, l'objectif du jour ===== */
+// Cherche la séance la plus récente de cet exercice : ici, dans une autre séance qui le
+// contient aussi, ou dans l'ancien programme A/B/C (voir « suit » dans le programme).
+function seriesDe(s,i,w){
+  const series=[];
+  for(let n=1;n<=4;n++){
+    const kg=num(lire(getKey(s,i,n,'kg',w))), reps=num(lire(getKey(s,i,n,'reps',w)));
+    if(reps!==null) series.push({kg,reps});
+  }
+  return series;
+}
 function derniereFois(sid,ei){
   const exo=PROGRAMME[sid].exos[ei];
-  for(let w=currentWeek-1;w>=1;w--){
-    const series=[];
-    for(let n=1;n<=exo.series;n++){
-      const kg=num(lire(getKey(sid,ei,n,'kg',w))), reps=num(lire(getKey(sid,ei,n,'reps',w)));
-      if(reps!==null) series.push({kg,reps});
+  const refs=[[sid,ei]].concat(exo.suit||[]);
+  for(let w=currentWeek;w>=1;w--){
+    for(const [s,i] of refs){
+      if(w===currentWeek && s===sid) continue;
+      const series=seriesDe(s,i,w);
+      if(series.length) return {w,series};
     }
-    if(series.length) return {w,series};
   }
   return null;
 }
 function arrondir(x,pas){ return Math.round(x/pas)*pas; }
 function montee(charge,pas){
-  const paliers=[[0.5,12],[0.7,8],[0.85,6]];
+  const paliers=[[0.5,8],[0.8,4]];
   const out=[]; let avant=null;
   paliers.forEach(([p,r])=>{
     const kg=arrondir(charge*p,pas);
@@ -467,8 +496,11 @@ function majGuide(sid,ei){
   }
   const haut=exo.reps[1];
   const charges=d.series.map(s=>s.kg).filter(k=>k!==null);
-  const ref = charges.length ? charges[0] : null;
-  const memeCharge = charges.length===d.series.length && charges.every(k=>k===ref);
+  const memeCharge = charges.length===d.series.length && charges.every(k=>k===charges[0]);
+  // Charges différentes : la plus lourde avec laquelle il a atteint le bas de la fourchette,
+  // sinon la plus légère.
+  const reussies = d.series.filter(x=>x.kg!==null && x.reps>=exo.reps[0]).map(x=>x.kg);
+  const ref = !charges.length ? null : memeCharge ? charges[0] : (reussies.length ? Math.max(...reussies) : Math.min(...charges));
   const tousEnHaut = d.series.length>=exo.min && d.series.every(s=>s.reps>=haut);
   const fait = d.series.map(s=>`${s.kg!==null?fr(s.kg):'?'} × ${fr(s.reps)}`).join(' · ');
   let objectif, cls='g-obj';
@@ -490,6 +522,7 @@ function majGuide(sid,ei){
 
 /* ===== Semaines ===== */
 function weekHasData(w){
+  if(ANCIEN.some(s=>[0,1,2,3,4,5].some(i=>seriesDe(s,i,w).length))) return true;
   return ORDRE.some(sid=>PROGRAMME[sid].exos.some((exo,ei)=>{
     for(let n=1;n<=exo.series;n++){ if(lire(getKey(sid,ei,n,'kg',w)) || lire(getKey(sid,ei,n,'reps',w))) return true; }
     return false;
@@ -523,7 +556,7 @@ function majBanniere(){
 /* ===== Séance suivante ===== */
 function etatRotation(){
   const derniere=lire('derniere');
-  if(!derniere || !PROGRAMME[derniere]) return {prochaine:'A', enCours:null, derniere:null};
+  if(!derniere || !PROGRAMME[derniere]) return {prochaine:ORDRE[0], enCours:null, derniere:null};
   const ts=parseInt(lire('derniere-ts')||'0',10);
   const finie = lire('terminee')==='1' || (Date.now()-ts) > 3*3600*1000;
   const suivante = ORDRE[(ORDRE.indexOf(derniere)+1)%ORDRE.length];
@@ -534,14 +567,14 @@ function majCarteSuivante(msgOk){
   const e=etatRotation();
   const el=document.getElementById('next-card');
   if(e.enCours){
-    el.innerHTML=`<div class="nc-k">Séance en cours</div><div class="nc-v">Séance ${e.enCours}</div>
+    el.innerHTML=`<div class="nc-k">Séance en cours</div><div class="nc-v">${PROGRAMME[e.enCours].titre}</div>
       <div class="nc-s">Reprends où tu en étais.</div>
-      <button onclick="switchTab('${e.enCours}')">Continuer la séance ${e.enCours}</button>`;
+      <button onclick="switchTab('${e.enCours}')">Continuer la séance ${PROGRAMME[e.enCours].titre}</button>`;
   } else {
-    const sous = e.derniere ? `La dernière fois, tu as fait la séance ${e.derniere}, ${jourFr(e.ts)}.` : `Tu commences par la séance A.`;
-    el.innerHTML=`<div class="nc-k">Ta prochaine séance</div><div class="nc-v">Séance ${e.prochaine}</div>
+    const sous = e.derniere ? `La dernière fois, tu as fait la séance ${PROGRAMME[e.derniere].titre}, ${jourFr(e.ts)}.` : `Ton nouveau programme commence par la séance ${PROGRAMME[ORDRE[0]].titre}.`;
+    el.innerHTML=`<div class="nc-k">Ta prochaine séance</div><div class="nc-v">${PROGRAMME[e.prochaine].titre}</div>
       <div class="nc-s">${sous}</div>${msgOk?`<div class="nc-ok">${msgOk}</div>`:''}
-      <button onclick="switchTab('${e.prochaine}')">Commencer la séance ${e.prochaine}</button>`;
+      <button onclick="switchTab('${e.prochaine}')">Commencer la séance ${PROGRAMME[e.prochaine].titre}</button>`;
   }
   document.querySelectorAll('.t-next').forEach(x=>x.remove());
   const cible=document.getElementById(`tab-${e.enCours||e.prochaine}`);
@@ -553,8 +586,8 @@ function finir(sid){
   ecrire('derniere',sid); ecrire('derniere-ts',String(Date.now())); ecrire('terminee','1');
   const suivante=ORDRE[(ORDRE.indexOf(sid)+1)%ORDRE.length];
   const msg=document.getElementById(`finish-${sid}`);
-  if(msg) msg.textContent=`Séance ${sid} notée. La prochaine fois : séance ${suivante}.`;
-  majCarteSuivante(`Bien joué. Séance ${sid} notée.`);
+  if(msg) msg.textContent=`Séance ${PROGRAMME[sid].titre} notée. La prochaine fois : ${PROGRAMME[suivante].titre}.`;
+  majCarteSuivante(`Bien joué. Séance ${PROGRAMME[sid].titre} notée.`);
 }
 
 function switchTab(id){
